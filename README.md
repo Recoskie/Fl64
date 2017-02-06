@@ -1,6 +1,6 @@
 # Float numbers Correction library.
 
-The routines are made to work with unrepresentable numbers back into fractions which then can be added, subtracted, divided, and multiplied though algorithms without error. The library also allow the translation of repeating digits in a binary number that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
+The routines in this libary are made to work with unrepresentable numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in a binary number that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
 
 The library is designed to work closely with the float number format without reducing performance.
 
