@@ -81,62 +81,6 @@ function BitCount( Mantissa )
 }
 
 //**********************************************************************************
-//Convert Bit count into Bit pattern.
-//**********************************************************************************
-
-function CountToPat( Data )
-{
-  var Max = 0, End = 0, Start = 0, Sets = [];
-  
-  //Compute every possible set.
-      
-  while( Data.length > 1 )
-  {
-    Max = 0; End = 0; Start = 0;
-    
-    //Find the max length in data in each iteration this can become different as different sets are computed though the shift.
-        
-    for( var i = 0; i < Data.length; i++ )
-    {
-      if( Max < Data[i] ) { Max = Data[i]; End = i + 1; }
-    }
-    
-    //Store an temporary sequence to compare the sequence to it's repeat.
-      
-    var temp = Data.slice( Start, End );
-      
-    //Remove elements from the start of the sequence till it matches preceding digits after the pasterns end.
-      
-    for( var i2 = 0; ( i2 + Start ) < End; i2++ )
-    {
-      if( temp[ Start + i2 ] !== Data[ End + i2 ] ) { Start++; }  
-    }
-        
-    //Recode Pat.
-        
-    Sets[ Sets.length ] = Data.slice( Start, End );
-        
-    //Shift Bit count.
-        
-    Data.shift();
-  }
-      
-  //The longest Set is the best matching bit pattern.
-      
-  for( var i = Sets.length; i > 0; i-- )
-  {
-    if( Sets[i] && Sets[i].length > Max )
-    {
-      Max = Sets[i].length; Start = i;
-    }
-  }
-  
-  //Return Patten, and Upper value remainder.
-  
-  return( Sets[ Start ] );
-}
-
-//**********************************************************************************
 //Decode only the mantissa bit's.
 //**********************************************************************************
 
