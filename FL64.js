@@ -31,6 +31,10 @@ function DivToPat( n1, n2 )
 
 function PatToDiv( Pat1 )
 {
+  //The fraction in f1, and f2, and c is the scale of the pattern into the whole.
+  
+  var f1 = 0, f2 = 0, c = 0;
+  
   //Rebuild the pattern into what divided into the whole is the pattern.
   //Used to find the smallest whole fraction.
   
@@ -39,10 +43,7 @@ function PatToDiv( Pat1 )
     for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ );
     for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d);
   }
-
-  //The fraction in f1, and f2, and c is the scale of the pattern into the whole.
-  
-  var f1 = 0, f2 = 0, c = 0;
+  function Rem( f1, f2 ) { return( f1 - ( Math.floor( f1 / f2 ) * f2 ) ); }
   
   //The pattern into the whole, and the given pattern.
   
@@ -50,15 +51,18 @@ function PatToDiv( Pat1 )
   
   //Compute the division into the whole.
   
-  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;
+  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); f1 = ( Math.pow( 2, f1 ) - 1 );
+  var c1 = f2, c2 = f1; for( var r = Rem( c1, c2 ); r; c1 = c2, c2 = r, r = Rem( c1, c2 ) ); c = f1 / c2;
   
   //Compute ?/?.
+  
+  f1 = 0; f2 = 0;
   
   for( var i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
   
   //Compute the smallest whole fraction.
   
-  c = c / f1; return( [ f2 * c, f1 * c ] );
+  c = c / f1; return( [ Math.floor( f2 * c ), Math.floor( f1 * c ) ] );
 }
 
 //**********************************************************************************
