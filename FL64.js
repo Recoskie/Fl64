@@ -29,27 +29,36 @@ function DivToPat( n1, n2 )
 //Convert undividable numbers to the repeat back into ?/? generates the pattern.
 //**********************************************************************************
 
-function PatToDiv( Pat )
+function PatToDiv( Pat1 )
 {
-  //the fraction in f1, and f2.
-
-  var f1 = 1, f2 = 0;
-
-  //Compute the shift of the division in pows of 2 (f1), and the remainders totals (f2).
-
-  for( var i = 0, n = 0; i < Pat.length; n = Math.pow( 2, Pat[ i++ ] ), f1 = f1 * n, f2 = f2 * n - 1 );
-
-  //Compute the Beginning, and end to match the division remainder.
-  //Convert to whole fraction.
+  //Rebuild the pattern into what divided into the whole is the pattern.
+  //Used to find the smallest whole fraction.
   
-  var f4 = 0, f3 = 0.1;
-
-  if( f1 !== Infinity || f2 !== -Infinity )
+  function Beggining( d )
   {
-    for( ; Math.abs( f3 - Math.floor(f3) ) > ( Number.EPSILON / 2 ); f3 = ( (++f4) / -f2 ) * ( f1 - 1 ) );
+    for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ );
+    for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d);
   }
+
+  //The fraction in f1, and f2, and c is the scale of the pattern into the whole.
   
-  return( [ f4, Math.round( f3 ) ] );
+  var f1 = 0, f2 = 0, c = 0;
+  
+  //The pattern into the whole, and the given pattern.
+  
+  var Pat2 = Beggining( Pat1.slice(0) ); Pat2.reverse(); Pat1.reverse();
+  
+  //Compute the division into the whole.
+  
+  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;
+  
+  //Compute ?/?.
+  
+  for( var i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
+  
+  //Compute the smallest whole fraction.
+  
+  c = c / f1; return( [ f2 * c, f1 * c ] );
 }
 
 //**********************************************************************************
@@ -78,6 +87,62 @@ function BitCount( Mantissa )
   var data = ToBin( Mantissa, 53 ).split("1"); data.shift();
   for( var i = 0; i < data.length; data[ i ] = data[ i ].length + 1, i++ );  
   return( data );
+}
+
+//**********************************************************************************
+//Convert Bit count into Bit pattern.
+//**********************************************************************************
+
+function CountToPat( Data )
+{
+  var Max = 0, End = 0, Start = 0, Sets = [];
+  
+  //Compute every possible set.
+      
+  while( Data.length > 1 )
+  {
+    Max = 0; End = 0; Start = 0;
+    
+    //Find the max length in data in each iteration this can become different as different sets are computed though the shift.
+        
+    for( var i = 0; i < Data.length; i++ )
+    {
+      if( Max < Data[i] ) { Max = Data[i]; End = i + 1; }
+    }
+    
+    //Store an temporary sequence to compare the sequence to it's repeat.
+      
+    var temp = Data.slice( Start, End );
+      
+    //Remove elements from the start of the sequence till it matches preceding digits after the pasterns end.
+      
+    for( var i2 = 0; ( i2 + Start ) < End; i2++ )
+    {
+      if( temp[ Start + i2 ] !== Data[ End + i2 ] ) { Start++; }  
+    }
+        
+    //Recode Pat.
+        
+    Sets[ Sets.length ] = Data.slice( Start, End );
+        
+    //Shift Bit count.
+        
+    Data.shift();
+  }
+      
+  //The longest Set is the best matching bit pattern.
+      
+  for( var i = Sets.length; i > 0; i-- )
+  {
+    if( Sets[i] && Sets[i].length > Max )
+    {
+      Max = Sets[i].length; Start = i;
+    }
+  }
+  
+  //Return Patten, and Upper value remainder.
+  
+  return( Sets[ Start ] );
 }
 
 //**********************************************************************************
