@@ -1,4 +1,16 @@
 //**********************************************************************************
+//The variable force lets the algorithms complete regardless of how long it takes the calculation.
+//**********************************************************************************
+
+var force = false;
+
+function Force( v )
+{
+  if ( v && confirm("Warning setting forced calculation can lead to freezing the page as some calculations take an long time.") == true ) { force = v; }
+  else if( !v ) { v = false; }
+}
+
+//**********************************************************************************
 //Do division one step at an time stopping at the repeat in the pattern.
 //**********************************************************************************
 
@@ -8,10 +20,14 @@ function DivToPat( n1, n2 )
   var Pat = [], Re = [ n1 ];
   var El = -1, C = 0;
   
+  var t = new Date().getTime();
+  
   if( Re[ 0 ] === 0 ) { return( [ null ] ); }
   
   while( El === -1 )
   {
+    if( !force && ( new Date().getTime() - t ) > 2700 ) { Pat.push( -1 ); return( Pat ); }
+    
     for ( var Exp2 = Re[ Re.length - 1 ], i = 0; ( Exp2 - n2 ) < 0; Exp2 *= 2, i++ );
     Pat[ Pat.length ] = i; C = Exp2 - n2; Re[ Re.length ] = C;
     
@@ -31,6 +47,10 @@ function DivToPat( n1, n2 )
 
 function PatToDiv( Pat1 )
 {
+  //Check if pattern is valid.
+  
+  if( Pat1[0] === null ) { return( [ 1, 1 ] ); }
+  
   //The fraction in f1, and f2, and c is the scale of the pattern into the whole.
   
   var f1 = 0, f2 = 0, c = 0;
@@ -43,7 +63,6 @@ function PatToDiv( Pat1 )
     for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ );
     for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d);
   }
-  function Rem( f1, f2 ) { return( f1 - ( Math.floor( f1 / f2 ) * f2 ) ); }
   
   //The pattern into the whole, and the given pattern.
   
@@ -51,14 +70,16 @@ function PatToDiv( Pat1 )
   
   //Compute the division into the whole.
   
-  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); f1 = ( Math.pow( 2, f1 ) - 1 );
-  var c1 = f2, c2 = f1; for( var r = Rem( c1, c2 ); r; c1 = c2, c2 = r, r = Rem( c1, c2 ) ); c = f1 / c2;
+  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;  
+  for( var i = 1; Math.abs( ( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ ); c *= i;
   
   //Compute ?/?.
   
   f1 = 0; f2 = 0;
   
   for( var i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
+  
+  if( f1 === Infinity ) { return( [ null, null ] ); }
   
   //Compute the smallest whole fraction.
   
