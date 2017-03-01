@@ -16,7 +16,7 @@ Removes epsilon error by using min, and max values through the number.
 DivToPat( f1, f2 );
 ------------------------------------------------------------------------------
 
-Use divide Undividable numbers.
+Use Undividable numbers.
 
 Divide, and ends as soon as a pattern is detected to an undividable number. Since numbers can divide using the same subtractions in a loop to infinity it ends right at the repeat of the subtraction well dividing numbers which becomes the repeating digits in the division.
 

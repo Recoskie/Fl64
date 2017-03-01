@@ -104,7 +104,7 @@ function PatToBin( Pat )
 }
 
 //**********************************************************************************
-//convert the float mantissa into it's bit count pattern.
+//convert the float mantissa into it's bit count pattern, or any binary data.
 //**********************************************************************************
 
 function BitCount( Mantissa )
@@ -112,6 +112,25 @@ function BitCount( Mantissa )
   var data = ToBin( Mantissa, 53 ).split("1"); data.shift();
   for( var i = 0; i < data.length; data[ i ] = data[ i ].length + 1, i++ );  
   return( data );
+}
+
+//**********************************************************************************
+//Reverse float number pattern, and exponet adjust to smalest fraction.
+//**********************************************************************************
+
+function FloatToFract( Float, PatDiv )
+{
+  //Compute Nominator.
+  
+  var e = Float / ( PatDiv[0] / PatDiv[1] ); PatDiv[0] *= e;
+  
+  //Exponent adjust.
+        
+  while( Math.floor( ( 1 / ( PatDiv[0] - Math.floor( PatDiv[0] ) ) ) | 1 ) !== 1 ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
+  
+  //Result.
+  
+  return( [ Math.round( PatDiv[0] ), Math.round( PatDiv[1] ) ] );
 }
 
 //**********************************************************************************
@@ -171,80 +190,68 @@ function CountToPat( Data )
 }
 
 //**********************************************************************************
-//Decode only the mantissa bit's.
-//**********************************************************************************
-
-function DecodeMantissa( f )
-{
-  if( f <= 0 ) { f = -f; }
-  
-  //The Exponent is in powers of two in an float 64 number.
-    
-  var Exp2 = Math.floor( Math.log( f ) / Math.log( 2 ) );
-  
-  //The Mantissa.
-  
-  var mantissa = 0;
-  
-  //Compute the 53 bit's of the mantissa in the float64 number.
-  
-  for( var i1 = -1, i2 = 53; i1 < 53; i1++, i2-- )
-  {
-    //Does bit subtract from float, and it's balanced Mantissa to exponent in prows of 2.
-
-    if( ( f - Math.pow( 2, Exp2 - i1 ) ) >= 0 )
-    {
-      //Remove Mantissa bit from float.
-          
-      f -= Math.pow( 2, Exp2 - i1 );
-          
-      //Add bit to mantissa number.
-          
-      mantissa += Math.pow( 2, i2 );
-    }
-  }
-  
-  //return the mantissa.
-  
-  return( mantissa );
-}
-
-//**********************************************************************************
-//Decode The exponent bit's.
-//**********************************************************************************
-
-function DecodeExp( f )
-{
-  //The Exponent is in powers of two in an float 64 number.
-    
-  var Exp2 = Math.floor( Math.log( f ) / Math.log( 2 ) );
-
-  //Center the exponent on the integer number line.
-  
-  return( ( 0x3FF + ( Exp2 ) ) & 0x7FF );
-}
-
-//**********************************************************************************
 //Decode Float 64.
 //**********************************************************************************
 
 function DecodeFloat( f )
 {
+  //Sing, Exponent, Mantissa.
+  
+  var number = [ 0, 0, 0 ];
+  
   //Sing is 0 for positive.
     
-  var Sing = 0; if( f <= 0 ) { Sing = 1; f = -f; }
+  if( f <= 0 ) { number[0] = 1; f = -f; }
   
-  //Put number together.
-
-  var number = [ Sing, DecodeExp( f ), DecodeMantissa( f ) ];
-    
-  //Remove Mantissa exponent bias.
+  //The Exponent is in powers of two in an float 64 number.
+  
+  number[1] = Math.floor( Math.log( f ) / Math.log( 2 ) );
+  
+  //If we know the exponent we can position the mantissa bit's as an integer.
+  
+  number[2] = parseInt( f * Math.pow( 2, 52 - number[1] ), 10 );
+  
+  //Remove Bias Bit.
   
   number[2] -= Math.pow( 2, Math.floor( Math.log( number[2] ) / Math.log( 2 ) ) );
   
+  //Center the exponent on the integer number line.
+  
+  number[1] = ( 0x3FF + ( number[1] ) ) & 0x7FF;
+  
   //return the Sing, exponent bits center balance, And mantissa balanced to exponent.
+
+  if( isNaN(number[1]) ) { number[1] = 0; } if( isNaN(number[2]) ) { number[2] = 0; }
   
   return( number );
+}
+
+//**********************************************************************************
+//Decode Float mantissa including the Bias bit.
+//**********************************************************************************
+
+function DecodeMantissa( f )
+{
+  f = Math.abs( f ); return( parseInt( f * Math.pow( 2, 52 - ( Math.floor( Math.log( f ) / Math.log( 2 ) ) ) ), 10 ) );
+}
+
+//**********************************************************************************
+//Convert binary to Float.
+//**********************************************************************************
+
+function ToFloat( fl )
+{
+  //center Exponent, and divided into (Bias+mantissa).
+
+  var float = ( Math.pow( 2, 52 ) + fl[2] ) / Math.pow( 2, 52 - ( fl[1] - 0x3FF ) );
+  
+  //Adjust Sing bit.
+  
+  ( fl[0] >= 1 ) && ( float = -float );
+  
+  //return Float number value.
+  
+  return( float );
 }
 
 //**********************************************************************************
