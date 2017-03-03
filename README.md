@@ -1,87 +1,189 @@
-# Float numbers Correction library.
+# Float numbers conversion library.
 
-The routines in this libary are made to work with unrepresentable numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in a binary number that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
+The routines in this library are made to work with unrepresentative numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in a binary numbers that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
 
 The library is designed to work closely with the float number format without reducing performance.
 
 Warning library is still in beta.
 
 ------------------------------------------------------------------------------
-CErr( f );
-------------------------------------------------------------------------------
+##CErr( f );
 
 Removes epsilon error by using min, and max values through the number.
 
-------------------------------------------------------------------------------
-DivToPat( f1, f2 );
-------------------------------------------------------------------------------
+```javascript
+var n = (0.3 + 0.6) / 0.9;
 
-Use Undividable numbers.
+alert(n); //output 0.9999999999999999
 
-Divide, and ends as soon as a pattern is detected to an undividable number. Since numbers can divide using the same subtractions in a loop to infinity it ends right at the repeat of the subtraction well dividing numbers which becomes the repeating digits in the division.
+//Correct Epsilon error.
+
+alert( CErr( n ) ); //output is 1
+```
+
+------------------------------------------------------------------------------
+##DivToPat( f1, f2 );
+
+Divide, and ends as soon as a pattern is detected to, for undividable number. Since numbers can divide using the same subtractions in a loop to infinity it ends right at the repeat of the subtraction well dividing numbers which becomes the repeating digits in the division.
 
 Basically 1÷3 is 0.3333333333 in which 3 will repeat forever. Thus the pattern starts at 3 and is 3. However in binary numbers the relationship is different (Pat = [2]).
 
-------------------------------------------------------------------------------
-PatToDiv( Pat );
-------------------------------------------------------------------------------
+```javascript
+alert(DivToPat( 314, 171 )); //314/171 = 1,1,2,2,1,5,2,3,1
+```
+Returns -1 at last array element if the calculation takes longer than 2.7 seconds. To enable the full computation of large patterns.
 
-Use Convert the reapting pattern of digits back into the correct fraction.
+```javascript
+//Force calculations.
 
-Converts the repeating pattern of digits in binary back into the smallest whole fraction that divides into the pattern of digit only.
+Force( true );
+
+//Compute pattern.
+
+alert(DivToPat( 314, 171 ));
+```
+
+------------------------------------------------------------------------------
+##PatToDiv( Pat );
+
+Converts the repeating pattern of digits in binary back into the smallest whole fraction that divides into the pattern of digits only.
 
 If the fraction, or value was something like ( 7 + ( 1 ÷ 3 ) ) = 7.33333333333333 then the pattern would be 3, thus the smallest fraction is 1÷3, so it does not take in account the plus 7.
 
+```javascript
+alert(PatToDiv([1,1,2,2,1,5,2,3,1])); //1,1,2,2,1,5,2,3,1 = 143/171
+```
 ------------------------------------------------------------------------------
-DecodeFloat( f );
-------------------------------------------------------------------------------
+##FloatToFract( Float, DivPat );
 
-Use extracting information from Float64 (Double precision) numbers.
+Calculates the smallest fraction by reversing the infinite pattern of numbers, and exponentially adjusting the number to whole fraction value.
 
-Decode the Sing, Exponent, and Mantissa of an JavaScript Float64 (Double precision) number.
+```javascript
+var n1 = 2198, n2 = 1197;
+
+//2198 divided by 1197 to pat.
+
+var pat = DivToPat( n1, n2 );
+
+//What divided by what is the division pattern.
+
+var PatDIv = PatToDiv( pat );
+
+//Divide 1197 into 2198 giving the float value.
+
+var FloatValue = n1 / n2;
+
+//Convert float value, and bit pattern back to smallest fraction.
+
+var Fract = FloatToFract( FloatValue, PatDIv );
+
+//Smallest fraction 314/171.
+
+alert( Fract );
+```
 
 ------------------------------------------------------------------------------
-ToBin( val, Pad );
+##DecodeFloat( f );
+
+Decode the Sing, Exponent, and Mantissa of a JavaScript Float64 (Double precision) number.
+
+```javascript
+var fl64 = DecodeFloat( 3.1415926535 );
+
+//Display Sing, Exponent, Mantissa value.
+
+alert( fl64[0] + ", " + fl64[1] + ", " + fl64[2] + "" );
+```
+
+The decoded float value is stored as three integer numbers in an array.
+The number values can be converted to binary using ".toString(2)" with a radix of 2, or to hex using a radix of 16.
+In order for the number to be display properly in binary you have to zero pad the left of the binary number to quantity of digits in memory.
+
 ------------------------------------------------------------------------------
+##ToBin( val, Pad );
 
 Convert Val to a binary number, and then zero pad the left of the binary number to quantity of digits in memory.
 
-------------------------------------------------------------------------------
-DecodeExp( f );
-------------------------------------------------------------------------------
+```javascript
+var fl64 = DecodeFloat( 3.1415926535 );
 
-Decode only the exponent of an Float64 (Double precision) number.
+var output = "";
+
+//Sing to bin. Sing is one binary digit big.
+
+output = "Sing = " + ToBin( fl64[0], 1 ) + "\r\n";
+
+//Exponent to bin.
+
+output += "Exponent = " + ToBin( fl64[1], 11 ) + "\r\n";
+
+//Mantissa to bin.
+
+output += "Mantissa = " + ToBin( fl64[2], 52 );
+
+//Display output.
+
+alert( output );
+```
 
 ------------------------------------------------------------------------------
-DecodeMantissa( f );
-------------------------------------------------------------------------------
+##ToFloat( f );
 
-Decode the Float mantissa bit's of an Float64 (Double precision) number.
+Convert a decoded float number back into it's float value.
+
+```javascript
+var fl64 = DecodeFloat( 3.1415926535 );
+
+//Display Sing, Exponent, Mantissa value.
+
+alert( fl64[0] + ", " + fl64[1] + ", " + fl64[2] + "" );
+
+//Convert back to float value.
+
+alert( ToFloat( fl64 ) + "" );
+
+//Add exponent and mantissa by one.
+
+fl64[1] += 1;
+fl64[2] += 1;
+
+//Decode modified float.
+
+alert( ToFloat( fl64 ) + "" );
+```
+By converting back, and forth this way it becomes possible to do float bit hacks which is originally impossible in JavaScript.
+Or you can simply convert float values back and fourth between float value, hex representation, binary representation.
 
 ------------------------------------------------------------------------------
-BitCount( Mantissa );
+##DecodeMantissa( f );
+
+Decode the Float mantissa bit's of an Float64 (Double precision) number. 
+
 ------------------------------------------------------------------------------
+##BitCount( Mantissa );
 
 Convert an float number into it's bit count.
 
+```javascript
+var value = parseInt( "10110101001", 2 );
+
+var pat = BitCount( value ); //2,1,2,2,3,1
+
+alert( PatToBin( pat ) ); //10110101001
+```
+It can be the mantissa bit's of a float, or a integer binary value.
+
 ------------------------------------------------------------------------------
 ~~CountToPat( Data );~~
-------------------------------------------------------------------------------
 
 ~~Convert the Bit count back into division pattern array.~~
 
 ------------------------------------------------------------------------------
-PatToBin( Pat );
-------------------------------------------------------------------------------
+##PatToBin( Pat );
 
 Gives back a binary string of the repeating binary digits, for the pattern of the binary digits.
 
-------------------------------------------------------------------------------
-Notes.
-------------------------------------------------------------------------------
-
-The routines are made to convert unrepresentable numbers back into whole number fractions which then can be added, subtracted, divided, and multiplied though algorithms. Then the final results are the division of the two number fractions. These algorithms are also designed to ignore epsilon errors while calculating.
-
-If one wants to they can rewrite the Sine, and cosine, and tangent functions to be more accurate with small performance impact.
-
-Allows for an better faster way to convert float values back into there fraction.
+```javascript
+var pat = DivToPat( 314, 171 ); //314/171 = 1,1,2,2,1,5,2,3,1
+alert( PatToBin( pat ) ); //111010110000101001
+```

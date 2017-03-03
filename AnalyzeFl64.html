@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html>
 <head>
   <title>Float64.</title>
@@ -147,7 +145,7 @@
         n = ToFloat( fl64 );
 
         Output( "Conversion" );
-        Output( "Binary value:", document.getElementById( "f2" ).value );
+        Output( "Binary value:", fl64[ 0 ] + ToBin( fl64[ 1 ], 11 ) + ToBin( fl64[ 2 ], 52 ) );
         Output( "Sing:", ( temp = fl64[ 0 ] ) );
         Binary += temp;
         Output( "Exponent:", ( temp = ToBin( fl64[ 1 ], 11 ) ) );
@@ -169,32 +167,32 @@
 
     function GetFloatBinary()
     {
-      var fl = [ 0, 0, 0 ], s = ( document.getElementById( "f2" ).value ).slice( document.getElementById( "f2" ).value.length - 64 );
+      var fl64 = [ 0, 0, 0 ], s = ( document.getElementById( "f2" ).value ).slice( document.getElementById( "f2" ).value.length - 64 );
 
       if ( isNaN( document.getElementById( "f2" ).value + "0" ) )
       {
         alert( "\"" + document.getElementById( "f2" ).value + "\" Is Not a binary number." );
         return ( [ null, null, null ] );
       }
-      if ( isNaN( ( fl[ 0 ] = parseInt( s.substring( 0, 1 ), 2 ) ) ) && s.substring( 0, 1 ) !== "" )
+      if ( isNaN( ( fl64[ 0 ] = parseInt( s.substring( 0, 1 ), 2 ) ) ) && s.substring( 0, 1 ) !== "" )
       {
         alert( "\"" + s.substring( 0, 1 ) + "\" Is Not a binary number." );
         return ( [ null, null, null ] );
       }
-      else if ( isNaN( ( fl[ 1 ] = parseInt( s.substring( 1, 12 ), 2 ) ) ) && s.substring( 1, 12 ) !== "" )
+      else if ( isNaN( ( fl64[ 1 ] = parseInt( s.substring( 1, 12 ), 2 ) ) ) && s.substring( 1, 12 ) !== "" )
       {
         alert( "\"" + s.substring( 1, 12 ) + "\" Is Not a binary number." );
         return ( [ null, null, null ] );
       }
-      else if ( isNaN( ( fl[ 2 ] = parseInt( s.substring( 12, 64 ), 2 ) ) ) && s.substring( 12, 64 ) !== "" )
+      else if ( isNaN( ( fl64[ 2 ] = parseInt( s.substring( 12, 64 ), 2 ) ) ) && s.substring( 12, 64 ) !== "" )
       {
         alert( "\"" + s.substring( 12, 64 ) + "\" Is Not a binary number." );
         return ( [ null, null, null ] );
       }
 
-      if ( s.substring( 0, 1 ) === "" ) { fl[ 0 ] = 0; } if ( s.substring( 1, 12 ) === "" ) { fl[ 1 ] = 0; } if ( s.substring( 12, 64 ) === "" ) { fl[ 2 ] = 0; }
+      if ( s.substring( 0, 1 ) === "" ) { fl64[ 0 ] = 0; } if ( s.substring( 1, 12 ) === "" ) { fl64[ 1 ] = 0; } if ( s.substring( 12, 64 ) === "" ) { fl64[ 2 ] = 0; }
 
-      return ( fl );
+      return ( fl64 );
     }
 
     //**********************************************************************************
@@ -332,13 +330,13 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeyup="Binary(0)" type="text" value="3.1415926535"><\/td>';
+        o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="Binary(0)" onkeyup="Binary(0)" type="text" value="3.1415926535"><\/td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeyup="Binary(1)" type="text" value="0100000000001001001000011111101101010100010000010001011101000100"><\/td>';
+        o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="Binary(1)" onkeyup="Binary(1)" type="text" value="0100000000001001001000011111101101010100010000010001011101000100"><\/td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Disable Auto Update" onclick="Update(1)"><\/td>';
+        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Disable Auto Update" onclick="Update(2)"><\/td>';
         o += '<\/tr>';
         o += '<\/table>';
       }
