@@ -22,10 +22,7 @@
     {
       var num = GetNumInput( true, true, true ), num2 = num.slice();
 
-      if ( num[ 0 ] === null )
-      {
-        return;
-      }
+      if ( num[ 0 ] === null ) { return; }
 
       Output( "Simulated." );
       Output( "Division:", ( num[ 0 ] + "&divide;" + num[ 1 ] ) );
@@ -52,7 +49,9 @@
 
         var n = PatToDiv( Data );
 
-        if ( ( n[ 0 ] !== null && n[ 1 ] !== null ) )
+        if( n[0] === -1 ){ Err( "Decode bit pattern back to ?/? = pat:" ); }
+
+        else if ( ( n[ 0 ] !== null && n[ 1 ] !== null ) )
         {
           Output( "Decode bit pattern back to ?/? = pat:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
 
@@ -62,7 +61,11 @@
 
           //Display most reduced fraction.
 
-          Output( "Calc (Float&divide;Pat)Exp = Smallest fraction:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
+          if( n[0] !== -1 )
+          {
+            Output( "Calc (Float&divide;Pat)Exp = Smallest fraction:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
+          }
+          else{ Err( "Calc (Float&divide;Pat)Exp = Smallest fraction:" ); }
         }
         else
         {
@@ -105,7 +108,8 @@
 
         var n = PatToDiv( Data );
 
-        Output( "Decode bit pattern back to ?/? = pat:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
+        if( n[0] === -1 ){ Err( "Decode bit pattern back to ?/? = pat:" ); }
+        else{ Output( "Decode bit pattern back to ?/? = pat:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) ); }
       }
 
       UpdateOutput();
@@ -121,42 +125,33 @@
 
       //Float to binary.
 
-      if ( Mode === 0 && ( n = GetNumInput( true, false, false )[ 0 ] ) !== null )
-      {
-        fl64 = DecodeFloat( n );
-
-        Output( "Conversion" );
-        Output( "Float Value:", n );
-        Output( "Sing:", ( temp = fl64[ 0 ] ) );
-        Binary += temp;
-        Output( "Exponent:", ( temp = ToBin( fl64[ 1 ], 11 ) ) );
-        Binary += temp;
-        Output( "Mantissa:", ( temp = ToBin( fl64[ 2 ], 52 ) ) );
-        Binary += temp;
-        Output( "Binary Value:", Binary );
-
-        document.getElementById( "f2" ).value = Binary;
-      }
+      if ( Mode === 0 && ( n = GetNumInput( true, false, false )[ 0 ] ) !== null ) { fl64 = DecodeFloat( n ); }
 
       //Binary to Float.
 
-      if ( Mode === 1 && ( fl64 = GetFloatBinary() )[ 0 ] !== null )
-      {
-        n = ToFloat( fl64 );
+      else if ( Mode === 1 && ( fl64 = GetFloatBinary() )[ 0 ] !== null ) { n = ToFloat( fl64 ); } else { return; }
 
-        Output( "Conversion" );
-        Output( "Binary value:", fl64[ 0 ] + ToBin( fl64[ 1 ], 11 ) + ToBin( fl64[ 2 ], 52 ) );
-        Output( "Sing:", ( temp = fl64[ 0 ] ) );
-        Binary += temp;
-        Output( "Exponent:", ( temp = ToBin( fl64[ 1 ], 11 ) ) );
-        Binary += temp;
-        Output( "Mantissa:", ( temp = ToBin( fl64[ 2 ], 52 ) ) );
-        Binary += temp;
-        Output( "Float Value:", n );
+      //Show Conversion.
 
-        document.getElementById( "f1" ).value = n;
-        document.getElementById( "f2" ).value = Binary;
-      }
+      Output( "Conversion" );
+
+      if( Mode === 0 ) { Output( "Float Value:", n ); } else { Output( "Binary value:", fl64[ 0 ] + ToBin( fl64[ 1 ], 11 ) + ToBin( fl64[ 2 ], 52 ) ); }
+
+      //The sections of the float number.
+
+      Output( "Sing:", ( temp = fl64[ 0 ] ) ); Binary += temp;
+      Output( "Exponent:", ( temp = ToBin( fl64[ 1 ], 11 ) ) ); Binary += temp;
+      Output( "Mantissa:", ( temp = ToBin( fl64[ 2 ], 52 ) ) ); Binary += temp;
+      
+      //Conversion result.
+      
+      if( Mode === 0 ) { Output( "Binary Value:", Binary ); } else { Output( "Float Value:", n ); }
+
+      //Update inputs.
+
+      if( Mode === 1 ) { document.getElementById( "f1" ).value = n; } document.getElementById( "f2" ).value = Binary;
+
+      //Display output.
 
       UpdateOutput();
     }
@@ -201,29 +196,19 @@
 
     function GetNumberSet()
     {
-      var Data = [ null ];
+      var cmp = document.getElementById( "f1" ).value.split(","), out = [], l = 0;
 
-      try
+      for ( var i = 0; i < cmp.length; i++ )
       {
-        eval( "Data = [" + document.getElementById( "f1" ).value + "];" );
-      }
-      catch ( e )
-      {
-        alert( "Input Error.\r\Numbers in an set must be entered followed by an comma.\r\nExample: 10, 20, 1, 11" );
-      }
-      if ( Data[ 0 ] !== null )
-      {
-        for ( var i = 0; i < Data.length; i++ )
+        if ( !isNaN( cmp[ i ] ) )
         {
-          if ( isNaN( parseInt( Data[ i ], 10 ) ) )
-          {
-            alert( "\"" + Data[ i ] + "\" Is not an number!" );
-            Data[ 0 ] = null;
-          }
+          out[ l ] = Math.abs( parseInt( cmp[i], 10 ) );
+          if( isNaN( out[ l ] ) ) { out.splice( l, 1); } else { l++; }
         }
+        else{ alert( "\"" + cmp[ i ] + "\" Is not an number!" ); }
       }
 
-      return ( Data );
+      return ( out );
     }
 
     //**********************************************************************************
@@ -379,9 +364,14 @@
       sw = false; Result = "";
     }
 
+    function SetForce() { Force( confirm("Warning setting forced calculation can lead to freezing the page as some calculations take an long time.") ); }
+
     function Err( MSG, Data )
     {
-      Output( MSG, "Calculation Stoped because it is slow.<input type='button' value='Show data.' onclick='Preview(\"" + Data + "\");' /><input type='button' value='Force Calculations!' onclick='Force(true);FractAnalyze();' />" );
+      var out = "Calculation Stoped because it is slow.";
+      if( arguments.length > 1 ) { out += "<input type='button' value='Show data.' onclick='Preview(\"" + Data + "\");' />"; }
+      out += "<input type='button' value='Force Calculations!' onclick='SetForce();' />";
+      Output( MSG, out );
     }
 
     function Preview( data )

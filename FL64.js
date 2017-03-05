@@ -2,13 +2,7 @@
 //The variable force lets the algorithms complete regardless of how long it takes the calculation.
 //**********************************************************************************
 
-var force = false;
-
-function Force( v )
-{
-  if ( v && confirm("Warning setting forced calculation can lead to freezing the page as some calculations take an long time.") == true ) { force = v; }
-  else if( !v ) { v = false; }
-}
+var force = false; function Force( v ) { force = v; }
 
 //**********************************************************************************
 //Do division one step at an time stopping at the repeat in the pattern.
@@ -47,6 +41,8 @@ function DivToPat( n1, n2 )
 
 function PatToDiv( Pat1 )
 {
+  var t = new Date().getTime();
+  
   //Check if pattern is valid.
   
   if( Pat1[0] === null ) { return( [ 1, 1 ] ); }
@@ -71,7 +67,10 @@ function PatToDiv( Pat1 )
   //Compute the division into the whole.
   
   for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;  
-  for( var i = 1; Math.abs( ( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ ); c *= i;
+  for( var i = 1; Math.abs( ( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ )
+  { if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); } }
+  
+  c *= i;
   
   //Compute ?/?.
   
@@ -120,73 +119,23 @@ function BitCount( Mantissa )
 
 function FloatToFract( Float, PatDiv )
 {
+  var t = new Date().getTime();
+
   //Compute Nominator.
   
   var e = Float / ( PatDiv[0] / PatDiv[1] ); PatDiv[0] *= e;
   
   //Exponent adjust.
         
-  while( Math.floor( ( 1 / ( PatDiv[0] - Math.floor( PatDiv[0] ) ) ) | 1 ) !== 1 ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
+  while( Math.floor( ( 1 / ( PatDiv[0] - Math.floor( PatDiv[0] ) ) ) | 1 ) !== 1 )
+  {
+    PatDiv[0] *= 2; PatDiv[1] *= 2;
+    if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); }
+  }
   
   //Result.
   
   return( [ Math.round( PatDiv[0] ), Math.round( PatDiv[1] ) ] );
-}
-
-//**********************************************************************************
-//Convert Bit count into Bit pattern.
-//**********************************************************************************
-
-function CountToPat( Data )
-{
-  var Max = 0, End = 0, Start = 0, Sets = [];
-  
-  //Compute every possible set.
-      
-  while( Data.length > 1 )
-  {
-    Max = 0; End = 0; Start = 0;
-    
-    //Find the max length in data in each iteration this can become different as different sets are computed though the shift.
-        
-    for( var i = 0; i < Data.length; i++ )
-    {
-      if( Max < Data[i] ) { Max = Data[i]; End = i + 1; }
-    }
-    
-    //Store an temporary sequence to compare the sequence to it's repeat.
-      
-    var temp = Data.slice( Start, End );
-      
-    //Remove elements from the start of the sequence till it matches preceding digits after the pasterns end.
-      
-    for( var i2 = 0; ( i2 + Start ) < End; i2++ )
-    {
-      if( temp[ Start + i2 ] !== Data[ End + i2 ] ) { Start++; }  
-    }
-        
-    //Recode Pat.
-        
-    Sets[ Sets.length ] = Data.slice( Start, End );
-        
-    //Shift Bit count.
-        
-    Data.shift();
-  }
-      
-  //The longest Set is the best matching bit pattern.
-      
-  for( var i = Sets.length; i > 0; i-- )
-  {
-    if( Sets[i] && Sets[i].length > Max )
-    {
-      Max = Sets[i].length; Start = i;
-    }
-  }
-  
-  //Return Patten, and Upper value remainder.
-  
-  return( Sets[ Start ] );
 }
 
 //**********************************************************************************
@@ -197,7 +146,7 @@ function DecodeFloat( f )
 {
   //Compute Sing.
 
-  var Sing = 0; if( f <= 0 ) { f = -f; Sing = 1; }
+  var Sing = 0; if( f < 0 ) { f = -f; Sing = 1; }
   
   //Compute Exponent.
     
@@ -205,7 +154,7 @@ function DecodeFloat( f )
   
   //Adjust the number so that it is "0.Mantissa".
   
-  if( -Exp >= 0x3FF ) { f /= Math.pow( 2, -0x3FD ); Exp = -0x3FF; } else{ f /= Math.pow( 2, Exp + 1 ); }
+  if( -Exp >= 0x3FF ) { f /= Math.pow( 2, -0x3FD ); Exp = -0x3FF; } else { f /= Math.pow( 2, Exp + 1 ); }
   
   //Compute Mantissa.
   
@@ -221,12 +170,12 @@ function DecodeFloat( f )
 }
 
 //**********************************************************************************
-//Decode Only the Mantissa.
+//Decode the Mantissa including the hidden bit.
 //**********************************************************************************
 
 function DecodeMantissa( f )
 {
-  if( f <= 0 ) { f = -f; Sing = 1; }
+  if( f < 0 ) { f = -f; Sing = 1; }
   
   //Compute Exponent.
     
@@ -239,14 +188,6 @@ function DecodeMantissa( f )
   //Compute Mantissa.
   
   return( f * Math.pow( 2, 53 ) );
-  
-  //Center Exponet.
-  
-  Exp = ( 0x3FF + Exp ) & 0x7FF;
-  
-  //return the decoded float.
-  
-  return( Mantissa );
 }
 
 //**********************************************************************************
@@ -284,103 +225,32 @@ function ToBin( val, Pad )
 }
 
 //**********************************************************************************
-//Correct epsilon error using min, max values in base 10.
+//Correct error.
 //**********************************************************************************
 
 function CErr( f )
 {
-  var Exp10 = 0, Point = 0, RoundDigit = 0, MinMax = "", NLen = 0;
+  var fl64 = DecodeFloat( f );
   
-  f = f.toString(); //Float to Base 10 string.
+  //Compute X, and Y.
   
-  //Calculate exponent.
+  for( var X = 0; ( X < 53 ) && ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === 0; X++ );
+  for( var Y = 0; ( ( fl64[2] / Math.pow( 2, X + Y ) ) & 1 ) === 1; Y++ );
   
-  if( f.indexOf("e") !== -1 )
-  {
-    Exp10 += parseInt( ( ( f.split("e") )[1] ), 10 );
-    f = ( f.split("e") )[0];
-  }
-
-  Point = f.indexOf("."); f = f.replace(".","");
+  //X Adjust. Note 53 - E. Close to 0.
   
-  //If no decimal point it is imaginary, and is at the end of the number.
+  if( X >= ( 53 - 10 ) && fl64[1] <= ( 0x3FF - 10 ) ) { return( 0 ); }
   
-  if( Point < 0 ) { Point = f.length; }
+  //Y Adjust. Note 52 - E. Close to Whole value in part of number.
   
-  //If starts with zeros after the exponent then adjust the number.
+  if( Y >= ( 52 - 10 ) ) { fl64[2] += Math.pow( 2, X ); }
   
-  if( f.charAt( f.length - 1 ) === "0" )
-  {
-    for( var i = f.length - 1; f.charAt(i) === "0"; i--, Exp10++ );
-    f = f.slice( 0, i );
-  }
+  //Cut off.
   
-  //Number of 0 (Min), or 9 (Max) is fractional error though an base 10 representation of an float number.
+  X = 23; Y = 0; while( X > 0 && Y < 10 ) { if( ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === 0 ) { Y++; } else { Y = 0; }; X--; }
+  if( X > 0 ) { fl64[2] = Math.floor( fl64[2] / Math.pow( 2, Y ) ) * Math.pow( 2, Y ); }
   
-  for( var i = f.length; i > -1; i-- )
-  {
-    //Check for min, or max value fractional error along base 10 string.
-      
-    if( MinMax === "" && ( f.charAt(i) === "9" || f.charAt(i) === "0" ) )
-    { MinMax = f.charAt(i); NLen++; }
-    
-    //Number of matches to 0 or 9.
-    
-    else if ( f.charAt( i ) === MinMax ) { NLen++; }
-    
-    //Else end of fractional error bit's.
-    
-    else if( MinMax !== "" || i === 0 )
-    {
-      //Number of matches must be at least bigger than 2.
-      
-      if( NLen > 2 )
-      {
-        //The next digit up that is to be corrected after fractional error is removed.
-        
-        RoundDigit = parseInt( f.charAt( i ), 10 );
-        
-        if( Exp10 >= 0 ){ Exp10 += f.length - i; }
-        if( Exp10 < 0 ){ Exp10 += f.length - i; }
-        
-        //Remove digits that are fractionally off between min, max.
-        
-        f = f.slice( 0, i );
-        
-        //If fractional error is one binary digit off we round up to the next digit.
-        
-        if( MinMax === "9" ) { RoundDigit += 1; }
-      }
-      
-      //End the error check.
-      
-      i = 0; break;
-    }
-  }
+  //Return Adjusted float.
   
-  //Create new fractionally corrected number.
-  
-  if( Exp10 >= 0 && MinMax !== "" )
-  {
-    f += RoundDigit + ""; MinMax !== "";
-  }
-  
-  for( ; f.length < Point; f += "0" );
-  f += ".";
-  
-  if( Exp10 < 0 && MinMax !== "" )
-  {
-    f += RoundDigit + ""; MinMax !== "";
-  }
-  
-  if( Point < f.length && Point > 0 )
-  {
-    f = f.substring( 0, Point ) + "." + f.substring( Point, f.length );
-  }
-  
-  f += "e" + Exp10 + "";
-  
-  //Compile fixed number.
-  
-  return( parseFloat( f, 10 ) );
+  return( ToFloat( fl64 ) );
 }
