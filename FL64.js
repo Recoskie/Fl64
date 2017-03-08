@@ -231,24 +231,20 @@ function ToBin( val, Pad )
 function CErr( f )
 {
   var fl64 = DecodeFloat( f );
+
+  //Close to 0. Note "e = 10", Center "0x3FF - e", "53 - e".
   
-  //Compute X, and Y.
+  if( ( fl64[2] / Math.pow(2, ( 53 - 10 ) ) === ( fl64[2] / Math.pow(2, ( 53 - 10 ) ) ) & -1 ) && fl64[1] <= ( 0x3FF - 10 ) ) { return( 0 ); }
   
-  for( var X = 0; ( X < 53 ) && ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === 0; X++ );
-  for( var Y = 0; ( ( fl64[2] / Math.pow( 2, X + Y ) ) & 1 ) === 1; Y++ );
+  //X, and Y Adjust. Note "e*2+3=23", "Y >= e".
   
-  //X Adjust. Note 53 - E. Close to 0.
-  
-  if( X >= ( 53 - 10 ) && fl64[1] <= ( 0x3FF - 10 ) ) { return( 0 ); }
-  
-  //Y Adjust. Note 52 - E. Close to Whole value in part of number.
-  
-  if( Y >= ( 52 - 10 ) ) { fl64[2] += Math.pow( 2, X ); }
-  
-  //Cut off.
-  
-  X = 23; Y = 0; while( X > 0 && Y < 10 ) { if( ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === 0 ) { Y++; } else { Y = 0; }; X--; }
-  if( X > 0 ) { fl64[2] = Math.floor( fl64[2] / Math.pow( 2, Y ) ) * Math.pow( 2, Y ); }
+  var X = 23, Y = 0, C = false;
+
+  for( var b = 1; b > -1; b--)
+  {
+    X = 23; Y = 0; while( X > 0 && ( ( C = ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === b ) || Y < 10 ) ) { if( C ) { Y++; } else { Y = 0; }; X--; }
+    if( b && Y >= 10 ) { fl64[2] +=  Math.pow( 2, X + 1 ); } else if( Y >= 10 ) { fl64[2] = Math.floor( fl64[2] / Math.pow( 2, Y ) ) * Math.pow( 2, Y ); }
+  }
   
   //Return Adjusted float.
   
