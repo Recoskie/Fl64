@@ -12,67 +12,34 @@ Warning library is still in beta.
 Removes error through the number.
 
 ```javascript
-//Setup.
+//Randomized Repetition error.
 
-var output= "", s = 1;
-var n = ( ( 0.3 + 0.6 ) / 0.9 ) - 1; //Theoretically 0.
+var n = 1 / ( 1 << ( ( Math.random() * 21 ) + 1 ) ); //Random fraction.
 
-//Example 1.
-
-output = "( ( 0.3 + 0.6 ) / 0.9 ) - 1 = 0.\r\n";
-output += "Float Value: " + n + "\r\n"; //0.9999999999999999
-output += "Corrected Float Value: " + CErr(n) + "\r\n\r\n"; //1
-
-//Repetition error. Example 2.
-
-for( var i = 0; i< 1000; i++ )
-{
-  n += ( ( 0.3 + 0.6 ) / 0.9 ) - 1; //Theoretically adding 0.
-}
-
-output += "Repetition Error.\r\n";
-output += "Float Value: " + n + "\r\n"; //0.9999999999998889
-output += "Corrected Float Value: " + CErr(n) + "\r\n\r\n"; //1
-
-//Fractional Repetition error. Example 3.
-
-n = 0.75; //set 0.75.
-
-for( var i = 0; i < 1000; i++ )
-{
-  n += ( ( 0.3 + 0.6 ) / 0.9 ) - 1; //Theoretically adding 0.
-}
-
-output += "Fract Repetition Error.\r\n";
-output += "Float Value: " + n + "\r\n"; //0.749999999999889
-output += "Corrected Float Value: " + CErr(n) + "\r\n\r\n"; //0.75
-
-//Fractional Repetition error. Example 4.
-
-n = 0.75; //set 0.75.
-
-for( var i = 0; i < 1000; i++ )
-{
-  n += ( -( 0.3 + 0.6 ) / 0.9 ) + 1; //Theoretically adding 0.
-}
-
-output += "Fract Repetition Error.\r\n";
-output += "Float Value: " + n + "\r\n"; //0.750000000000111
-output += "Corrected Float Value: " + CErr(n) + "\r\n\r\n"; //0.75
-
-//Randomized Repetition error. Example 5.
-
-n = 1 / ( ( 1 << ( ( Math.random() + 1 ) ) * 3 ) & -1 ); //Random fraction.
-
-for( var i = 0, c = 7, s = 1; i < 1000; c = ( ( Math.random() * 1000 ) + 1 ) & -1, i++ )
+for( var i = 0, c = 7, s = 1; i < 1000; c = ( ( Math.random() * 100 ) + 1 ) & -1, i++ )
 {
   n -= ( ( ( ( c * 4 ) / 1000 ) + ( ( c * 3 ) / 1000 ) ) / ( ( ( c * 7 ) / 1000 ) ) ) - 1; //Random error.
   if ( ( Math.random() * 2 ) & -1 ) { n = -n; } // random Sing switch.
 }
 
-output += "Randomized Fractional Repetition Error.\r\n";
-output += "Float Value: " + n + "\r\n"; //?
-output += "Corrected Float Value: " + CErr(n) + ""; //?
+var output = "Randomized Fractional Repetition Error.\r\n";
+output += "Float Value: " + n + ", Fract 1/" + 1 / n +"\r\n";
+
+n = CErr(n);
+
+output += "Corrected Float Value: " + n + ", Fract 1/" + 1 / n + "";
+
+alert( output );
+```
+
+Another example is when one tries to compare to equality, or to 0.
+
+```javascript
+var n = ( ( 0.3 + 0.6 ) / 0.9 ) - 1; //Theoretically 0.
+
+var output = "( ( 0.3 + 0.6 ) / 0.9 ) - 1 = 0.\r\n";
+output += "Float Value: " + n + "\r\n"; //0.9999999999999999
+output += "Corrected Float Value: " + CErr(n) + ""; //0
 
 alert( output );
 ```
