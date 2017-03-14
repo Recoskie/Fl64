@@ -7,7 +7,7 @@ The library is designed to work closely with the float number format without red
 Warning library is still in beta.
 
 ------------------------------------------------------------------------------
-##CErr( f );
+## CErr( f );
 
 Removes error through the number.
 
@@ -45,7 +45,7 @@ alert( output );
 ```
 
 ------------------------------------------------------------------------------
-##DivToPat( f1, f2 );
+## DivToPat( f1, f2 );
 
 Divide, and ends as soon as a pattern is detected to, for undividable number. Since numbers can divide using the same subtractions in a loop to infinity it ends right at the repeat of the subtraction well dividing numbers which becomes the repeating digits in the division.
 
@@ -67,7 +67,7 @@ alert(DivToPat( 314, 171 ));
 ```
 
 ------------------------------------------------------------------------------
-##PatToDiv( Pat );
+## PatToDiv( Pat );
 
 Converts the repeating pattern of digits in binary back into the smallest whole fraction that divides into the pattern of digits only.
 
@@ -77,7 +77,7 @@ If the fraction, or value was something like ( 7 + ( 1 ÷ 3 ) ) = 7.333333333333
 alert(PatToDiv([1,1,2,2,1,5,2,3,1])); //1,1,2,2,1,5,2,3,1 = 143/171
 ```
 ------------------------------------------------------------------------------
-##FloatToFract( Float, DivPat );
+## FloatToFract( Float, DivPat );
 
 Calculates the smallest fraction by reversing the infinite pattern of numbers, and exponentially adjusting the number to whole fraction value.
 
@@ -106,7 +106,7 @@ alert( Fract );
 ```
 
 ------------------------------------------------------------------------------
-##DecodeFloat( f );
+## DecodeFloat( f );
 
 Decode the Sing, Exponent, and Mantissa of a JavaScript Float64 (Double precision) number.
 
@@ -123,7 +123,7 @@ The number values can be converted to binary using ".toString(2)" with a radix o
 In order for the number to be display properly in binary you have to zero pad the left of the binary number to quantity of digits in memory.
 
 ------------------------------------------------------------------------------
-##ToBin( val, Pad );
+## ToBin( val, Pad );
 
 Convert Val to a binary number, and then zero pad the left of the binary number to quantity of digits in memory.
 
@@ -150,7 +150,7 @@ alert( output );
 ```
 
 ------------------------------------------------------------------------------
-##ToFloat( f );
+## ToFloat( f );
 
 Convert a decoded float number back into it's float value.
 
@@ -178,12 +178,12 @@ By converting back, and forth this way it becomes possible to do float bit hacks
 Or you can simply convert float values back and fourth between float value, hex representation, binary representation.
 
 ------------------------------------------------------------------------------
-##DecodeMantissa( f );
+## DecodeMantissa( f );
 
 Decode the Float mantissa bit's of an Float64 (Double precision) number. Includes the Bias bit.
 
 ------------------------------------------------------------------------------
-##BitCount( Mantissa );
+## BitCount( Mantissa );
 
 Convert an float number into it's bit count.
 
@@ -197,12 +197,12 @@ alert( PatToBin( pat ) ); //10110101001
 It can be the mantissa bit's of a float, or a integer binary value.
 
 ------------------------------------------------------------------------------
-~~CountToPat( Data );~~
+## ~~CountToPat( Data );~~
 
 ~~Convert the Bit count back into division pattern array.~~
 
 ------------------------------------------------------------------------------
-##PatToBin( Pat );
+## PatToBin( Pat );
 
 Gives back a binary string of the repeating binary digits, for the pattern of the binary digits.
 
