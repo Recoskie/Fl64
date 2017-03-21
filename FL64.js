@@ -36,7 +36,7 @@ function DivToPat( n1, n2 )
 }
 
 //**********************************************************************************
-//Convert undividable numbers to the repeat back into ?/? generates the pattern.
+//Convert underivable bit patterns into ?/? generates the pattern.
 //**********************************************************************************
 
 function PatToDiv( Pat1 )
@@ -51,36 +51,37 @@ function PatToDiv( Pat1 )
   
   var f1 = 0, f2 = 0, c = 0;
   
-  //Rebuild the pattern into what divided into the whole is the pattern.
-  //Used to find the smallest whole fraction.
+  //Rebuild the pattern into what divided into the pattern is the smallest whole value.
   
-  function Beggining( d )
-  {
-    for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ );
-    for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d);
-  }
+  function Beggining( d ) { for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ ); for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d); }
   
-  //The pattern into the whole, and the given pattern.
+  //An float number can only handle an Max accuracy of 53 bit's, so the pattern is limited to 53.
   
-  var Pat2 = Beggining( Pat1.slice(0) ); Pat2.reverse(); Pat1.reverse();
+  function LimitPat( d ) { for( var i = d.length - 1, s = 0; s < 53 && i > 0; s+= d[i--] ); d = d.slice( i, d.length ); return(d); }
   
-  //Compute the division into the whole.
+  //Regular pattern (Pat1), and configured pattern (Pat2).
   
-  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;  
-  for( var i = 1; Math.abs( ( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ )
-  { if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); } }
+  var Pat2 = Beggining( Pat1.slice() ); Pat2.reverse(); Pat1.reverse();
+  Pat1 = LimitPat( Pat1 ); Pat2 = LimitPat( Pat2 );
   
-  c *= i;
+  //Compute the scale to divide the pattern by to get to the smallest whole fraction.
+  
+  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;
+  
+  //Alignment adjust.
+  
+  for( var i = 1; Math.abs( CErr( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ )
+  { if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); } }; c *= i;
   
   //Compute ?/?.
   
   f1 = 0; f2 = 0;
+
+  //Compute the regular pattern.
   
   for( var i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
   
-  if( f1 === Infinity ) { return( [ null, null ] ); }
-  
-  //Compute the smallest whole fraction.
+  //Compute the smallest whole fraction by scale size to whole (c).
   
   c = c / f1; return( [ Math.floor( f2 * c ), Math.floor( f1 * c ) ] );
 }
@@ -114,7 +115,41 @@ function BitCount( Mantissa )
 }
 
 //**********************************************************************************
-//Reverse float number pattern, and exponet adjust to smalest fraction.
+//Convert an bit count to it's best matching pattern.
+//**********************************************************************************
+
+function FindPat( Data )
+{
+  var LMatches = 0, Matches = 0, Start = 0, Dif = 0, L = 0;
+  
+  for( var i1 = 0, i2 = 0, len = Data.length / 2; len > -1; i1++ )
+  {
+    //Compare match at i2 to length.
+    
+    if( Data[i1] === Data[ i2 + LMatches ] ) { LMatches++; Matches++; }
+    
+    //No more matches at length. Update to best match.
+    
+    else { if( Dif <= Matches ) { Dif = Matches; Start = i1 - Dif; L = len; i2++; i1 = 0; }; Matches = 0; LMatches = 0; }
+    
+    //Reset match length.
+    
+    if( LMatches > len ) { LMatches = 0; }
+
+    //Adjust occurrence point.
+    
+    if( i1 >= Data.length ) { i2++; i1 = 0; LMatches = 0; Matches = 0; }
+    
+    //Adjust occurrence length.
+    
+    if( i2 >= Data.length ) { i2 = 0; i1 = 0; LMatches = 0; Matches = 0; len--; }
+  }
+  
+  return( Data.splice( Start, L + 1 ) );
+}
+
+//**********************************************************************************
+//Reverse float number pattern, and exponent adjust to smallest fraction.
 //**********************************************************************************
 
 function FloatToFract( Float, PatDiv )
@@ -160,7 +195,7 @@ function DecodeFloat( f )
   
   var Mantissa = f * Math.pow( 2, 53 ); if( -Exp !== 0x3FF ) { Mantissa -= Math.pow( 2, 52 ); }
   
-  //Center Exponet.
+  //Center Exponent.
   
   Exp = ( 0x3FF + Exp ) & 0x7FF;
   
@@ -232,18 +267,19 @@ function CErr( f )
 {
   var fl64 = DecodeFloat( f );
 
-  //Close to 0. Note "e = 10", 53 - ( ( e * 2 ) + 3 ), Center "0x3FF - ( ( e * 2 ) + 3 )".
+  //Close to 0. Note "e = 10", Center "0x3FF - e", "53 - e".
   
-  if( ( fl64[2] / Math.pow(2, ( 53 - 23 ) ) === ( fl64[2] / Math.pow(2, ( 53 - 23 ) ) ) & -1 ) && fl64[1] <= ( 0x3FF - 23 ) ) { return( 0 ); }
+  if( ( fl64[2] / Math.pow(2, ( 53 - 10 ) ) === ( fl64[2] / Math.pow(2, ( 53 - 10 ) ) ) & -1 ) && fl64[1] <= ( 0x3FF - 10 ) ) { return( 0 ); }
   
-  //X, and Y Adjust. Note "Y >= e".
+  //X, and Y Adjust. Note "e = 10", "e*2+3=23", "Y >= e".
   
-  var X = 53, Y = 0, C = false;
+  var X = 23, Y = 0, C = false;
 
   for( var b = 1; b > -1; b--)
   {
-    X = 53; Y = 0; while( X > 0 && ( ( C = ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === b ) || Y < 10 ) ) { if( C ) { Y++; } else { Y = 0; }; X--; }
+    while( X > 0 && ( ( C = ( ( fl64[2] / Math.pow( 2, X ) ) & 1 ) === b ) || Y < 10 ) ) { C ? Y++ : Y = 0; X--; }
     if( b && Y >= 10 ) { fl64[2] +=  Math.pow( 2, X + 1 ); } else if( Y >= 10 ) { fl64[2] = Math.floor( fl64[2] / Math.pow( 2, Y ) ) * Math.pow( 2, Y ); }
+    X = 23; Y = 0; 
   }
   
   //Return Adjusted float.
