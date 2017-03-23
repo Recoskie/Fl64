@@ -36,54 +36,32 @@ function DivToPat( n1, n2 )
 }
 
 //**********************************************************************************
-//Convert underivable bit patterns into ?/? generates the pattern.
+//Convert non-dividable bit patterns into ?/? generates the pattern.
 //**********************************************************************************
 
-function PatToDiv( Pat1 )
+function PatToDiv( Pat )
 {
-  var t = new Date().getTime();
+  //Initialize.
+    
+  var Pat1 = Pat.slice(); Pat1.reverse();
+  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, re = [];
   
-  //Check if pattern is valid.
+  //Limit Pattern size to 53 bit mantissa.
   
-  if( Pat1[0] === null ) { return( [ 1, 1 ] ); }
+  for( var i = Pat1.length - 1, s = 0; s < 53 && i > 0; s+= Pat1[i--] ); Pat1 = Pat1.slice( i, Pat1.length );
   
-  //The fraction in f1, and f2, and c is the scale of the pattern into the whole.
+  //Calculate pattern.
   
-  var f1 = 0, f2 = 0, c = 0;
+  for( i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
   
-  //Rebuild the pattern into what divided into the pattern is the smallest whole value.
+  //Compute smallest Fraction.
   
-  function Beggining( d ) { for(var i = 0, m = 0, el = 0; i < d.length; ( d[i] > m ) && ( el = i, m = d[i] ), i++ ); for(var i = d.length - el; i > 0; d.unshift(d.pop()), i-- ); return(d); }
+  c1 = f2; c2 = f1; while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); re[re.length] = t; c2 = t; }
+  i = 0; if( re.length > 1 ) { for( i = 1; i < re.length && CErr( ( f1 / re[i] ) - Math.floor( f1 / re[i] ) ) !== 0; i++ ); }
   
-  //An float number can only handle an Max accuracy of 53 bit's, so the pattern is limited to 53.
+  //return fraction.
   
-  function LimitPat( d ) { for( var i = d.length - 1, s = 0; s < 53 && i > 0; s+= d[i--] ); d = d.slice( i, d.length ); return(d); }
-  
-  //Regular pattern (Pat1), and configured pattern (Pat2).
-  
-  var Pat2 = Beggining( Pat1.slice() ); Pat2.reverse(); Pat1.reverse();
-  Pat1 = LimitPat( Pat1 ); Pat2 = LimitPat( Pat2 );
-  
-  //Compute the scale to divide the pattern by to get to the smallest whole fraction.
-  
-  for( var i = 0; i < Pat2.length; f2 += Math.pow( 2, f1 ), f1 += Pat2[i++] ); c = ( Math.pow( 2, f1 ) - 1 ) / f2;
-  
-  //Alignment adjust.
-  
-  for( var i = 1; Math.abs( CErr( c * i ) - Math.floor( c * i ) ) > ( Number.EPSILON / 2 ); i++ )
-  { if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); } }; c *= i;
-  
-  //Compute ?/?.
-  
-  f1 = 0; f2 = 0;
-
-  //Compute the regular pattern.
-  
-  for( var i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
-  
-  //Compute the smallest whole fraction by scale size to whole (c).
-  
-  c = c / f1; return( [ Math.floor( f2 * c ), Math.floor( f1 * c ) ] );
+  return( [ Math.floor( f2 / re[i] ) , Math.floor( f1 / re[i] ) ] );
 }
 
 //**********************************************************************************
