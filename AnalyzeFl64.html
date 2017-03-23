@@ -14,7 +14,7 @@
     var sw = false;
 
     //**********************************************************************************
-    //Analize Fractions, and compare Float 64 format acuracy.
+    //Analyze Fractions, and compare Float 64 format accuracy.
     //**********************************************************************************
 
     function FractAnalyze()
@@ -54,7 +54,7 @@
         {
           Output( "Decode bit pattern back to ?/? = pat:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
 
-          //Convert Float value, and division patern to smalest fraction.
+          //Convert Float value, and division pattern to smallest fraction.
 
           n = FloatToFract( num[ 0 ] / num[ 1 ], n );
 
@@ -78,7 +78,7 @@
 
       var Float = num2[ 0 ] / num2[ 1 ], fl64 = DecodeFloat( Float );
 
-      Output( "Float64 comparsion." );
+      Output( "Float64 comparison." );
       Output( "Normal divide:", ( num2[ 0 ] + "&divide;" + num2[ 1 ] + "=" + Float ) );
       Output( "Decode Sing:", fl64[ 0 ] );
       Output( "Decode Exponent:", ToBin( fl64[ 1 ], 11 ) );
@@ -109,6 +109,24 @@
 
         if( n[0] === -1 ){ Err( "Decode bit pattern back to ?/? = pat:" ); }
         else{ Output( "Decode bit pattern back to ?/? = pat:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) ); }
+
+        Output( "Test." );
+        Output( "Division:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
+
+        //Find the Division pattern.
+
+        var Data = DivToPat( n[ 0 ], n[ 1 ] );
+
+        //Show the bit pattern.
+
+        if ( Data[ Data.length - 1 ] === -1 )
+        {
+          Data.pop(); Err( "Simulated Divide to Bit Pattern:", Data ); Data = [ null ];
+        }
+        else
+        {
+          Output( "Simulated Divide to Bit Pattern:", ( Data + "&infin; Repeats to Infinity." ) );
+        }
       }
 
       UpdateOutput();
@@ -331,7 +349,7 @@
     }
 
     //**********************************************************************************
-    //Simplifiy displying output.
+    //Simplify displaying output.
     //**********************************************************************************
 
     function Output( MSG, Data )
@@ -369,9 +387,9 @@
 
     function Err( MSG, Data )
     {
-      var out = "Calculation Stoped because it is slow.";
-      if( arguments.length > 1 ) { out += "<input type='button' value='Show data.' onclick='Preview(\"" + Data + "\");' />"; }
-      out += "<input type='button' value='Force Calculations!' onclick='SetForce();' />";
+      var out = "Calculation Stopped because it is slow.";
+      if( arguments.length > 1 ) { out += "<input type='button' value='Show data.' onclick='parent.Preview(\"" + Data + "\");' />"; }
+      out += "<input type='button' value='Force Calculations!' onclick='parent.SetForce();' />";
       Output( MSG, out );
     }
 
@@ -432,7 +450,7 @@
           </center>
         </td>
 		  
-	<!--The output-->
+	      <!--The output-->
 
         <td style="overflow:hidden;vertical-align:top" id="OutSize"> <div id="out"> </div> </td>
       </tr>
