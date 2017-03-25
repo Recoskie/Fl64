@@ -42,9 +42,9 @@ function DivToPat( n1, n2 )
 function PatToDiv( Pat )
 {
   //Initialize.
-    
+
   var Pat1 = Pat.slice(); Pat1.reverse();
-  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, re = [];
+  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, re = [], er = [];
   
   //Limit Pattern size to 53 bit mantissa.
   
@@ -54,14 +54,18 @@ function PatToDiv( Pat )
   
   for( i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
   
-  //Compute smallest Fraction.
+  //Compute the smallest Fraction.
   
   c1 = f2; c2 = f1; while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); re[re.length] = t; c2 = t; }
-  i = 0; if( re.length > 1 ) { for( i = 1; i < re.length && CErr( ( f1 / re[i] ) - Math.floor( f1 / re[i] ) ) !== 0; i++ ); }
   
-  //return fraction.
+  //Error Corect.
   
-  return( [ Math.floor( f2 / re[i] ) , Math.floor( f1 / re[i] ) ] );
+  c1 = f2 / f1; for( i = 0; i < re.length - 1; i++ ) { er[i] = Math.abs( c1 - Math.floor( f2 / re[i] ) / Math.floor( f1 / re[i] ) ); if( er[i] > Number.EPSILON ) { er[i] = 1; } }  
+  c1 = 0; c2 = 1; for( i = 0; i < er.length; i++ ) { if( er[i] < c2 ) { c2 = er[i]; c1 = i; } }; if( c2 === 1 ) { c1 = er.length; }
+
+  //Compute fraction.
+  
+  return( [ Math.floor( f2 / re[ c1 ] ), Math.floor( f1 / re[ c1 ] ) ] );
 }
 
 //**********************************************************************************
