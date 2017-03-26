@@ -126,19 +126,13 @@ function FindPat( Data )
 
 function FloatToFract( Float, PatDiv )
 {
-  var t = new Date().getTime();
-
   //Compute Nominator.
   
   var e = Float / ( PatDiv[0] / PatDiv[1] ); PatDiv[0] *= e;
   
   //Exponent adjust.
         
-  while( Math.floor( ( 1 / ( PatDiv[0] - Math.floor( PatDiv[0] ) ) ) | 1 ) !== 1 )
-  {
-    PatDiv[0] *= 2; PatDiv[1] *= 2;
-    if( !force && ( new Date().getTime() - t ) > 2700 ) { return( [-1,-1] ); }
-  }
+  while( ( PatDiv[0] - Math.floor( PatDiv[0] ) ) > Number.EPSILON ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
   
   //Result.
   
