@@ -43,29 +43,19 @@ function PatToDiv( Pat )
 {
   //Initialize.
 
-  var Pat1 = Pat.slice(); Pat1.reverse();
-  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, re = [], er = [];
+  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0;
   
-  //Limit Pattern size to 53 bit mantissa.
+  //Calculate pattern in the limitation of 53 mantissa bit's.
   
-  for( var i = Pat1.length - 1, s = 0; s < 53 && i > 0; s+= Pat1[i--] ); Pat1 = Pat1.slice( i, Pat1.length );
+  for( var i = 0, s = 0; s < 53 && i < Pat.length - 1; s+= Pat[ i++ ] ); for( ; i > -1; f2 += Math.pow( 2, f1 ), f1 += Pat[ i-- ] ); f1 = Math.pow( 2, f1 ) - 1; c1 = f2; c2 = f1; s = f2 / f1;
   
-  //Calculate pattern.
+  //Find best matching whole fraction.
   
-  for( i = 0; i < Pat1.length; f2 += Math.pow( 2, f1 ), f1 += Pat1[i++] ); f1 = Math.pow( 2, f1 ) - 1;
+  while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < Number.EPSILON ) && ( c1 = 0 ); c2 = t; }
   
-  //Compute the smallest Fraction.
-  
-  c1 = f2; c2 = f1; while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); re[re.length] = t; c2 = t; }
-  
-  //Error Corect.
-  
-  c1 = f2 / f1; for( i = 0; i < re.length - 1; i++ ) { er[i] = Math.abs( c1 - Math.floor( f2 / re[i] ) / Math.floor( f1 / re[i] ) ); if( er[i] > Number.EPSILON ) { er[i] = 1; } }  
-  c1 = 0; c2 = 1; for( i = 0; i < er.length; i++ ) { if( er[i] < c2 ) { c2 = er[i]; c1 = i; } }; if( c2 === 1 ) { c1 = er.length; }
-
   //Compute fraction.
   
-  return( [ Math.floor( f2 / re[ c1 ] ), Math.floor( f1 / re[ c1 ] ) ] );
+  return( [ Math.floor( f2 / c2 ), Math.floor( f1 / c2 ) ] );
 }
 
 //**********************************************************************************
