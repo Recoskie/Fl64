@@ -55,7 +55,9 @@ function PatToDiv( Pat )
   
   //Compute fraction.
   
-  return( [ Math.floor( f2 / c2 ), Math.floor( f1 / c2 ) ] );
+  f2 = Math.floor( f2 / c2 ); f1 = Math.floor( f1 / c2 ); if( f1 === 0 ){ f1 = 1; }
+  
+  return( [ f2, f1 ] );
 }
 
 //**********************************************************************************
@@ -87,38 +89,45 @@ function BitCount( Mantissa )
 }
 
 //**********************************************************************************
+//Convert an bit count to it's best matching division pattern.
+//**********************************************************************************
+
+function FindPatDiv( Pat )
+{
+  //Initialize.
+
+  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, er = 1, m = [ 1, 1 ];
+  
+  while( Pat.length > 0 )
+  {
+    //Calculate pattern.
+  
+    f1 = 0; f2 = 0; for( var i = 0, s = 0; s < 53 && i < Pat.length - 1; s+= Pat[ i++ ] ); for( ; i > -1; f2 += Math.pow( 2, f1 ), f1 += Pat[ i-- ] ); f1 = Math.pow( 2, f1 ) - 1; c1 = f2; c2 = f1; s = f2 / f1;
+    while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < Number.EPSILON * Math.pow( 2, er ) ) && ( c1 = 0 ); c2 = t; }
+    
+    //Test pattern.
+    
+    if( Math.floor( f1 / c2 ) === m[1] ) { break; } else { m = [ Math.floor( f2 / c2 ), Math.floor( f1 / c2 ) ]; }
+    
+    //Shift the pattern and increase the cutoff range in the mantissa bits by pattern shift.
+    
+    er += Pat[0]; Pat.shift();
+  }
+  
+  //Check if no pattern.
+  
+  if( Pat.length === 0 ) { m = [ 1, 1 ]; }
+  
+  //Return the division pattern.
+  
+  return( m );
+}
+
+//**********************************************************************************
 //Convert an bit count to it's best matching pattern.
 //**********************************************************************************
 
-function FindPat( Data )
-{
-  var LMatches = 0, Matches = 0, Start = 0, Dif = 0, L = 0;
-  
-  for( var i1 = 0, i2 = 0, len = Data.length / 2; len > -1; i1++ )
-  {
-    //Compare match at i2 to length.
-    
-    if( Data[i1] === Data[ i2 + LMatches ] ) { LMatches++; Matches++; }
-    
-    //No more matches at length. Update to best match.
-    
-    else { if( Dif <= Matches ) { Dif = Matches; Start = i1 - Dif; L = len; i2++; i1 = 0; }; Matches = 0; LMatches = 0; }
-    
-    //Reset match length.
-    
-    if( LMatches > len ) { LMatches = 0; }
-
-    //Adjust occurrence point.
-    
-    if( i1 >= Data.length ) { i2++; i1 = 0; LMatches = 0; Matches = 0; }
-    
-    //Adjust occurrence length.
-    
-    if( i2 >= Data.length ) { i2 = 0; i1 = 0; LMatches = 0; Matches = 0; len--; }
-  }
-  
-  return( Data.splice( Start, L + 1 ) );
-}
+function FindPat( Pat ){ var n = FindPatDiv( Pat ); return( DivToPat( n[0], n[1] ) ); }
 
 //**********************************************************************************
 //Reverse float number pattern, and exponent adjust to smallest fraction.
@@ -132,11 +141,11 @@ function FloatToFract( Float, PatDiv )
   
   //Exponent adjust.
         
-  while( ( PatDiv[0] - Math.floor( PatDiv[0] ) ) > Number.EPSILON ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
+  while( ( PatDiv[0] - Math.floor( PatDiv[0] ) ) !== 0 ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
   
   //Result.
   
-  return( [ Math.round( PatDiv[0] ), Math.round( PatDiv[1] ) ] );
+  return( [ Math.ceil( PatDiv[0] ), Math.ceil( PatDiv[1] ) ] );
 }
 
 //**********************************************************************************
