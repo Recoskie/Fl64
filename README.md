@@ -90,7 +90,7 @@ var pat = DivToPat( n1, n2 );
 
 //What divided by what is the division pattern.
 
-var PatDIv = PatToDiv( pat );
+var PatDiv = PatToDiv( pat );
 
 //Divide 1197 into 2198 giving the float value.
 
@@ -98,7 +98,7 @@ var FloatValue = n1 / n2;
 
 //Convert float value, and bit pattern back to smallest fraction.
 
-var Fract = FloatToFract( FloatValue, PatDIv );
+var Fract = FloatToFract( FloatValue, PatDiv );
 
 //Smallest fraction 314/171.
 
