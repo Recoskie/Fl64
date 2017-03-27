@@ -1,8 +1,8 @@
 # Float numbers conversion library.
 
-The routines in this library are made to work with unrepresentative numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in a binary numbers that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
+The routines in this library are made to work with unrepresentative numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in binary numbers that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
 
-The library is designed to work closely with the float number format without reducing performance.
+The library is designed to work closely with the float number format without reducing performance, for algorithms that may benefit from this library.
 
 Warning library is still in beta.
 
