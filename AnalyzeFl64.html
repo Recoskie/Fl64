@@ -62,7 +62,7 @@
 
           if( n[0] !== -1 )
           {
-            Output( "Calc (Float&divide;Pat)Exp = Smallest fraction:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) );
+            Output( "Calc (Float&divide;Pat)Exp = Smallest fraction:", ( n[ 0 ] + "&divide;" + n[ 1 ] ) + " = " + ( n[0] / n[1] ) + "" );
           }
           else{ Err( "Calc (Float&divide;Pat)Exp = Smallest fraction:" ); }
         }
@@ -172,6 +172,99 @@
 
       UpdateOutput();
     }
+    
+    //**********************************************************************************
+    //Convert Float from binary to fraction.
+    //**********************************************************************************
+
+    function BinToFract()
+    {
+      var fl64 = [], Binary = "", temp = "";
+
+      //Float to binary.
+
+      if ( ( n = GetNumInput( true, false, false )[ 0 ] ) !== null ) { fl64 = DecodeFloat( n ); }
+
+      //The sections of the float number.
+
+      Output( "Float to Binary." );
+
+      Output( "Sing:", ( temp = fl64[ 0 ] ) ); Binary += temp;
+      Output( "Exponent:", ( temp = ToBin( fl64[ 1 ], 11 ) ) ); Binary += temp;
+      Output( "Mantissa:", ( temp = ToBin( fl64[ 2 ], 52 ) ) ); Binary += temp;
+      
+      //Conversion result.
+      
+      Output( "Convert float value." );
+
+      Output( "Mantissa Bit pattern count:", ( temp = BitCount( DecodeMantissa( n ) ) ) + "" );
+      
+      temp = FindPat( temp );
+      
+      if ( temp[ temp.length - 1 ] === -1 )
+      {
+        temp.pop(); Err( "Simulated Divide to Bit Pattern:", temp ); temp = [ null ];
+      }
+      else
+      {
+        Output( "Find Pattern:", temp + "&infin; Repeats to Infinity." );
+      
+        temp = PatToDiv( temp );
+        
+        Output( "Decode bit pattern back to ?/? = pat:", ( temp[ 0 ] + "&divide;" + temp[ 1 ] ) + "" );
+      
+        var o = FloatToFract( n, temp );
+      
+        Output( "Calc (Float&divide;Pat)Exp:", ( o[ 0 ] + "&divide;" + o[ 1 ] ) + " = " + ( o[0] / o[1] ) + "" );
+      }
+      
+      UpdateOutput();
+    }
+    
+    //**********************************************************************************
+    //Convert Float from binary to fraction.
+    //**********************************************************************************
+
+    function DivToFract()
+    {
+      var fl64 = [], Binary = "", temp = "";
+
+      //Float to binary.
+
+      if ( ( n = GetNumInput( true, false, false )[ 0 ] ) === null ) { return; }
+
+      //The sections of the float number.
+
+      Output( "Convert float value." );
+      Output( "Float Value:", n + "" );
+      
+      //Conversion result.
+
+      var f1 = ( ( n +"" ).indexOf(".") > 0 ) ? ( n + "" ).split(".")[1] : "", f2 = Math.pow( 10, f1.length ); f1 = parseInt( f1 || 1 ,10);
+      
+      Output( "Division to Float:", ( f1 + "&divide;" + f2 ) + "" );
+      
+      temp = DivToPat( f1, f2 );
+      
+      if ( temp[ temp.length - 1 ] === -1 )
+      {
+        temp.pop(); Err( "Simulated Divide to Bit Pattern:", temp ); temp = [ null ];
+      }
+      else
+      {
+        Output( "Simulated Divide to Bit Pattern:", temp + "&infin; Repeats to Infinity." );
+      
+        temp = PatToDiv( temp );
+        
+        Output( "Decode bit pattern back to ?/? = pat:", ( temp[ 0 ] + "&divide;" + temp[ 1 ] ) + "" );
+      
+        var o = FloatToFract( n, temp );
+      
+        Output( "Calc (Float&divide;Pat)Exp:", ( o[ 0 ] + "&divide;" + o[ 1 ] ) + " = " + ( o[0] / o[1] ) + "" );
+      }
+      
+      UpdateOutput();
+    }
 
     //**********************************************************************************
     //Get Float binary input format, and check for proper input format.
@@ -240,7 +333,7 @@
       {
         alert( document.getElementById( "f1" ).value + " = Is not an number." );
       }
-      else
+      else if( F1 )
       {
         num[ 0 ] = Int_Float ? parseInt( document.getElementById( "f1" ).value, 10 ) : parseFloat( document.getElementById( "f1" ).value, 10 );
       }
@@ -249,7 +342,7 @@
       {
         alert( document.getElementById( "f2" ).value + " = Is not an number." );
       }
-      else
+      else if( F2 )
       {
         num[ 1 ] = Int_Float ? parseInt( document.getElementById( "f2" ).value, 10 ) : parseFloat( document.getElementById( "f2" ).value, 10 );
       }
@@ -342,6 +435,18 @@
         o += '<\/tr>';
         o += '<\/table>';
       }
+      
+      if ( Mode === 4 )
+      {
+        o += '<table style="width:100%;height:100%;">';
+        o += '<tr>';
+        o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
+        o += '<\/tr>';
+        o += '<tr>';
+        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td>';
+        o += '<\/tr>';
+        o += '<\/table>';
+      }
 
       document.getElementById( "c" ).innerHTML = o;
       document.getElementById( "out" ).innerHTML = "";
@@ -422,6 +527,12 @@
             <input name="c" onclick="Update(2);" type="radio">
           </center>
         </td>
+        <td>
+          <center>
+            <p style="font-size:3vh;">Float to Fraction:</p>
+            <input name="c" onclick="Update(4);" type="radio">
+          </center>
+        </td>
       </tr>
     </table>
 	  
@@ -450,8 +561,8 @@
           </center>
         </td>
 		  
-	      <!--The output-->
-
+        <!--The output-->
+        
         <td style="overflow:hidden;vertical-align:top" id="OutSize"> <div id="out"> </div> </td>
       </tr>
     </table>
