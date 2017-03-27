@@ -201,6 +201,18 @@ It can be the mantissa bit's of a float, or a integer binary value.
 
 ~~Convert the Bit count back into division pattern array.~~
 
+
+------------------------------------------------------------------------------
+## FindPat( Pat );
+
+Convert the Bit counts into the best matching division pattern array.
+
+
+------------------------------------------------------------------------------
+## FindPatDiv( Pat );
+
+Convert the Bit counts into the best matching division pattern.
+
 ------------------------------------------------------------------------------
 ## PatToBin( Pat );
 
