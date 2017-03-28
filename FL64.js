@@ -140,12 +140,12 @@ function FloatToFract( Float, PatDiv )
   var e = Float / ( PatDiv[0] / PatDiv[1] ); PatDiv[0] *= e;
   
   //Exponent adjust.
-        
-  while( ( PatDiv[0] - Math.floor( PatDiv[0] ) ) !== 0 ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
+  
+  while( Math.abs( Float - (  Math.round( PatDiv[0] ) / Math.round( PatDiv[1] ) ) ) > Number.EPSILON && PatDiv[0] !== Infinity ) { PatDiv[0] *= 2; PatDiv[1] *= 2; }
   
   //Result.
   
-  return( [ Math.ceil( PatDiv[0] ), Math.ceil( PatDiv[1] ) ] );
+  return( [ Math.round( PatDiv[0] ), Math.round( PatDiv[1] ) ] );
 }
 
 //**********************************************************************************
