@@ -43,7 +43,7 @@ function PatToDiv( Pat )
 {
   //Initialize.
 
-  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0;
+  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, e = Number.EPSILON * ( arguments[1] || 1 );
   
   //Calculate pattern in the limitation of 53 mantissa bit's.
   
@@ -51,7 +51,7 @@ function PatToDiv( Pat )
   
   //Find best matching whole fraction.
   
-  while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < Number.EPSILON ) && ( c1 = 0 ); c2 = t; }
+  while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < e ) && ( c1 = 0 ); c2 = t; }
   
   //Compute fraction.
   
@@ -96,22 +96,21 @@ function FindPatDiv( Pat )
 {
   //Initialize.
 
-  var f1 = 0, f2 = 0, c1 = 0, c2 = 0, t = 0, er = 1, m = [ 1, 1 ];
+  var len = 0, c = [ 1, 1 ], m = [ 1, 1 ];
   
   while( Pat.length > 0 )
   {
     //Calculate pattern.
   
-    f1 = 0; f2 = 0; for( var i = 0, s = 0; s < 53 && i < Pat.length - 1; s+= Pat[ i++ ] ); for( ; i > -1; f2 += Math.pow( 2, f1 ), f1 += Pat[ i-- ] ); f1 = Math.pow( 2, f1 ) - 1; c1 = f2; c2 = f1; s = f2 / f1;
-    while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < Number.EPSILON * Math.pow( 2, er ) ) && ( c1 = 0 ); c2 = t; }
+    c = PatToDiv( Pat, Math.pow( 2, len ) );
     
     //Test pattern.
     
-    if( Math.floor( f1 / c2 ) === m[1] ) { break; } else { m = [ Math.floor( f2 / c2 ), Math.floor( f1 / c2 ) ]; }
+    if( c[1] === m[1] ) { break; } else { m = c; }
     
-    //Shift the pattern and increase the cutoff range in the mantissa bits by pattern shift.
+    //Shift the pattern.
     
-    er += Pat[0]; Pat.shift();
+    len += Pat[0]; Pat.shift();
   }
   
   //Check if no pattern.
