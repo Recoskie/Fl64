@@ -215,16 +215,9 @@ alert( PatToBin( pat ) ); //10110101001
 It can be the mantissa bit's of a float, or a integer binary value.
 
 ------------------------------------------------------------------------------
-## ~~CountToPat( Data );~~
-
-~~Convert the Bit count back into division pattern array.~~
-
-
-------------------------------------------------------------------------------
 ## FindPat( Pat );
 
 Convert the Bit counts into the best matching division pattern array.
-
 
 ------------------------------------------------------------------------------
 ## FindPatDiv( Pat );
