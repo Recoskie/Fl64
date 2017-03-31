@@ -128,7 +128,7 @@ function FindPat( Pat ){ var n = FindPatDiv( Pat ); return( DivToPat( n[0], n[1]
 //Reverse float number pattern, and exponent adjust to smallest fraction.
 //**********************************************************************************
 
-function FloatToFract( Float, PatDiv )
+function PatToFract( Float, PatDiv )
 {
   //Compute Nominator.
   
@@ -141,6 +141,38 @@ function FloatToFract( Float, PatDiv )
   //Result.
   
   return( [ Math.round( PatDiv[0] ), Math.round( PatDiv[1] ) ] );
+}
+
+//**********************************************************************************
+//Directly translate an float to fract matching denominator, and numerator.
+//**********************************************************************************
+
+function FloatToFract( float, er )
+{
+  var f1 = [ 1, 0 ], f2 = [ 0, 1 ];
+  var r2 = float, r1 = 0, t = 0;
+
+  //Continue till Denominator, and Numerator Divide exactly to float value minus "er" (Error).
+      
+  while ( Math.abs( float - f1[0] / f1[1] ) > er )
+  {
+    //Whole value.
+    
+    r1 = Math.floor( r2 );
+    
+    //Adjust denominator, and Numerator.
+    
+    t = f1[0]; f1[0] = r1 * f1[0] + f2[0]; f2[0] = t;
+    t = f1[1]; f1[1] = r1 * f1[1] + f2[1]; f2[1] = t;
+    
+    //Remainder.
+    
+    r2 = 1 / ( r2 - r1 );
+  }
+  
+  //Return fraction.
+    
+  return ( f1 );
 }
 
 //**********************************************************************************
