@@ -149,11 +149,15 @@ function PatToFract( Float, PatDiv )
 
 function FloatToFract( float )
 {
-  var f1 = [ 1, 0 ], f2 = [ 0, 1 ], r2 = float, r1 = 0, t = 0, e = Number.EPSILON * ( arguments[1] || 1 );
+  var f1 = [ 1, 0 ], f2 = [ 0, 1 ], r2 = float, r1 = 0, t = 0;
+
+  //Cut off binary digits to amount of error at the very end of the float Mantissa.
+
+  var er = Math.abs( float * ( Number.EPSILON * ( arguments[1] || 1 ) ) );
 
   //Continue till Denominator, and Numerator Divide exactly to float value minus "er" (Error).
       
-  while ( Math.abs( float - f1[0] / f1[1] ) > Math.abs( e * float ) )
+  while ( Math.abs( float - f1[0] / f1[1] ) > er )
   {
     //Whole value.
     
