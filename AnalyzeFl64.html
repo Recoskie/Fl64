@@ -167,6 +167,72 @@
 
     function BinToFract()
     {
+      var fl = [], Binary = "", temp = "";
+
+      //Float to binary.
+
+      if ( ( n = GetNumInput( true, false, false )[ 0 ] ) !== null ) { fl = DecodeFloat( n ); n = Math.abs( n ); }
+
+      //The sections of the float number.
+
+      Output( "Float to Binary." );
+
+      Output( "Sing:", ( temp = fl[ 0 ] ) ); Binary += temp;
+      Output( "Exponent:", ( temp = ToBin( fl[ 1 ], 11 ) ) ); Binary += temp;
+      Output( "Mantissa:", ( temp = ToBin( fl[ 2 ], 52 ) ) ); Binary += temp;
+      
+      //Start Conversion.
+      
+      Output( "Convert float value." );
+
+      //Decode the mantissa, and generate the division that results to the same mantissa.
+
+      var f2 = DecodeMantissa( n ), f1 = Math.pow( 2, 52 );
+
+      //Display the fraction.
+
+      Output( "Mantissa(Value)&divide;Whole(2^53):", f2 + "&divide;" + f1 + "" );
+
+      //Find best matching smallest whole fraction.
+      
+      var c1 = f1, c2 = f2, s = f2 / f1;
+      
+      while ( c1 ) { t = c1; c1 = ( c2 - ( Math.floor( c2 / c1 ) * c1 ) ); i = ( s - Math.floor( f2 / t ) / Math.floor( f1 / t ) ); ( Math.abs( i ) < Number.EPSILON ) && ( c1 = 0 ); c2 = t; }
+  
+      //Compute fraction.
+  
+      f2 = Math.floor( f2 / c2 ); f1 = Math.floor( f1 / c2 ); if( f1 === 0 ){ f1 = 1; }
+      
+      //Display result.
+
+      Output( "Closest Whole Fraction:", ( f2 + "&divide;" + f1 ) + " = " + ( f2 / f1 ) + "" );
+      
+      //Adjust fraction exponent to match float.
+      
+      var exp = Math.pow( 2, Math.abs( ( fl[1] !== 0 ? fl[1] : fl[1] + 1 ) - 0x3FF ) );
+      if( fl[1] > 0x3FF ) { f1 /= exp; } else { f2 /= exp; }
+  
+      //Exponent adjust.
+  
+      while( Math.abs( n - (  Math.round( f2 ) / Math.round( f1 ) ) ) > Number.EPSILON && f2 !== Infinity ) { f2 *= 2; f1 *= 2; }
+      
+      //Sing adjust.
+
+      if( fl[0] ) { f2 = -f2; }
+
+      //Result.
+      
+      Output( "Calc Mantissa^Exp:", ( f2 + "&divide;" + f1 ) + " = " + ( f2 / f1 ) + "" );
+      
+      UpdateOutput();
+    }
+    
+    //**********************************************************************************
+    //Convert Float from binary to fraction.
+    //**********************************************************************************
+
+    function BinToPatToFract()
+    {
       var fl64 = [], Binary = "", temp = "";
 
       //Float to binary.
@@ -464,10 +530,10 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td colspan="3"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
+        o += '<td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td>';
+        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Pat to Fract" onclick="BinToPatToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td>';
         o += '<\/tr>';
         o += '<\/table>';
       }
