@@ -222,7 +222,7 @@
 
       //Result.
       
-      Output( "Calc Mantissa^Exp:", ( f2 + "&divide;" + f1 ) + " = " + ( f2 / f1 ) + "" );
+      Output( "Calc Sing|Mantissa^Exp:", ( f2 + "&divide;" + f1 ) + " = " + ( f2 / f1 ) + "" );
       
       UpdateOutput();
     }
@@ -267,7 +267,7 @@
         
         Output( "Decode bit pattern back to ?/? = pat:", ( temp[ 0 ] + "&divide;" + temp[ 1 ] ) + "" );
       
-        var o = FloatToFract( n, temp );
+        var o = PatToFract( n, temp );
       
         Output( "Calc (Float&divide;Pat)Exp:", ( o[ 0 ] + "&divide;" + o[ 1 ] ) + " = " + ( o[0] / o[1] ) + "" );
       }
@@ -312,7 +312,7 @@
         
         Output( "Decode bit pattern back to ?/? = pat:", ( temp[ 0 ] + "&divide;" + temp[ 1 ] ) + "" );
       
-        var o = FloatToFract( n, temp );
+        var o = PatToFract( n, temp );
       
         Output( "Calc (Float&divide;Pat)Exp:", ( o[ 0 ] + "&divide;" + o[ 1 ] ) + " = " + ( o[0] / o[1] ) + "" );
       }
@@ -349,7 +349,30 @@
       
       //Result.
 
-      Output( "Closest sum-able fraction:", Math.floor( n * i ) + "&divide;" + i + "" );
+      Output( "Closest sum-able fraction:", Math.floor( n * i ) + "&divide;" + i + " = " + ( Math.floor( n * i ) / i ) + "" );
+      
+      //Update output.
+      
+      UpdateOutput();
+    }
+    
+    //**********************************************************************************
+    //Convert Float to fraction using fractions.
+    //**********************************************************************************
+
+    function CalcFract()
+    {
+      //Float to binary.
+
+      if ( ( n = GetNumInput( true, false, false )[ 0 ] ) === null ) { return; }
+    
+      //Begin Conversion.
+       
+      Output( "Convert float value." );
+      
+      var t = FloatToFract( n, Number.EPSILON )
+      
+      Output( "Closest fraction:", t[0] + "&divide;" + t[1] + " = " + ( t[0] / t[1] ) + "" );
       
       //Update output.
       
@@ -530,10 +553,10 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
+        o += '<td colspan="5"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Pat to Fract" onclick="BinToPatToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td>';
+        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Pat to Fract" onclick="BinToPatToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="1/R to Fract" onclick="CalcFract()"><\/td>';
         o += '<\/tr>';
         o += '<\/table>';
       }
