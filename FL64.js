@@ -147,14 +147,13 @@ function PatToFract( Float, PatDiv )
 //Directly translate an float to fract matching denominator, and numerator.
 //**********************************************************************************
 
-function FloatToFract( float, er )
+function FloatToFract( float )
 {
-  var f1 = [ 1, 0 ], f2 = [ 0, 1 ];
-  var r2 = float, r1 = 0, t = 0;
+  var f1 = [ 1, 0 ], f2 = [ 0, 1 ], r2 = float, r1 = 0, t = 0, e = Number.EPSILON * ( arguments[1] || 1 );
 
   //Continue till Denominator, and Numerator Divide exactly to float value minus "er" (Error).
       
-  while ( Math.abs( float - f1[0] / f1[1] ) > er )
+  while ( Math.abs( float - f1[0] / f1[1] ) > e )
   {
     //Whole value.
     
