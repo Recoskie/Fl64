@@ -121,7 +121,7 @@ var Fract = FloatToFract( n1 / n2, Number.EPSILON * CutOff );
 
 alert( Fract );
 ```
-Note Adjusting the value CutOff higher than 1 allows one to cut off EPSILON error when converting to fraction if the value is expected to have "X" amount of error after repetitive arithmetic. Otherwise the variable "CutOff" is not necessary as it is only put in place to show the proper use of the function.
+Note Adjusting the value "CutOff" higher than 1 allows you to cut off EPSILON error when converting to fraction. Only do this if the value is expected to have "X" amount of error after repetitive arithmetic in an loop. Otherwise the variable "CutOff" is not necessary as it is only put in place to show the proper use of the function.
 
 ------------------------------------------------------------------------------
 ## DecodeFloat( f );
