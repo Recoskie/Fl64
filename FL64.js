@@ -153,7 +153,7 @@ function FloatToFract( float )
 
   //Continue till Denominator, and Numerator Divide exactly to float value minus "er" (Error).
       
-  while ( Math.abs( float - f1[0] / f1[1] ) > e )
+  while ( Math.abs( float - f1[0] / f1[1] ) > Math.abs( e * float ) )
   {
     //Whole value.
     
