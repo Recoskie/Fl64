@@ -210,7 +210,7 @@
     }
     
     //**********************************************************************************
-    //Convert Float from binary to fraction.
+    //Divide float to find it's divide pattern then convert to fraction.
     //**********************************************************************************
 
     function DivToFract()
@@ -250,6 +250,42 @@
       
         Output( "Calc (Float&divide;Pat)Exp:", ( o[ 0 ] + "&divide;" + o[ 1 ] ) + " = " + ( o[0] / o[1] ) + "" );
       }
+      
+      UpdateOutput();
+    }
+    
+    //**********************************************************************************
+    //Convert Float to fraction An iteration at an time.
+    //**********************************************************************************
+
+    function SumToFract()
+    {
+      var t = new Date().getTime();
+    
+      //Float to binary.
+
+      if ( ( n = GetNumInput( true, false, false )[ 0 ] ) === null ) { return; }
+    
+       //Begin Conversion.
+       
+       Output( "Convert float value." );
+    
+       //Find best matching whole fraction an iteration at an time.
+    
+      for( var i = 1; Math.abs( n - ( Math.floor( n * i ) / i ) ) > Number.EPSILON; i++ )
+      {
+        if( !force && ( new Date().getTime() - t ) > 2700 )
+        {
+          Err( "Closest sum-able fraction:" );
+          UpdateOutput(); return;
+        }
+      }
+      
+      //Result.
+
+      Output( "Closest sum-able fraction:", Math.floor( n * i ) + "&divide;" + i + "" );
+      
+      //Update output.
       
       UpdateOutput();
     }
@@ -428,10 +464,10 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
+        o += '<td colspan="3"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td>';
+        o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Fract" onclick="BinToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td>';
         o += '<\/tr>';
         o += '<\/table>';
       }
