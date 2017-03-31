@@ -108,19 +108,20 @@ alert( Fract );
 ------------------------------------------------------------------------------
 ## FloatToFract( Float, er );
 
-Calculates the smallest of an float number.
+Calculates the smallest fraction of an float number.
 
 ```javascript
-var n1 = 2198, n2 = 1197;
+var n1 = 2198, n2 = 1197, CutOff = 1;
 
 //2198 divided by 1197 to smalest fraction.
 
-var Fract = FloatToFract( n1 / n2, Number.EPSILON );
+var Fract = FloatToFract( n1 / n2, Number.EPSILON * CutOff );
 
 //Smallest fraction 314/171.
 
 alert( Fract );
 ```
+Note Adjusting the value CutOff higher than 1 allows one to cut off EPSILON error when converting to fraction if the value is expected to have "X" amount of error after repetitive arithmetic. Otherwise the variable "CutOff" is not necessary as it is only put in place to show the proper use of the function.
 
 ------------------------------------------------------------------------------
 ## DecodeFloat( f );
