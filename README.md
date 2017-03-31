@@ -77,7 +77,7 @@ If the fraction, or value was something like ( 7 + ( 1 ÷ 3 ) ) = 7.333333333333
 alert(PatToDiv([1,1,2,2,1,5,2,3,1])); //1,1,2,2,1,5,2,3,1 = 143/171
 ```
 ------------------------------------------------------------------------------
-## FloatToFract( Float, DivPat );
+## PatToFract( Float, DivPat );
 
 Calculates the smallest fraction by reversing the infinite pattern of numbers, and exponentially adjusting the number to whole fraction value.
 
@@ -98,7 +98,24 @@ var FloatValue = n1 / n2;
 
 //Convert float value, and bit pattern back to smallest fraction.
 
-var Fract = FloatToFract( FloatValue, PatDiv );
+var Fract = PatToFract( FloatValue, PatDiv );
+
+//Smallest fraction 314/171.
+
+alert( Fract );
+```
+
+------------------------------------------------------------------------------
+## FloatToFract( Float, er );
+
+Calculates the smallest of an float number.
+
+```javascript
+var n1 = 2198, n2 = 1197;
+
+//2198 divided by 1197 to smalest fraction.
+
+var Fract = FloatToFract( n1 / n2, Number.EPSILON );
 
 //Smallest fraction 314/171.
 
