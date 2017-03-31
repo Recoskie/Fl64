@@ -96,21 +96,17 @@ function FindPatDiv( Pat )
 {
   //Initialize.
 
-  var len = 0, c = [ 1, 1 ], m = [ 1, 1 ];
+  var len = 1, c = PatToDiv( Pat ), m = [ 1, 1 ];
   
-  while( Pat.length > 0 )
+  while( Pat.length > 0 && c[1] !== m[1] )
   {
+    //Shift the pattern.
+    
+    len += Pat[0]; Pat.shift(); m = c;
+    
     //Calculate pattern.
   
     c = PatToDiv( Pat, Math.pow( 2, len ) );
-    
-    //Test pattern.
-    
-    if( c[1] === m[1] ) { break; } else { m = c; }
-    
-    //Shift the pattern.
-    
-    len += Pat[0]; Pat.shift();
   }
   
   //Check if no pattern.
