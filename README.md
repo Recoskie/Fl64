@@ -155,7 +155,7 @@ alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) + " Recalcula
 
 ```
 
-The "CutOff" in the above code will cut off the last representable binary digits in an float number by 10 this can be set larger. The cut off range will not cut off all values by 10 it only cuts off the last binary digits in the floats mantissa removing error. Only do this if the value is expected to have "X" amount of error close to EPSILON after repetitive arithmetic in an loop, thus we can cut the error off at the very end of the last representable binary digits in an floats binary data. Otherwise cutting off is not necessary.
+The "CutOff" in the above code will cut off the last representable binary digits in an float number by 10 this can be set larger. The cut off range will not cut off all values by 10 it only cuts off the last binary digits in the floats mantissa removing error. Only do this if the value is expected to have "X" amount of error close to EPSILON after repetitive arithmetic in an loop, thus we can cut the error off at the very end of the last representable binary digits in an floats binary data. Basically 3.1415 will still translate to the correct fraction even with the cut off of 10 as the number is not large enough to be near the maximum round off point of an float number.
 
 ------------------------------------------------------------------------------
 ## DecodeFloat( f );
