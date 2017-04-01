@@ -112,16 +112,52 @@ Calculates the smallest fraction of an float number.
 
 ```javascript
 var n1 = 2198, n2 = 1197, CutOff = 1;
+var Float = n1 / n2;
 
 //2198 divided by 1197 to smalest fraction.
 
-var Fract = FloatToFract( n1 / n2, Number.EPSILON * CutOff );
+var Fract = FloatToFract( Float );
 
 //Smallest fraction 314/171.
 
 alert( Fract );
 ```
-Note Adjusting the value "CutOff" higher than 1 allows you to cut off EPSILON error when converting to fraction. Only do this if the value is expected to have "X" amount of error after repetitive arithmetic in an loop. Otherwise the variable "CutOff" is not necessary as it is only put in place to show the proper use of the function.
+The above will calculate the best possible fraction for the entire float number, but the next example will cut off "1000" at the very end of the max representable value.
+
+```javascript
+var Float = 0.7777777777777778; //Closest value of 7/9.
+
+//gives 7/9.
+
+var Fract = FloatToFract( Float );
+
+//Show fraction.
+
+alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
+
+var Float = 0.7777777777777773; //Closest value of 7/9, but is one digit off.
+
+//gives 187649984473773/241264265751994.
+
+var Fract = FloatToFract( Float );
+
+//Show fraction.
+
+alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
+
+//Recalculate fraction with an cut off of 10.
+
+//gives 7/9.
+
+var Fract = FloatToFract( Float, 10 );
+
+//Show fraction.
+
+alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) + " Recalculated with an cut off of 10 at the last representable place value." );
+
+```
+
+The "CutOff" in the above code will cut off the last representable binary digits in an float number by 10 this can be set larger. The cut off range will not cut off all values by 10 it only cuts off the last binary digits in the floats mantissa removing error. Only do this if the value is expected to have "X" amount of error close to EPSILON after repetitive arithmetic in an loop, thus we can cut the error off at the very end of the last representable binary digits in an floats binary data. Otherwise cutting off is not necessary.
 
 ------------------------------------------------------------------------------
 ## DecodeFloat( f );
