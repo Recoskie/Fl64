@@ -122,7 +122,7 @@ var Fract = FloatToFract( Float );
 
 alert( Fract );
 ```
-The above will calculate the best possible fraction for the entire float number, but the next example will cut off "1000" at the very end of the max representable value.
+The above will calculate the best possible fraction for the entire float number, but the next example will cut off "10" at the very end of the, of an float value to where it gets rounded off in the computer at max representable value.
 
 ```javascript
 var Float = 0.7777777777777778; //Closest value of 7/9.
@@ -135,9 +135,9 @@ var Fract = FloatToFract( Float );
 
 alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
 
-var Float = 0.7777777777777773; //Closest value of 7/9, but is one digit off.
+var Float = 0.7777777777777773; //Closest value of 7/9, but is one digit off at maximum representable digits.
 
-//gives 187649984473773/241264265751994.
+//Gives 187649984473773/241264265751994 which is correct if the value rally is 0.7777777777777773.
 
 var Fract = FloatToFract( Float );
 
@@ -145,11 +145,9 @@ var Fract = FloatToFract( Float );
 
 alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
 
-//Recalculate fraction with an cut off of 10.
+//Recalculate fraction with an cut off of 10 right near where an float gets rounded off in hardware.
 
-//gives 7/9.
-
-var Fract = FloatToFract( Float, 10 );
+var Fract = FloatToFract( Float, 10 ); //Now it gives 7/9.
 
 //Show fraction.
 
