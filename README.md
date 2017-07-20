@@ -4,7 +4,7 @@ The routines in this library are made to work with unrepresentative numbers back
 
 The library is designed to work closely with the float number format without reducing performance, for algorithms that may benefit from this library.
 
-Warning library is still in beta.
+Warning library is still in beta. Warning the methods in this readme  are now outdated. This readme will be updated soon to reflect the new methods and data types.
 
 ------------------------------------------------------------------------------
 ## CErr( f );
