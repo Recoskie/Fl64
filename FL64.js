@@ -262,7 +262,7 @@ Number.prototype.bits = function()
 
   //Infinity.
   
-  if( !isFinite( f ) ) { this.exp = 2047; this.mantissa = 0; return( this ); }
+  if( !isFinite( f ) ) { this.sing = ( f < 0 ) & 1; this.exp = 2047; this.mantissa = 0; return( this ); }
   
   var o = new Number( this );
   
@@ -288,6 +288,8 @@ Number.prototype.bits = function()
   
   //return the decoded float.
   
+  if( o.mantissa > 4503599627370495 ){ console.log( this + " = " + o.exp + " , " + o.mantissa ); o.exp--; o.mantissa -= Math.floor( o.mantissa / 4503599627370496 ) * 4503599627370496; }
+  
   o.b = true; return( o );
 }
 
@@ -295,7 +297,7 @@ Number.prototype.bits = function()
 //Logical Bitwise and float64 binary values.
 //**********************************************************************************
 
-Number.prototype.and = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
+Number.prototype.bitAnd = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
   
   var f = fl1.mantissa & fl2.mantissa; if( f < 0 ) { f += 0x100000000; }
   
@@ -307,7 +309,7 @@ Number.prototype.and = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits()
 //Logical Bitwise or float64 binary values.
 //**********************************************************************************
 
-Number.prototype.or = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
+Number.prototype.bitOr = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
   
   var f = fl1.mantissa | fl2.mantissa; if( f < 0 ) { f += 0x100000000; }
   
@@ -319,7 +321,7 @@ Number.prototype.or = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
 //Logical Bitwise xor float64 binary values.
 //**********************************************************************************
 
-Number.prototype.xor = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
+Number.prototype.bitXor = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits();
   
   var f = fl1.mantissa ^ fl2.mantissa; if( f < 0 ) { f += 0x100000000; }
   
@@ -331,7 +333,7 @@ Number.prototype.xor = function( fl2 ) { var fl1 = this.bits(), fl2 = fl2.bits()
 //Logical Bitwise not float64 binary values.
 //**********************************************************************************
 
-Number.prototype.not = function() { var fl1 = this.bits();
+Number.prototype.bitNot = function() { var fl1 = this.bits();
   
   f = ~fl1.mantissa; if( f < 0 ) { f += 0x100000000; } f += ( ( ~( fl1.mantissa / 0x100000000 ) ) & 0xFFFFF ) * 0x100000000;
   
@@ -341,7 +343,7 @@ Number.prototype.not = function() { var fl1 = this.bits();
 //Right shift float64 binary values.
 //**********************************************************************************
 
-Number.prototype.rsh = function( s1 )
+Number.prototype.bitRsh = function( s1 )
 {
   var f = this.bits(), s1 = s1 % 64, s2 = 0; ( s1 >= 32 ) && ( s1 -= ( s2 = s1 - 32 ) );
   
@@ -362,7 +364,7 @@ Number.prototype.rsh = function( s1 )
 //Left shift float64 binary values.
 //**********************************************************************************
 
-Number.prototype.lsh = function( s1 )
+Number.prototype.bitLsh = function( s1 )
 {
   var f = this.bits(), s1 = s1 % 64, s2 = 0; ( s1 >= 32 ) && ( s1 -= ( s2 = s1 - 32 ) );
   
@@ -445,7 +447,8 @@ Number.prototype.toPattern = function( base )
   
   //Compute data.
   
-  var d = ( this * Math.pow( base, ( Math.ceil( 36.04365338911715 / Math.log( base ) ) - Math.floor(Math.log( this ) / Math.log( base ) ) ) ) ).toString( base );
+  var d = ( this * Math.pow( base, ( Math.ceil( 36.04365338911715 / Math.log( base ) ) - Math.floor(Math.log( this ) / Math.log( base ) ) ) ) ).tostring( base, true );
+  d = d.replace(".","").split("e")[0];
   
   //Create the pattern.
   
@@ -460,74 +463,211 @@ Number.prototype.toPattern = function( base )
 //Create the new toString function to give the full number format.
 //**********************************************************************************
 
-var toString = Number.prototype.toString; Number.prototype.toString = function( base )
+Number.prototype.tostring = function( base, MostAcurate )
 {
-  //Regular to string if no bit's are defined.
- 
-  if( !this.b )
-  {
-	base = base || 10; this.t = toString; s = this.t( base );
-	var n = s.charAt(0) === "-"; if( n ) { s = s.slice( 1, s.length ); }
-    
-    //If not base 10 then "0" count and add appropriate exponent.
-    
-    if( base != 10 )
-    {
-	  s = s.toUpperCase();
-      var s2 = s.split("."), exp = 0, lim = ( Math.floor( Math.log( 4503599627370496 ) / Math.log( base ) ) + 1 ); 	
-      
-      //Compute the exponent.
-      
-      if( s2.length > 1 && s2[1].length > s2[0].length ) { exp = -s2[1].length; s2 = s2[1]; } else { exp = s2[0].length - 1; s2 = s2[0]; }
-      s2 = s2.replace(/^0+|0+$/g, ""); if( exp < 0 ) { exp += s2.length - 1; }
-      
-      //If the length is outside of the 53 bit limitation of an float add the exponentiation.
-      
-      if( Math.abs( exp ) > lim ) { s = s2.charAt(0) + "." + s2.slice( 1, s2.length ) + "e" + exp.toString( base ).toUpperCase(); }
-    }
-    
-	this.t = undefined; return( ( n ? "-" : "" ) + s );
-  }
+  //The string representing the character output of the number value.
+  
+  var str = "", out = [ 0, 0, 0, 0 ], sec = 0, c = 0, nexp = 0, rexp = 0;
   
   //Check if invalid base setting.
   
-  if( !base ){ base = 2; }; if( base < 2 || base > 36 ){ throw new Error( "RangeError: radix must be an integer at least 2 and no greater than 36" ); }
+  base = ( base & -1 ) || ( this.b ? 2 : 10 ); if( base < 2 || base > 36 ){ throw new Error( "RangeError: radix must be an integer at least 2 and no greater than 36" ); }
   
-  //Number of digits End of 64 bit number.
+  //If number is in bits mode.
   
-  var str = "", e = Math.ceil( 44.3614195558365 / Math.log( base ) );
+  if( this.b )
+  {
+	out = [ ( ( ( ( this.sing & 1 ) << 31 | ( this.exp & 0x7FF ) << 20 ) ) | ( ( this.mantissa / 0x100000000 ) & 0xFFFFF ) ), this.mantissa & 0xFFFFFFFF, 0, 0 ];
+    if ( out[0] < 0 ) { out[0] += 0x100000000; }; if ( out[1] < 0 ) { out[1] += 0x100000000; }
+  }
   
-  //Convert the 64 bit number into two 32 bit unsigned integer numbers.
+  //Else Decode the number into it's bits and float value.
   
-  var f = [ ( ( ( ( this.sing & 1 ) << 31 | ( this.exp & 0x7FF ) << 20 ) ) | ( ( this.mantissa / 0x100000000 ) & 0xFFFFF ) ), this.mantissa & 0xFFFFFFFF ];
+  else
+  {
+    var fl = this.bits();
   
-  //Adjust to unsigned.
+    //NaN, and Sing^Infinity, and zero.
   
-  if ( f[0] < 0 ) { f[0] += 0x100000000; }; if ( f[1] < 0 ) { f[1] += 0x100000000; }
+    if( fl.exp === 0 && fl.mantissa === 0 ){ return( "0" ); } else if( fl.exp >= 2047 ) { if( fl.mantissa > 0 ) { return( "NaN" ); } else { return( fl.sing ? "-Infinity" : "Infinity" ); } }
+  
+    //Load four 52bit mantissa values in appropriate number base rounding off at the last digit of accuracy.
+  
+    var val = [ sec =  Math.pow( base, rexp = ( Math.floor( Math.log( Math.pow( 2, 52 ) ) / Math.log( base ) ) - 1 ) ), 0, 0, 0 ];
+  
+    //Calculate the exponents distance from center.
+  
+    fl.exp -= 0x3FF;
+  
+    //Shortcut for computing number bases.
+  
+    if( base === 2 || base === 4 || base === 8 || base === 16 || base === 32 ) { var s = Math.log( base ) / Math.log( 2 ); nexp = ( fl.exp / s ) & -1; fl.exp %= s; MostAcurate = true; }
+  
+    //IF exponent is zero the first bit in the mantissa is the exponent position from center.
+  
+    if( fl.exp === -0x3FF ) { fl.exp -= ( ( c = 52 - Math.floor( Math.log( fl.mantissa ) / Math.log( 2 ) ) ) ) - 1; fl.mantissa *= Math.pow( 2, c ); } else { fl.mantissa += Math.pow( 2, 52 ); }
+  
+    //Add the number together in select number base.
+  
+    while( fl.mantissa > 0 )
+    {
+	  //If exponent is zero shift down the value as each bit value in mantissa bit's and add them.
+	
+	  if( fl.exp === 0 )
+	  {
+	    if( ( fl.mantissa - 4503599627370496 ) >= 0 )
+	    {
+		  fl.mantissa -= 4503599627370496;
+	      out[0] += val[0]; out[1] += val[1]; out[2] += val[2]; out[3] += val[3];
+          out[2] += c = Math.floor( out[3] / sec ); out[3] -= c * sec;
+	      out[1] += c = Math.floor( out[2] / sec ); out[2] -= c * sec; 
+	      out[0] += c = Math.floor( out[1] / sec ); out[1] -= c * sec;
+	    }
+	  
+	    //Shift value down.
+	  
+        fl.exp--; fl.mantissa *= 2;
+	  }  
+    
+	  //Do not let the whole values go outside of the accuracy range limit.
+	
+	  else
+	  {
+	    if( val[0] < sec )
+        {
+	      val[3] *= base; val[2] *= base; val[1] *= base; val[0] *= base;
+	      val[2] += c = Math.floor( val[3] / sec ); val[3] -= c * sec;
+	      val[1] += c = Math.floor( val[2] / sec ); val[2] -= c * sec;
+	      val[0] += c = Math.floor( val[1] / sec ); val[1] -= c * sec;
+	      nexp--;
+	    }
+      
+	    if( val[0] > sec )
+	    {
+	      c = val[ 0 ] - ( ( val[ 0 ] = Math.floor( val[ 0 ] / base ) ) * base );
+          c = ( ( c * sec ) + val[ 1 ] ) - ( ( val[ 1 ] = Math.floor( ( ( c * sec ) + val[ 1 ] ) / base ) ) * base );
+          c = ( ( c * sec ) + val[ 2 ] ) - ( ( val[ 2 ] = Math.floor( ( ( c * sec ) + val[ 2 ] ) / base ) ) * base );
+          val[ 3 ] = Math.floor( ( ( c * sec ) + val[ 3 ] ) / base );
+	      nexp++;
+	    }
+	  }
+	  
+	  //Adjust the base value by an binary exponent.
+	  
+	  if( fl.exp < 0 )
+	  {
+        c = val[ 0 ] - ( ( val[ 0 ] = Math.floor( val[ 0 ] / 2 ) ) * 2 );
+        c = ( ( c * sec ) + val[ 1 ] ) - ( ( val[ 1 ] = Math.floor( ( ( c * sec ) + val[ 1 ] ) / 2 ) ) * 2 );
+        c = ( ( c * sec ) + val[ 2 ] ) - ( ( val[ 2 ] = Math.floor( ( ( c * sec ) + val[ 2 ] ) / 2 ) ) * 2 );
+        val[ 3 ] = Math.floor( ( ( c * sec ) + val[ 3 ] ) / 2 );
+        fl.exp++;
+	  }
+	
+	  else if( fl.exp > 0 )
+	  {
+	    val[3] *= 2; val[2] *= 2; val[1] *= 2; val[0] *= 2;
+	    val[2] += c = Math.floor( val[3] / sec ); val[3] -= c * sec;
+	    val[1] += c = Math.floor( val[2] / sec ); val[2] -= c * sec;
+	    val[0] += c = Math.floor( val[1] / sec ); val[1] -= c * sec;
+	    fl.exp--;
+	  }
+    }
+  
+    //if Most accurate is not set round off the value.
+  
+    if( !MostAcurate ) { out[1] = Math.round( out[1] / ( sec / base ) ) * ( sec / base ); out[0] += c = Math.floor( out[1] / sec ); out[1] -= c * sec; out[3] = 0; out[2] = 0; }
+  
+    //Else round off the last digit of accuracy.
+  
+    else { out[3] = Math.round( out[3] / ( base * base * base ) ) * ( base * base * base ); out[2] += c = Math.floor( out[3] / sec ); out[3] -= c * sec;
+      out[1] += c = Math.floor( out[2] / sec ); out[2] -= c * sec; out[0] += c = Math.floor( out[1] / sec ); out[1] -= c * sec; }
+  }
+  
+  //Divide the sections into parts of 2 for binary, or 10 as decimal, or as 16 as hexadecimal, or any range in between, or higher.
+  
+  if( !this.b )
+  {
+	str = [ "", "", "", "" ];
+	  
+    for( var DigitV = 0, i = 0, rd = false; Math.floor( sec ) !== 0; i++ )
+    {
+      //Divide.
+    
+      DigitV = ( out[ i ] / sec ) & -1; out[ i ] -= DigitV * sec;
+    
+      //Digit 0 through 9, and A to Z by unit size per column.
+    
+      DigitV = DigitV < 10 ? 0x30 + DigitV : 0x37 + DigitV;
+    
+      //Write char to string.
+    
+      str[ i ] += String.fromCharCode( DigitV );
+    
+	  //Switch to next digit.
+	
+	  if( i > 2 || !rd ) { sec /= base; i = -1; rd = true; }
+    }
+    
+    //combine the sections together.
+  
+    nexp -= ( str[0].length - ( str[0] = str[0].replace(/^0+/,"") ).length ); str = ( str[0] + str[1] + str[2] + str[3] ).replace(/0+$/,"");
+  
+    //Exponent if not in bit representation mode.
+  
+    if( Math.abs( nexp ) > rexp )
+    {
+	  str = str.charAt(0) + (  str.length > 1 ? "." : "" ) + str.slice( 1, str.length ) + "e" + ( nexp > 0 ? "+" : "-" ); nexp = Math.abs( nexp ); out[ 1 ] = nexp;
+    }
+    else if( nexp < str.length && nexp >= 0 )
+    {
+      str = str.slice( 0, nexp + 1 ) + ( nexp !== ( str.length - 1 ) ? "." : "" ) + str.slice( nexp + 1, str.length ); nexp = 0;
+    }
+    else
+    {
+	  while( nexp > 0 ) { str += "0"; nexp--; }
+	
+	  if( nexp < 0 ) { nexp++; while( nexp < 0 ) { str = "0" + str; nexp++; } str = "." + str; }
+    }
+  
+    if( str.charAt(0) === "." ) { str = "0" + str; }
+    
+    str = ( fl.sing ? "-" : "" ) + str;
+  }
+  
+  //Decode the exponent to characters, or all 64 bit's of an float number if bit's mode.
+  
+  var end = nexp > 0 ? Math.ceil( Math.log( nexp ) / Math.log( base ) ) : Math.ceil( 44.3614195558365 / Math.log( base ) );
   
   //Divide the number into parts of 2 for binary, or 10 as decimal, or as 16 as hexadecimal, or any range in between, or higher.
   
-  for( var i = 0, DigitV = 0; i < e; i++ )
+  if( Math.max( out[0], out[1] ) > 0 || this.b )
   {
-    //Divide higher 32 bits, and floor off the number store floored value in Digit.
+	var t = "";
+	  
+    for( var i = 0, DigitV = 0; i < end; i++ )
+    {
+      //Divide higher 32 bits, and floor off the number store floored value in Digit.
  
-    DigitV = f[ 0 ] - ( ( f[ 0 ] = Math.floor( f[ 0 ] / base ) ) * base );
+      DigitV = out[ 0 ] - ( ( out[ 0 ] = Math.floor( out[ 0 ] / base ) ) * base );
     
-    //Divide lower 32 bit's including the floored off value in the higher 32 bit's.
+      //Divide lower 32 bit's including the floored off value in the higher 32 bit's.
     
-    f[ 1 ] = ( ( DigitV * 0x100000000 ) + f[ 1 ] ) / base;
+      out[ 1 ] = ( ( DigitV * 0x100000000 ) + out[ 1 ] ) / base;
     
-    //Round off the remainder and store the digit value that is between the number base into Digit.
+      //Round off the remainder and store the digit value that is between the number base into Digit.
     
-    DigitV = Math.round( ( f[1] - Math.floor( f[1] ) ) * base ); f[ 1 ] = Math.floor( f[ 1 ] );
+      DigitV = Math.round( ( out[1] - Math.floor( out[1] ) ) * base ); out[ 1 ] = Math.floor( out[ 1 ] );
  
-    //Digit 0 through 9, and A to Z by unit size per column.
+      //Digit 0 through 9, and A to Z by unit size per column.
     
-    DigitV = DigitV < 10 ? 0x30 + DigitV : 0x37 + DigitV;
+      DigitV = DigitV < 10 ? 0x30 + DigitV : 0x37 + DigitV;
     
-    //Write char to string.
+      //Write char to string.
     
-    str = String.fromCharCode( DigitV ) + str;
+      t = String.fromCharCode( DigitV ) + t;
+    }
+    
+    str = str + t; t = null;
   }
   
   //Return the String representation of the float numbers bit's.
@@ -574,22 +714,7 @@ Number.prototype.valueOf = function()
 //**********************************************************************************
 
 function parseFloat( str, base )
-{
-  function RoundOff( v, str, base )
-  {
-    str = str.replace(".",""); str = str.split("e")[0]; v = v.bits();
-    
-    for( var i = 0, o = v.mantissa; i < base; i++ )
-    {
-	  v.mantissa -= i; cmp = v.valueOf().toString(base); cmp = cmp.replace(".",""); cmp = cmp.split("e")[0];
-	  if( ( str.indexOf(cmp) - ( str.length - cmp.length ) ) === 0 && str.indexOf(cmp) >= 0 ) { return( v.valueOf() ); } v.mantissa = o;
-      v.mantissa += i; cmp = v.valueOf().toString(base); cmp = cmp.replace(".",""); cmp = cmp.split("e")[0];
-	  if( ( str.indexOf(cmp) - ( str.length - cmp.length ) ) === 0 && str.indexOf(cmp) >= 0 ) { return( v.valueOf() ); } v.mantissa = o;
-    }
-    
-    return( v.valueOf() );
-  }
-  
+{  
   //If no base setting parse float as an base 10 number.
 
   base = base || 10;
@@ -626,14 +751,14 @@ function parseFloat( str, base )
     
     //Exponent adjustment.
 
-    else if( Digit === 46 ){ f *= Math.pow( base, parseInt( str.slice( i + 1, str.length ), base ) ); f = RoundOff( f, str, base ); return( sing ? -f : f ); }
+    else if( Digit === 46 ){ f *= Math.pow( base, parseInt( str.slice( i + 1, str.length ), base ) ); return( sing ? -f : f ); }
 
     //Else return "NaN" as it is not an number.
 
     else { return( NaN ); }
   }
   
-  f = RoundOff( f, str, base ); return( ( sing ? -f : f ).valueOf() );
+  return( ( sing ? -f : f ).valueOf() );
 }
 
 //**********************************************************************************
