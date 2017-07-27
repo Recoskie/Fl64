@@ -49,7 +49,7 @@
       //Divide the fraction for real, and decode the real mantissa.
       //**********************************************************************************
 
-      var Float = fract.valueOf().bits().toString(2);
+      var Float = fract.valueOf().bits().tostring(2);
 
       Output( "Binary comparison to Binary divide pattern." );
       Output( "Normal divide:", ( fract.toString() + "=" + fract ) );
@@ -60,7 +60,7 @@
       
       Output( "Compare fraction value in different number bases." );
       
-      for( var i = 2; i < 37; Output( "Base " + i, fract.valueOf().toString(i++) ) );
+      for( var i = 2; i < 37; Output( "Base " + i, fract.valueOf().tostring(i++) ) );
 
       UpdateOutput();
     }
@@ -120,14 +120,16 @@
 	  if( Mode === 0 )
 	  {
 		var f = parseFloat( document.getElementById("f1").value, FloatBase );
-		document.getElementById("f2").value = f.bits().toString( DecodeBase );
+		document.getElementById("ac").value = "Most Accurate Value = " + f.tostring( FloatBase, true );
+		document.getElementById("f2").value = f.bits().tostring( DecodeBase );
 	  }
 	  
 	  if( Mode === 1 )
 	  {
 		var f = parseNumber( document.getElementById("f2").value, DecodeBase );
-		document.getElementById("f2").value = f.toString( DecodeBase );
-		document.getElementById("f1").value = f.valueOf().toString( FloatBase );
+		document.getElementById("f2").value = f.tostring( DecodeBase );
+		document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().tostring( FloatBase, true );
+		document.getElementById("f1").value = f.valueOf().tostring( FloatBase );
 	  }
 	  
     }
@@ -148,7 +150,7 @@
 
       Output( "Float to Binary." );
       
-      var s = val.toString(2);
+      var s = val.tostring(2);
 
       Output( "Float64 in Binary:", s );
       Output( "Float64 Sing Section:", s.charAt(0) );
@@ -169,10 +171,6 @@
       if ( !pat.data )
       {
         Output( "Division Pattern:", pat + " Repeats to Infinity." );
-      
-        f = pat.getFract();
-        
-        Output( "Decode bit pattern back to ?/? = pat:", f.toString() + "" );
       
         f = pat.toFract( val );
       
@@ -209,7 +207,7 @@
       
       var f = new Fract( f1, f2 );
       
-      Output( "Division to Float:", f + "" );
+      Output( "Division to Float:", f.toString() + "" );
       
       var pat = f.divP();
       
@@ -409,14 +407,18 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415926535"><\/td>';
+        o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.141592653589793"><\/td>';
         o += '<\/td>';
-        o += '<td><select id="b1" onchange="Convert(1)" style="width:100%;height:100%;font-size:5vh;">';
+        o += '<td rowspan="2"><select id="b1" onchange="Convert(1)" style="width:100%;height:100%;font-size:5vh;">';
         for( var i = 2; i < 37; o += '<option value="' + i + '"' + ( i === 10 ? ' selected="selected"' : '' ) + '>Base' + i + '</option>', i++ );
         o += '</select></td>';
-        o += '<\/tr>';
+        o += '</tr>';
         o += '<tr>';
-        o += '<td colspan="2"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" type="text" value="0100000000001001001000011111101101010100010000010001011101000100"><\/td>';
+        o += '<td colspan="2"><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1vw;background-color:rgba(255,255,255,0.5);" type="text" value="Most Accurate value = 3.141592653589793115997963468544185161590576171875" readonly="true"><\/td>';
+        o += '</td>';
+        o += '</tr>';
+        o += '<tr>';
+        o += '<td colspan="2"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" type="text" value="0100000000001001001000011111101101010100010001000010110100011000"><\/td>';
         o += '<\/td>';
         o += '<td><select id="b2" onchange="Convert(0)" style="width:100%;height:100%;font-size:5vh;">';
         for( var i = 2; i < 37; o += '<option value="' + i + '">Base' + i + '</option>', i++ );
@@ -438,13 +440,17 @@
       {
         o += '<table style="width:100%;height:100%;">';
         o += '<tr>';
-        o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="Convert(0)" onkeyup="Convert(0)" type="text" value="3.1415926535"><\/td>';
-        o += '<td><select id="b1" onchange="Convert(1)" style="width:100%;height:100%;font-size:5vh;">';
+        o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="Convert(0)" onkeyup="Convert(0)" type="text" value="3.141592653589793"><\/td>';
+        o += '<td rowspan="2"><select id="b1" onchange="Convert(1)" style="width:100%;height:100%;font-size:5vh;">';
         for( var i = 2; i < 37; o += '<option value="' + i + '"' + ( i === 10 ? ' selected="selected"' : '' ) + '>Base' + i + '</option>', i++ );
         o += '</select></td>';
         o += '<\/tr>';
         o += '<tr>';
-        o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="Convert(1)" onkeyup="Convert(1)" type="text" value="0100000000001001001000011111101101010100010000010001011101000100"><\/td>';
+        o += '<td><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1vw;background-color:rgba(255,255,255,0.5);" type="text" value="Most Accurate value = 3.141592653589793115997963468544185161590576171875" readonly="true"><\/td>';
+        o += '</td>';
+        o += '</tr>';
+        o += '<tr>';
+        o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="Convert(1)" onkeyup="Convert(1)" type="text" value="0100000000001001001000011111101101010100010001000010110100011000"><\/td>';
         o += '<td><select id="b2" onchange="Convert(0)" style="width:100%;height:100%;font-size:5vh;">';
         for( var i = 2; i < 37; o += '<option value="' + i + '">Base' + i + '</option>', i++ );
         o += '</select></td>';
