@@ -588,7 +588,7 @@ Number.prototype.tostring = function(base, MostAcurate)
 
     if ( !MostAcurate )
     {
-      out[1] = Math.round( out[1] / ( sec / ( base * base * base ) ) ) * ( sec / ( base * base * base ) );
+      out[1] = Math.round( out[1] / ( sec / base ) ) * ( sec / base );
       out[0] += c = Math.floor(out[1] / sec); out[1] -= c * sec;
       out[3] = 0; out[2] = 0;
     }
