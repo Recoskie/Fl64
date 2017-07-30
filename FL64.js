@@ -588,7 +588,7 @@ Number.prototype.tostring = function(base, MostAcurate)
 
     if ( !MostAcurate )
     {
-      out[1] = Math.round( out[1] / ( sec / base ) ) * ( sec / base );
+      out[1] = Math.round( out[1] / ( sec / ( base * base * base ) ) ) * ( sec / ( base * base * base ) );
       out[0] += c = Math.floor(out[1] / sec); out[1] -= c * sec;
       out[3] = 0; out[2] = 0;
     }
@@ -734,52 +734,87 @@ Number.prototype.valueOf = function()
 //Update the parse float function to be more accurate, and to support all number bases.
 //**********************************************************************************
 
-function parseFloat(str, base)
+function parseFloat( str, base )
 {
-  //If no base setting parse float as an base 10 number.
+  //Check if invalid base setting.
 
-  base = base || 10;
+  base = ( base & -1 ) || 10; if ( base < 2 || base > 36 ) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
 
-  //Check base range.
+  //The decoded value.
+  
+  var o = new Number(0), m = [ 0, 0 ]; o.b = true; o.sing = 0; o.exp = 0; o.mantissa = 0;
 
-  if (base < 2 || base > 36) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  //Sing bit.
 
-  //The center point of an number meaning "7.25" is the ".".
+  if( str.charAt(0) === "-" ) { o.sing = 1; str = str.slice(1,str.length); }
 
-  var center = 0;
+  //Infinity.
 
-  //The sing if negative or positive.
+  if( str === "Infinity" ) { o.exp = 0x7FF; return( o.valueOf() ); }
 
-  var sing = false;
+  //The string value and exponent that is in the numbers base format.
 
-  //Iterate though the character values in the string building the number.
+  var bexp = 0, t = str.split("e"); if( t[1] ) { bexp = parseInt( t[1], base ); str = t[0]; } t = str.split("."); bexp += t[0].length; str = str.replace(".",""); t = null;
 
-  for (var i = 0, Digit = 0, f = 0; i < str.length; i++)
+  //Each 52 bit section must be able to store at least one multiple more of the number base to allow carry.
+
+  var sec = Math.pow( 2, 52 - (Math.log(base)/Math.log(2))&-1 );
+
+  //decode charterers.
+
+  for (var i = 0, Digit = 0; i < str.length && m[0] < sec; i++)
   {
     Digit = str.charCodeAt(i); Digit = Digit < 0x40 ? Digit - 0x30 : Digit - 0x37;
 
     //Put digit into value.
 
-    if (Digit < base && Digit >= 0) { f = center ? f + (Digit / (center *= base)) : (f * base) + Digit; }
-
-    //Center "." Point.
-    
-    else if (Digit === -2 && !center) { center = 1; }
-
-    //Signified adjust.
-    
-    else if (Digit === -3 && !sing) { sing = true; }
-
-    //Exponent adjustment.
-    
-    else if (Digit === 46) { f *= Math.pow(base, parseInt(str.slice(i + 1, str.length), base)); return (sing ? -f : f); }
+    if ( Digit < base && Digit >= 0 ) { m[1] = ( m[1] * base ) + Digit; m[0] *= base; m[0] += c = Math.floor(m[1] / sec); m[1] -= c * sec; bexp--; }
 
     //Else return "NaN" as it is not an number.
     
     else { return (NaN); }
   }
+  
+  //If value is 0.
+  
+  if( m[0] === 0 && m[1] === 0 ) { return( 0 ); }
 
-  return ((sing ? -f : f).valueOf());
+  //Calculate exponent.
+
+  var x = ( m[0] * sec ) + m[1]; for(var i = 0; i > bexp; i-- ) { x /= base; } for(var i = 0; i < bexp; i++ ) { x *= base; }
+  o.exp = 0x3FF + ( Math.floor( Math.log( x ) / Math.log( 2 ) ) ) & 0x7FF; x = null;
+
+  //Each section is an max of 52 mantissa bits.
+
+  for( var i = 0; i < bexp; i++)
+  {
+    //do not let the multiples of the number base go outside 52 bit accuracy limit, so divide by 2.
+  
+    while( m[0] > sec ) { c = m[0] - ( ( m[0] = Math.floor( m[0] / 2 ) ) * 2 ); m[1] = Math.floor( ( ( c * sec ) + m[1] ) / 2 ); }
+
+    //Multiply value by base.
+
+    m[1] *= base; m[0] *= base; m[0] += c = Math.floor(m[1] / sec); m[1] -= c * sec;
+  }
+
+  for( var i = 0; i > bexp; i--)
+  {
+    //If number is below 52 bit range multiply by 2.
+
+    while( m[0] < sec ) { m[1] *= 2; m[0] *= 2; m[0] += c = Math.floor(m[1] / sec); m[1] -= c * sec; }
+    
+    //Divide by base.
+
+    c = m[0] - ( ( m[0] = Math.floor( m[0] / base ) ) * base ); m[1] = Math.floor( ( ( c * sec ) + m[1] ) / base ); 
+  }
+
+  //Convert to 52 bit mantissa.
+
+  while( m[0] < 4503599627370496 ) { m[1] *= 2; m[0] *= 2; m[0] += c = Math.floor(m[1] / sec); m[1] -= c * sec; } if( ( m[1] * 2 ) > sec ) { m[0] += 1; } o.mantissa = m[0] - 4503599627370496;
+
+  //Return the decoded value.
+
+  return( o.valueOf() );
 }
 
 //**********************************************************************************
