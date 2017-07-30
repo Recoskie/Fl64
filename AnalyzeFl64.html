@@ -127,7 +127,7 @@
 
         if (Mode === 0)
         {
-          var f = parseFloat(document.getElementById("f1").value, FloatBase);
+          var f = parseFloat(document.getElementById("ac").value.replace("Most Accurate Value = ",""), FloatBase);
           document.getElementById("ac").value = "Most Accurate Value = " + f.tostring(FloatBase, true);
           document.getElementById("f2").value = f.bits().tostring(DecodeBase);
         }
