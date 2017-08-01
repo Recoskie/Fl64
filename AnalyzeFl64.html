@@ -128,16 +128,16 @@
         if (Mode === 0)
         {
           var f = parseFloat(document.getElementById("f1").value, FloatBase);
-          document.getElementById("ac").value = "Most Accurate Value = " + f.tostring(FloatBase, true);
-          document.getElementById("f2").value = f.bits().tostring(DecodeBase);
+          document.getElementById("ac").value = "Most Accurate Value = " + f.toString(FloatBase, true);
+          document.getElementById("f2").value = f.bits().toString(DecodeBase);
         }
 
         if (Mode === 1)
         {
           var f = parseNumber(document.getElementById("f2").value, DecodeBase);
-          document.getElementById("f2").value = f.tostring(DecodeBase);
-          document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().tostring(FloatBase, true);
-          document.getElementById("f1").value = f.valueOf().tostring(FloatBase);
+          document.getElementById("f2").value = f.toString(DecodeBase);
+          document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(FloatBase, true);
+          document.getElementById("f1").value = f.valueOf().toString(FloatBase);
         }
 
       }
@@ -161,7 +161,7 @@
 
         Output("Float to Binary.");
 
-        var s = val.tostring(2);
+        var s = val.toString(2);
 
         Output("Float64 in Binary:", s);
         Output("Float64 Sing Section:", s.charAt(0));
