@@ -55,7 +55,7 @@
         //Divide the fraction for real, and decode the real mantissa.
         //**********************************************************************************
 
-        var Float = fract.valueOf().bits().tostring(2);
+        var Float = fract.valueOf().bits().toString(2);
 
         Output("Binary comparison to Binary divide pattern.");
         Output("Normal divide:", (fract.toString() + "=" + fract));
@@ -66,7 +66,7 @@
 
         Output("Compare fraction value in different number bases.");
 
-        for (var i = 2; i < 37; Output("Base " + i, fract.valueOf().tostring(i++)));
+        for (var i = 2; i < 37; Output("Base " + i, fract.valueOf().toString(i++)));
 
         UpdateOutput();
       }
