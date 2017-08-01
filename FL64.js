@@ -475,7 +475,7 @@ Number.prototype.toPattern = function(base)
 //Create the new toString function to give the full number format.
 //**********************************************************************************
 
-Number.prototype.tostring = function(base, MostAcurate)
+Number.prototype.toString = function(base, MostAcurate)
 {
   //The string representing the character output of the number value.
 
@@ -485,6 +485,8 @@ Number.prototype.tostring = function(base, MostAcurate)
   //Check if invalid base setting.
 
   base = ( base & -1 ) || ( this.b ? 2 : 10 ); if ( base < 2 || base > 36 ) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  
+  debugger;
 
   //If number is in bits mode.
 
@@ -498,8 +500,6 @@ Number.prototype.tostring = function(base, MostAcurate)
   else
   {
     var fl = this.bits();
-
-    //NaN, and Sing^Infinity, and zero.
 
     if ( fl.exp === 0 && fl.mantissa === 0 ) { return ("0"); }
     else if ( fl.exp >= 2047 ) { if ( fl.mantissa > 0 ) { return ("NaN"); } else { return ( fl.sing ? "-Infinity" : "Infinity" ); } }
@@ -700,9 +700,9 @@ Number.prototype.tostring = function(base, MostAcurate)
 //Convert the float number to value when adding, or doing integer logic operations.
 //**********************************************************************************
 
-Number.prototype.valueOf = function()
+Number.prototype.primitive = Number.prototype.valueOf; Number.prototype.valueOf = function()
 {
-  if ( !this.b ) { return ( this ); }
+  if ( !this.b ) { return ( this.primitive() ); }
 
   //Remove overflow.
 
@@ -750,7 +750,7 @@ function parseFloat( str, base )
 
   //Infinity.
 
-  if( str === "Infinity" ) { o.exp = 0x7FF; return( o.valueOf() ); }
+  if( str === "Infinity" ) { o.exp = 2047; return( o.valueOf() ); }
 
   //The string value and exponent that is in the numbers base format.
 
@@ -782,6 +782,7 @@ function parseFloat( str, base )
   //Calculate exponent.
 
   var x = ( m[0] * sec ) + m[1]; for(var i = 0; i > bexp; i-- ) { x /= base; } for(var i = 0; i < bexp; i++ ) { x *= base; }
+  if( !isFinite(x) ) { o.exp = 0x7FF; return( o.valueOf() ); } if( x === 0 && ( m[0] + m[1] ) !== 0 ) { return( 0 ); }
   o.exp = 0x3FF + ( Math.floor( Math.log( x ) / Math.log( 2 ) ) ) & 0x7FF; x = null;
 
   //Each section is an max of 52 mantissa bits.
