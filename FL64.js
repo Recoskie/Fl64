@@ -477,14 +477,14 @@ Number.prototype.toPattern = function(base)
 
 Number.prototype.toString = function(base, MostAcurate)
 {
+  //Check if invalid base setting.
+
+  base = ( base & -1 ) || ( this.b ? 2 : 10 ); if ( base < 2 || base > 36 ) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  
   //The string representing the character output of the number value.
 
   var str = "";
   var c = 0, sec = 0, nexp = 0, rexp = 0, out = [ 0, 0, 0, 0 ];
-
-  //Check if invalid base setting.
-
-  base = ( base & -1 ) || ( this.b ? 2 : 10 ); if ( base < 2 || base > 36 ) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
 
   //If number is in bits mode.
 
@@ -495,12 +495,12 @@ Number.prototype.toString = function(base, MostAcurate)
   }
 
   //Else Decode the number into it's bits and float value.
+  
   else
   {
     var fl = this.bits();
 
-    if ( fl.exp === 0 && fl.mantissa === 0 ) { return ("0"); }
-    else if ( fl.exp >= 2047 ) { if ( fl.mantissa > 0 ) { return ("NaN"); } else { return ( fl.sing ? "-Infinity" : "Infinity" ); } }
+    if ( fl.exp === 0 && fl.mantissa === 0 ) { return ("0"); } else if ( fl.exp >= 2047 ) { if ( fl.mantissa > 0 ) { return ("NaN"); } else { return ( fl.sing ? "-Infinity" : "Infinity" ); } }
 
     //Load four 52bit mantissa values in appropriate number base rounding off at the last digit of accuracy.
 
@@ -586,7 +586,7 @@ Number.prototype.toString = function(base, MostAcurate)
 
     if ( !MostAcurate )
     {
-      out[1] = Math.round( out[1] / ( sec / ( base * base * base ) ) ) * ( sec / ( base * base * base ) );
+      out[1] = Math.round( out[1] / ( sec / base ) ) * ( sec / base );
       out[0] += c = Math.floor(out[1] / sec); out[1] -= c * sec;
       out[3] = 0; out[2] = 0;
     }
