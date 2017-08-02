@@ -134,7 +134,12 @@
         {
           var f = parseFloat(document.getElementById("f1").value, FloatBase);
           
-          if( b1 != document.getElementById("f1").value || fr )
+          if( isNaN(f) )
+          {
+            alert('Only numbers "0 to ' + (Math.min(10, FloatBase) - 1) + (FloatBase > 10 ? (FloatBase === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + FloatBase)) : "") + '" are Acceptable.');
+          }
+          
+          else if( b1 != document.getElementById("f1").value || fr )
           {
             b1 = document.getElementById("f1").value; 
             document.getElementById("ac").value = "Most Accurate Value = " + f.toString(FloatBase, true);
@@ -149,9 +154,17 @@
             b2 = document.getElementById("f2").value;
             
             var f = parseNumber( b2 = document.getElementById("f2").value, DecodeBase);
-            document.getElementById("f2").value = f.toString(DecodeBase);
-            document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(FloatBase, true);
-            document.getElementById("f1").value = b1 = f.valueOf().toString(FloatBase);
+            
+            if( f === undefined )
+            {
+              alert('Only numbers "0 to ' + (Math.min(10, DecodeBase) - 1) + (DecodeBase > 10 ? (DecodeBase === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + DecodeBase)) : "") + '" are Acceptable.');
+            }
+            else
+            {
+              document.getElementById("f2").value = f.toString(DecodeBase);
+              document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(FloatBase, true);
+              document.getElementById("f1").value = b1 = f.valueOf().toString(FloatBase);
+            }
           }
         }
 
@@ -218,9 +231,7 @@
 
       function DivToFract()
       {
-        var f = new Fract(),
-          pat = new Pattern(),
-          val = 0;
+        var f = new Fract(), pat = new Pattern(), val = 0;
 
         //Float to binary.
 
@@ -612,7 +623,7 @@
           </td>
           <td>
             <center>
-              <p style="font-size:3vh;">Analyze Patterns:</p>
+              <p style="font-size:3vh;">Analyze Data/Num Patterns:</p>
               <input name="c" onclick="Update(1);" type="radio">
             </center>
           </td>
