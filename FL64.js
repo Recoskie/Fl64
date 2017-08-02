@@ -459,7 +459,7 @@ Number.prototype.toPattern = function(base)
 
   //Compute data.
 
-  var d = ( this * Math.pow( base, ( Math.ceil( 36.04365338911715 / Math.log(base) ) - Math.floor( Math.log( this ) / Math.log( base ) ) ) ) ).tostring( base, true );
+  var d = ( this * Math.pow( base, ( Math.ceil( 36.04365338911715 / Math.log(base) ) - Math.floor( Math.log( this ) / Math.log( base ) ) ) ) ).toString( base, true );
   d = d.replace(".", "").split("e")[0];
 
   //Create the pattern.
