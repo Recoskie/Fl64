@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
 FL64 is an libary alowing javascript to have.<br />
 
-* Complete acess to the 64 bits of an double percision number.<br />
+* Complete access to the 64 bits of an double precision number.<br />
 
 * All 64 bit's of double percision numbers to do 64 bit bitwise arithmetic.<br />
 
