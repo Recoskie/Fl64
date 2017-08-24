@@ -14,13 +14,13 @@ FL64 is an libary alowing javascript to have.<br />
 
 * Nicely format double precision numbers as proper fractions.<br />
 ------------------------------------------------------------------------------
-FL64_App is an sample web application using this library which allows you to. <br />
+FL64_App is an sample web application using this library which allows you. <br />
 
 * To analyze patterns in bases 2 through 36. <br />
 
 * To convert fractional decimal Numbers to 64 bit binary as IEEE-754 double precision, and back again. Also supports fractional numbers in bases 2 though 36 not just decimal back to IEEE-754 double precision binary. Also IEEE-754 double precision binary can be set to hexadecimal instead of binary, or any base 2 though 36. <br />
 
-* Generate rally long randomized patterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
+* To generate rally long randomized patterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
 Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
 
 ------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         >> ##### Converts the bits in the mantissa to an different base then pattern data type.
 ------------------------------------------------------------------------------
 2. ### Bit Number Data type.
-    1. Bit Numbers acts as an regular number with two new properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated or read.
+    1. Bit Numbers act as an regular number with three new properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated, or read.
         ```javascript
         var num = ( 3.14 ).bits();
         
