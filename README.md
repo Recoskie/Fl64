@@ -20,7 +20,7 @@ FL64_App is an sample web application using this library which allows you to. <b
 
 * To convert fractional decimal Numbers to 64 bit binary as IEEE-754 double precision, and back again. Also supports fractional numbers in bases 2 though 36 not just decimal back to IEEE-754 double precision binary. Also IEEE-754 double precision binary can be set to hexadecimal instead of binary, or any base 2 though 36. <br />
 
-* Generate rally long randomized pasterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
+* Generate rally long randomized patterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
 Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
 
 ------------------------------------------------------------------------------
