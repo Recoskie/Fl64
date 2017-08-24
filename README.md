@@ -279,5 +279,5 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
           
           alert( Pat.toFract( num ) ); //Gives the fraction "3÷7".
           ```
-      5. Method **Pat.toString**:
+      5. Method **Pat.toString()**:
           > The infinet repeating patern to an string.
