@@ -1,269 +1,283 @@
-# Float numbers conversion library.
+# JavaScript double precision library.
+------------------------------------------------------------------------------
+FL64 is an libary alowing javascript to have.<br />
 
-The routines in this library are made to work with unrepresentative numbers back into fractions which then can be added, subtracted, divided, and multiplied through algorithms without error. The library also allow the translation of repeating digits in binary numbers that do not divide causing epsilon error. The algorithms can be tested using the "AnalyzeFl64.html".
+* Complete acess to the 64 bits of an double percision number.<br />
 
-The library is designed to work closely with the float number format without reducing performance, for algorithms that may benefit from this library.
+* All 64 bit's of double percision numbers to do 64 bit bitwise arithmetic.<br />
 
-Warning library is still in beta. Warning the methods in this readme  are now outdated. This readme will be updated soon to reflect the new methods and data types.
+* Numbers have number properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulates with math operations, and bitwise which changes the number value.<br />
+
+* Error correction.<br />
+
+* Pattern detection.<br />
+
+* Nicely format double precision numbers as proper fractions.<br />
+------------------------------------------------------------------------------
+FL64_App is an sample web application using this library which allows you to. <br />
+
+* To analyze patterns in bases 2 through 36. <br />
+
+* To convert fractional decimal Numbers to 64 bit binary as IEEE-754 double precision, and back again. Also supports fractional numbers in bases 2 though 36 not just decimal back to IEEE-754 double precision binary. Also IEEE-754 double precision binary can be set to hexadecimal instead of binary, or any base 2 though 36. <br />
+
+* Generate rally long randomized pasterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
+Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
 
 ------------------------------------------------------------------------------
-## CErr( f );
-
-Removes error through the number.
-
-```javascript
-//Randomized Repetition error.
-
-var n = 1 / ( 1 << ( ( Math.random() * 21 ) + 1 ) ); //Random fraction.
-
-for( var i = 0, c = 7, s = 1; i < 1000; c = ( ( Math.random() * 100 ) + 1 ) & -1, i++ )
-{
-  n -= ( ( ( ( c * 4 ) / 1000 ) + ( ( c * 3 ) / 1000 ) ) / ( ( ( c * 7 ) / 1000 ) ) ) - 1; //Random error.
-  if ( ( Math.random() * 2 ) & -1 ) { n = -n; } // random Sing switch.
-}
-
-var output = "Randomized Fractional Repetition Error.\r\n";
-output += "Float Value: " + n + ", Fract 1/" + 1 / n +"\r\n";
-
-n = CErr(n);
-
-output += "Corrected Float Value: " + n + ", Fract 1/" + 1 / n + "";
-
-alert( output );
-```
-
-Another example is when one tries to compare to equality, or to 0.
-
-```javascript
-var n = ( ( 0.3 + 0.6 ) / 0.9 ) - 1; //Theoretically 0.
-
-var output = "( ( 0.3 + 0.6 ) / 0.9 ) - 1 = 0.\r\n";
-output += "Float Value: " + n + "\r\n"; //0.9999999999999999
-output += "Corrected Float Value: " + CErr(n) + ""; //0
-
-alert( output );
-```
-
+1. ### Adds the following to double precision numbers:
+    1. Method **num.err()**
+        > ##### Error correction for double precision numbers.
+    2. Methods **num.bitLsh( shift )**, **num.bitRsh( shift )**.
+        > ##### Right shift, and left shift all 64 of double precision numbers.
+        > ##### Return number as an bitNumber.
+    3. Methods **num1.bitOr( num2 )**, **num1.bitAnd( num2 )**, **num1.bitXor( num2 )**, **num1.bitNot()**.
+        > ##### Do 64 bitwise using all 64 bits of both double precision numbers.
+        > ##### Return number as an bitNumber.
+    4. Method **num.bits()**.
+        > ##### Return number as an bitNumber.
+    5. Method **num.toString()** Enhanced:
+        > #### num.toString( base, true )
+        >> ##### If Exstend true display the float value past round off point in bases 2 through 36.
+        >> The exact value of the number PI as an double precision number in decimal (base 10) is 3.141592653589793115997963468544185161590576171875, but is rounded off at 3.141592653589793.
+        > #### num.toString( base )
+        >> ##### Display the regular toString value in radix 2 through 36.
+        > #### num.toString()
+        >> ##### Double percision number to decimal string.
+    6. Method **parseFloat()** Enhanced:
+        > #### parseFloat( str, base )
+        >> ##### Convert string radix 2 through 36 to an float value.
+        > #### parseFloat( str )
+        >> ##### Converts decimal string to double precision number.
+    7. Method **num.getFract()**
+        > #### Returns number as an Fraction data type.
+    8. Method **num.avgFract()**
+        > #### Returns number as best matching fraction across the mantissa as an Fraction data type.
+    9. Method **num.toPattern()**
+        > #### num.toPattern().
+        >> ##### Converts the bits in the mantissa to an pattern data type.
+        > #### num.toPattern( base ).
+        >> ##### Converts the bits in the mantissa to an different base then pattern data type.
 ------------------------------------------------------------------------------
-## DivToPat( f1, f2 );
+2. ### Bit Number Data type.
+    1. Bit Numbers acts as an regular number with two new properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated or read.
+        ```javascript
+        var num = ( 3.14 ).bits();
+        
+        alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
+        
+        alert( "Value = " + num ); //3.14 when added to String.
+        
+        alert( num.exp );  //The number value of the double precision exponent.
+        
+        alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
+        
+        //Right shift the double precision exponent by one, and subtract 1.
+        
+        num.exp = ( num.exp >> 1 ) -1;
+        
+        alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
+        
+        alert( "Value = " + num ); //The new manipulated number value.
+        
+        alert( num.exp );  //The new number value of the double precision exponent.
+        
+        alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
+        ```
+    2. Bit Numbers convert to Number during any Math, or Arithmetic/Logic operation.
+        ```javascript
+        var num = ( 3.14 ).bits();
 
-Divide, and ends as soon as a pattern is detected to, for undividable number. Since numbers can divide using the same subtractions in a loop to infinity it ends right at the repeat of the subtraction well dividing numbers which becomes the repeating digits in the division.
+        //Any Number operation that does not return "bitNumber" will convert back to "Number".
 
-Basically 1÷3 is 0.3333333333 in which 3 will repeat forever. Thus the pattern starts at 3 and is 3. However in binary numbers the relationship is different (Pat = [2]).
+        num = ( ( num + 9 ) * 7 ) << 2;
 
-```javascript
-alert(DivToPat( 314, 171 )); //314/171 = 1,1,2,2,1,5,2,3,1
-```
-Returns -1 at last array element if the calculation takes longer than 2.7 seconds. To enable the full computation of large patterns.
-
-```javascript
-//Force calculations.
-
-Force( true );
-
-//Compute pattern.
-
-alert(DivToPat( 314, 171 ));
-```
-
+        alert( "Add 9, multiply by 7, Left Shift 2 = " + num );
+        
+        alert( "Exponet = " + num.exp + "" ); //No "bitNumber" exponent.
+        
+        alert( "Exponet = " + num.bits().exp + "" ); //To "bitNumber" then exponent.
+        
+        alert( "Exponet = " + num.bitLsh(1).exp + "" ); //Or do "bitLsh()" gives "bitNumber".
+        ```
+    3. Method **parseNumber()**:
+        > #### parseNumber( str, base )
+        ```javascript
+        //The number PI in IEEE-754 double precision binary format.
+        
+        var num = parseNumber( "0100000000001001001000011111101101010010111011001001010000101010" );
+        
+        alert( num ); //Displays "3.141592643589793".
+        
+        //The number PI in IEEE-754 double precision hex format 0x400921FB52EC942A.
+        
+        var num2 = parseNumber( "400921FB52EC942A", 16 );
+        
+        alert( num2 ); //Displays "3.141592643589793".
+        
+        //Convert Number to Bit Number.
+        
+        var num = ( 79.6771716761117 ).bits();
+        
+        //Display Number in base 36 IEEE-754 double precision, and parse back to an Number.
+        
+        var str36 = num.toString(36);
+        
+        alert( str36 + " = " + parseNumber( str36, 36 ) );
+        ```
 ------------------------------------------------------------------------------
-## PatToDiv( Pat );
+3. ### Fraction Data type.
+     1. Fractions are displayed in proper fraction format.
+        ```javascript
+        var f = new Fract( 314, 100 );
+        
+        alert( f );  //The Fraction "14÷100+3" is displayed.
+        
+        alert( "Value = " + f );  //3.14 is displayed when added to an string.
+        
+        alert( "Value = " + f.toString() );  //The Fraction "14÷100+3" is displayed.
+        ```
+    2. Fractions convert to Number during any Math, or Arithmetic/Logic operation.
+        ```javascript
+        var f1 = new Fract( 9, 17 ), f2 = new Fract( 99, 10 );
 
-Converts the repeating pattern of digits in binary back into the smallest whole fraction that divides into the pattern of digits only.
+        //Any Number operation, or arithmetic operation will convert back to "Number".
+        //This includes adding fractions, or multiplying.
+        
+        f1 = f1 + 71;
+        
+        alert( f1 );  //The number "71.52941176470588" is displayed.
+        
+        //Ask the number to be an fraction again.
 
-If the fraction, or value was something like ( 7 + ( 1 ÷ 3 ) ) = 7.33333333333333 then the pattern would be 3, thus the smallest fraction is 1÷3, so it does not take in account the plus 7.
+        f1 = f1.getFract();
 
-```javascript
-alert(PatToDiv([1,1,2,2,1,5,2,3,1])); //1,1,2,2,1,5,2,3,1 = 143/171
-```
+        alert( f1 );  //9÷17+71 is displayed.
+
+        //Multiply fractions.
+
+        f1 = f1 * f2;
+
+        alert( f1 );  //The number "708.1411764705882" is displayed.
+
+        //Ask the number to be an fraction again.
+
+        f1 = f1.getFract();
+
+        alert( f1 );  //The fraction "12÷85+708" is displayed.
+
+        //Convert Fraction to number then to bit number.
+
+        f2 = ( f2 + 0 ).bits();
+
+        //Add the Bit number to fraction. Both convert to Number during Math operation.
+
+        f1 = f1 + f2;
+
+        alert( f1 );  //The Number "718.0411764705882" is displayed.
+        ```
+    3. Method **Fract.divP()**:
+        > Divides the fraction in select number base 2 through 36 returns the repeating Pattern.<br />
+        For Example 1÷7 = 0.142857142857 will repeat digits "142857" over and over to infinity.<br />
+        However 1÷7 divides evenly in (base 7), but not out of per 10 digits.<br />
+        ```javascript
+        var Pat = new Fract( 1, 7 ).divP(); //Divide 1 into 7 in binary.
+        
+        alert( Pat ); //The repeating pattern in an double precision numbers mantissa bits is "001∞".
+        
+        Pat = new Fract( 1, 7 ).divP( 10 ); //Divide 1 into 7 in decimal (base 10).
+        
+        alert( Pat ); //The repeating pattern in decimal is "142857∞".
+        ```
+    4. Method **Fract.Reduce()**:
+        > Reduce fraction to lowest possible whole value. <br />
+        Returns Fraction data type.
+    5. Method **Fract.toString()**:
+        > Returns an string of the fraction as a proper fraction.
+    6. Method **Fract.toCode()**:
+        > Returns an string of the fraction as script code. <br />
+        Main use is self building code that then can be compiled using **eval()** to evaluate the code.
+        ```javascript
+        var x = 1;
+        
+        var f = ( Math.random() * 1000 ).getFract();
+        
+        var code = "";
+        
+        for( var i = 0; i < 7; i++ )
+        {
+          code += "x *= " + f.toCode() + ";\r\n";
+          f = ( Math.random() * 1000 ).getFract();
+        }
+        
+        //Put the code into an function.
+        
+        code = "var MyFunc = function( x ) {\r\n" + code + "return( x ); };"
+        
+        //Display the Self generated function.
+        
+        alert( "Self generated code =\r\n" + code );
+        
+        //Compile the function.
+        
+        eval(code);
+        
+        //Pass random values to the function.
+        
+        x = Math.random();
+        alert( x + " = " + MyFunc( x ) + "" );
+        
+        x = Math.random();
+        alert( x + " = " + MyFunc( x ) + "" );
+        
+        x = Math.random();
+        alert( x + " = " + MyFunc( x ) + "" );
+        ```
+        > Note if one wants to you can create an array of random functions with this and link them together. <br />
+        Or one can combine this with an algorithm to generate an function based on an data set.
 ------------------------------------------------------------------------------
-## PatToFract( Float, DivPat );
-
-Calculates the smallest fraction by reversing the infinite pattern of numbers, and exponentially adjusting the number to whole fraction value.
-
-```javascript
-var n1 = 2198, n2 = 1197;
-
-//2198 divided by 1197 to pat.
-
-var pat = DivToPat( n1, n2 );
-
-//What divided by what is the division pattern.
-
-var PatDiv = PatToDiv( pat );
-
-//Divide 1197 into 2198 giving the float value.
-
-var FloatValue = n1 / n2;
-
-//Convert float value, and bit pattern back to smallest fraction.
-
-var Fract = PatToFract( FloatValue, PatDiv );
-
-//Smallest fraction 314/171.
-
-alert( Fract );
-```
-
-------------------------------------------------------------------------------
-## FloatToFract( Float, er );
-
-Calculates the smallest fraction of an float number.
-
-```javascript
-var n1 = 2198, n2 = 1197, CutOff = 1;
-var Float = n1 / n2;
-
-//2198 divided by 1197 to smalest fraction.
-
-var Fract = FloatToFract( Float );
-
-//Smallest fraction 314/171.
-
-alert( Fract );
-```
-The above will calculate the best possible fraction for the entire float number, but the next example will cut off "10" at the very end of the, of an float value to where it gets rounded off in the computer at max representable value.
-
-```javascript
-var Float = 0.7777777777777778; //Closest value of 7/9.
-
-//gives 7/9.
-
-var Fract = FloatToFract( Float );
-
-//Show fraction.
-
-alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
-
-var Float = 0.7777777777777773; //Closest value of 7/9, but is one digit off at maximum representable digits.
-
-//Gives 187649984473773/241264265751994 which is correct if the value rally is 0.7777777777777773.
-
-var Fract = FloatToFract( Float );
-
-//Show fraction.
-
-alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) );
-
-//Recalculate fraction with an cut off of 10 right near where an float gets rounded off in hardware.
-
-var Fract = FloatToFract( Float, 10 ); //Now it gives 7/9.
-
-//Show fraction.
-
-alert( Fract[0] + "/" + Fract[1] + " = " + ( Fract[0] / Fract[1] ) + " Recalculated with an cut off of 10 at the last representable place value." );
-
-```
-
-The "CutOff" in the above code will cut off the last representable binary digits in an float number by 10 this can be set larger. The cut off range will not cut off all values by 10 it only cuts off the last binary digits in the floats mantissa removing error. Only do this if the value is expected to have "X" amount of error close to EPSILON after repetitive arithmetic in an loop, thus we can cut the error off at the very end of the last representable binary digits in an floats binary data. Basically 3.1415 will still translate to the correct fraction even with the cut off of 10 as the number is not large enough to be near the maximum round off point of an float number.
-
-------------------------------------------------------------------------------
-## DecodeFloat( f );
-
-Decode the Sing, Exponent, and Mantissa of a JavaScript Float64 (Double precision) number.
-
-```javascript
-var fl64 = DecodeFloat( 3.1415926535 );
-
-//Display Sing, Exponent, Mantissa value.
-
-alert( fl64[0] + ", " + fl64[1] + ", " + fl64[2] + "" );
-```
-
-The decoded float value is stored as three integer numbers in an array.
-The number values can be converted to binary using ".toString(2)" with a radix of 2, or to hex using a radix of 16.
-In order for the number to be display properly in binary you have to zero pad the left of the binary number to quantity of digits in memory.
-
-------------------------------------------------------------------------------
-## ToBin( val, Pad );
-
-Convert Val to a binary number, and then zero pad the left of the binary number to quantity of digits in memory.
-
-```javascript
-var fl64 = DecodeFloat( 3.1415926535 );
-
-var output = "";
-
-//Sing to bin. Sing is one binary digit big.
-
-output = "Sing = " + ToBin( fl64[0], 1 ) + "\r\n";
-
-//Exponent to bin.
-
-output += "Exponent = " + ToBin( fl64[1], 11 ) + "\r\n";
-
-//Mantissa to bin.
-
-output += "Mantissa = " + ToBin( fl64[2], 52 );
-
-//Display output.
-
-alert( output );
-```
-
-------------------------------------------------------------------------------
-## ToFloat( f );
-
-Convert a decoded float number back into it's float value.
-
-```javascript
-var fl64 = DecodeFloat( 3.1415926535 );
-
-//Display Sing, Exponent, Mantissa value.
-
-alert( fl64[0] + ", " + fl64[1] + ", " + fl64[2] + "" );
-
-//Convert back to float value.
-
-alert( ToFloat( fl64 ) + "" );
-
-//Add exponent and mantissa by one.
-
-fl64[1] += 1;
-fl64[2] += 1;
-
-//Decode modified float.
-
-alert( ToFloat( fl64 ) + "" );
-```
-By converting back, and forth this way it becomes possible to do float bit hacks which is originally impossible in JavaScript.
-Or you can simply convert float values back and fourth between float value, hex representation, binary representation.
-
-------------------------------------------------------------------------------
-## DecodeMantissa( f );
-
-Decode the Float mantissa bit's of an Float64 (Double precision) number. Includes the Bias bit.
-
-------------------------------------------------------------------------------
-## BitCount( Mantissa );
-
-Convert an float number into it's bit count.
-
-```javascript
-var value = parseInt( "10110101001", 2 );
-
-var pat = BitCount( value ); //2,1,2,2,3,1
-
-alert( PatToBin( pat ) ); //10110101001
-```
-It can be the mantissa bit's of a float, or a integer binary value.
-
-------------------------------------------------------------------------------
-## FindPat( Pat );
-
-Convert the Bit counts into the best matching division pattern array.
-
-------------------------------------------------------------------------------
-## FindPatDiv( Pat );
-
-Convert the Bit counts into the best matching division pattern.
-
-------------------------------------------------------------------------------
-## PatToBin( Pat );
-
-Gives back a binary string of the repeating binary digits, for the pattern of the binary digits.
-
-```javascript
-var pat = DivToPat( 314, 171 ); //314/171 = 1,1,2,2,1,5,2,3,1
-alert( PatToBin( pat ) ); //111010110000101001
-```
+4. ### Pattern Data type.
+     1. Method **parsePattern( str, base )**:
+        ```javascript
+        var Pat = parsePattern( "142857", 10 );
+        
+        alert( Pat ); //Displays "142857∞"
+        
+        var Fract = Pat.getFract();
+        
+        alert( "Fraction = " + Fract.toString() ); //Displays Fraction "1÷7".
+        
+        //The value of the fraction.
+        
+        alert( "Value = " + Fract ); //Displays "0.14285714285714285" In which digits "142857" repeats.
+        ```
+        > If no base is specified binary is amused.
+        ```javascript
+        var Pat = parsePattern( "001" );
+        
+        alert( Pat ); //Displays "001∞"
+        
+        var Fract = Pat.getFract();
+        
+        alert( "Fraction = " + Fract.toString() ); //Displays Fraction "1÷7".
+        
+        //The value of the fraction.
+        
+        alert( "Value = " + Fract ); //Displays "0.14285714285714285" In which digits "142857" repeats.
+
+        alert( "Value = " + (Fract + 0).toString(2) ); //Displays "0.001001001001001001001001001001001001001001001001001001" In which digits "001∞" repeats.
+        ```
+      2. Method **Pat.getFract()**:
+          > Returns the fraction that produces the repeating pattern.
+      3. Method **Pat.avgFract()**:
+          > Returns the fraction that produces the best matching repeating pattern.
+      4. Method **Pat.toFract( num )**:
+          > Removes the pattern component of an float number then compute the Fraction.
+          ```javascript
+          var Pat = parsePattern( "142857", 10 ); //The Pattern of "1÷7".
+          
+          var num = ( 1 / 7 ) * 3; //The fraction "(1÷7)x3".
+          
+          alert( Pat.toFract( num ) ); //Gives the fraction "3÷7".
+          ```
+      5. Method **Pat.toString**:
+          > The infinet repeating patern to an string.
