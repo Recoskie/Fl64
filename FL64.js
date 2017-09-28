@@ -123,14 +123,15 @@ Fract.prototype.toCode = function()
 {
   var out = " ", sum = Math.floor(Math.abs(this.x) / Math.abs(this.y));
 
-  if ( ( this.x < 0 ) == !( this.y < 0 ) ) { sum = -sum; }
+  var s = false;
+
+  if ( ( this.x < 0 ) == !( this.y < 0 ) ) { s=true; }
 
   var re = Math.abs( Math.abs( this.x ) - ( Math.abs( this.y ) * Math.abs( sum ) ) );
 
-  if ( re !== 0 ) { if (sum < 0) { out += "-"; }; out += re + " / " + Math.abs( this.y );
-  if (sum > 0) { out += " + "; } else if (sum < 0) { out += " - "; sum = -sum; } }
+  if ( re !== 0 ) { if (s) { out += "-"; }; out += re + " / " + Math.abs( this.y ); }
 
-  if (sum !== 0) { out += sum; }; return (out);
+  if (sum !== 0) { if (!s) { out += " + "; } else if (s) { out += " - "; } out += sum; }; return (out);
 }
 
 //**********************************************************************************
@@ -257,6 +258,13 @@ Pattern.prototype.toFract = function(Float)
 
   fr.x = Math.round( fr.x ); fr.y = Math.round( fr.y ); return ( fr );
 }
+
+//**********************************************************************************
+//Last binary digit of accuracy in an float 64 number.
+//This line is for compatibility to older systems that do not have the constant.
+//**********************************************************************************
+
+Number.EPSILON = 1 / Math.pow( 2, 52 );
 
 //**********************************************************************************
 //Adjust Float64 binary into sections extending from number.
@@ -847,7 +855,7 @@ var parseNumber = function(str, base)
 
   //Put number together.
 
-  var fl = new Number(0); fl.b = true; fl.sing = ( f[0] >> 31 ) & 1; fl.exp = ( f[0] >> 20 ) & 0x7FF; fl.mantissa = ( ( f[0] & 0xFFFFF) * 0x100000000 ) + f[1]; return (fl);
+  var fl = new Number(0); fl.b = true; fl.sing = ( f[0] >> 31 ) & 1; fl.exp = ( f[0] >> 20 ) & 0x7FF; fl.mantissa = ( ( f[0] & 0xFFFFF) * 0x100000000 ) + f[1]; return ( fl );
 }
 
 //**********************************************************************************
