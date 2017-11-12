@@ -12,9 +12,9 @@ var Fract = function( X, Y )
 {
   if ( arguments.length > 1 )
   {
-	//check if fraction is valid.
-	
-	X.isNum(); Y.isNum(); this.x = Math.round( X ); this.y = Math.round( Y );
+    //check if fraction is valid.
+    
+    X.isNum(); Y.isNum(); this.x = Math.round( X ); this.y = Math.round( Y );
   }
   
   //Else default fraction.
@@ -901,3 +901,16 @@ var parseNumber = function( str, base )
 //**********************************************************************************
 
 Number.prototype.err = function() { return ( this.avgFract().valueOf() ); }
+
+//**********************************************************************************
+//Allow Arrays to do float number operations on all numbers in array. Similar to vector operations.
+//**********************************************************************************
+
+for( var i = 0, a = [ "divP", "reduce", "valueOf", "getFract", "avgFract", "bits", "bitAnd", "bitOr", "bitXor", "bitNot", "bitRsh", "bitLsh", "toPattern", "err" ], c = ""; i < a.length; i++ )
+{
+  c += "Array.prototype." + a[i] + " = function( a ) { for( var i1 = 0, i2 = 0, l = this.length, o = []; i1 < l; i1++ ) { ";
+  c += "if( this[i1]." + a[i] + " ) { o[i2++] = this[i1]." + a[i] + "( a ); } else if( ( this[i1] + 0 )." + a[i] + " ) { o[i2++] = ( this[i1] + 0 )." + a[i] + "( a ); }";
+  c += " } return( o ); }\r\n";
+}
+
+eval( c ); i = undefined; c = undefined; a = undefined;
