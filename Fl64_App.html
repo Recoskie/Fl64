@@ -480,7 +480,7 @@
       
       function Output( MSG, Data )
       {
-		up = true;
+        up = true;
 		
         //If only an message end any table, and setup the message as an header.
         
@@ -498,8 +498,8 @@
       
       function UpdateOutput()
       {
-		if ( up )
-		{
+        if ( up )
+        {
           document.getElementById( "OutSize" ).width = "40vw;";
           document.getElementById( "out" ).innerHTML = '<iframe frameborder="0" style="height:81vh;width:40vw;" id = "o"></iframe>';
           document.getElementById( "o" ).contentWindow.document.write( "<center>" + Result + "<\/table></center>" );
@@ -510,8 +510,8 @@
         Result = "<style>.wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }</style>";
         
         if ( !up ) { document.getElementById( "out" ).innerHTML = ""; document.getElementById( "OutSize" ).width = "0px;"; }
-		
-		up = false;
+        
+        up = false;
       }
       
       //**********************************************************************************
