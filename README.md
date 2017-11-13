@@ -1,48 +1,47 @@
 # JavaScript double precision library.
 ------------------------------------------------------------------------------
-FL64 is an libary alowing javascript to have.<br />
+FL64 is an high performance library allowing javascript to have.<br />
 
 * Complete access to the 64 bits of an double precision number.<br />
 
-* All 64 bit's of double percision numbers to do 64 bitwise arithmetic.<br />
+* All 64 bit's of double precision numbers to do 64 bitwise arithmetic.<br />
 
 * Numbers have number properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated with math operations, and bitwise which changes the number value.<br />
 
 * Error correction.<br />
 
-* Pattern detection.<br />
+* Recurring Pattern detection.<br />
 
 * Nicely format double precision numbers as proper fractions.<br />
 ------------------------------------------------------------------------------
 FL64_App is an sample web application using this library which allows you. <br />
 
-* To analyze patterns in bases 2 through 36. <br />
+* To analyze recurring patterns in bases 2 through 36. <br />
 
-* To convert fractional decimal Numbers to 64 bit binary as IEEE-754 double precision, and back again.<br />
-  Also supports fractional numbers in bases 2 through 36 not just decimal back to IEEE-754 double precision binary.<br />
-  Also IEEE-754 double precision binary can be set to hexadecimal instead of binary, or any base 2 through 36. <br />
+* To convert IEEE-754 double precision binary in base2-36 to fractional Number, and to convert fractional Numbers in base2-36 to IEEE-754 double precision binary.<br />
 
-* To generate rally long randomized patterns in different number bases and convert them back, and fourth between fractions that produce the pattern in division.<br />
+* To generate rally long randomized recurring patterns in different number bases and convert them back, and fourth between fractions that produce the recurring pattern in division.<br />
 Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
 
 ------------------------------------------------------------------------------
 1. ### Adds the following to double precision numbers:
     1. Method **num.err()**
         > ##### Error correction for double precision numbers.
+        > ##### Return number.
     2. Methods **num.bitLsh( shift )**, **num.bitRsh( shift )**.
-        > ##### Right shift, and left shift all 64 of double precision numbers.
+        > ##### Right shift, and left shift 64bit of double precision numbers in memory.
         > ##### Return number as an bitNumber.
     3. Methods **num1.bitOr( num2 )**, **num1.bitAnd( num2 )**, **num1.bitXor( num2 )**, **num1.bitNot()**.
-        > ##### Do 64 bitwise using all 64 bits of both double precision numbers.
+        > ##### Do 64 bitwise using all 64 bits of both double precision numbers in memory.
         > ##### Return number as an bitNumber.
     4. Method **num.bits()**.
         > ##### Return number as an bitNumber.
     5. Method **num.toString()** Enhanced:
         > #### num.toString( base, true )
-        >> ##### If Exstend true display the float value past round off point in bases 2 through 36.
+        >> ##### If Exstend true then display the float value past round off point in bases 2 through 36.
         >> The exact value of the number PI as an double precision number in decimal (base 10) is 3.141592653589793115997963468544185161590576171875, but is rounded off at 3.141592653589793.
         > #### num.toString( base )
-        >> ##### Display the regular toString value in radix 2 through 36.
+        >> ##### Display the regular toString value in base 2 through 36.
         > #### num.toString()
         >> ##### Double percision number to decimal string.
     6. Method **parseFloat()** Enhanced:
@@ -178,8 +177,8 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         alert( f1 );  //The Number "718.0411764705882" is displayed.
         ```
     3. Method **Fract.divP()**:
-        > Divides the fraction in select number base 2 through 36 returns the repeating Pattern.<br />
-        For Example 1÷7 = 0.142857142857 will repeat digits "142857" over and over to infinity.<br />
+        > Divides the fraction in select number base 2 through 36 returns the recurring Pattern.<br />
+        For Example 1÷7 = 0.142857142857 in which the recurring digits "142857" repeat over and over to infinity.<br />
         However 1÷7 divides evenly in (base 7), but not out of per 10 digits.<br />
         ```javascript
         var Pat = new Fract( 1, 7 ).divP(); //Divide 1 into 7 in binary.
@@ -195,20 +194,19 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         Returns Fraction data type.
     5. Method **Fract.toString()**:
         > Returns an string of the fraction as a proper fraction.
-    6. Method **Fract.toCode()**:
-        > Returns an string of the fraction as script code. <br />
+    6. Method **Fract.toString( op )**:
+        > Returns an string of the fraction as script code mixed with comparison or logic/arithmetic, or math operator. <br />
         Main use is self building code that then can be compiled using **eval()** to evaluate the code.
         ```javascript
         var x = 1;
         
-        var f = ( Math.random() * 1000 ).getFract();
+        var f = ( Math.random() * 1000 ).getFract(1);
         
         var code = "";
         
-        for( var i = 0; i < 7; i++ )
+        for( var i = 0; i < 7; f = ( Math.random() * 1000 ).getFract(1), i++ )
         {
-          code += "x *= " + f.toCode() + ";\r\n";
-          f = ( Math.random() * 1000 ).getFract();
+          code += "x" + f.toString( "*=" ) + ";\r\n";
         }
         
         //Put the code into an function.
@@ -237,7 +235,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         > Note if one wants to you can create an array of random functions with this and link them together. <br />
         Or one can combine this with an algorithm to generate an function based on an data set.
 ------------------------------------------------------------------------------
-4. ### Pattern Data type.
+4. ### Recurring Pattern Data type.
      1. Method **parsePattern( str, base )**:
         ```javascript
         var Pat = parsePattern( "142857", 10 );
