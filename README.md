@@ -236,7 +236,8 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         Or one can combine this with an algorithm to generate an function based on an data set.
 ------------------------------------------------------------------------------
 4. ### Recurring Pattern Data type.
-     1. The recurring pattern data type is for fractions that do not dived by number base properly. For example 1÷7 in decimal can not divide producing recurring digits "142857".
+     1. The recurring pattern data type is for fractions that do not divide by number base properly.<br />
+     For example 1÷7 in decimal can not divide producing recurring digits "142857".
         ```javascript
         var Pat = new Pattern( "142857", 10 );
         
@@ -269,8 +270,8 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
       2. Method **Pat.getFract()**:
           > Returns the fraction that produces the repeating pattern.
       3. Method **Pat.avgFract()**:
-          > Returns the fraction that produces the best matching repeating pattern within the digit.
-          > Note it is possible to use this as an high performance alternative to finding the best matching rescuing pattern in data.
+          > Returns the fraction that produces the best matching repeating pattern within the digit.<br /><br />
+          Note it is possible to use this as an high performance alternative to finding the best matching rescuing pattern in data.
       4. Method **Pat.toFract( num )**:
           > Removes the pattern component of an float number then compute the Fraction.
           ```javascript
