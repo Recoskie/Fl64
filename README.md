@@ -12,7 +12,7 @@ FL64 is an high performance library allowing javascript to have.<br />
 
 * Recurring Pattern detection.<br />
 
-* Nicely format double precision numbers as proper fractions.<br />
+* Nicely format double precision numbers as proper fractions, or as script code.<br />
 ------------------------------------------------------------------------------
 FL64_App is an sample web application using this library which allows you. <br />
 
@@ -236,9 +236,9 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         Or one can combine this with an algorithm to generate an function based on an data set.
 ------------------------------------------------------------------------------
 4. ### Recurring Pattern Data type.
-     1. Method **parsePattern( str, base )**:
+     1. The recurring pattern data type is for fractions that do not dived by number base properly. For example 1÷7 in decimal can not divide producing recurring digits "142857".
         ```javascript
-        var Pat = parsePattern( "142857", 10 );
+        var Pat = new Pattern( "142857", 10 );
         
         alert( Pat ); //Displays "142857∞"
         
@@ -252,7 +252,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         ```
         > If no base is specified binary is amused.
         ```javascript
-        var Pat = parsePattern( "001" );
+        var Pat = new Pattern( "001" );
         
         alert( Pat ); //Displays "001∞"
         
@@ -269,15 +269,16 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
       2. Method **Pat.getFract()**:
           > Returns the fraction that produces the repeating pattern.
       3. Method **Pat.avgFract()**:
-          > Returns the fraction that produces the best matching repeating pattern.
+          > Returns the fraction that produces the best matching repeating pattern within the digit.
+          > Note it is possible to use this as an high performance alternative to finding the best matching rescuing pattern in data.
       4. Method **Pat.toFract( num )**:
           > Removes the pattern component of an float number then compute the Fraction.
           ```javascript
-          var Pat = parsePattern( "142857", 10 ); //The Pattern of "1÷7".
+          var Pat = new Pattern( "142857", 10 ); //The Pattern of "1÷7".
           
           var num = ( 1 / 7 ) * 3; //The fraction "(1÷7)x3".
           
           alert( Pat.toFract( num ) ); //Gives the fraction "3÷7".
           ```
       5. Method **Pat.toString()**:
-          > The infinet repeating patern to an string.
+          > The infinite repeating pattern to an string.
