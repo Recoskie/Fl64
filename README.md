@@ -46,7 +46,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
         >> ##### Double percision number to decimal string.
     6. Method **parseFloat()** Enhanced:
         > #### parseFloat( str, base )
-        >> ##### Convert string radix 2 through 36 to an float value.
+        >> ##### Convert string base 2 through 36 to an float value.
         > #### parseFloat( str )
         >> ##### Converts decimal string to double precision number.
     7. Method **num.getFract()**
@@ -195,8 +195,8 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
     5. Method **Fract.toString()**:
         > Returns an string of the fraction as a proper fraction.
     6. Method **Fract.toString( op )**:
-        > Returns an string of the fraction as script code mixed with comparison or logic/arithmetic, or math operator. <br />
-        Main use is self building code that then can be compiled using **eval()** to evaluate the code.
+        > Returns an string of the fraction as script code combined with any operator such as comparison, or logic/arithmetic, or math operator. <br />
+        Main use is self building code that then can be compiled using **eval()**.
         ```javascript
         var x = 1;
         
@@ -270,7 +270,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
       2. Method **Pat.getFract()**:
           > Returns the fraction that produces the repeating pattern.
       3. Method **Pat.avgFract()**:
-          > Returns the fraction that produces the best matching repeating pattern within the digit.<br /><br />
+          > Returns the fraction that produces the best matching repeating pattern within the digits.<br /><br />
           Note it is possible to use this as an high performance alternative to finding the best matching rescuing pattern in data.
       4. Method **Pat.toFract( num )**:
           > Removes the pattern component of an float number then compute the Fraction.
