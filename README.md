@@ -283,3 +283,58 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
           ```
       5. Method **Pat.toString()**:
           > The infinite repeating pattern to an string.
+------------------------------------------------------------------------------
+5. ### Vector/Array based operations.
+      All functions in this library can be used with an group of numbers rather than just one number at an time.<br />
+      This includes error correct all numbers in array by calling method ".err()" on the array for example.<br />
+      The elements in the array are automatically adjusted and converted to the proper data type, so if number is in "64bit's", or an "fraction" and you use number error correction then the array elements are converted to the proper type number.<br />
+      Any elements that do not support the operation are removed.
+      ```javascript
+      //The output to be displayed in new window.
+      
+      var out = "";
+      
+      //Create Array of ten random fractions.
+      
+      for( var i = 0, a = []; i < 10; a[ i++ ] = new Fract( Math.random() * 1000, Math.random() * 1000 ) );
+      
+      out += "<hr / >Find the division pattern of all fractions.";
+      
+      a = a.divP(); //Find division pattern.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      out += "<hr / >Convert all ten patterns to fractions.";
+      
+      a = a.getFract(); //Convert to fract.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      out += "<hr / >Convert all ten fractions to float value.";
+      
+      a = a.valueOf(); //Value of each element.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      out += "<hr / >Convert all ten numbers to bits.";
+      
+      a = a.bits(); //Convert to bit's.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      out += "<hr / >Xor the seventh number by all numbers."
+      
+      a = a.bitXor( a[7] ); //Xor number 7 by all numbers.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      out += "<hr / >Convert all ten 64bit's to float value.";
+      
+      a = a.valueOf(); //Value of each element.
+      
+      out += "<hr / >" + ( a + "" ).replace( /,/g, "<br />" );
+      
+      //Write output to an new blank window.
+      
+      var w = window.open(''); w.document.write( out );
+      ```
