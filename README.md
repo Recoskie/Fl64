@@ -338,3 +338,8 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
       
       var w = window.open(''); w.document.write( out );
       ```
+6. ### Additional references.
+      <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">Double precision format.</a><br />
+      <a href="https://en.wikipedia.org/wiki/Binary_number">Binary Base2 positional system.</a><br />
+      <a href="https://en.wikipedia.org/wiki/Duodecimal">Duodecimal Base12 positional system.</a>
+      
