@@ -121,7 +121,7 @@ var Oporators = [
   "<", "<=", ">", ">=", "==", "===", "!=", "!==", "&&", "&&=", "||", "||=", "!", "!=", "", "="
 ];
 
-Fract.prototype.toString = function( op )
+Fract.prototype.toString = function( op, s )
 {
   var out = "", sum = Math.floor( Math.abs( Math.round( this.x ) ) / Math.abs( Math.round( this.y ) ) );
   
@@ -129,9 +129,11 @@ Fract.prototype.toString = function( op )
   
   if( op != undefined && ( op = Oporators.indexOf(op) ) < 0 ) { throw ( new Error( "Operator is not supported." ) ); }
   
-  //Is the value of the fraction negative or positive.
+  //Is the value of the fraction negative or positive. Note if "s" is true force absolute value.
   
   var sing = ( this.x ^ this.y ) < 0;
+  
+  if( s ) { sing = false; }
   
   //subtract sum amount leaving the remainder of the fractional part.
   
@@ -149,7 +151,7 @@ Fract.prototype.toString = function( op )
     
     //Else Regular fraction amount.
     
-    else { out += re + ( op != undefined ? "/" : "\xF7" ); }
+    else { out += re + ( op != undefined ? " / " : "\xF7" ); }
     
     //Divided by.
     
@@ -158,15 +160,17 @@ Fract.prototype.toString = function( op )
   
   //Sum amount.
   
-  if ( sum !== 0 ) {  out += !sing ? ( out == "" ? "" : "+" ) : "-"; out += sum; }
+  if ( sum !== 0 ) {  out += !sing ? ( out == "" ? "" : " + " ) : " - "; out += sum; }
   
   //If fraction and sum is combined with operation must be put in parenthesis.
   
-  if( op != undefined && re !== 0 && sum !== 0 && ( ( op & 1 ) == 0 && op < 12 ) ) { out = "(" + out + ")"; }
+  if( op != undefined && re !== 0 && sum !== 0 && ( ( op & 1 ) == 0 && op < 12 ) ) { out = "( " + out + " )"; }
   
   //Return value.
   
-  return ( ( Oporators[ op ] || "" ) + out );
+  if( Oporators[ op ] ) { out = Oporators[ op ] + " " + out; } else { out = out.replace( / /g, "" ); }
+  
+  return ( out !== "" ? out : "0" );
 }
 
 //**********************************************************************************
@@ -903,7 +907,7 @@ var parseNumber = function( str, base )
 Number.prototype.err = function() { return ( this.avgFract().valueOf() ); }
 
 //**********************************************************************************
-//Allow Arrays to do float number operations on all numbers in array. Similar to vector operations.
+//Allow Arrays to do float number operations on all numbers in array. Similar to vector.
 //**********************************************************************************
 
 for( var i = 0, a = [ "divP", "reduce", "valueOf", "getFract", "avgFract", "bits", "bitAnd", "bitOr", "bitXor", "bitNot", "bitRsh", "bitLsh", "toPattern", "err" ], c = ""; i < a.length; i++ )
