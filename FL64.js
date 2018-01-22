@@ -524,7 +524,32 @@ Number.prototype.toPattern = function( base )
 
 Number.prototype.toString = function( base, MostAcurate )
 {
-  //Check if invalid base setting.
+  //If base is an string then it is an operation.
+
+  if( typeof base === 'string' )
+  {
+    //Output and select operator.
+
+    var out = this, op = Oporators.indexOf( base );
+
+    //Check if operator is valid.
+  
+    if( op != undefined && op < 0 ) { throw ( new Error( "Operator is not supported." ) ); }
+
+    //Adjust for absolute value.
+
+    if ( MostAcurate && out < 0 ) { out = -out; }
+
+    //Not all operators are fractional some are integer operations.
+
+    if( op > 11 && op < 26 ){ out = out & -1; }
+
+    //Return output.
+
+    return ( ( Oporators[op] !== "" ? Oporators[op] + " " : "" ) + out + "" );
+  }
+  
+  //Else Check if invalid base setting.
   
   base = ( base & -1 ) || ( this.b ? 2 : 10 ); if ( base < 2 || base > 36 ) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
   
