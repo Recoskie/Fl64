@@ -123,39 +123,41 @@ var Oporators = [
 
 Fract.prototype.toString = function( op, s )
 {
-  var out = "", sum = Math.floor( Math.abs( Math.round( this.x ) ) / Math.abs( Math.round( this.y ) ) );
-  
   //Check if operator is valid.
   
   if( op != undefined && ( op = Oporators.indexOf(op) ) < 0 ) { throw ( new Error( "Operator is not supported." ) ); }
   
   //Is the value of the fraction negative or positive. Note if "s" is true force absolute value.
   
-  var sing = ( this.x ^ this.y ) < 0;
+  var sing = ( this.x ^ this.y ) < 0 && !s;
   
-  if( s ) { sing = false; }
+  //absolute value numerator, denominator, remainder, and sum.
+   
+  var out = "", numerator = Math.floor( Math.abs( Math.round( this.x ) ), denominator = Math.abs( Math.round( this.y ) ) );
+  
+  var sum = Math.floor( numerator / denominator );
   
   //subtract sum amount leaving the remainder of the fractional part.
   
-  var re = Math.abs( Math.abs( this.x ) - ( Math.abs( this.y ) * Math.abs( sum ) ) );
+  numerator = numerator - ( denominator * sum );
   
   //If has fractional part.
   
-  if ( re !== 0 && !( op > 11 && op < 26 ) )
+  if ( numerator !== 0 && !( op > 11 && op < 26 ) )
   {
     if ( sing ) { out += "-"; sing = ~sing; }
-	
+  
     //Multiply, and Divide flip if it is 1 divided by.
     
-    if( ( re === 1 && sum === 0 ) && ( op < 4 ) ) { op += op < 2 ? 2 : -2; }
+    if( ( numerator === 1 && sum === 0 ) && ( op < 4 ) ) { numerator = 0; op += op < 2 ? 2 : -2; }
     
     //Else Regular fraction amount.
     
-    else { out += re + ( op != undefined ? " / " : "\xF7" ); }
+    else { out += numerator + ( op != undefined ? " / " : "\xF7" ); }
     
     //Divided by.
     
-    out += Math.abs( this.y );
+    out += denominator;
   }
   
   //Sum amount.
@@ -164,9 +166,11 @@ Fract.prototype.toString = function( op, s )
   
   //If fraction and sum is combined with operation must be put in parenthesis.
   
-  if( op != undefined && re !== 0 && sum !== 0 && ( ( op & 1 ) == 0 && op < 12 ) ) { out = "( " + out + " )"; }
+  if( op != undefined && numerator !== 0 && sum !== 0 && ( ( op & 1 ) == 0 && op < 12 ) ) { out = "( " + out + " )"; }
   
   //Return value.
+  
+  if( ( out === "1" || out === "" ) && ( op < 4 ) ) { return( "" ); } //Divide multiply by one is no operation.
   
   if( Oporators[ op ] ) { out = Oporators[ op ] + " " + out; } else { out = out.replace( / /g, "" ); }
   
