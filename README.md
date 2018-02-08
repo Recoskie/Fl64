@@ -287,7 +287,7 @@ Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2
 5. ### Vector/Array based operations.
       All functions in this library can be used with an group of numbers rather than just one number at an time.<br />
       This includes error correct all numbers in array by calling method ".err()" on the array for example.<br />
-      This includes the Set data type used in the <a href="https://github.com/Recoskie/AI-Matrix#sets-also-suport-array-methods-reverse-splice-shift-unshift-push-pop">AI Matrix library</a>, because the set type is basically arrays.<br />
+      This includes the Set data type used in the <a href="https://github.com/Recoskie/AI-Matrix/blob/master/README.md#sets-are-the-same-as-arrays">AI Matrix library</a>, because the set type is basically array.<br />
       The elements in the array are automatically adjusted and converted to the proper data type, so if number is in "64bit's", or an "fraction" and you use number error correction then the array elements are converted to the proper type number.<br />
       Any elements that do not support the operation are removed.
       ```javascript
