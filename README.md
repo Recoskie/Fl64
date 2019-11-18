@@ -1,5 +1,10 @@
 # JavaScript double precision library.
 ------------------------------------------------------------------------------
+* Note FL64-v3 is in progress. It will allow you to solve the pattern to any irrational number.<br />
+Or to create any irrational number you like.<br />
+See the following gist which is the working version of FL64-v3.<br />
+https://gist.github.com/Recoskie/129de0a911173d3dbdcf617f3492567b
+------------------------------------------------------------------------------
 FL64 is an high performance library allowing javascript to have.<br />
 
 * Complete access to the 64 bits of an double precision number.<br />
