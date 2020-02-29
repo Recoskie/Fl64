@@ -1,8 +1,10 @@
 # JavaScript double precision library.
 ------------------------------------------------------------------------------
-If you download this library, and tool as zip. You have to download the files in the folder AI-Mat. <br />
-Github.com does not group togther seprate libaryies. Open the folder AI-Mat on this page, and download it as zip.
-Place the files in the folder AI-Mat.
+If you download this library, and tool as zip.
+
+You have to download the file AI-Mat.js to the empty folder AI-Mat. <br />
+Github.com does not group together separate libraries. Open the folder AI-Mat on this page, and copy AI-Mat.js to the empty folder.
+Or just download the AI-Mat library and Place the files in the empty folder AI-Mat.
 
 See the following about git issue <a href="https://github.com/dear-github/dear-github/issues/214" >#214</a >.
 
