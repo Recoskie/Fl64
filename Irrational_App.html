@@ -1,0 +1,285 @@
+<html>
+<head>
+  <title>Float64.</title>
+</head>
+<body onload="update(); Trans.update(); LoadExample();" onresize="update();">
+  <style type="text/css">
+    <!--
+    body {
+      background-color: #0033AA;
+      background-image: url(bg/bg.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      -moz-background-size: cover;
+      -webkit-background-size: cover;
+    }
+
+    table {
+      background-color: rgba(200,200,200,0.50);
+    }
+
+    input[type=button] {
+      background-color: rgba(0, 200, 255, 0.50);
+      height: 2.7vh;
+    }
+
+    input[type=text] {
+      background-color: rgba(255, 255, 255, 0.50);
+    }
+    -->
+  </style>
+  <script src="FL64.js" type="text/javascript"></script>
+  <script src="FL64-UI.js" type="text/javascript"></script>
+  <script src="AI-Mat\AI-Mat.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    //Setup converg bar.
+
+    var CVerg = new CBar("CVerg");
+
+    //Set up Control/Edit factor bar.
+
+    var Fracts = new FBar("Fracts");
+
+    //Setup Factor creation bar, or fractor tranformation of a set number in FBar.
+
+    var Trans = new TBar("Trans", Fracts);
+
+    /*A floating point number is incoomplete at it's last digit of accuracy.
+    Thus this creates factors that are partially incomplete*/
+
+    var ac = 100; //Percentage as an adjustable value.
+    var CutOff = 1 / Math.pow(2, (52 * (ac / 100))); //The acutuall cut off range across the binary number.
+
+    //Number compared aginst to test acuracy.
+
+    var n_ac = NaN;
+
+    //User input.
+
+    function GetInput()
+    {
+      var n = NaN;
+
+      if (input == 1) {
+        n = new Fract(document.getElementById("f1").value, document.getElementById("f2").value);
+      }
+      else {
+        n = new Number(document.getElementById("num").value);
+      }
+
+      n_ac = n.primitive(); n = n.splitAll(); CVerg.set(n); Fracts.set(n);
+    }
+
+    //Switch div elements between cell and row alignment based on window dimensions.
+
+    function update()
+    {
+      var ng = document.getElementById("group");
+      var w = window.innerWidth, h = window.innerHeight;
+
+      //If width is longer do regular row alignment.
+
+      if (CVerg.Vertical && w > h) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; }
+
+      //Else lay the bars out side by side in cells.
+
+      else if (!CVerg.Vertical && w < h) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; }
+
+      //Update the page elements b1, and b2 to proper width and dimensions.
+
+      CVerg.auto(); Fracts.auto();
+    }
+
+    //Update the convergent bar on creating a new number in FBar.
+
+    Fracts.onCreate = function (n)
+    {
+      //Change to number type only.
+
+      document.getElementsByName("Input")[0].checked = "true"; input = 0; UpdateI();
+
+      //Update input/output.
+
+      document.getElementById("num").value = n.primitive() + "";
+      document.getElementById("r").innerHTML = "Output = " + n.primitive() + "";
+      CVerg.set(n);
+
+      //Update n_ac number.
+
+      n_ac = n.primitive();
+    }
+
+    //Update output and accuracy comparision.
+
+    Fracts.onChange = function (n)
+    {
+      //Caulate the acuraccy of the value to the Cut off range.
+
+      var re = Math.ceil((((-Math.log(Math.abs(1 - (n.primitive() / n_ac))) / Math.log(2)) / (52 / (100 / ac))) * 100));
+
+      if (re == Infinity || re > 100) { re = 100; }
+
+      document.getElementById("r-ac").innerHTML = isNaN(re) ? "?" : re;
+
+      //Update output to change.
+
+      document.getElementById("r").innerHTML = "Output = " + n + "";
+    }
+
+    //Load a example.
+
+    var sq = 2, tanh = 1;
+
+    function LoadExample(type)
+    {
+      var type = type || 0;
+
+      if (type == 0) {
+        document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='PHI' onclick='LoadExample(1);' /></td>\
+<td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /></td>\
+<td><input type='button' value='PI' onclick='LoadExample(3);' /></td>\
+<td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td>\
+<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td></table>";
+      }
+
+      else {
+        //Change input type.
+
+        document.getElementsByName("Input")[0].checked = "true"; input = 0; UpdateI();
+
+        //Solve the golden ratio.
+
+        if (type == 1) {
+          var n = 1.618033988749895.limit(CutOff);
+
+          n_ac = n.primitive(); CVerg.set(n.splitAll());
+
+          document.getElementById("num").value = n.primitive() + "";
+
+          n = n.split(); Fracts.set(n);
+
+          Trans.index = 0; Trans.set([1], [1]);
+        }
+
+        //Solve the natural logritham.
+
+        else if (type == 2) {
+          var n = 2.718281828459045.limit(CutOff);
+
+          n_ac = n.primitive(); CVerg.set(n.splitAll());
+
+          document.getElementById("num").value = n.primitive() + "";
+
+          n = n.split(); Fracts.set(n);
+
+          Trans.index = 1; Trans.set([1, 1], [1, 1]);
+        }
+
+        //Solve the number PI.
+
+        else if (type == 3) {
+          var n = Math.PI.limit(CutOff);
+
+          n_ac = n.primitive(); CVerg.set(n.splitAll());
+
+          document.getElementById("num").value = n.primitive() + "";
+
+          n = n.split(); Fracts.set(n);
+
+          Trans.index = 1; Trans.set([6, 0, 0], [9, 16, 8]);
+        }
+
+        //Solve a Sqaure root.
+
+        else if (type == 4) {
+          var n = Math.pow(sq, 0.5).limit(CutOff);
+
+          n_ac = n.primitive(); CVerg.set(n.splitAll());
+
+          document.getElementById("num").value = n.primitive() + "";
+
+          var a = Math.floor(n.primitive()), b = sq - (a * a);
+
+          n.length = 0;
+
+          if ((n - a) !== 0) {
+            n = n.split(a, b); Fracts.set(n);
+
+            Trans.index = 1; Trans.set([a * 2], [b]);
+          }
+          else { Fracts.set(n); Trans.index = 1; Trans.set([0], [0]); }
+        }
+
+        //Solve the heperbolic function.
+
+        else if (type == 5) {
+          var n = Math.tanh(1 / tanh).limit(CutOff);
+
+          n_ac = n.primitive(); CVerg.set(n.splitAll());
+
+          document.getElementById("num").value = n.primitive() + "";
+
+          n = n.split(0, 1); Fracts.set(n);
+
+          Trans.index = 1; Trans.set([tanh, tanh * 2], [1, 0]);
+        }
+      }
+    }
+
+    //Adjust the cut off range and acuracy.
+
+    function setAC()
+    {
+      CutOff = 1 / Math.pow(2, (52 * (ac / 100)));
+
+      if (!isNaN(Fracts.get())) { Fracts.set(Fracts.get().limit(CutOff)); }
+
+      document.getElementById("ac").innerHTML = ac + "";
+    }
+
+    //Change the input method.
+
+    var input = 0;
+
+    function UpdateI()
+    {
+      if (input == 1) {
+        document.getElementById("in").innerHTML = 'Input = <input id="f1" type="text">&div;<input id="f2" type="text">'
+      }
+      else {
+        document.getElementById("in").innerHTML = 'Input = <input id="num" type="text">'
+      }
+    }
+  </script>
+  <center>
+    <table style="width:100%;" border="1">
+      <tr>
+        <td>
+          Value:<input type="radio" onclick="input = 0; UpdateI();" name="Input" checked="true" />Fraction:<input type="radio" onclick="input = 1; UpdateI();" name="Input" />
+        </td>
+        <td>
+          <div id="in" style=" display:inline;">Input = <input id="num" type="text"></div><input type="button" value="1/val" onclick="GetInput();">
+        </td>
+        <td>
+          Cut Off Range = <div style=" display:inline;" id="ac">100</div>%<input type="button" value="&#x2191;" onclick="ac=Math.min(ac+1,100);setAC();" /><input type="button" value="&#x2193;" onclick="ac=Math.max(ac-1,1);setAC();" />
+        </td>
+        <td>
+          <div id="r">Output = ?</div>
+        </td>
+        <td>
+          Accuracy = <div style="display:inline;" id="r-ac">?</div>%
+        </td>
+      </tr>
+    </table>
+    <div id="group">
+      <div id="CVerg" style="overflow:hidden;"></div>
+      <hr />
+      <div id="Fracts" style="overflow:hidden;"></div>
+    </div>
+    <hr />
+    <div id="Trans" style="max-height:30%;"></div>
+    <br />
+    <div id="Exp"></div>
+  </center>
+</body>
+</html>

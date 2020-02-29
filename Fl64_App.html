@@ -1,594 +1,653 @@
 <html>
-  <head>
-    <title>Float64.</title>
-  </head>
-  <body  style="overflow:hidden;">
+<head>
+  <title>Float64.</title>
+  <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />
+</head>
+  <body onload="re(false); update();" onresize="re(true);">
     <style type="text/css">
       <!--
-        body { background-image:url(bg/bg.jpg); background-repeat:no-repeat; background-size:cover; -moz-background-size:cover; -webkit-background-size:cover; }
+        body
+        {
+          background-image:url(bg/bg.jpg);
+          background-repeat:no-repeat;
+          background-size:cover;
+          -moz-background-size:cover;
+          -webkit-background-size:cover;
+        }
+        table
+        {
+          background-color:rgba(255,255,255,0.5);
+        }
+        input[type=button]
+        {
+          background-color:rgba(255,255,255,0.5);
+        }
+        input[type=text]
+        {
+          background-color:rgba(255,255,255,0.5);
+        }
         -->
     </style>
     <script src="FL64.js" type="text/javascript"> </script> 
     <script type="Text/JavaScript">
-      var Result = "<style><!--.wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }--></style>";
-      var force = false, sw = false, up = false;
-      
-      //**********************************************************************************
-      //Analyze Fractions, and compare Float 64 binary patterns.
-      //**********************************************************************************
+var Result = "<style><!--.wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }--></style>";
+var force = false, sw = false, up = false;
 
-      function AnalyzeFract()
-      {
-        var num = GetInput( true, true, true ), fract = new Fract( num[ 0 ], num[ 1 ] );
-        
-        Output( "Smallest fraction by pattern." ); Output( "Fraction:", fract.toString() );
-        
-        //Find the Division pattern.
-        
-        var pat = fract.divP( force ), pat_f = new Fract();
-        
-        //Show the bit pattern.
-        
-        if ( !pat.data )
-        {
-          Output( "Binary Divide Pattern:", ( pat + " Repeats to Infinity." ) );
-          
-          //Convert the bit pattern into divide.
-          
-          pat_f = pat.getFract(); Output( "Pattern to Fraction:", pat_f.toString() );
-          
-          //Convert Float value, and division pattern to smallest fraction.
-          
-          pat_f = pat.toFract( fract ); Output( "Calc (Float&divide;Pat)Exp:", pat_f.toString() + " = " + pat_f + "" );
-        }
-        else { Err( "Simulated Divide to Bit Pattern:", pat.data ); }
-        
-        //**********************************************************************************
-        //Divide the fraction for real, and decode the real mantissa.
-        //**********************************************************************************
-        
-        var Float = fract.valueOf().bits().toString( 2 );
-        
-        Output( "Binary comparison to Binary divide pattern." );
-        Output( "Normal divide:", ( fract.toString() + "=" + fract ) );
-        Output( "Float64 in Binary:", Float );
-        Output( "Float64 Sing Section:", Float.charAt( 0 ) );
-        Output( "Exponent Section:", Float.substring( 1, 12 ) );
-        Output( "Mantissa Section:", Float.substring( 12, 64 ) );
-        
-        Output( "Compare fraction value in different number bases." );
-        
-        for ( var i = 2; i < 37; Output( "Base " + i, fract.valueOf().toString( i++ ) ) );
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Convert an given set of digits to division bit pattern.
-      //**********************************************************************************
-      
-      function PatToDiv()
-      {
-        var base = parseInt( document.getElementById("b1").value ), Data = new Pattern( document.getElementById("f1").value, base );
-        
-        if ( Data != "" )
-        {
-          Output( "Translation." );
-          Output( "Divide Pattern:", Data );
-          
-          var n = Data.getFract();
-          
-          Output( "Decode pattern back to ?/? = pat:", n.toString() );
-          Output( "Test divide pattern." );
-          Output( "Division:", n.toString() );
-          
-          //Find the Division pattern.
-          
-          var Data = n.divP( base );
-          
-          //Show the bit pattern.
-          
-          if ( Data === "" ) { Data.pop(); Err( "Divide to Pattern:", Data ); Data = [ null ]; }
-          else { Output( "Divide to Pattern:", Data ); }
-        }
-        else
-        {
-          Output( "Your Input contains characters outside of base" + base + " range." );
-          Output( 'Only numbers "0 to ' + ( Math.min( 10, base ) - 1 ) + ( base > 10 ? ( base === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode( 0x36 + base ) ) : "" ) + '" are Acceptable.' );
-        }
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Convert Float To, and from binary.
-      //**********************************************************************************
-      
-      var b1 = "" , b2 = "";
-      
-      function Convert( Mode, fr )
-      {
-        var FloatBase = new Number( document.getElementById( "b1" ).value ), DecodeBase = new Number( document.getElementById( "b2" ).value );
-        
-        if ( Mode === 0 )
-        {
-          var f = parseFloat( document.getElementById( "f1" ).value, FloatBase );
-          
-          if ( isNaN( f ) )
-          {
-            Output( 'Only numbers "0 to ' + ( Math.min( 10, FloatBase ) - 1 ) + ( FloatBase > 10 ? ( FloatBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode( 0x36 + FloatBase ) ) : "" ) + '" are Acceptable.' );
-            UpdateOutput(); return;
-          }
-          
-          else if ( b1 != document.getElementById( "f1" ).value || fr )
-          {
-            b1 = document.getElementById( "f1" ).value; 
-            document.getElementById( "ac" ).value = "Most Accurate Value = " + f.toString( FloatBase, true );
-            document.getElementById( "f2" ).value = b2 = f.bits().toString( DecodeBase );
-          }
-        }
-        
-        if ( Mode === 1 )
-        {
-          if( b2 != document.getElementById( "f2" ).value || fr )
-          {
-            b2 = document.getElementById( "f2" ).value;
-            
-            var f = parseNumber( b2 = document.getElementById( "f2" ).value, DecodeBase );
-            
-            if( f === undefined )
-            {
-              Output( 'Only numbers "0 to ' + ( Math.min( 10, DecodeBase ) - 1 ) + ( DecodeBase > 10 ? ( DecodeBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode( 0x36 + DecodeBase ) ) : "" ) + '" are Acceptable.' );
-              UpdateOutput(); return;
-            }
-            else
-            {
-              document.getElementById( "f2" ).value = f.toString( DecodeBase );
-              document.getElementById( "ac" ).value = "Most Accurate Value = " + f.valueOf().toString( FloatBase, true );
-              document.getElementById( "f1" ).value = b1 = f.valueOf().toString( FloatBase );
-            }
-          }
-        }
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Convert Float from binary to fraction.
-      //**********************************************************************************
-      
-      function BinToPatToFract()
-      {
-        var f = new Fract(), pat = new Pattern(), val = 0;
+//vertical, horizontal layout.
 
-        //Float to binary.
-        
-        if ( ( val = GetInput( true, false, false )[ 0 ] ) !== null ) { val = val.bits(); }
-        
-        //The sections of the float number.
-        
-        Output( "Float to Binary." );
-        
-        var s = val.toString( 2 );
-        
-        Output( "Float64 in Binary:", s );
-        Output( "Float64 Sing Section:", s.charAt( 0 ) );
-        Output( "Exponent Section:", s.substring( 1, 12 ) );
-        Output( "Mantissa Section:", s.substring( 12, 64 ) );
-        
-        //Conversion result.
-        
-        Output( "Convert float value." );
-        Output( "Mantissa Bit pattern count:", ( pat = val.toPattern( 2 ) ) + "" );
-        
-        f = pat.avgFract();
-        
-        Output( "Closest Average division pattern:", f.toString() + "" );
-        
-        pat = f.divP();
-        
-        if ( !pat.data )
-        {
-          Output( "Division Pattern:", pat + " Repeats to Infinity." );
-          
-          f = pat.toFract( val );
-          
-          Output( "Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "" );
-        }
-        else { temp.pop(); Err( "Divided to Pattern timed out:", temp ); temp = [ null ]; }
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Divide float to find it's divide pattern then convert to fraction.
-      //**********************************************************************************
-      
-      function DivToFract()
-      {
-        var f = new Fract(), pat = new Pattern(), val = 0;
-        
-        //Float to binary.
-        
-        if ( ( val = GetInput( true, false, false )[ 0 ] ) === null ) { return; }
-        
-        //The sections of the float number.
-        
-        Output( "Convert float value." ); Output( "Float Value:", val + "" );
-        
-        //Conversion result.
-        
-        var f1 = ( ( val + "" ).indexOf( "." ) > 0 ) ? ( val + "" ).split( "." )[ 1 ] : "", f2 = Math.pow( 10, f1.length ); f1 = parseInt( f1 || 1, 10 );
-        
-        var f = new Fract( f1, f2 );
-        
-        Output( "Division to Float:", f.toString() + "" );
-        
-        var pat = f.divP();
-        
-        if ( !pat.data )
-        {
-          Output( "Binary Divide Pattern:", pat + " Repeats to Infinity." );
-          
-          f = pat.getFract();
-          
-          Output( "Decode bit pattern back to ?/? = pat:", f.toString() + "" );
-          
-          f = pat.toFract( val );
-          
-          Output( "Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "" );
-        }
-        else { Err( "Divided to Pattern timed out:", pat.data ); }
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Convert Float to fraction An iteration at an time.
-      //**********************************************************************************
-      
-      function SumToFract()
-      {
-        var t = new Date().getTime();
-        
-        //Float to binary.
-        
-        if ( ( n = GetInput( true, false, false )[ 0 ] ) === null ) { return; }
-        
-        //Begin Conversion.
-        
-        Output( "Convert float value." );
-        
-        //Find best matching whole fraction an iteration at an time.
-        
-        for ( var i = 1; Math.abs( n - ( Math.floor( n * i ) / i ) ) > Number.EPSILON; i++ )
-        {
-          if ( ( new Date().getTime() - t ) > 7000 ) { Err( "Closest sum-able fraction timed out:" ); UpdateOutput(); return; }
-        }
-        
-        var f = new Fract( n * i, i );
-        
-        //Result.
-        
-        Output( "Closest sum-able fraction:", f.toString() + " = " + f + "" );
-        
-        //Update output.
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Convert Float to fraction using fractions.
-      //**********************************************************************************
-      
-      function CalcFract()
-      {
-        //Float to binary.
-        
-        if ( ( val = GetInput( true, false, false )[ 0 ]) === null ) { return; }
-        
-        //Begin Conversion.
-        
-        Output( "Convert float value." );
-        
-        var f = val.getFract();
-        
-        Output( "Closest fraction:", f.toString() + " = " + f + "" );
-        
-        //Update output.
-        
-        UpdateOutput();
-      }
-      
-      //**********************************************************************************
-      //Get input, and check for proper input formats.
-      //**********************************************************************************
-      
-      function GetInput( F1, F2, Int_Float )
-      {
-        var num = [ null, null ];
-        
-        if ( F1 && isNaN( document.getElementById( "f1" ).value + "0" ) ) { Output( document.getElementById( "f1" ).value + " = Is not an number." ); }
-        
-        else if ( F1 ) { num[ 0 ] = Int_Float ? parseInt( document.getElementById( "f1" ).value, 10 ) : parseFloat( document.getElementById( "f1" ).value, 10 ); }
-        
-        if ( F2 && isNaN( "0" + document.getElementById( "f2" ).value + "0" ) ) { Output( document.getElementById( "f2" ).value + " = Is not an number." ); }
-        
-        else if ( F2 ) { num[ 1 ] = Int_Float ? parseInt( document.getElementById( "f2" ).value, 10 ) : parseFloat( document.getElementById( "f2" ).value, 10 ); }
-        
-        if ( isNaN( num[ 0 ] ) ) { num[0] = 0; } if ( isNaN( num[ 1 ] ) ) { num[ 1 ] = 0; } return (num);
-      }
-      
-      //**********************************************************************************
-      //Generate an sequence, for the pattern to fraction testing code.
-      //**********************************************************************************
-      
-      function CreateSeq()
-      {
-        var base = parseInt( document.getElementById( "b1" ).value );
-        var v = new Fract( Math.random() * Math.pow( 2, 12 ), Math.random() * Math.pow( 2, 12 ) );
-        document.getElementById( "f1" ).value = v.divP( base );
-      }
-      
-      //**********************************************************************************
-      //Update Controls, and input.
-      //**********************************************************************************
-      
-      function Update( Mode )
-      {
-        var o = "";
-        
-        //**********************************************************************************
-        //Analyze binary fractions.
-        //**********************************************************************************
-        
-        if ( Mode === 0 )
-        {
-          o += '<table style="width:100%;height:100%;">';
-          o += '<tr>';
-          o += '<td style="width:50%;"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:11vh;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="1">';
-          o += '<\/td>';
-          o += '<td>';
-          o += '<p style="font-size:11vh">&divide;<\/p>';
-          o += '<\/td>';
-          o += '<td style="width:50%;"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:11vh;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="7">';
-          o += '<\/td>';
-          o += '<\/tr>';
-          o += '<tr>';
-          o += '<td colspan="3">';
-          o += '<center>';
-          o += '<input onclick="AnalyzeFract();" style="width:100%;height:42vh;font-size:7vh;" type="button" value="Analyze Fraction">';
-          o += '<\/center>';
-          o += '<\/td>';
-          o += '<\/tr>';
-          o += '<\/table>';
-        }
-        
-        //**********************************************************************************
-        //Analyze bit patterns into fractions.
-        //**********************************************************************************
-        
-        if ( Mode === 1 )
-        {
-          o += '<table style="width:100%;height:100%;">';
-          o += '<tr>';
-          o += '<td colspan="2"><textarea onclick="this.select();" style="width:100%;height:100%;text-align:center;font-size:3.7vw;background-color:rgba(255,255,255,0.5);" id="f1">00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E<\/textarea>';
-          o += '<\/td>';
-          o += '</tr>';
-          o += '<tr>';
-          o += '<td rowspan="2">';
-          o += '<input onclick="PatToDiv();" style="width:100%;height:100%;font-size:7vh;" type="button" value="Convert To Fraction.">';
-          o += '<\/td>';
-          o += '<td><select id="b1" onchange="CreateSeq()" style="width:100%;height:100%;font-size:5vh;">';
-          for ( var i = 2; i < 37; o += '<option value="' + i + '">Base' + i + '</option>', i++ );
-          o += '</select></td>';
-          o += '<\/tr>';
-          o += '<tr><td><input onclick="CreateSeq()" style="width:100%;height:100%;font-size:5vh;" type="button" value="Generate Sequence." /></td></tr>';
-          o += '<\/tr>';
-          o += '<\/table>';
-        }
-        
-        //**********************************************************************************
-        //Base convert.
-        //**********************************************************************************
-        
-        if ( Mode === 2 )
-        {
-          o += '<table style="width:100%;height:100%;">';
-          o += '<tr>';
-          o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.141592653589793"><\/td>';
-          o += '<\/td>';
-          o += '<td rowspan="2"><select id="b1" onchange="Convert(1,true)" style="width:100%;height:100%;font-size:1vw;">';
-          for ( var i = 2; i < 37; o += '<option value="' + i + '"' + ( i === 10 ? ' selected="selected"' : '' ) + '>Value/Base' + i + '</option>', i++ );
-          o += '</select></td>';
-          o += '</tr>';
-          o += '<tr>';
-          o += '<td colspan="2"><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1vw;background-color:rgba(255,255,255,0.5);" type="text" value="Most Accurate Value = 3.141592653589793115997963468544185161590576171875" readonly="true"><\/td>';
-          o += '</td>';
-          o += '</tr>';
-          o += '<tr>';
-          o += '<td colspan="2"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" type="text" value="0100000000001001001000011111101101010100010001000010110100011000"><\/td>';
-          o += '<\/td>';
-          o += '<td><select id="b2" onchange="Convert(0,true)" style="width:100%;height:100%;font-size:1vw;">';
-          for ( var i = 2; i < 37; o += '<option value="' + i + '">Bits/Base' + i + '</option>', i++ );
-          o += '</select></td>';
-          o += '<\/tr>';
-          o += '<tr>';
-          o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Decode Float." onclick="Convert(0)"><\/td>';
-          o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Float Value." onclick="Convert(1)"><\/td>';
-          o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Auto Update Inputs" onclick="Update(3)"><\/td>';
-          o += '<\/tr>';
-          o += '<\/table>';
-        }
-        
-        //**********************************************************************************
-        //Auto base Convert.
-        //**********************************************************************************
-        
-        if ( Mode === 3 )
-        {
-          o += '<table style="width:100%;height:100%;">';
-          o += '<tr>';
-          o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="Convert(0)" onkeyup="Convert(0)" type="text" value="3.141592653589793"><\/td>';
-          o += '<td rowspan="2"><select id="b1" onchange="Convert(1,true)" style="width:100%;height:100%;font-size:1vw;">';
-          for ( var i = 2; i < 37; o += '<option value="' + i + '"' + ( i === 10 ? ' selected="selected"' : '' ) + '>Value/Base' + i + '</option>', i++ );
-          o += '</select></td>';
-          o += '<\/tr>';
-          o += '<tr>';
-          o += '<td><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1vw;background-color:rgba(255,255,255,0.5);" type="text" value="Most Accurate Value = 3.141592653589793115997963468544185161590576171875" readonly="true"><\/td>';
-          o += '</td>';
-          o += '</tr>';
-          o += '<tr>';
-          o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="Convert(1)" onkeyup="Convert(1)" type="text" value="0100000000001001001000011111101101010100010001000010110100011000"><\/td>';
-          o += '<td><select id="b2" onchange="Convert(0,true)" style="width:100%;height:100%;font-size:1vw;">';
-          for ( var i = 2; i < 37; o += '<option value="' + i + '">Bit/Base' + i + '</option>', i++ );
-          o += '</select></td>';
-          o += '<\/tr>';
-          o += '<tr>';
-          o += '<td colspan="2"><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Disable Auto Update" onclick="Update(2)"><\/td>';
-          o += '<\/tr>';
-          o += '<\/table>';
-        }
-        
-        //**********************************************************************************
-        //Binary float number to fractions.
-        //**********************************************************************************
-        
-        if ( Mode === 4 )
-        {
-          o += '<table style="width:100%;height:100%;">';
-          o += '<tr>';
-          o += '<td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"><\/td>';
-          o += '<\/tr>';
-          o += '<tr>';
-          o += '<td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Bin to Pat to Fract" onclick="BinToPatToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Div to Pat to Fract" onclick="DivToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="Sum to Fract" onclick="SumToFract()"><\/td><td><input type="button" style="width:100%;height:100%;font-size:2vh;" value="1/R to Fract" onclick="CalcFract()"><\/td>';
-          o += '<\/tr>';
-          o += '<\/table>';
-        }
-        
-        //**********************************************************************************
-        //Update output.
-        //**********************************************************************************
-        
-        document.getElementById( "c" ).innerHTML = o;
-        document.getElementById( "out" ).innerHTML = "";
-        document.getElementById( "OutSize" ).width = "0px;";
-      }
-      
-      //**********************************************************************************
-      //Simplify displaying output.
-      //**********************************************************************************
-      
-      function Output( MSG, Data )
-      {
-        up = true;
-		
-        //If only an message end any table, and setup the message as an header.
-        
-        if ( arguments.length <= 1 ) { if ( sw ) { Result += "<\/table>"; sw = false; } Result += "<p style=\"font-size:4.2vh;\">" + MSG + "<\/p>"; }
-        
-        //If message followed by data. First cell is message second cell is data in the table row.
-        
-        else if ( !sw ) { Result += "<table style=\"font-size:2.2vh;width:40vw;width:100%;\" border=\"1\">"; sw = true; }
-        if ( sw ) { Result += "<tr><td style=\"white-space:nowrap\">" + MSG + "<\/td><td class=\"wrap\">" + Data + "<\/td><\/tr>"; }
-      }
-      
-      //**********************************************************************************
-      //Update the IFrame responsible for displaying output.
-      //**********************************************************************************
-      
-      function UpdateOutput()
-      {
-        if ( up )
-        {
-          document.getElementById( "OutSize" ).width = "40vw;";
-          document.getElementById( "out" ).innerHTML = '<iframe frameborder="0" style="height:81vh;width:40vw;" id = "o"></iframe>';
-          document.getElementById( "o" ).contentWindow.document.write( "<center>" + Result + "<\/table></center>" );
-          document.getElementById( "o" ).contentWindow.stop();
-          sw = false;
-        }
-        
-        Result = "<style>.wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }</style>";
-        
-        if ( !up ) { document.getElementById( "out" ).innerHTML = ""; document.getElementById( "OutSize" ).width = "0px;"; }
-        
-        up = false;
-      }
-      
-      //**********************************************************************************
-      //If the calculation timed out.
-      //**********************************************************************************
-      
-      function Err( MSG, Data )
-      {
-        var out = "Calculation Stopped because it is slow."; up = true;
-        
-        if (arguments.length > 1) { out += "<input type='button' value='Show data.' onclick='parent.Preview(\"" + Data + "\");' />"; }
+var v = false, Mode = 0;
 
-        Output(MSG, out);
+//Width and height in pixels is important for the layout of this page.
+
+var w = 0, h = 0;
+
+//when window size changes;
+
+function re(m)
+{
+  w = window.innerWidth; h = window.innerHeight;
+
+  v = w < h;
+
+  //subtract the mode section bar from height.
+
+  h -= document.getElementById("rm").offsetHeight + 32; w -= 32;
+
+  update(m);
+}
+
+//**********************************************************************************
+//Analyze Fractions, and compare Float 64 binary patterns.
+//**********************************************************************************
+
+function AnalyzeFract()
+{
+  var num = GetInput(true, true, true), fract = new Fract(num[0], num[1]);
+
+  Output("Smallest fraction by pattern."); Output("Fraction:", fract.toString());
+
+  //Find the Division pattern.
+
+  var pat = fract.divP(force), pat_f = new Fract();
+
+  //Show the bit pattern.
+
+  if (!pat.data) {
+    Output("Binary Divide Pattern:", (pat + " Repeats to Infinity."));
+
+    //Convert the bit pattern into divide.
+
+    pat_f = pat.getFract(); Output("Pattern to Fraction:", pat_f.toString());
+
+    //Convert Float value, and division pattern to smallest fraction.
+
+    pat_f = pat.toFract(fract); Output("Calc (Float&divide;Pat)Exp:", pat_f.toString() + " = " + pat_f + "");
+  }
+  else { Err("Simulated Divide to Bit Pattern:", pat.data); }
+
+  //**********************************************************************************
+  //Divide the fraction for real, and decode the real mantissa.
+  //**********************************************************************************
+
+  var Float = fract.valueOf().bits().toString(2);
+
+  Output("Binary comparison to Binary divide pattern.");
+  Output("Normal divide:", (fract.toString() + "=" + fract));
+  Output("Float64 in Binary:", Float);
+  Output("Float64 Sing Section:", Float.charAt(0));
+  Output("Exponent Section:", Float.substring(1, 12));
+  Output("Mantissa Section:", Float.substring(12, 64));
+
+  Output("Compare fraction value in different number bases.");
+
+  for (var i = 2; i < 37; Output("Base " + i, fract.valueOf().toString(i++)));
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Convert an given set of digits to division bit pattern.
+//**********************************************************************************
+
+function PatToDiv()
+{
+  var base = parseInt(document.getElementById("b1").value), Data = new Pattern(document.getElementById("f1").value, base);
+
+  if (Data != "") {
+    Output("Translation.");
+    Output("Divide Pattern:", Data);
+
+    var n = Data.getFract();
+
+    Output("Decode pattern back to ?/? = pat:", n.toString());
+    Output("Test divide pattern.");
+    Output("Division:", n.toString());
+
+    //Find the Division pattern.
+
+    var Data = n.divP(base);
+
+    //Show the bit pattern.
+
+    if (Data === "") { Data.pop(); Err("Divide to Pattern:", Data); Data = [null]; }
+    else { Output("Divide to Pattern:", Data); }
+  }
+  else {
+    Output("Your Input contains characters outside of base" + base + " range.");
+    Output('Only numbers "0 to ' + (Math.min(10, base) - 1) + (base > 10 ? (base === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + base)) : "") + '" are Acceptable.');
+  }
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Convert Float To, and from binary.
+//**********************************************************************************
+
+var b1 = "", b2 = "";
+
+function Convert(Mode, fr)
+{
+  var FloatBase = new Number(document.getElementById("b1").value), DecodeBase = new Number(document.getElementById("b2").value);
+
+  if (Mode === 0) {
+    var f = parseFloat(document.getElementById("f1").value, FloatBase);
+
+    if (isNaN(f)) {
+      Output('Only numbers "0 to ' + (Math.min(10, FloatBase) - 1) + (FloatBase > 10 ? (FloatBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + FloatBase)) : "") + '" are Acceptable.');
+      UpdateOutput(); return;
+    }
+
+    else if (b1 != document.getElementById("f1").value || fr) {
+      b1 = document.getElementById("f1").value;
+      document.getElementById("ac").value = "Most Accurate Value = " + f.toString(FloatBase, true);
+      document.getElementById("f2").value = b2 = f.bits().toString(DecodeBase);
+    }
+  }
+
+  if (Mode === 1) {
+    if (b2 != document.getElementById("f2").value || fr) {
+      b2 = document.getElementById("f2").value;
+
+      var f = parseNumber(b2 = document.getElementById("f2").value, DecodeBase);
+
+      if (f === undefined) {
+        Output('Only numbers "0 to ' + (Math.min(10, DecodeBase) - 1) + (DecodeBase > 10 ? (DecodeBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + DecodeBase)) : "") + '" are Acceptable.');
+        UpdateOutput(); return;
       }
+      else {
+        document.getElementById("f2").value = f.toString(DecodeBase);
+        document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(FloatBase, true);
+        document.getElementById("f1").value = b1 = f.valueOf().toString(FloatBase);
+      }
+    }
+  }
+  UpdateOutput();
+}
 
-      //**********************************************************************************
-      //Preview Data of an timed out function.
-      //**********************************************************************************
+//**********************************************************************************
+//Convert Float from binary to fraction.
+//**********************************************************************************
 
-      function Preview( data ) { ( window.open( "", "_blank", "" ) ).document.write( "<textarea style='width:100%;height:100%;'>" + data + "<\/textarea>" ); }
+function BinToPatToFract()
+{
+  var f = new Fract(), pat = new Pattern(), val = 0;
+
+  //Float to binary.
+
+  if ((val = GetInput(true, false, false)[0]) !== null) { val = val.bits(); }
+
+  //The sections of the float number.
+
+  Output("Float to Binary.");
+
+  var s = val.toString(2);
+
+  Output("Float64 in Binary:", s);
+  Output("Float64 Sing Section:", s.charAt(0));
+  Output("Exponent Section:", s.substring(1, 12));
+  Output("Mantissa Section:", s.substring(12, 64));
+
+  //Conversion result.
+
+  Output("Convert float value.");
+  Output("Mantissa Bit pattern count:", (pat = val.toPattern(2)) + "");
+
+  f = pat.avgFract();
+
+  Output("Closest Average division pattern:", f.toString() + "");
+
+  pat = f.divP();
+
+  if (!pat.data) {
+    Output("Division Pattern:", pat + " Repeats to Infinity.");
+
+    f = pat.toFract(val);
+
+    Output("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
+  }
+  else { temp.pop(); Err("Divided to Pattern timed out:", temp); temp = [null]; }
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Divide float to find it's divide pattern then convert to fraction.
+//**********************************************************************************
+
+function DivToFract()
+{
+  var f = new Fract(), pat = new Pattern(), val = 0;
+
+  //Float to binary.
+
+  if ((val = GetInput(true, false, false)[0]) === null) { return; }
+
+  //The sections of the float number.
+
+  Output("Convert float value."); Output("Float Value:", val + "");
+
+  //Conversion result.
+
+  var f1 = ((val + "").indexOf(".") > 0) ? (val + "").split(".")[1] : "", f2 = Math.pow(10, f1.length); f1 = parseInt(f1 || 1, 10);
+
+  var f = new Fract(f1, f2);
+
+  Output("Division to Float:", f.toString() + "");
+
+  var pat = f.divP();
+
+  if (!pat.data) {
+    Output("Binary Divide Pattern:", pat + " Repeats to Infinity.");
+
+    f = pat.getFract();
+
+    Output("Decode bit pattern back to ?/? = pat:", f.toString() + "");
+
+    f = pat.toFract(val);
+
+    Output("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
+  }
+  else { Err("Divided to Pattern timed out:", pat.data); }
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Convert Float to fraction An iteration at an time.
+//**********************************************************************************
+
+function SumToFract()
+{
+  var t = new Date().getTime();
+
+  //Float to binary.
+
+  if ((n = GetInput(true, false, false)[0]) === null) { return; }
+
+  //Begin Conversion.
+
+  Output("Convert float value.");
+
+  //Find best matching whole fraction an iteration at an time.
+
+  for (var i = 1; Math.abs(n - (Math.floor(n * i) / i)) > Number.EPSILON; i++) {
+    if ((new Date().getTime() - t) > 7000) { Err("Closest sum-able fraction timed out:"); UpdateOutput(); return; }
+  }
+
+  var f = new Fract(n * i, i);
+
+  //Result.
+
+  Output("Closest sum-able fraction:", f.toString() + " = " + f + "");
+
+  //Update output.
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Convert Float to fraction using fractions.
+//**********************************************************************************
+
+function CalcFract()
+{
+  //Float to binary.
+
+  if ((val = GetInput(true, false, false)[0]) === null) { return; }
+
+  //Begin Conversion.
+
+  Output("Convert float value.");
+
+  var f = val.getFract();
+
+  Output("Closest fraction:", f.toString() + " = " + f + "");
+
+  //Update output.
+
+  UpdateOutput();
+}
+
+//**********************************************************************************
+//Get input, and check for proper input formats.
+//**********************************************************************************
+
+function GetInput(F1, F2, Int_Float)
+{
+  var num = [null, null];
+
+  if (F1 && isNaN(document.getElementById("f1").value + "0")) { Output(document.getElementById("f1").value + " = Is not an number."); }
+
+  else if (F1) { num[0] = Int_Float ? parseInt(document.getElementById("f1").value, 10) : parseFloat(document.getElementById("f1").value, 10); }
+
+  if (F2 && isNaN("0" + document.getElementById("f2").value + "0")) { Output(document.getElementById("f2").value + " = Is not an number."); }
+
+  else if (F2) { num[1] = Int_Float ? parseInt(document.getElementById("f2").value, 10) : parseFloat(document.getElementById("f2").value, 10); }
+
+  if (isNaN(num[0])) { num[0] = 0; } if (isNaN(num[1])) { num[1] = 0; } return (num);
+}
+
+//**********************************************************************************
+//Generate an sequence, for the pattern to fraction testing code.
+//**********************************************************************************
+
+function CreateSeq()
+{
+  var base = parseInt(document.getElementById("b1").value);
+  var v = new Fract(Math.random() * Math.pow(2, 12), Math.random() * Math.pow(2, 12));
+  document.getElementById("f1").value = v.divP(base);
+}
+
+//**********************************************************************************
+//Update Controls, and input.
+//**********************************************************************************
+
+function update(re)
+{
+  //if re is true update record both input and output.
+
+  var inputs = [], o_ac = '';
+
+  if (Mode == 2 || Mode == 3) {
+    o_ac = (document.getElementById('ac') || { value: 'Most Accurate Value = 3.141592653589793115997963468544185161590576171875' }).value;
+  }
+
+  if (re) {
+    inputs = [(document.getElementById("f1") || { value: undefined }).value, (document.getElementById("f2") || { value: undefined }).value];
+    if (document.getElementById("o")) { Result = document.getElementById("o").contentWindow.document.body.innerHTML; up = true; }
+  }
+
+  //Page vertical and horzontal layout.
+
+  if (!v) {
+    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + h + "px;max-height:'>\
+        <tr valign='top'>\
+          <td>\
+            <center>\
+              <div id='c' style='height:"+ h + "px;'>\
+              </div>\
+            </center>\
+          </td>\
+          <td style='overflow:hidden;vertical-align:top' id='OutSize'>\
+            <div id='out'> <\/div>\
+          </td>\
+        </tr>\
+      </table>";
+  }
+  else {
+    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + h + "px;max-height:" + h + "px;'>\
+        <tr valign='top'>\
+          <td>\
+            <center>\
+              <div id='c' style='height:"+ (h / 2) + "px;max-height:" + (h / 2) + "px;'>\
+              </div>\
+            </center>\
+          </td>\
+        </tr>\
+        <tr>\
+          <td style='overflow:hidden;vertical-align:top;height:"+ (h / 2) + "px;max-height:" + (h / 2) + "px;' id='OutSize'>\
+            <div id='out'> </div>\
+          </td>\
+        </tr>\
+      </table>";
+  }
+
+  var o = "";
+
+  //**********************************************************************************
+  //Analyze binary fractions. Controls, and inputs.
+  //**********************************************************************************
+
+  if (Mode === 0) {
+    o += '<table style="width:100%;height:100%;">';
+    o += '<tr>';
+    o += '<td style="width:50%;"><input id="f1" style="width:100%;text-align:center;font-size:' + (v ? 7 : 7 / 2) + 'vw;" onclick="this.select();" type="text" value="' + (inputs[0] || 1) + '">';
+    o += '</td>';
+    o += '<td>';
+    o += '<p style="font-size:7vw">&divide;<\/p>';
+    o += '</td>';
+    o += '<td style="width:50%;"><input id="f2" style="width:100%;text-align:center;font-size:' + (v ? 7 : 7 / 2) + 'vw;" onclick="this.select();" type="text" value="' + (inputs[1] || 7) + '">';
+    o += '</td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td colspan="3">';
+    o += '<center>';
+    o += '<input onclick="AnalyzeFract();" style="width:100%;height:' + (v ? ( h / 2 ) - ( w / 9 ) : h - ( w / 11 )) + 'px;font-size:' + (v ? 5.2 : 5.2 / 2) + 'vw;" type="button" value="Analyze Fraction">';
+    o += '</center>';
+    o += '</td>';
+    o += '</tr>';
+    o += '</table>';
+  }
+
+  //**********************************************************************************
+  //Analyze bit patterns into fractions. Controls, and inputs.
+  //**********************************************************************************
+
+  if (Mode === 1) {
+    inputs[0] = inputs[0] || '00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E';
+
+    o += '<table style="width:100%;height:100%;">';
+    o += '<tr>';
+    o += '<td colspan="2"><textarea onclick="this.select();" style="width:100%;height:100%;text-align:center;font-size:' + (v ? 6 : 6 / 2) + 'vw;background-color:rgba(255,255,255,0.5);" id="f1">' + inputs[0] + '<\/textarea>';
+    o += '</td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td rowspan="2">';
+    o += '<input onclick="PatToDiv();" style="width:100%;height:100%;font-size:' + (v ? 4 : 4 / 2) + 'vw;" type="button" value="Convert To Fraction.">';
+    o += '</td>';
+    o += '<td><select id="b1" onchange="CreateSeq()" style="width:100%;height:100%;font-size:' + (v ? 2.6 : 2.6 / 2) + 'vw;">';
+    for (var i = 2; i < 37; o += '<option value="' + i + '">Base' + i + '</option>', i++);
+    o += '</select></td>';
+    o += '</tr>';
+    o += '<tr><td><input onclick="CreateSeq()" style="width:100%;height:100%;font-size:' + (v ? 2.6 : 2.6 / 2) + 'vw;" type="button" value="Generate Sequence." /></td></tr>';
+    o += '</tr>';
+    o += '</table>';
+  }
+
+  //**********************************************************************************
+  //Base convert. Controls, and inputs.
+  //**********************************************************************************
+
+  if (Mode === 2) {
+    inputs[0] = inputs[0] || 3.141592653589793;
+    inputs[1] = inputs[1] || '0100000000001001001000011111101101010100010001000010110100011000';
+
+    o += '<table style="width:100%;height:100%;">';
+    o += '<tr>';
+    o += '<td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:2.8125vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="' + inputs[0] + '"></td>';
+    o += '</td>';
+    o += '<td style="width:16%;" rowspan="2"><select id="b1" onchange="Convert(1,true)" style="width:100%;height:100%;font-size:2vw;">';
+    for (var i = 2; i < 37; o += '<option value="' + i + '"' + (i === 10 ? ' selected="selected"' : '') + '>Value/Base' + i + '</option>', i++);
+    o += '</select></td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td colspan="2"><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1.25625vw;background-color:rgba(255,255,255,0.5);" type="text" value="' + o_ac + '" readonly="true"></td>';
+    o += '</td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td colspan="2"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" type="text" value="' + inputs[1] + '"></td>';
+    o += '</td>';
+    o += '<td><select id="b2" onchange="Convert(0,true)" style="width:100%;height:100%;font-size:2vw;">';
+    for (var i = 2; i < 37; o += '<option value="' + i + '">Bits/Base' + i + '</option>', i++);
+    o += '</select></td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Decode Float." onclick="Convert(0)"><\/td>';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Float Value." onclick="Convert(1)"><\/td>';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Auto Update Inputs" onclick="Mode = 3;update(false);"><\/td>';
+    o += '</tr>';
+    o += '</table>';
+  }
+
+  //**********************************************************************************
+  //Auto base Convert. Controls, and inputs.
+  //**********************************************************************************
+
+  if (Mode === 3) {
+    inputs[0] = inputs[0] || 3.141592653589793;
+    inputs[1] = inputs[1] || '0100000000001001001000011111101101010100010001000010110100011000';
+
+    o += '<table style="width:100%;height:100%;">';
+    o += '<tr>';
+    o += '<td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:2.8125vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="Convert(0)" onkeyup="Convert(0)" type="text" value="' + inputs[0] + '"></td>';
+    o += '<td style="width:16%;" rowspan="2"><select id="b1" onchange="Convert(1,true)" style="width:100%;height:100%;font-size:2vw;">';
+    for (var i = 2; i < 37; o += '<option value="' + i + '"' + (i === 10 ? ' selected="selected"' : '') + '>Value/Base' + i + '</option>', i++);
+    o += '</select></td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1.25625vw;background-color:rgba(255,255,255,0.5);" type="text" value="' + o_ac + '" readonly="true"></td>';
+    o += '</td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="Convert(1)" onkeyup="Convert(1)" type="text" value="' + inputs[1] + '"></td>';
+    o += '<td><select id="b2" onchange="Convert(0,true)" style="width:100%;height:100%;font-size:2vw;">';
+    for (var i = 2; i < 37; o += '<option value="' + i + '">Bit/Base' + i + '</option>', i++);
+    o += '</select></td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<td colspan="2"><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Disable Auto Update" onclick="Mode = 2;update(false);"></td>';
+    o += '</tr>';
+    o += '</table>';
+  }
+
+  //**********************************************************************************
+  //Binary float number to fractions. Controls, and inputs.
+  //**********************************************************************************
+
+  if (Mode === 4) {
+    o += '<table style="width:100%;height:100%;">';
+    o += '<tr>';
+    o += '<td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"></td>';
+    o += '</tr>';
+    o += '<tr>';
+    o += '<!--<td><input type="button" style="width:100%;height:100%;font-size:' + (v ? 3.5 : 3.5 / 2) + 'vw;" value="Bin to Pat to Fract" onclick="BinToPatToFract()"></td>-->';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:' + (v ? 3.5 : 3.5 / 2) + 'vw;" value="Div to Pat to Fract" onclick="DivToFract()"></td>';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:' + (v ? 3.5 : 3.5 / 2) + 'vw;" value="Sum to Fract" onclick="SumToFract()"></td>';
+    o += '<td><input type="button" style="width:100%;height:100%;font-size:' + (v ? 3.5 : 3.5 / 2) + 'vw;" value="1/R to Fract" onclick="CalcFract()"></td>';
+    o += '</tr>';
+    o += '</table>';
+  }
+
+  //**********************************************************************************
+  //Update output.
+  //**********************************************************************************
+
+  document.getElementById("c").innerHTML = o;
+  document.getElementById("out").innerHTML = "";
+  document.getElementById("OutSize").width = "0px;";
+
+  if (re) { UpdateOutput(); }
+}
+
+//**********************************************************************************
+//Simplify displaying output.
+//**********************************************************************************
+
+function Output(MSG, Data)
+{
+  up = true;
+
+  //If only an message end any table, and setup the message as an header.
+
+  if (arguments.length <= 1) { if (sw) { Result += "</table>"; sw = false; } Result += "<p style=\"font-size:4h;\">" + MSG + "</p>"; }
+
+  //If message followed by data. First cell is message second cell is data in the table row.
+
+  else if (!sw) { Result += "<table style=\"font-size:4h;width:100%;\" border=\"1\">"; sw = true; }
+  if (sw) { Result += "<tr><td style=\"white-space:nowrap\">" + MSG + "</td><td class=\"wrap\">" + Data + "</td></tr>"; }
+}
+
+//**********************************************************************************
+//Update the IFrame responsible for displaying output.
+//**********************************************************************************
+
+function UpdateOutput()
+{
+  if (up) {
+    document.getElementById("OutSize").style.width = v ? w : (w / 2); document.getElementById("OutSize").style.height = v ? (h / 2) : h;
+
+    document.getElementById("out").innerHTML = '<iframe frameborder="0" style="height:' + (v ? (h / 2) + 'px;' : h + 'px;') + ';width:' + (v ? w + 'px;' : (w / 2) + 'px;') + '" id = "o"></iframe>';
+    document.getElementById("o").contentWindow.document.write("<center>" + Result + "<\/table></center>");
+    document.getElementById("o").contentWindow.stop();
+    sw = false;
+  }
+
+  Result = "<style>.wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }</style>";
+
+  if (!up) { document.getElementById("out").innerHTML = ""; document.getElementById("OutSize").width = "0px;"; }
+
+  up = false;
+}
+
+//**********************************************************************************
+//If the calculation timed out.
+//**********************************************************************************
+
+function Err(MSG, Data)
+{
+  var out = "Calculation Stopped because it is slow."; up = true;
+
+  if (arguments.length > 1) { out += "<input type='button' value='Show data.' onclick='parent.Preview(\"" + Data + "\");' />"; }
+
+  Output(MSG, out);
+}
+
+//**********************************************************************************
+//Preview Data of an timed out function.
+//**********************************************************************************
+
+function Preview(data) { (window.open("", "_blank", "")).document.write("<textarea style='width:100%;height:100%;'>" + data + "<\/textarea>"); }
     </script>
     
     <!--Mode selection-->
     
     <center>
-      <table border="1" style="width:100%; height:16%; background-color:rgba(156,156,156,0.4);">
+      <table id="rm" border="1" style="width:100%; height:16%; text-align: center; font-size:2.8vw; background-color:rgba(156,156,156,0.4);">
         <tr>
           <td>
-            <center>
-              <p style="font-size:3vh;">Analyze Fractions:</p>
-              <input checked name="c" onclick="Update(0);" type="radio">
-            </center>
+              Analyze Fractions: <br /> <input checked name="c" onclick="Mode = 0; update(false);" type="radio">
           </td>
           <td>
-            <center>
-              <p style="font-size:3vh;">Analyze Data/Num Patterns:</p>
-              <input name="c" onclick="Update(1);" type="radio">
-            </center>
+              Analyze Division Patterns: <br /> <input name="c" onclick="Mode = 1; update(false);" type="radio">
           </td>
           <td>
-            <center>
-              <p style="font-size:3vh;">Float64 binary converter:</p>
-              <input name="c" onclick="Update(2);" type="radio">
-            </center>
+                Float64 binary converter: <br /> <input name="c" onclick="Mode = 2; update(false);" type="radio">
           </td>
           <td>
-            <center>
-              <p style="font-size:3vh;">Float to Fraction:</p>
-              <input name="c" onclick="Update(4);" type="radio">
-            </center>
+              Float to Fract1ion: <br /> <input name="c" onclick="Mode = 4; update(false);" type="radio">
           </td>
         </tr>
       </table>
       
+      <div id="page">
       <!--Controls and input=-->
       
-      <table border="2" style="width:100%;height:84%;background-color:rgba(255,255,255,0.5);">
+      <table border="2" style="width:100%;height:84%;">
         <tr valign="top">
           <td>
             <center>
               <div id="c" style="height:78vh;">
-                <table style="width:100%;height:100%;">
-                  <tr>
-                    <td style="width:50%;"><input id="f1" onclick="this.select();" style="width:100%;height:100%;text-align:center;font-size:11vh;background-color:rgba(255,255,255,0.5);" type="text" value="1"></td>
-                    <td>
-                      <p style="font-size:11vh;">&divide;</p>
-                    </td>
-                    <td style="width:50%;"><input id="f2" onclick="this.select();" style="width:100%;height:100%;text-align:center;font-size:11vh;background-color:rgba(255,255,255,0.5);" type="text" value="7"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="3">
-                      <center>
-                        <input onclick="AnalyzeFract();" style="width:100%;height:42vh;font-size:7vh;" type="button" value="Analyze Fraction">
-                      </center>
-                    </td>
-                  </tr>
-                </table>
               </div>
             </center>
           </td>
@@ -600,6 +659,7 @@
           </td>
         </tr>
       </table>
+      </div>
     </center>
   </body>
 </html>
