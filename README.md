@@ -26,6 +26,7 @@ See the following about git issue <a href="https://github.com/dear-github/dear-g
 * Recurring Pattern detection.<br />
 
 * Nicely format double precision numbers as proper fractions, or as script code.<br />
+
   ------------------------------------------------------------------------------
     FL64_App is an sample web application using this library which allows you. <br />
 
