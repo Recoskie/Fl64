@@ -123,6 +123,12 @@ Fract.prototype.val = Number.prototype.val = [undefined];
 
 Number.prototype.ac = Fract.prototype.ac = Number.EPSILON;
 
+//**********************************************************************************
+//The next part.
+//**********************************************************************************
+
+Number.prototype.reValue = Fract.prototype.reValue = function () { return ( this.r[this.length] || this ); };
+
 //*****************************************************************************************************
 //Split a number and return the number object.
 //*****************************************************************************************************
@@ -152,17 +158,6 @@ Number.prototype.split = function (a, b)
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
     this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function (parts)
-    {
-      var s = "";
-
-      if (parts)
-      {
-        for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-      }
-
-      return (s + "R=" + this.r[this.length] + "");
-    };
 
     this.length += 1; return (this);
   }
@@ -233,17 +228,8 @@ Number.prototype.splitAll = function ()
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
     this.valueOf = function () { return (this.val[this.length]); };
-    this.toString = function (parts)
-    {
-      var s = "";
-
-      if (parts) {
-        for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-      }
-
-      return (s + "R=" + this.r[this.length] + "");
-    };
-  } else { this.length -= 1; }
+  }
+  else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
 
   //initialize cut off range.
 
@@ -280,6 +266,7 @@ Number.prototype.splitAll = function ()
 
 //*****************************************************************************************************
 //Split a fraction and return the fraction object.
+//Debating on removing this operation since spiting number is faster than fraction.
 //*****************************************************************************************************
 
 Fract.prototype.split = function (a, b)
@@ -308,16 +295,13 @@ Fract.prototype.split = function (a, b)
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
     this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function (parts)
+    this.toString = function ()
     {
       var s = "";
 
-      if (parts)
-      {
-        for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-      }
+      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
 
-      return (s + "R=" + this.r[this.length].toString() + "");
+      return (s + this.valueOf().getFract().toString());
     };
 
     this.length += 1; return ( this );
@@ -362,6 +346,7 @@ Fract.prototype.split = function (a, b)
 
 //*****************************************************************************************************
 //Split a fraction into all parts as fast as possible.
+//Debating on removing this operation since spiting number is faster than fraction.
 //*****************************************************************************************************
 
 Fract.prototype.splitAll = function ()
@@ -388,17 +373,16 @@ Fract.prototype.splitAll = function ()
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
     this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function (parts)
+    this.toString = function ()
     {
       var s = "";
 
-      if (parts) {
-        for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-      }
+      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
 
-      return (s + "R=" + this.r[this.length].toString() + "");
+      return (s + this.valueOf().getFract().toString());
     };
-  } else { this.length -= 1; }
+  }
+  else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
 
   //initialize cut off range.
 
@@ -1024,6 +1008,8 @@ Number.prototype.toPattern = function (base)
 
 Number.prototype.toString = function (base, MostAcurate)
 {
+  for (var i = 0, parts = ""; i < this.length; parts += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
+
   //If base is an string then it is an operation.
 
   if (typeof base === 'string')
@@ -1072,7 +1058,7 @@ Number.prototype.toString = function (base, MostAcurate)
   {
     var fl = this.bits();
 
-    if (fl.exp === 0 && fl.mantissa === 0) { return ("0"); } else if (fl.exp >= 2047) { if (fl.mantissa > 0) { return ("NaN"); } else { return (fl.sing ? "-Infinity" : "Infinity"); } }
+    if (fl.exp === 0 && fl.mantissa === 0) { return (parts + "0"); } else if (fl.exp >= 2047) { if (fl.mantissa > 0) { return ("NaN"); } else { return (fl.sing ? "-Infinity" : "Infinity"); } }
 
     //Load four 52bit mantissa values in appropriate number base rounding off at the last digit of accuracy.
 
@@ -1264,7 +1250,7 @@ Number.prototype.toString = function (base, MostAcurate)
 
   //Return the String representation of the float numbers value, or bit's.
 
-  return (str);
+  return (parts + str);
 }
 
 //**********************************************************************************
