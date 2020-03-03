@@ -127,7 +127,7 @@ Number.prototype.ac = Fract.prototype.ac = Number.EPSILON;
 //The next part.
 //**********************************************************************************
 
-Number.prototype.reValue = Fract.prototype.reValue = function () { return ( ( this.r[this.length] || this ).valueOf() ); };
+Number.prototype.reValue = Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).valueOf()); };
 
 //*****************************************************************************************************
 //Split a number and return the number object.
@@ -154,6 +154,8 @@ Number.prototype.split = function (a, b)
     this.a = [a]; this.b = [b];
 
     this.r = [n, (1 / (this.val[0] = n - a)) * b];
+
+    if (this.r[1] == Infinity) { this.r[1] = 0; }
 
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
@@ -291,6 +293,8 @@ Fract.prototype.split = function (a, b)
       new Fract(this.x, this.y),
       new Fract(this.y, (this.x - (this.y * a)) / b)
     ];
+
+    if (this.r[1] == Infinity) { this.r[1] = 0; }
 
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
