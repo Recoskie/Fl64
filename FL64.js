@@ -127,7 +127,7 @@ Number.prototype.ac = Fract.prototype.ac = Number.EPSILON;
 //The next part.
 //**********************************************************************************
 
-Number.prototype.reValue = Fract.prototype.reValue = function () { return ( this.r[this.length] || this ); };
+Number.prototype.reValue = Fract.prototype.reValue = function () { return ( ( this.r[this.length] || this ).valueOf() ); };
 
 //*****************************************************************************************************
 //Split a number and return the number object.
