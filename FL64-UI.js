@@ -452,7 +452,7 @@ FBar.prototype.update = function (force)
 
   //Only Update the remaining factor if value is not NaN.
 
-  if (!isNaN(SFBar.Ref[this.n].primitive())) { document.getElementById("f" + this.n + "re").innerHTML = SFBar.Ref[this.n].toString(); }
+  if (!isNaN(SFBar.Ref[this.n].primitive())) { document.getElementById("f" + this.n + "re").innerHTML = SFBar.Ref[this.n].reValue().toString(); }
 
   //Otherwise replace it with the create number option.
 
