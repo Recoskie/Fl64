@@ -147,7 +147,7 @@ SFBar = {
 
   split: function (bar)
   {
-    if (isNaN(this.Ref[bar]))
+    if (isNaN(this.Ref[bar].primitive()))
     {
       this.Ref[bar] = this.Ref[bar].split(1, 1);
     }
@@ -452,7 +452,7 @@ FBar.prototype.update = function (force)
 
   //Only Update the remaining factor if value is not NaN.
 
-  if (!isNaN(SFBar.Ref[this.n].primitive())) { document.getElementById("f" + this.n + "re").innerHTML = SFBar.Ref[this.n].reValue().toString(); }
+  if (!isNaN(SFBar.Ref[this.n].primitive())) { document.getElementById("f" + this.n + "re").innerHTML = SFBar.Ref[this.n].reValue(); }
 
   //Otherwise replace it with the create number option.
 
