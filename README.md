@@ -1,6 +1,5 @@
 # JavaScript double precision library.
 
-------------------------------------------------------------------------------
   FL64 is an high performance library allowing javascript to.<br />
 
 * Split numbers into parts, or find the pattern to any irrational number.<br />
@@ -11,7 +10,7 @@
 
 * All 64 bit's of double precision numbers to do 64 bitwise arithmetic.<br />
 
-  * Numbers have number properties ** num.sing **, ** num.exp **, ** num.mantissa ** which can be manipulated with math operations, and bitwise which changes the number value.<br />
+  * Numbers have number properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated with math operations, and bitwise which changes the number value.<br />
 
 * Error correction.<br />
 
