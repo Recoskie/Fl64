@@ -1207,7 +1207,10 @@ Number.prototype.toString = function (base, MostAcurate)
     }
     else
     {
+      if(nexp > 0) { nexp -= str.length - 1; }
+      
       while (nexp > 0) { str += "0"; nexp--; }
+      
       if (nexp < 0) { nexp++; while (nexp < 0) { str = "0" + str; nexp++; } str = "." + str; }
     }
 
