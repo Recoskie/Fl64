@@ -551,7 +551,7 @@ Fract.prototype.limit = Number.prototype.limit = function (ac)
 {
   //Set accuracy limit.
 
-  this.ac = Math.pow(2, (Math.round(Math.log(this.primitive()) / 0.6931471805599453))) * (ac || Number.EPSILON);
+  this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
 
   //Set length to accuracy limit.
 
