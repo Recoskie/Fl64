@@ -6,18 +6,21 @@
 <body>
   <style type="text/css">
     <!--
-    body
-    {
+    body {
       background-image: url(bg/bg.jpg);
       background-repeat: no-repeat;
       background-size: cover;
       -moz-background-size: cover;
       -webkit-background-size: cover;
+      overflow:hidden;
+    }
+    textarea {
+      resize: none;
     }
     -->
   </style>
   <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
-  <script src="FL64.js" type="text/javascript"></script>
+  <script src="../FL64.js" type="text/javascript"></script>
   <script type="text/javascript">
     function RunCode()
     {
@@ -33,10 +36,7 @@
 
     var output = ""; console.log = function (msg) { output += msg + "\r\n"; }
   </script>
-  <table style="height:100%;width:100%;table-layout: fixed;">
-    <tr style="height:80%;">
-      <td style="width:70%;height:100%;">
-        <textarea id="code" style="width:100%;height:100%;background-color:rgba(255,255,255,0.5);">
+  <textarea id="code" style="width:70%;height:93%;background-color:rgba(255,255,255,0.5);">
 var n1 = 3.147547;
 
 var er1 = 1; //Number Of binary digits.
@@ -64,24 +64,14 @@ console.log("Value After error is introduced.\r\n"+n1.toString(2));
 n1.stats();
 
 console.log("Error corrected value = "+n1.err());</textarea>
-      <td style="width:30%;height:100%;">
-        <textarea id="console" style="width:100%;height:100%;background-color:rgba(255,255,255,0.75);">Console Output.</textarea>
-      </td>
-    </tr>
-    <tr style="height:20%;">
-      <td style="width:70%;">
-        <input type="button" value="Run Code." onclick="RunCode()" style="width:100%;min-height:64px;height:100%;" />
-      </td>
-      <td style="width:30vw;">
-        <select style="width:100%;min-height:64px;height:100%;">
-          <option>Exp1</option>
-          <option>Exp2</option>
-          <option>Exp3</option>
-          <option>Exp4</option>
-          <option>Exp5</option>
-        </select>
-      </td>
-    </tr>
-  </table>
+  <textarea id="console" style="width:29%;height:93%;background-color:rgba(255,255,255,0.75);">Console Output.</textarea>
+  <input type="button" value="Run Code." onclick="RunCode()" style="width:70%;min-height:64px;height:6%;" />
+  <select style="width:29%;min-height:64px;height:6%;">
+    <option>Exp1</option>
+    <option>Exp2</option>
+    <option>Exp3</option>
+    <option>Exp4</option>
+    <option>Exp5</option>
+  </select>
 </body>
 </html>
