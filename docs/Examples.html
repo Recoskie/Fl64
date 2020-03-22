@@ -57,8 +57,7 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
-
-/**/</script>
+  </script>
 
   <h1>Indexed contents.</h1>
 
@@ -728,11 +727,76 @@ console.log(val.toString());
 
   <br /><br />
 
-  Doing this allows you to solve the pattern to all irrational numbers no matter how they are generated per part.
+  Doing this allows you to solve the patterns to all irrational numbers no matter how they are generated per part.
 
   <br /><br />
 
-  This includes <h3>sine, cosine, tangent, x to y root, and logarithms</h3>.
+  This includes <h3>sine, cosine, tangent, x to y root, logarithms, and even PI</h3>.
+
+  <br />
+
+  Even numbers you create per digit such as 1.01001000100001. Which the irrational pattern obviously is one more zero before one more per one.
+
+  <br /><br />
+
+  <h2>The Natural logarithm.</h2>
+
+  <table border="1">
+    <tr><td colspan="2">Natural log.</td></tr>
+    <tr><td>A</td><td>B</td></tr>
+    <tr><td>2</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td></tr>
+    <tr><td>2</td><td>2</td></tr>
+    <tr><td>3</td><td>3</td></tr>
+    <tr><td>4</td><td>4</td></tr>
+    <tr><td>5</td><td>5</td></tr>
+    <tr><td>6</td><td>6</td></tr>
+    <tr><td>7</td><td>7</td></tr>
+    <tr><td>8</td><td>8</td></tr>
+    <tr><td>9</td><td>9</td></tr>
+  </table>
+
+  <br /><br />
+
+  <!--Example #18-->
+
+  <textarea class="c" rows="18" id="e18">var val = NaN;
+
+function A(x)
+{
+  return( x );
+}
+
+function B(x)
+{
+  return( x );
+}
+
+val = val.split(2,1);
+val = val.Trans(1,A,B);
+
+val = val.calc();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="18" id="e18o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e18');" value="Run code." />
+
+  <!--End Example #18-->
+
+  <br /><br />
+
+  The natural log is another good place to start. As you can see this is similar to that of our square roots, and the golden ratio. With one slight difference. Each part is +1 from before.
+
+  <br /><br />
+
+  <h3>Each of these numbers relate to each other. Think of this like the golden ratio to the square, and then to natural log. In which PI is like a spiral stir case squared.</h3>
+  
+  <br /><br />
+
+  If you rally do understand, and rally work it out. You then understand every math function ever made.
+
+  <br /><br />
+
 
 </body>
 </html>
