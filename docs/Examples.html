@@ -57,7 +57,8 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
-  </script>
+
+/**/</script>
 
   <h1>Indexed contents.</h1>
 
@@ -566,7 +567,7 @@ console.log(val.toString());
 
   You can change this however you like. Thus you can create any irrational number you like using this.
 
-  <a id="Irrational"><h1>Irrational Numbers.</h1></a>
+  <a id="irrational"><h1>Irrational Numbers.</h1></a>
 
   An irrational number is a value that can never be solved to it's exact value.
 
@@ -577,6 +578,51 @@ console.log(val.toString());
   <br /><br />
 
   But the digits in the number never repeat. For example the number PI to a billion digits.
+
+  <br /><br />
+
+  Irrational numbers are created when you measure something that gets a tiny bit bigger each time in reference to say another number.
+
+  <br /><br />
+
+  The most basic example is a circle. The circles outside distance gets slightly bigger than the distance across per bigger circle.
+
+  <br /><br />
+
+  This means you are going to get a different number each time. The farther down the decimal place per bigger circle. AS the two lengths change in ratio plus so much more as you go bigger.
+
+  <br /><br />
+
+  <!--Example #15-->
+
+  <textarea class="c" rows="10" id="e15">var val = NaN;
+
+function A(x)
+{
+  return(6);
+}
+
+function B(x)
+{
+  return( 1 + (x * 4) + (x * x * 4) );
+}
+
+val = val.split(3,1);
+val = val.Trans(1,A,B);
+
+val = val.calc();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="10" id="e15o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e15');" value="Run code." />
+
+  <!--End Example #15-->
+
+  <br /><br />
+
+  The above calculate the number PI per additional part Rally quickly. This is much different than the physical measurement as we add per part together to create the number.
+
+  <br /><br />
 
 
 </body>
