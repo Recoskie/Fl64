@@ -595,7 +595,7 @@ console.log(val.toString());
 
   <!--Example #15-->
 
-  <textarea class="c" rows="10" id="e15">var val = NaN;
+  <textarea class="c" rows="20" id="e15">var val = NaN;
 
 function A(x)
 {
@@ -613,17 +613,53 @@ val = val.Trans(1,A,B);
 val = val.calc();
 
 console.log(val.toString());
-</textarea><textarea class="o" rows="10" id="e15o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="20" id="e15o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e15');" value="Run code." />
 
   <!--End Example #15-->
 
   <br /><br />
 
-  The above calculate the number PI per additional part Rally quickly. This is much different than the physical measurement as we add per part together to create the number.
+  The above example calculates the number PI per additional part Rally quickly.
 
   <br /><br />
 
+  This is much different than the physical measurement as we add per part together to create the number.
 
+  <br />
+
+  <h2>The golden ratio.</h2>
+
+  The golden ratio is a very fascinating irrational number as each part is as small as it possibly can be per part.
+
+  <br /><br />
+
+  All parts are exactly a=1, b=1.
+
+  <br /><br />
+
+  <!--Example #16-->
+
+  <textarea class="c" rows="20" id="e16">var val = NaN;
+
+function A(x)
+{
+  return(1);
+}
+
+function B(x)
+{
+  return(1);
+}
+
+val = val.Trans(0,A,B);
+
+val = val.calc();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="20" id="e16o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e16');" value="Run code." />
+
+  <!--End Example #16-->
 </body>
 </html>
