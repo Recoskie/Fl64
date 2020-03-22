@@ -65,9 +65,10 @@
   Adding parts back together: <a href="#calc">Link</a><br />
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
+  Irrational numbers:  <a href="#irrational">Link</a><br />
+  Division pattern:  <a href="">Link</a><br />
   Bitwise operations: <a href="">Link</a><br />
   Fraction Data type: <a href="">Link</a><br />
-  Division pattern:  <a href="">Link</a><br />
   Vector and Array operation:  <a href="">Link</a><br />
   Error Correction:  <a href="">Link</a>
 
@@ -82,7 +83,7 @@
 
   <!--Example #1-->
 
-  <textarea class="c" rows="10" id="e1">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e1">var pi = 3.1415;
 
 pi = pi.split();
 
@@ -103,7 +104,7 @@ console.log(pi);</textarea><textarea class="o" rows="10" id="e1o" readonly>Conso
 
   <!--Example #2-->
 
-  <textarea class="c" rows="10" id="e2">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e2">var pi = 3.1415;
 
 pi = pi.split();
 
@@ -146,7 +147,7 @@ console.log(pi.toString());</textarea><textarea class="o" rows="10" id="e2o" rea
   <!--Example #3-->
 
   <textarea class="c" rows="10" id="e3">
-var pi = 3.1415926535;
+var pi = 3.1415;
 
 console.log(pi.reValue());
 
@@ -178,7 +179,7 @@ console.log(pi.toString());
 
   <!--Example #4-->
 
-  <textarea class="c" rows="10" id="e4">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e4">var pi = 3.1415;
 
 pi = pi.split(7,9);
 
@@ -198,7 +199,7 @@ console.log(pi.toString());
 
   <!--Example #5-->
 
-  <textarea class="c" rows="10" id="e5">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e5">var pi = 3.1415;
   
 pi = pi.split(7,9);
 
@@ -211,14 +212,13 @@ console.log(pi.toString());
   <input type="button" onclick="runExamp('e5');" value="Run code." />
 
   <!--End Example #5-->
-
   Instead of using <h3>split</h3> when you want to <h3>split</h3> a number into all remaining parts. You are best off using the method <h3>splitAll</h3>. The method <h3>splitAll</h3> is much faster than <h3>split</h3> when you want to <h3>split</h3> the value till it is 0 in value.
 
   <br /><br />
 
   <!--Example #6-->
 
-  <textarea class="c" rows="10" id="e6">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e6">var pi = 3.1415;
   
 pi = pi.split(7,9);
 
@@ -236,13 +236,13 @@ console.log(pi.toString());
 
   <!--Example #7-->
 
-  <textarea class="c" rows="10" id="e7">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e7">var pi = 3.1415;
   
 pi = pi.splitAll();
 
-var fract = pi.calcF(3, 7);
+var fract = pi.calcF(2, 5);
 
-var Number = pi.calc(3, 7);
+var Number = pi.calc(2, 5);
 
 console.log(pi.toString());
 
@@ -268,7 +268,7 @@ console.log(Number.toString());
 
   <br /><br />
 
-  In the example above we start at part 3, and add up parts till part 7.
+  In the example above we start at part 2, and add up parts till part 5.
 
   <br /><br />
 
@@ -282,7 +282,7 @@ console.log(Number.toString());
 
   <!--Example #8-->
 
-  <textarea class="c" rows="10" id="e8">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e8">var pi = 3.1415;
   
 pi = pi.splitAll();
 
@@ -308,7 +308,7 @@ console.log(Number.toString());
 
   <!--Example #9-->
 
-  <textarea class="c" rows="10" id="e9">var pi = 3.1415926535;
+  <textarea class="c" rows="10" id="e9">var pi = 3.1415;
   
 pi = pi.splitAll();
 
@@ -340,71 +340,234 @@ console.log(Number.toString());
 
   <!--Example #10-->
 
-  <textarea class="c" rows="10" id="e10">var pi = 3.1415926535;
+  <textarea class="c" rows="20" id="e10">var pi = 3.1415;
   
 pi = pi.splitAll();
 
 console.log(pi.toString());
 
-pi = pi.remove(7);
+pi = pi.remove(4);
 pi = pi.splitAll();
 
 console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e10o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="20" id="e10o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e10');" value="Run code." />
 
   <!--End Example #10-->
 
   <br /><br />
 
-  In this example we remove part 7.
-  
+  In this example we remove part 4.
+
   <br /><br />
 
-  Which is a=6, b=1.
-  
+  Which is a=8, b=1.
+
   <br /><br />
-  
-  As you can see part 7 is gone when we display the set after the remove operation.
-  
+
+  As you can see part 4 is gone when we display the set after the remove operation.
+
   <br /><br />
-  
+
   Pay attention to where the end with 0 remaining value is. To see the separation between before, and after.
-  
+
   <br /><br />
-  
+
   Thus because we changed the parts the value is no longer 0, so we split to all parts again before display the after result.
 
   <br /><br />
 
   <!--Example #11-->
 
-  <textarea class="c" rows="10" id="e11">var pi = 3.1415926535;
+  <textarea class="c" rows="20" id="e11">var pi = 3.1415;
   
 pi = pi.splitAll();
 
 console.log(pi.toString());
 
-pi = pi.setA(7, 3);
-pi = pi.setB(7, 4);
+pi = pi.setA(4, 3);
+pi = pi.setB(4, 4);
 
 pi = pi.splitAll();
 
 console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e11o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="20" id="e11o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e11');" value="Run code." />
 
   <!--End Example #11-->
 
   <br /><br />
 
-  Instead of removing the 7th part we modify the 7th part to be a=3, b=4.
-  
-  <br /><br />
-  
+  Instead of removing the 4th part we modify the 4th part to be a=3, b=4.
+
+  <br />
+
   Methods <h3>setA</h3>, and <h3>setB</h3> Use the first value for which part then the second value for which number you wish to set it to.
 
+  <h2>Transforming parts.</h2>
+
+  Lets say you want to modify a whole bunch of parts at one time.
+
   <br /><br />
+
+  <!--Example #12-->
+
+  <textarea class="c" rows="38" id="e12">var val = 1.3922111911773096;
+
+function A(x)
+{
+  return(x);
+}
+
+function B(x)
+{
+  return(x);
+}
+
+val = val.splitAll();
+
+console.log(val.toString());
+
+val = val.Trans(0,A,B);
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="38" id="e12o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e12');" value="Run code." />
+
+  <!--End Example #12-->
+
+  <br /><br />
+
+  This is one of the most useful operations you will be using.
+
+  <br />
+
+  The first set of parts are the arraignment of parts that are at max value per part using method <h3>splitAll</h3>.
+
+  <br />
+
+  The second set is the output from the transform method. The transform method terminates if a value is out or range, or if you hit 0.
+
+  <br />
+
+  The transform method needs two functions as inputs. Both functions take a single input. In the above example code I label it as <h3>x</h3>.
+
+  <br />
+
+  The input to the function adds by 1 per part. So it goes like this 0,1,2,3,4,5,6 and so on per part.
+
+  <br />
+
+  It is up to you what you want to return as a value from the two functions. In the example I return the value <h3>x</h3> which goes 0,1,2,3,4,5,6 and so on.
+
+  <br />
+
+  Each input to your fraction that is 0,1,2,3,4,5,6 can even be used as a array index if you wish to transform by specific values, or you can calculate each value per value.
+
+  <br /><br />
+
+  <h3>Some modifications you can do to see what happens is changing "val = val.Trans(0,A,B);" to "val = val.Trans(1,A,B);".</h3>
+
+  <br /><br />
+
+  This changes the start position in the parts you wish to transform. Also take note that the transform method will terminate sooner, because the parts will most likely be out of range.
+
+  <a id="cparts"><h1>Creating A number in parts.</h1></a>
+
+  In order to create a number you start with a value that is <h3>NaN</h3>. Which stands for <h3>Not a Number</h3>.
+
+  <br />
+
+  You then can do all manipulation operations, or <h3>split</h3> by "a", and "b".
+
+  <br />
+
+  In order to get a fraction or number back you add the parts back together using methods <h3>calc</h3>, or <h3>calcF</h3>
+
+  <!--Example #13-->
+
+  <textarea class="c" rows="18" id="e13">var val = NaN;
+
+val = val.split(1,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+val = val.split(2,1);
+
+val = val.calc();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="18" id="e13o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e13');" value="Run code." />
+
+  <!--End Example #13-->
+
+  <br /><br />
+
+  We create the square root of 2. Using this split sequence.
+
+  <br /><br />
+
+  You can split into any number you like per part.
+
+  <br /><br />
+
+  Now lets say you wish to continue this splitting sequence to the end. Instead of doing a bunch of split operations you are best to use the transform operation.
+
+  <br /><br />
+
+  <!--Example #14-->
+
+  <textarea class="c" rows="18" id="e14">var val = NaN;
+
+function A(x)
+{
+  return(2);
+}
+
+function B(x)
+{
+  return(1);
+}
+
+val = val.split(1,1);
+val = val.Trans(1,A,B);
+
+val = val.calc();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="18" id="e14o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e14');" value="Run code." />
+
+  <!--End Example #14-->
+
+  <br /><br />
+
+  In this example we split the first part as a=1, b=1.
+
+  <br /><br />
+
+  Then we transform the rest of the parts as a=2, b=1 using function A and B.
+
+  <br />
+
+  Then we add it together with the <h3>calc</h3> Method.
+
+  <br />
+
+  This makes the square root of 2.
+
+  <br /><br />
+
+  You can change this however you like. Thus you can create any irrational number you like using this.
+
+  <h1>Irrational Numbers.</h1>
+
 
 </body>
 </html>
