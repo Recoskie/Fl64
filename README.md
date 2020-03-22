@@ -1,5 +1,6 @@
 # JavaScript double precision library.
 
+Full Documentation: <a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a><br />
 FL64 Basic function page: <a href="https://recoskie.github.io/Fl64/docs/Fl64_App.html">Link</a><br />
 FL64 Irrational numbers: <a href="https://recoskie.github.io/Fl64/docs/Irrational_App.html">Link</a><br />
 Test And execute custom code: <a href="https://recoskie.github.io/docs/Fl64/Code_App.html">Link</a><br />
