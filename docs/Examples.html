@@ -57,8 +57,7 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
-
-/**/</script>
+  </script>
 
   <h1>Indexed contents.</h1>
 
@@ -67,7 +66,7 @@
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
   Irrational numbers:  <a href="#irrational">Link</a><br />
-  Division pattern:  <a href="">Link</a><br />
+  Division pattern:  <a href="#dpat">Link</a><br />
   Bitwise operations: <a href="">Link</a><br />
   Fraction Data type: <a href="">Link</a><br />
   Vector and Array operation:  <a href="">Link</a><br />
@@ -133,7 +132,7 @@ console.log(pi.toString());</textarea><textarea class="o" rows="10" id="e2o" rea
 
   <br /><br />
 
-  If b is set 2, or -2. Then we are going out of a half per value. Does not matter which direction -/+.
+  If b is set 2, or -2. Then we are going half per value. Does not matter which direction -/+.
 
   <br /><br />
 
@@ -170,7 +169,7 @@ console.log(pi.toString());
 
   <br />
 
-  You can change the A and B part to what ever you like per split. Using splits that are out of range will be accommodated in the next parts.
+  You can change the A and B part to what ever you like per split. Using splits that are out of range will be accommodated for in regular <h3>split</h3> without a, or b input.
 
   <br /><br />
 
@@ -378,6 +377,10 @@ console.log(pi.toString());
 
   <br /><br />
 
+  You can see that the change was accommodated for with a=-2, b=1. Per largest out of the number there after till 0 parts remain.
+
+  <br /><br />
+
   <!--Example #11-->
 
   <textarea class="c" rows="20" id="e11">var pi = 3.1415;
@@ -404,6 +407,8 @@ console.log(pi.toString());
   <br />
 
   Methods <h3>setA</h3>, and <h3>setB</h3> Use the first value for which part then the second value for which number you wish to set it to.
+
+  <br />
 
   <h2>Transforming parts.</h2>
 
@@ -447,7 +452,7 @@ console.log(val.toString());
 
   <br />
 
-  The second set is the output from the transform method. The transform method terminates if a value is out or range, or if you hit 0.
+  The second set is the output from the transform method. The transform method terminates if a value is out of range -/+, or if you hit 0.
 
   <br />
 
@@ -455,15 +460,15 @@ console.log(val.toString());
 
   <br />
 
-  The input to the function adds by 1 per part. So it goes like this 0,1,2,3,4,5,6 and so on per part.
+  The input to the function adds by 1 per part. So it goes like this 1,2,3,4,5,6 and so on per part.
 
   <br />
 
-  It is up to you what you want to return as a value from the two functions. In the example I return the value <h3>x</h3> which goes 0,1,2,3,4,5,6 and so on.
+  It is up to you what you want to return as a value from the two functions. In the example I return the value <h3>x</h3> which goes 1,2,3,4,5,6 and so on.
 
   <br />
 
-  Each input to your fraction that is 0,1,2,3,4,5,6 can even be used as a array index if you wish to transform by specific values, or you can calculate each value per value.
+  Each input to your fraction that is 1,2,3,4,5,6 can even be used as a array index if you wish to transform by specific values, or you can calculate each value per value.
 
   <br /><br />
 
@@ -811,5 +816,39 @@ console.log(val.toString());
   <br /><br />
 
   At the smallest scale. The Golden ratio is the sub structure to all other numbers. Including all irrational numbers.
+
+  <br /><br />
+
+  <h2>Rational Vs Irrational.</h2>
+
+  In theory if we could store infinite number of digits.
+
+  <br />
+
+  All rational numbers can be split to 0 parts remain. Then added back to smallest fraction using <h3>calcF</h3>.
+
+  <br />
+
+  Irrational numbers can be split forever into smaller parts, and never terminate.
+
+  <br /><br />
+
+  Computers have a limit for the number of digits we can store. So making the determination between the tow is hard.
+
+  <br /><br />
+
+  We can say a number is irrational if the final split before 0 is at the end of the accuracy of a floating point number in the computer.
+
+  <br /><br />
+
+  The other method is calculating it to A per B ratio to a pattern.
+
+  <br /><br />
+
+  It is possible to determine one from the other even with limited digits.
+
+  <a id="dpat"><h1>Division pattern.</h1></a>
+
+
 </body>
 </html>
