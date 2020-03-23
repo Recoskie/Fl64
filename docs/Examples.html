@@ -910,7 +910,7 @@ console.log(val.toString());
 
   <br /><br />
 
-  The next palace value is 100, so 100-1=99. Any two digits divided by 99 will repeat forever across the number as it is indivisible.
+  The next palace value is 10*10=100, so 100-1=99. Any two digits divided by 99 will repeat forever across the number as it is indivisible.
 
   <br /><br />
 
@@ -918,7 +918,7 @@ console.log(val.toString());
 
   <br /><br />
 
-  The next pace value is 1000, so 1000-1 is 999. Thus any three digits divided by 999 will be indivisible.
+  The next pace value is 100*10=1000, so 1000-1 is 999. Thus any three digits divided by 999 will be indivisible.
 
   <br /><br />
 
@@ -947,5 +947,86 @@ console.log(val);
   <br /><br />
 
   However division pattern relates to the number of digits you are using to display your value per place value.
+
+  <br /><br />
+
+  <!--Example #20-->
+
+  <textarea class="c" rows="5" id="e20">var val = 3 / 9;
+
+console.log(val.toString(3));
+</textarea><textarea class="o" rows="5" id="e20o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e20');" value="Run code." />
+
+  <!--End Example #20-->
+
+  <br /><br />
+
+  In this example the fraction 3&divide;9 works out as 0.1. This is because we are dividing the number up in place values of 3 per place value. Which is what <h3>toString(3)</h3> does.
+
+  <br /><br />
+
+  This is called changing the number base from base 10 to base 3. Instead of each place value being in divisions of 10 per place value it is in perts of 3.
+
+  <br /><br />
+
+  This means we have three digits instead of ten. Thus in three digits 1&divide;3 is perfectly dividable as one third 0.1.
+
+  <br /><br />
+
+  Changing the number of digits we use in a number per place value changes what is divisible between the number of digits.
+
+  <br /><br />
+
+  However even base thee has the following indivisible values.
+
+  <br /><br />
+
+  As the first place value is 3. So 3-1=2.
+
+  <br />
+
+  And the second place value is 3*3=6. So 6-1=5.
+
+  <br /><br />
+
+  <table border="1">
+    <tr><td>1&divide;2</td><td>0.111111111111111</td></tr>
+    <tr><td>1&divide;5</td><td>0.012101210121012</td></tr>
+    <tr><td>2&divide;5</td><td>0.101210121012101</td></tr>
+    <tr><td>3&divide;5</td><td>0.121012101210121</td></tr>
+    <tr><td>4&divide;5</td><td>0.210121012101210</td></tr>
+  </table>
+
+  <br />
+
+  For example half of something can never be dividable out of thirds per place value. However half of ten digits is 5, so a half is 0.5.
+
+  <br />
+
+  So it does not matter what the number of digits you use are. You get the same problem. You end up with 50% divisible numbers and 50% indivisible number even if you used base 60 numbers.
+
+  <br />
+
+  Don't worry so much about divisibility of place values in a number system though. Since you can split these types of numbers into parts. then add the parts together into smallest fraction with <h3>calcF</h3>.
+
+  <br />
+
+  <!--Example #21-->
+
+  <textarea class="c" rows="7" id="e21">var val = 3 / 9;
+
+val = val.splitAll();
+val = val.calcF();
+
+console.log(val.toString());
+</textarea><textarea class="o" rows="7" id="e21o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e21');" value="Run code." />
+
+  <!--End Example #21-->
+
+  <br /><br />
+
+  This way you do not have to worry about these messed up types of numbers.
 </body>
 </html>
