@@ -67,7 +67,7 @@
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
   Irrational numbers:  <a href="#irrational">Link</a><br />
-  Division pattern:  <a href="#dpat">Link</a><br />
+  Division pattern:  <a href="#dpate">Link</a><br />
   Bitwise operations: <a href="">Link</a><br />
   Fraction Data type: <a href="">Link</a><br />
   Vector and Array operation:  <a href="">Link</a><br />
@@ -875,7 +875,23 @@ console.log(val.toString());
 
   It is possible to determine one from the other even with limited digits.
 
-  <a id="dpat"><h1>Division pattern.</h1></a>
+  <a id="dpate"><h1>Division pattern.</h1></a>
+
+  Division pattern has some useful characteristics.
+
+  <br /><br />
+
+  1. Such as algorithms that translate recurring (periodic) patterns quickly in data with a single calculation. There is no faster method.
+
+  <br />
+
+  2. Generating fun random looking sequences that repeat infinitely periodically.
+
+  <h2>Division pattern explained.</h2>
+
+  IF you already know what division pattern is. How it happens in different number bases differently. You can skip to the examples: <a href="#dpat">link</a>.
+
+  <br /><br />
 
   Division pattern happens when you divide a number that does not divide evenly out of the number of digits per place value.
 
@@ -1029,20 +1045,68 @@ console.log(val.toString());
 
   This way you do not have to worry about these messed up types of numbers.
 
-  <h2>Creating a division pattern.</h2>
-
-  Division pattern has some useful characteristics.
-  
-  <br /><br />
-  
-  Such as algorithms that translate recurring (periodic) patterns quickly in data with a single calculation. There is no faster method.
-
-  <br />
-
-  Or to generating fun random looking sequences that repeat infinitely periodically.
-
-  <br />
+  <a id="dpat"><h2>Creating a division pattern.</h2></a>
 
   To create a new division pattern you use the <h3>Pattern</h3> data type.
+
+  <br />
+
+  <!--Example #22-->
+
+  <textarea class="c" rows="9" id="e22">var pat = new Pattern("31415",10);
+
+console.log(pat);
+
+var fract = pat.getFract();
+
+console.log(fract.toString());
+</textarea><textarea class="o" rows="9" id="e22o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e22');" value="Run code." />
+
+  <!--End Example #22-->
+
+  <br /><br />
+
+  We chose the pattern 31415, using out of ten digits. Thus we use the method <h3>getFract</h3> to get the smallest fraction.
+
+  <br /><br />
+
+  We can get more complex than this if we like.
+
+  <br /><br />
+
+  <!--Example #23-->
+
+  <textarea class="c" rows="12" id="e23">var pat = new Pattern("DAMIAN",24);
+
+console.log(pat);
+
+var fract = pat.getFract();
+
+var val = fract.valueOf();
+
+console.log(fract.toString());
+
+console.log(val.toString(24));
+</textarea><textarea class="o" rows="12" id="e23o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e23');" value="Run code." />
+
+  <!--End Example #23-->
+
+  <br /><br />
+
+  In this example I encode my name into a division pattern. AS you can see the pattern is displayed first. Then fraction. Then value in base 24.
+
+  <br /><br />
+
+  You can encode things like this if you like. When I display the value my name is 0.DAMIAN<div style="display:inline-block;color:#FF0000;">DAMIB</div>.
+
+  <br /><br />
+
+  It gets cut off at DAMIB the second time. The last digit that should be an A gets rounded up to B, because it is the last digit of accuracy in the floating point value.
+
+  <br /><br />
+
+
 </body>
 </html>
