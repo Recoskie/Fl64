@@ -68,7 +68,7 @@
   Creating a number in Parts: <a href="#cparts">Link</a><br />
   Irrational numbers:  <a href="#irrational">Link</a><br />
   Division pattern:  <a href="#dpate">Link</a><br />
-  Fraction Data type: <a href="">Link</a><br />
+  Fraction Data type: <a href="#fract">Link</a><br />
   Binary operations: <a href="">Link</a><br />
   Vector and Array operation:  <a href="">Link</a><br />
   Error Correction:  <a href="">Link</a>
@@ -1132,13 +1132,129 @@ console.log(val.toString(2));
   <br /><br />
 
   It is fun working with numbers in different divisible parts.
-  
+
   <br /><br />
-  
+
   However you have to remind yourself that it is all in binary place values. Even though we can round stuff off, and divide by different place values.
 
   <br /><br />
 
+  <h2>Finding the division pattern.</h2>
 
+  <br /><br />
+
+  Lets say you wish to find what the periodic pattern of a fraction, or number is.
+
+  <br /><br />
+
+  <!--Example #25-->
+
+  <textarea class="c" rows="12" id="e25">var f = new Fract(711,911);
+
+var val = f.valueOf();
+
+console.log(val.toString(2));
+
+console.log(f.toString());
+
+var pat = f.divP();
+
+console.log(pat.toString());
+</textarea><textarea class="o" rows="12" id="e25o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e25');" value="Run code." />
+
+  <!--End Example #25-->
+
+  <br /><br />
+
+  You start by creating a fraction. You then call the operation <h3>divP</h3>. Which divides the value in binary. It finds the two points that equal the same remainder. Then creates the pattern.
+
+  <br /><br />
+
+  The first output is the value of the fraction in binary.
+
+  <br /><br />
+
+  The second output is the fraction.
+
+  <br /><br />
+
+  The last output is the division pattern before any recurrence.
+
+  <br /><br />
+
+  Assuming you wish to find the division pattern of a value. You then get the fraction of the value then call <h3>divP</h3>.
+
+  <br /><br />
+
+  <!--Example #26-->
+
+  <textarea class="c" rows="12" id="e26">var val = 711 / 911;
+
+console.log(val.toString(2));
+
+var f = val.getFract();
+
+var pat = f.divP();
+
+console.log(pat.toString());</textarea><textarea class="o" rows="12" id="e26o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e26');" value="Run code." />
+
+  <!--End Example #26-->
+
+  <br /><br />
+
+  Now all of this is done in binary by default. You can actually pass the number base you want to <h3>divP</h3>.
+
+  <br />
+
+  This will then force division pattern in other number bases like base 10.
+
+  <br /><br />
+
+  <!--Example #27-->
+
+  <textarea class="c" rows="12" id="e27">var f = new Fract(711,911);
+
+var val = f.valueOf();
+
+console.log(val.toString());
+
+console.log(f.toString());
+
+var pat = f.divP(10);
+
+console.log(pat.toString());
+</textarea><textarea class="o" rows="12" id="e27o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e27');" value="Run code." />
+
+  <!--End Example #27-->
+
+  <br /><br />
+
+  And lets say you wish to convert to a base 10 pattern from just the number value.
+
+  <br /><br />
+
+  <!--Example #28-->
+
+  <textarea class="c" rows="12" id="e28">var val = 711 / 911;
+
+console.log(val.toString());
+
+var f = val.getFract();
+
+var pat = f.divP(10);
+
+console.log(pat.toString());</textarea><textarea class="o" rows="12" id="e28o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e28');" value="Run code." />
+
+  <!--End Example #28-->
+
+  <br />
+
+  <a id="fract"><h1>Fraction data type.</h1></a>
+
+  <br />
 </body>
 </html>
