@@ -57,7 +57,8 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
-  </script>
+
+/**/</script>
 
   <h1>Indexed contents.</h1>
 
@@ -868,7 +869,7 @@ console.log(val.toString());
 
   <br /><br />
 
-  The other method is calculating it to in A to B ratio in to a pattern.
+  The other method is calculating it in A to B ratio in to a pattern.
 
   <br /><br />
 
@@ -876,6 +877,75 @@ console.log(val.toString());
 
   <a id="dpat"><h1>Division pattern.</h1></a>
 
+  Division pattern happens when you divide a number that does not divide evenly out of the number of digits per place value.
 
+  <br /><br />
+
+  <table border="1">
+    <tr><td>1&divide;9</td><td>0.111111111111111</td></tr>
+    <tr><td>2&divide;9</td><td>0.222222222222222</td></tr>
+    <tr><td>3&divide;9</td><td>0.333333333333333</td></tr>
+    <tr><td>4&divide;9</td><td>0.444444444444444</td></tr>
+    <tr><td>5&divide;9</td><td>0.555555555555555</td></tr>
+    <tr><td>6&divide;9</td><td>0.666666666666666</td></tr>
+    <tr><td>7&divide;9</td><td>0.777777777777777</td></tr>
+    <tr><td>8&divide;9</td><td>0.888888888888888</td></tr>
+  </table>
+
+  <br />
+
+  Take note that you can make the fractions smaller. You can change 3&divide;9 to 1&divide;3. Which is the same fraction.
+
+  <br /><br />
+
+  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9 it will create a remainder that is the same going in and out across the number forever.
+
+  <br /><br />
+
+  What actually is happening is that we have ten possible digits per place value. We have 0,1,2,3,4,5,6,7,8,9.
+
+  <br /><br />
+
+  Thus anything divided by the last digit creates a indivisible remainder that is the same across the number forever.
+
+  <br /><br />
+
+  The next palace value is 100, so 100-1=99. Any two digits divided by 99 will repeat forever across the number as it is indivisible.
+
+  <br /><br />
+
+  23&divide;99=0.23232323232323
+
+  <br /><br />
+
+  The next pace value is 1000, so 1000-1 is 999. Thus any three digits divided by 999 will be indivisible.
+
+  <br /><br />
+
+  719&divide;999=0.719719719719719
+
+  <br /><br />
+
+  You can make any number you like that is indivisible. Thus creates a number pattern using division.
+
+  <br /><br />
+
+  <!--Example #19-->
+
+  <textarea class="c" rows="5" id="e19">var val = 3 / 9;
+
+console.log(val);
+</textarea><textarea class="o" rows="5" id="e19o" readonly>Console output.</textarea>
+  <input type="button" onclick="runExamp('e19');" value="Run code." />
+
+  <!--End Example #19-->
+
+  <br /><br />
+
+  In this example you can try it out your self with every value you come up with that is indivisible.
+
+  <br /><br />
+
+  However division pattern relates to the number of digits you are using to display your value per place value.
 </body>
 </html>
