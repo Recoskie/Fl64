@@ -99,7 +99,7 @@ console.log(pi);</textarea><textarea class="o" rows="10" id="e1o" readonly>Conso
 
   <br /><br />
 
-  As you can see the more we split the value the closer we get to 0. You can also view each part by calling the <h3>toString</h3> method.
+  As you can see the more we split the value. The closer we get to 0. You can also view each part by calling the <h3>toString</h3> method.
 
   <br /><br />
 
@@ -133,11 +133,11 @@ console.log(pi.toString());</textarea><textarea class="o" rows="10" id="e2o" rea
 
   <br /><br />
 
-  If b is set 2, or -2. Then we are going half per value. Does not matter which direction -/+.
+  If b is set 2, or -2. Then we are going half to the next value. Does not matter which direction -/+.
 
   <br /><br />
 
-  If b=3 then it is third in scale to the next part across the number and so on.
+  If b is 3 then it is third in scale to the next part across the number and so on.
 
   <br />
 
@@ -213,9 +213,12 @@ console.log(pi.toString());
   <input type="button" onclick="runExamp('e5');" value="Run code." />
 
   <!--End Example #5-->
+
+  <br />
+
   Instead of using <h3>split</h3> when you want to <h3>split</h3> a number into all remaining parts. You are best off using the method <h3>splitAll</h3>. The method <h3>splitAll</h3> is much faster than <h3>split</h3> when you want to <h3>split</h3> the value till it is 0 in value.
 
-  <br /><br />
+  <br />
 
   <!--Example #6-->
 
@@ -237,7 +240,7 @@ console.log(pi.toString());
 
   <!--Example #7-->
 
-  <textarea class="c" rows="10" id="e7">var pi = 3.1415;
+  <textarea class="c" rows="11" id="e7">var pi = 3.1415;
   
 pi = pi.splitAll();
 
@@ -250,7 +253,7 @@ console.log(pi.toString());
 console.log(fract.toString());
 
 console.log(Number.toString());
-</textarea><textarea class="o" rows="10" id="e7o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="11" id="e7o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e7');" value="Run code." />
 
   <!--End Example #7-->
@@ -283,7 +286,7 @@ console.log(Number.toString());
 
   <!--Example #8-->
 
-  <textarea class="c" rows="10" id="e8">var pi = 3.1415;
+  <textarea class="c" rows="11" id="e8">var pi = 3.1415;
   
 pi = pi.splitAll();
 
@@ -296,7 +299,7 @@ console.log(pi.toString());
 console.log(fract.toString());
 
 console.log(Number.toString());
-</textarea><textarea class="o" rows="10" id="e8o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="11" id="e8o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e8');" value="Run code." />
 
   <!--End Example #8-->
@@ -309,7 +312,7 @@ console.log(Number.toString());
 
   <!--Example #9-->
 
-  <textarea class="c" rows="10" id="e9">var pi = 3.1415;
+  <textarea class="c" rows="11" id="e9">var pi = 3.1415;
   
 pi = pi.splitAll();
 
@@ -322,7 +325,7 @@ console.log(pi.toString());
 console.log(fract.toString());
 
 console.log(Number.toString());
-</textarea><textarea class="o" rows="10" id="e9o" readonly>Console output.</textarea>
+</textarea><textarea class="o" rows="11" id="e9o" readonly>Console output.</textarea>
   <input type="button" onclick="runExamp('e9');" value="Run code." />
 
   <!--End Example #9-->
@@ -331,7 +334,7 @@ console.log(Number.toString());
 
   Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are one part off.
 
-  <br /><br />
+  <br />
 
   <a id="mparts"><h1>Manipulating parts</h1></a>
 
@@ -372,11 +375,11 @@ console.log(pi.toString());
 
   Pay attention to where the end with 0 remaining value is. To see the separation between before, and after.
 
-  <br /><br />
+  <br />
 
-  Thus because we changed the parts the value is no longer 0, so we split to all parts again before display the after result.
+  Thus because we changed the parts the value is no longer 0, so method <h3>splitAll</h3> is used to split to all remaining parts before displaying the after result.
 
-  <br /><br />
+  <br />
 
   You can see that the change was accommodated for with a=-2, b=1. Per largest out of the number there after till 0 parts remain.
 
@@ -419,7 +422,7 @@ console.log(pi.toString());
 
   <!--Example #12-->
 
-  <textarea class="c" rows="38" id="e12">var val = 1.3922111911773096;
+  <textarea class="c" rows="38" id="e12">var val = 1.3922111911773327;
 
 function A(x)
 {
@@ -477,7 +480,11 @@ console.log(val.toString());
 
   <br /><br />
 
-  This changes the start position in the parts you wish to transform. Also take note that the transform method will terminate sooner, because the parts will most likely be out of range.
+  This changes the start position in the parts you wish to transform. Also take note that the transform method will terminate sooner, because the parts will most likely be out of range -/+.
+
+  <br /><br />
+
+  You can change the starting position to what ever you like to see the effect for your self. Set it 3, or even 5.
 
   <a id="cparts"><h1>Creating A number in parts.</h1></a>
 
@@ -819,7 +826,7 @@ console.log(val.toString());
   <br />
 
   <h2>At the smallest scale.</h2>
-  
+
   The Golden ratio is the sub structure to all other numbers. Including all irrational numbers.
 
   <br /><br />
@@ -828,7 +835,15 @@ console.log(val.toString());
 
   <br /><br />
 
-  Each Fibonacci number divided by a prior Fibonacci number forum the golden ratio per a=1, b=1. In perfect equilibrium.
+  Each Fibonacci number divided by a prior Fibonacci number forums the golden ratio per a=1, b=1. In perfect equilibrium.
+
+  <br /><br />
+
+  All numbers can be split into parts and added back to their smallest fraction. By adding all A, and B the same way as the Fibonacci sequence.
+
+  <br /><br />
+
+  Which is why any of this works at all. So the Fibonacci sequence is used to add par part together for all numbers. While the golden ratio is a direct 1:1 relation to the whole.
 
   <br />
 
