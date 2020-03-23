@@ -3,7 +3,7 @@
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
   <title>FL64 Examples.</title>
 </head>
-<body>
+<body onload="setup();">
   <style type="text/css">
     <!--
     input[type=button] {
@@ -47,6 +47,25 @@
   <script type="text/javascript">
     var output = "";
 
+    function setup()
+    {
+      var list = document.getElementsByTagName("code");
+
+      var html = "";
+
+      var lines = 0;
+
+      for (var i = 0; i < list.length; i++) {
+        html = list[i].innerHTML;
+
+        lines = (html.match(/\n/g) || '').length + 1;
+
+        list[i].innerHTML = "<textarea class=\"c\" rows=\"" + lines + "\" id=\"e" + i + "\">" + html.replace(/    /g, "") + "</textarea></textarea><textarea class=\"o\" rows=\"" + lines + "\" id=\"e" + i + "o\" readonly>Console output.</textarea><input type=\"button\" onclick=\"runExamp('e" + i + "');\" value=\"Run code.\" />";
+      }
+    }
+
+    function ndsp(n) { for (var i = 0, s = ""; i < n; i++) { s += " "; } return (s); }
+
     function runExamp(id)
     {
       var code = document.getElementById(id).value;
@@ -57,8 +76,7 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
-
-/**/</script>
+  </script>
 
   <h1>Indexed contents.</h1>
 
@@ -84,16 +102,17 @@
 
   <!--Example #1-->
 
-  <textarea class="c" rows="10" id="e1">var pi = 3.1415;
+  <code>
+    var pi = 3.1415;
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi);
+    console.log(pi);
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi);</textarea><textarea class="o" rows="10" id="e1o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e1');" value="Run code." />
+    console.log(pi);
+  </code>
 
   <!--End Example #1-->
 
@@ -105,16 +124,17 @@ console.log(pi);</textarea><textarea class="o" rows="10" id="e1o" readonly>Conso
 
   <!--Example #2-->
 
-  <textarea class="c" rows="10" id="e2">var pi = 3.1415;
+  <code>
+    var pi = 3.1415;
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi.toString());
+    console.log(pi.toString());
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi.toString());</textarea><textarea class="o" rows="10" id="e2o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e2');" value="Run code." />
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #2-->
 
@@ -147,20 +167,19 @@ console.log(pi.toString());</textarea><textarea class="o" rows="10" id="e2o" rea
 
   <!--Example #3-->
 
-  <textarea class="c" rows="10" id="e3">
-var pi = 3.1415;
+  <code>
+    var pi = 3.1415;
 
-console.log(pi.reValue());
+    console.log(pi.reValue());
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi.reValue());
+    console.log(pi.reValue());
 
-pi = pi.split();
+    pi = pi.split();
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e3o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e3');" value="Run code." />
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #3-->
 
@@ -180,15 +199,15 @@ console.log(pi.toString());
 
   <!--Example #4-->
 
-  <textarea class="c" rows="10" id="e4">var pi = 3.1415;
+  <code>
+    var pi = 3.1415;
 
-pi = pi.split(7,9);
+    pi = pi.split(7,9);
 
-pi = pi.split(3,5);
+    pi = pi.split(3,5);
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e4o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e4');" value="Run code." />
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #4-->
 
@@ -200,17 +219,17 @@ console.log(pi.toString());
 
   <!--Example #5-->
 
-  <textarea class="c" rows="10" id="e5">var pi = 3.1415;
-  
-pi = pi.split(7,9);
+  <code>
+    var pi = 3.1415;
 
-pi = pi.split(3,5);
+    pi = pi.split(7,9);
 
-while( pi > 0 ) { pi = pi.split(); }
+    pi = pi.split(3,5);
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e5o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e5');" value="Run code." />
+    while( pi > 0 ) { pi = pi.split(); }
+
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #5-->
 
@@ -222,17 +241,17 @@ console.log(pi.toString());
 
   <!--Example #6-->
 
-  <textarea class="c" rows="10" id="e6">var pi = 3.1415;
-  
-pi = pi.split(7,9);
+  <code>
+    var pi = 3.1415;
 
-pi = pi.split(3,5);
+    pi = pi.split(7,9);
 
-pi = pi.splitAll();
+    pi = pi.split(3,5);
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="10" id="e6o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e6');" value="Run code." />
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #6-->
 
@@ -240,21 +259,21 @@ console.log(pi.toString());
 
   <!--Example #7-->
 
-  <textarea class="c" rows="11" id="e7">var pi = 3.1415;
-  
-pi = pi.splitAll();
+  <code>
+    var pi = 3.1415;
 
-var fract = pi.calcF(2, 5);
+    pi = pi.splitAll();
 
-var Number = pi.calc(2, 5);
+    var fract = pi.calcF(2, 5);
 
-console.log(pi.toString());
+    var Number = pi.calc(2, 5);
 
-console.log(fract.toString());
+    console.log(pi.toString());
 
-console.log(Number.toString());
-</textarea><textarea class="o" rows="11" id="e7o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e7');" value="Run code." />
+    console.log(fract.toString());
+
+    console.log(Number.toString());
+  </code>
 
   <!--End Example #7-->
 
@@ -286,21 +305,21 @@ console.log(Number.toString());
 
   <!--Example #8-->
 
-  <textarea class="c" rows="11" id="e8">var pi = 3.1415;
-  
-pi = pi.splitAll();
+  <code>
+    var pi = 3.1415;
 
-var fract = pi.calcF();
+    pi = pi.splitAll();
 
-var Number = pi.calc();
+    var fract = pi.calcF();
 
-console.log(pi.toString());
+    var Number = pi.calc();
 
-console.log(fract.toString());
+    console.log(pi.toString());
 
-console.log(Number.toString());
-</textarea><textarea class="o" rows="11" id="e8o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e8');" value="Run code." />
+    console.log(fract.toString());
+
+    console.log(Number.toString());
+  </code>
 
   <!--End Example #8-->
 
@@ -312,21 +331,21 @@ console.log(Number.toString());
 
   <!--Example #9-->
 
-  <textarea class="c" rows="11" id="e9">var pi = 3.1415;
-  
-pi = pi.splitAll();
+  <code>
+    var pi = 3.1415;
 
-var fract = pi.calcF(0, pi.length - 2);
+    pi = pi.splitAll();
 
-var Number = pi.calc(0, pi.length - 2);
+    var fract = pi.calcF(0, pi.length - 2);
 
-console.log(pi.toString());
+    var Number = pi.calc(0, pi.length - 2);
 
-console.log(fract.toString());
+    console.log(pi.toString());
 
-console.log(Number.toString());
-</textarea><textarea class="o" rows="11" id="e9o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e9');" value="Run code." />
+    console.log(fract.toString());
+
+    console.log(Number.toString());
+  </code>
 
   <!--End Example #9-->
 
@@ -344,18 +363,18 @@ console.log(Number.toString());
 
   <!--Example #10-->
 
-  <textarea class="c" rows="21" id="e10">var pi = 3.1415;
-  
-pi = pi.splitAll();
+  <code>
+    var pi = 3.1415;
 
-console.log(pi.toString());
+    pi = pi.splitAll();
 
-pi = pi.remove(4);
-pi = pi.splitAll();
+    console.log(pi.toString());
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="21" id="e10o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e10');" value="Run code." />
+    pi = pi.remove(4);
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #10-->
 
@@ -387,20 +406,20 @@ console.log(pi.toString());
 
   <!--Example #11-->
 
-  <textarea class="c" rows="23" id="e11">var pi = 3.1415;
-  
-pi = pi.splitAll();
+  <code>
+    var pi = 3.1415;
 
-console.log(pi.toString());
+    pi = pi.splitAll();
 
-pi = pi.setA(4, 3);
-pi = pi.setB(4, 4);
+    console.log(pi.toString());
 
-pi = pi.splitAll();
+    pi = pi.setA(4, 3);
+    pi = pi.setB(4, 4);
 
-console.log(pi.toString());
-</textarea><textarea class="o" rows="23" id="e11o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e11');" value="Run code." />
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+  </code>
 
   <!--End Example #11-->
 
@@ -422,27 +441,27 @@ console.log(pi.toString());
 
   <!--Example #12-->
 
-  <textarea class="c" rows="40" id="e12">var val = 1.3922111911773327;
+  <code>
+    var val = 1.3922111911773327;
 
-function A(x)
-{
-  return(x);
-}
+    function A(x)
+    {
+      return(x);
+    }
 
-function B(x)
-{
-  return(x);
-}
+    function B(x)
+    {
+      return(x);
+    }
 
-val = val.splitAll();
+    val = val.splitAll();
 
-console.log(val.toString());
+    console.log(val.toString());
 
-val = val.Trans(0,A,B);
+    val = val.Trans(0,A,B);
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="40" id="e12o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e12');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #12-->
 
@@ -502,24 +521,24 @@ console.log(val.toString());
 
   <!--Example #13-->
 
-  <textarea class="c" rows="18" id="e13">var val = NaN;
+  <code>
+    var val = NaN;
 
-val = val.split(1,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
-val = val.split(2,1);
+    val = val.split(1,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
+    val = val.split(2,1);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="18" id="e13o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e13');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #13-->
 
@@ -539,26 +558,26 @@ console.log(val.toString());
 
   <!--Example #14-->
 
-  <textarea class="c" rows="19" id="e14">var val = NaN;
+  <code>
+    var val = NaN;
 
-function A(x)
-{
-  return(2);
-}
+    function A(x)
+    {
+      return(2);
+    }
 
-function B(x)
-{
-  return(1);
-}
+    function B(x)
+    {
+      return(1);
+    }
 
-val = val.split(1,1);
-val = val.Trans(1,A,B);
+    val = val.split(1,1);
+    val = val.Trans(1,A,B);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="19" id="e14o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e14');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #14-->
 
@@ -622,26 +641,26 @@ console.log(val.toString());
 
   <!--Example #15-->
 
-  <textarea class="c" rows="20" id="e15">var val = NaN;
+  <code>
+    var val = NaN;
 
-function A(x)
-{
-  return(6);
-}
+    function A(x)
+    {
+      return(6);
+    }
 
-function B(x)
-{
-  return( 1 + (x * 4) + (x * x * 4) );
-}
+    function B(x)
+    {
+      return( 1 + (x * 4) + (x * x * 4) );
+    }
 
-val = val.split(3,1);
-val = val.Trans(1,A,B);
+    val = val.split(3,1);
+    val = val.Trans(1,A,B);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="20" id="e15o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e15');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #15-->
 
@@ -667,25 +686,25 @@ console.log(val.toString());
 
   <!--Example #16-->
 
-  <textarea class="c" rows="20" id="e16">var val = NaN;
+  <code>
+    var val = NaN;
 
-function A(x)
-{
-  return(1);
-}
+    function A(x)
+    {
+      return(1);
+    }
 
-function B(x)
-{
-  return(1);
-}
+    function B(x)
+    {
+      return(1);
+    }
 
-val = val.Trans(0,A,B);
+    val = val.Trans(0,A,B);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="20" id="e16o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e16');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #16-->
 
@@ -714,26 +733,26 @@ console.log(val.toString());
 
   <!--Example #17-->
 
-  <textarea class="c" rows="19" id="e17">var val = NaN;
+  <code>
+    var val = NaN;
 
-function A(x)
-{
-  return(8);
-}
+    function A(x)
+    {
+      return(8);
+    }
 
-function B(x)
-{
-  return(7);
-}
+    function B(x)
+    {
+      return(7);
+    }
 
-val = val.split(4,7);
-val = val.Trans(1,A,B);
+    val = val.split(4,7);
+    val = val.Trans(1,A,B);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="19" id="e17o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e17');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #17-->
 
@@ -788,26 +807,26 @@ console.log(val.toString());
 
   <!--Example #18-->
 
-  <textarea class="c" rows="19" id="e18">var val = NaN;
+  <code>
+    var val = NaN;
 
-function A(x)
-{
-  return( x );
-}
+    function A(x)
+    {
+      return( x );
+    }
 
-function B(x)
-{
-  return( x );
-}
+    function B(x)
+    {
+      return( x );
+    }
 
-val = val.split(2,1);
-val = val.Trans(1,A,B);
+    val = val.split(2,1);
+    val = val.Trans(1,A,B);
 
-val = val.calc();
+    val = val.calc();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="19" id="e18o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e18');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #18-->
 
@@ -948,11 +967,11 @@ console.log(val.toString());
 
   <!--Example #19-->
 
-  <textarea class="c" rows="5" id="e19">var val = 3 / 9;
+  <code>
+    var val = 3 / 9;
 
-console.log(val);
-</textarea><textarea class="o" rows="5" id="e19o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e19');" value="Run code." />
+    console.log(val);
+  </code>
 
   <!--End Example #19-->
 
@@ -968,11 +987,11 @@ console.log(val);
 
   <!--Example #20-->
 
-  <textarea class="c" rows="5" id="e20">var val = 3 / 9;
+  <code>
+    var val = 3 / 9;
 
-console.log(val.toString(3));
-</textarea><textarea class="o" rows="5" id="e20o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e20');" value="Run code." />
+    console.log(val.toString(3));
+  </code>
 
   <!--End Example #20-->
 
@@ -1030,14 +1049,14 @@ console.log(val.toString(3));
 
   <!--Example #21-->
 
-  <textarea class="c" rows="7" id="e21">var val = 3 / 9;
+  <code>
+    var val = 3 / 9;
 
-val = val.splitAll();
-val = val.calcF();
+    val = val.splitAll();
+    val = val.calcF();
 
-console.log(val.toString());
-</textarea><textarea class="o" rows="7" id="e21o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e21');" value="Run code." />
+    console.log(val.toString());
+  </code>
 
   <!--End Example #21-->
 
@@ -1053,15 +1072,15 @@ console.log(val.toString());
 
   <!--Example #22-->
 
-  <textarea class="c" rows="9" id="e22">var pat = new Pattern("31415",10);
+  <code>
+    var pat = new Pattern("31415",10);
 
-console.log(pat);
+    console.log(pat);
 
-var fract = pat.getFract();
+    var fract = pat.getFract();
 
-console.log(fract.toString());
-</textarea><textarea class="o" rows="9" id="e22o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e22');" value="Run code." />
+    console.log(fract.toString());
+  </code>
 
   <!--End Example #22-->
 
@@ -1077,19 +1096,19 @@ console.log(fract.toString());
 
   <!--Example #23-->
 
-  <textarea class="c" rows="12" id="e23">var pat = new Pattern("DAMIAN",24);
+  <code>
+    var pat = new Pattern("DAMIAN",24);
 
-console.log(pat);
+    console.log(pat);
 
-var fract = pat.getFract();
+    var fract = pat.getFract();
 
-var val = fract.valueOf();
+    var val = fract.valueOf();
 
-console.log(fract.toString());
+    console.log(fract.toString());
 
-console.log(val.toString(24));
-</textarea><textarea class="o" rows="12" id="e23o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e23');" value="Run code." />
+    console.log(val.toString(24));
+  </code>
 
   <!--End Example #23-->
 
@@ -1113,19 +1132,19 @@ console.log(val.toString(24));
 
   <!--Example #24-->
 
-  <textarea class="c" rows="12" id="e24">var pat = new Pattern("1011");
+  <code>
+    var pat = new Pattern("1011");
 
-console.log(pat);
+    console.log(pat);
 
-var fract = pat.getFract();
+    var fract = pat.getFract();
 
-var val = fract.valueOf();
+    var val = fract.valueOf();
 
-console.log(fract.toString());
+    console.log(fract.toString());
 
-console.log(val.toString(2));
-</textarea><textarea class="o" rows="12" id="e24o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e24');" value="Run code." />
+    console.log(val.toString(2));
+  </code>
 
   <!--End Example #24-->
 
@@ -1149,19 +1168,19 @@ console.log(val.toString(2));
 
   <!--Example #25-->
 
-  <textarea class="c" rows="12" id="e25">var f = new Fract(711,911);
+  <code>
+    var f = new Fract(711,911);
 
-var val = f.valueOf();
+    var val = f.valueOf();
 
-console.log(val.toString(2));
+    console.log(val.toString(2));
 
-console.log(f.toString());
+    console.log(f.toString());
 
-var pat = f.divP();
+    var pat = f.divP();
 
-console.log(pat.toString());
-</textarea><textarea class="o" rows="12" id="e25o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e25');" value="Run code." />
+    console.log(pat.toString());
+  </code>
 
   <!--End Example #25-->
 
@@ -1189,16 +1208,17 @@ console.log(pat.toString());
 
   <!--Example #26-->
 
-  <textarea class="c" rows="12" id="e26">var val = 711 / 911;
+  <code>
+    var val = 711 / 911;
 
-console.log(val.toString(2));
+    console.log(val.toString(2));
 
-var f = val.getFract();
+    var f = val.getFract();
 
-var pat = f.divP();
+    var pat = f.divP();
 
-console.log(pat.toString());</textarea><textarea class="o" rows="12" id="e26o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e26');" value="Run code." />
+    console.log(pat.toString());
+  </code>
 
   <!--End Example #26-->
 
@@ -1213,20 +1233,20 @@ console.log(pat.toString());</textarea><textarea class="o" rows="12" id="e26o" r
   <br /><br />
 
   <!--Example #27-->
+  
+  <code>
+    var f = new Fract(711,911);
 
-  <textarea class="c" rows="12" id="e27">var f = new Fract(711,911);
+    var val = f.valueOf();
 
-var val = f.valueOf();
+    console.log(val.toString());
 
-console.log(val.toString());
+    console.log(f.toString());
 
-console.log(f.toString());
+    var pat = f.divP(10);
 
-var pat = f.divP(10);
-
-console.log(pat.toString());
-</textarea><textarea class="o" rows="12" id="e27o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e27');" value="Run code." />
+    console.log(pat.toString());
+  </code>
 
   <!--End Example #27-->
 
@@ -1238,16 +1258,17 @@ console.log(pat.toString());
 
   <!--Example #28-->
 
-  <textarea class="c" rows="12" id="e28">var val = 711 / 911;
+  <code>
+    var val = 711 / 911;
 
-console.log(val.toString());
+    console.log(val.toString());
 
-var f = val.getFract();
+    var f = val.getFract();
 
-var pat = f.divP(10);
+    var pat = f.divP(10);
 
-console.log(pat.toString());</textarea><textarea class="o" rows="12" id="e28o" readonly>Console output.</textarea>
-  <input type="button" onclick="runExamp('e28');" value="Run code." />
+    console.log(pat.toString());
+  </code>
 
   <!--End Example #28-->
 
