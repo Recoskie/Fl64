@@ -51,20 +51,19 @@
     {
       var list = document.getElementsByTagName("code");
 
-      var html = "";
+      var html = "", lines = 0, spaces = 0;
 
-      var lines = 0;
+      for (var i1 = 0; i1 < list.length; i1++)
+      {
+        html = list[i1].innerHTML;
 
-      for (var i = 0; i < list.length; i++) {
-        html = list[i].innerHTML;
+        var t = html.split("\n"); lines = t.length - 1; spaces = html.search(/\S|$/) - 1;
 
-        lines = (html.match(/\n/g) || '').length + 1;
+        for (var i2 = 0, html = ""; i2 < lines; i2++) { html += t[i2].slice(spaces, t[i2].length) + "\n"; }
 
-        list[i].innerHTML = "<textarea class=\"c\" rows=\"" + lines + "\" id=\"e" + i + "\">" + html.replace(/    /g, "") + "</textarea></textarea><textarea class=\"o\" rows=\"" + lines + "\" id=\"e" + i + "o\" readonly>Console output.</textarea><input type=\"button\" onclick=\"runExamp('e" + i + "');\" value=\"Run code.\" />";
+        list[i1].innerHTML = "<textarea class=\"c\" rows=\"" + lines + "\" id=\"e" + i1 + "\">" + html + "</textarea></textarea><textarea class=\"o\" rows=\"" + lines + "\" id=\"e" + i1 + "o\" readonly>Console output.</textarea><input type=\"button\" onclick=\"runExamp('e" + i1 + "');\" value=\"Run code.\" />";
       }
     }
-
-    function ndsp(n) { for (var i = 0, s = ""; i < n; i++) { s += " "; } return (s); }
 
     function runExamp(id)
     {
