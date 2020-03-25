@@ -1172,8 +1172,56 @@
 
   <br /><br />
 
-  Such values can be converted to two values that divide to the value without error. Which is what the fraction data type does.
+  Such values can be converted into two values that divide to the value without error. Which is what the fraction data type does.
 
   <br /><br />
+
+  For example we can store decimal numbers as fractions, and then add them.
+
+  <br /><br />
+
+  <code>
+    var f1 = new Fract(1,10);
+    var f2 = new Fract(2,10);
+
+    //Add the two fractions.
+
+    f1.x += f2.x;
+
+    //Display the result.
+
+    console.log(f1);
+  </code>
+
+  <br /><br />
+
+  Now normally adding 0.1 with 0.2 would create a floating point error. However it does not this time.
+
+  <br /><br />
+
+  You can multiply add and subtract such values without any errors as the fraction data type.
+
+  <br /><br />
+
+  This form of arithmetic is preferred in applications that require extremely high accuracy with very little impact on performance.
+
+  <br /><br />
+
+  Now adding 0.1, and 0.2 regally as follows will result in error.
+
+  <br /><br />
+
+  <code>
+    var f1 = 0.1;
+    var f2 = 0.2;
+
+    //Add the two numbers.
+
+    f1 += f2;
+
+    //Display the result.
+
+    console.log(f1);
+  </code>
 </body>
 </html>
