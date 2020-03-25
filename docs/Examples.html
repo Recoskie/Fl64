@@ -1249,5 +1249,51 @@
 
     console.log(f.toString());
   </code>
+
+  <br /><br />
+
+  The Fraction data type lets you use the <h3>divP</h3> method to find what the indivisible pattern is.
+
+  <br /><br />
+
+  <code>
+    var f = new Fract(2,10);
+
+    //Indivisible part in binary base 2.
+
+    var pat = f.divP(2);
+
+    //Display the indivisible pattern.
+
+    console.log(pat);
+  </code>
+
+  <br />
+
+  So 0.2 ends up having the recurring pattern <h3>0011&infin;</h3> forever. You can change the <h3>divP(2)</h3> to other number bases if you wish to find if the fraction is dividable in other number bases other than binary.
+
+  <br />
+
+  For example if you change base 2 to base 10 with <h3>divP(10)</h3> then you will get the output <h3>0&infin;</h3>. This means there is no reminder. Which means it divides in base 10, but not as a base 2 binary number.
+
+  <br />
+
+  You can only use <h3>divP</h3> with the fraction data type.
+
+  <br /><br />
+
+  The method <h3>getFract</h3> gives back a fraction from numbers, and patterns. By splitting to all parts then adding all parts back to a fraction.
+
+  <br /><br />
+
+  It is methods <h3>splitAll</h3>, and <h3>calcF</h3> combined.
+
+  <br /><br />
+
+  Also Method <h3>calcF</h3> gives back the fraction data type. Which also would allow you to use <h3>divP</h3> with added up parts.
+
+  <br /><br />
+
+  It is important for you to know this so you do not use a method like <h3>divP</h3>. Unless you convert to a fraction data type first.
 </body>
 </html>
