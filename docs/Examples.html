@@ -84,12 +84,12 @@
   Adding parts back together: <a href="#calc">Link</a><br />
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
-  Irrational numbers:  <a href="#irrational">Link</a><br />
-  Periodic patterns:  <a href="#dpate">Link</a><br />
+  Irrational numbers: <a href="#irrational">Link</a><br />
+  Periodic patterns: <a href="#dpate">Link</a><br />
   Fraction Data type: <a href="#fract">Link</a><br />
-  Error Correction:  <a href="">Link</a><br />
+  Error Correction: <a href="#er">Link</a><br />
   Binary operations: <a href="">Link</a><br />
-  Vector and Array operation:  <a href="">Link</a>
+  Vector and Array operation: <a href="">Link</a>
 
   <h1><a id="parts">Parts.</a></h1>
 
@@ -1296,7 +1296,87 @@
 
   It is important for you to know this so you do not use a method like <h3>divP</h3>, or even <h3>reduce</h3>. Unless you convert to a fraction data type first.
 
-  <br />
+  <a id="er"><h1>Error Correction.</h1></a>
+
+  Generally error correction is not rally necessary if you write your code, and algorithms using the fraction data type: <a href="#fract">Link</a>.
+
+  <br /><br />
+
+  In that section I explain floating point error, and how to overcome it.
+
+  <br /><br />
+
+  Errors happen at the last place of the number. When you add values together that do not divide evenly into a binary number.
+
+  <br /><br />
+
+  When a number is split into parts. The last part is usually where the error is.
+
+  <br /><br />
+
+  However removing the last part with a number that has no error will result in error.
+
+  <br /><br />
+
+  What makes error easy to spot is that the part ends up being rally big in size compared to the other A, B parts.
+
+  <br /><br />
+
+  So here is a example where we introduce error into a floating point value. Then error correct it.
+
+  <br /><br />
+
+  <code>
+    var n = 3.147547;
+
+    var er = 1; //Number Of binary digits.
+
+    //The exponent position using log 2.
+
+    var pos = Math.round(Math.log(n)/Math.log(2));
+
+    //The last binary digit.
+
+    var er = 2**(pos-(53-er)); er -= 2**(pos-53);
+
+    //Show the error that is being introduced.
+
+    console.log( "Value before error is introduced.\r\n\r\n" + n.toString(2) + "\r\n\r\n" );
+
+    console.log( "Value that is going to be added to Number as error.\r\n\r\n" + er.toString(2) + "\r\n\r\n" );
+
+    n += er;
+
+    console.log( "Value After error is introduced.\r\n\r\n" + n.toString(2) + "\r\n\r\n" );
+
+    //Show various stats about the number in question.
+
+    n.stats();
+
+    //Call the error correction method on the number.
+
+    console.log( "\r\n\r\nError corrected value = " + n.err() );
+  </code>
+
+  In this example I use the method <h3>stats</h3>. It displays everything about any number you use it with.
+
+  <br /><br />
+
+  As you can see there is a big jump at the last part in convergence speed. Even average integer part.
+
+  <br /><br />
+
+  Generally we only need to remove the part at the end of the number. Going backwards that is higher than average.
+
+  <br /><br />
+
+  When the method <h3>err</h3> is used on a number it gives back the number value error corrected.
+
+  <br /><br />
+
+  There is a lot you can change in this example code if you like. You can change the number used which is variable "n". You can make the error bigger by change the "er = 1" to say "er = 5".
+
+  <br /><br />
 
 
 </body>
