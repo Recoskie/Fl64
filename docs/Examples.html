@@ -1176,7 +1176,7 @@
 
   <br /><br />
 
-  For example we can store decimal numbers as fractions, and then add them.
+  We can store decimal numbers as fractions, and then add them.
 
   <br /><br />
 
@@ -1199,7 +1199,11 @@
 
   <br /><br />
 
-  You can multiply add and subtract such values without any errors as the fraction data type.
+  You can multiply, add, and subtract. Such values without any errors as the fraction data type.
+
+  <br /><br />
+
+  Each fraction has a <h3>x</h3>, and <h3>y</h3>. <h3>x</h3> is the numerator, and <h3>y</h3> is the denominator.
 
   <br /><br />
 
@@ -1207,7 +1211,7 @@
 
   <br /><br />
 
-  Now adding 0.1, and 0.2 regally as follows will result in error.
+  Now adding 0.1, and 0.2 regularly as follows will result in error.
 
   <br /><br />
 
@@ -1222,6 +1226,28 @@
     //Display the result.
 
     console.log(f1);
+  </code>
+
+  <br /><br />
+
+  The <h3>reduce</h3> method splits the fraction into parts then adds the parts back into the smallest fraction.
+
+  <br /><br />
+
+  <code>
+    var f = new Fract(31415,10000);
+
+    //Display fraction.
+
+    console.log(f.toString());
+
+    //Smallest fraction.
+
+    f = f.reduce();
+
+    //Display the result.
+
+    console.log(f.toString());
   </code>
 </body>
 </html>
