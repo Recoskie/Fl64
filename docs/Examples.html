@@ -53,8 +53,7 @@
 
       var html = "", lines = 0, spaces = 0;
 
-      for (var i1 = 0; i1 < list.length; i1++)
-      {
+      for (var i1 = 0; i1 < list.length; i1++) {
         html = list[i1].innerHTML;
 
         var t = html.split("\n"); lines = t.length - 1; spaces = html.search(/\S|$/) - 1;
@@ -178,7 +177,7 @@
 
   <br />
 
-  You can change the A and B part to what ever you like per split. Using splits that are out of range will be accommodated for in regular <h3>split</h3> without a, or b input.
+  You can change the A, and B part to what ever you like per split. Using splits that are out of range will be accommodated for in regular <h3>split</h3> without a, or b input.
 
   <br /><br />
 
@@ -316,7 +315,7 @@
 
   <br /><br />
 
-  Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are one part off.
+  Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are adding one part less before the end.
 
   <br />
 
@@ -341,7 +340,7 @@
 
   <br /><br />
 
-  In this example we remove part 4.
+  In this example part 4 is removed.
 
   <br /><br />
 
@@ -357,11 +356,11 @@
 
   <br />
 
-  Thus because we changed the parts the value is no longer 0, so method <h3>splitAll</h3> is used to split to all remaining parts before displaying the after result.
+  Because we changed the parts the value is no longer 0, so method <h3>splitAll</h3> is used to split to all remaining parts before displaying the after result.
 
   <br />
 
-  You can see that the change was accommodated for with a=-2, b=1. Per largest out of the number there after till 0 parts remain.
+  You can see that the change was accommodated for with a=-2, b=1. Per largest part out of the number till 0 parts remain.
 
   <br /><br />
 
@@ -401,12 +400,12 @@
 
     function A(x)
     {
-      return(x);
+    return(x);
     }
 
     function B(x)
     {
-      return(x);
+    return(x);
     }
 
     val = val.splitAll();
@@ -448,7 +447,7 @@
 
   <br /><br />
 
-  <h3>Some modifications you can do to see what happens is changing "val = val.Trans(0,A,B);" to "val = val.Trans(1,A,B);".</h3>
+  <h3>Some modifications you can make to see what happens is changing "val = val.Trans(0,A,B);" to "val = val.Trans(1,A,B);".</h3>
 
   <br /><br />
 
@@ -468,7 +467,7 @@
 
   <br />
 
-  In order to get a fraction or number back you add the parts back together using methods <h3>calc</h3>, or <h3>calcF</h3>
+  In order to get a fraction, or number back you add the parts back together using methods <h3>calc</h3>, or <h3>calcF</h3>
 
   <br />
 
@@ -501,7 +500,7 @@
 
   <br /><br />
 
-  Now lets say you wish to continue this splitting sequence to the end. Instead of doing a bunch of split operations you are best to use the transform operation.
+  Now lets say you wish to continue this splitting sequence to the end. Instead of doing a bunch of split operations. You are best to use the transform operation.
 
   <br /><br />
 
@@ -510,12 +509,12 @@
 
     function A(x)
     {
-      return(2);
+    return(2);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.split(1,1);
@@ -544,7 +543,7 @@
 
   <br /><br />
 
-  You can change this however you like. Thus you can create any irrational number you like using this.
+  You can change this however you like. You can create any irrational number you like using this.
 
   <a id="irrational"><h1>Irrational Numbers.</h1></a>
 
@@ -580,7 +579,7 @@
 
   <br /><br />
 
-  This means you are going to get a different number each time. The farther down the decimal place per bigger circle. AS the two lengths change in ratio plus so much more as you go bigger.
+  This means you are going to get a different number each time. The farther down the decimal place per bigger circle. AS the two lengths change in ratio as you go bigger down the decimal place.
 
   <br /><br />
 
@@ -589,12 +588,12 @@
 
     function A(x)
     {
-      return(6);
+    return( 6 );
     }
 
     function B(x)
     {
-      return( 1 + (x * 4) + (x * x * 4) );
+    return( 1 + (x * 4) + (x * x * 4) );
     }
 
     val = val.split(3,1);
@@ -611,7 +610,7 @@
 
   <br /><br />
 
-  This is much different than the physical measurement as we add per part together to create the number.
+  This is much different than the physical measurement. As we add per part together to create the number.
 
   <br />
 
@@ -630,12 +629,12 @@
 
     function A(x)
     {
-      return(1);
+    return(1);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.Trans(0,A,B);
@@ -673,12 +672,12 @@
 
     function A(x)
     {
-      return(8);
+    return(8);
     }
 
     function B(x)
     {
-      return(7);
+    return(7);
     }
 
     val = val.split(4,7);
@@ -743,12 +742,12 @@
 
     function A(x)
     {
-      return( x );
+    return( x );
     }
 
     function B(x)
     {
-      return( x );
+    return( x );
     }
 
     val = val.split(2,1);
@@ -769,7 +768,7 @@
 
   <br /><br />
 
-  If you really do understand, and really work it out. You then understand every math function ever made.
+  If you really do understand, and really work it out. Then you can line up any number to it's pattern.
 
   <br />
 
@@ -787,7 +786,7 @@
 
   <br /><br />
 
-  All numbers can be split into parts and added back to their smallest fraction. By adding all A, and B the same way as the Fibonacci sequence.
+  All numbers can be split into parts then added back to their smallest fraction. By adding all A, and B the same way as the Fibonacci sequence.
 
   <br /><br />
 
@@ -805,7 +804,7 @@
 
   <br />
 
-  Irrational numbers can be split forever into smaller parts, and never terminate.
+  Irrational numbers can be split forever into smaller parts and will never hit 0.
 
   <br /><br />
 
@@ -829,7 +828,7 @@
 
   <br /><br />
 
-  1. Such as algorithms that translate recurring (periodic) patterns quickly in data with a single calculation. There is no faster method.
+  1. Such as algorithms that find, and translate recurring (periodic) patterns quickly in data with a single calculation.
 
   <br />
 
@@ -842,6 +841,10 @@
   <br /><br />
 
   Division creates periodic patterns when you divide a number that does not divide evenly out of the number of digits per place value.
+
+  <br /><br />
+
+  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9 it will create a remainder that is the same going in and out across the number forever.
 
   <br /><br />
 
@@ -862,11 +865,7 @@
 
   <br /><br />
 
-  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9 it will create a remainder that is the same going in and out across the number forever.
-
-  <br /><br />
-
-  What actually is happening is that we have ten possible digits per place value. We have 0,1,2,3,4,5,6,7,8,9.
+  What is happening is that we have ten possible digits per place value. We have 0,1,2,3,4,5,6,7,8,9.
 
   <br /><br />
 
@@ -902,7 +901,7 @@
 
   <br /><br />
 
-  In this example you can try it out your self with every value you come up with that is indivisible.
+  In this example you can try it out your self. You can also change 3&divide;9(3 / 9) with every value you come up with that is indivisible.
 
   <br /><br />
 
@@ -922,7 +921,7 @@
 
   <br /><br />
 
-  This is called changing the number base from base 10 to base 3. Instead of each place value being in per 10 place value. It is in place values of 3.
+  This is called changing the number base from base 10 to base 3. Instead of each place value being in 10 per place value. It is in place values of 3.
 
   <br /><br />
 
@@ -1091,15 +1090,7 @@
 
   <br /><br />
 
-  The first output is the value of the fraction in binary.
-
-  <br /><br />
-
-  The second output is the fraction.
-
-  <br /><br />
-
-  The last output is the division pattern before any recurrence.
+  In the example code. The first output is the value of the fraction in binary. The second output is the fraction. Then last output is the division pattern before any recurrence.
 
   <br /><br />
 
@@ -1128,7 +1119,7 @@
   This will then force division pattern in other number bases like base 10.
 
   <br /><br />
-  
+
   <code>
     var f = new Fract(711,911);
 
