@@ -1220,7 +1220,7 @@
 
   <br /><br />
 
-  We can store decimal numbers as fractions, and then add them.
+  The reason it works is that we can store numbers as whole numbers in binary without error. Then add them. Then divide to the exact number.
 
   <br /><br />
 
@@ -1239,7 +1239,7 @@
 
   <br /><br />
 
-  Now normally adding 0.1 with 0.2 would create a floating point error. However it does not this time.
+  Now normally adding 0.1 with 0.2 would create a floating point error. However it does not this time. Because we are using whole number values that can be represented in binary perfectly.
 
   <br /><br />
 
@@ -1247,7 +1247,15 @@
 
   <br /><br />
 
-  Each fraction has a <h3>x</h3>, and <h3>y</h3>. <h3>x</h3> is the numerator floating point value, and <h3>y</h3> is the denominator floating point number.
+  Each fraction has a <h3>x</h3>, and <h3>y</h3>.
+  
+  <br />
+  
+  <h3>x</h3> is the numerator floating point value.
+
+  <br />
+
+  <h3>y</h3> is the denominator floating point number.
 
   <br /><br />
 
@@ -1342,11 +1350,11 @@
 
   <a id="er"><h1>Error Correction.</h1></a>
 
-  Generally error correction is not rally necessary if you write your code, and algorithms using the fraction data type: <a href="#fract">Link</a>.
+  Generally error correction is not rally necessary. If you write your code, and algorithms using the fraction data type: <a href="#fract">Link</a>.
 
   <br /><br />
 
-  In that section. I explain floating point error, and how to overcome it.
+  In that section. I explain floating point error, and how to overcome it. With as little performance loss as possible.
 
   <br /><br />
 
@@ -1414,7 +1422,7 @@
 
   <br /><br />
 
-  When the method <h3>err</h3> is used on a number it gives back the number value error corrected.
+  When the method <h3>err</h3> is used on a number. It gives back the number value error corrected.
 
   <br /><br />
 
@@ -1476,7 +1484,7 @@
 
   <br /><br />
 
-  You then can translate to a fraction and add the fraction data types together to have less error overall.
+  You then can translate to a fraction. Then you can do arithmetic with fraction data types. To have less error overall.
 
   <br /><br />
 
@@ -1492,7 +1500,7 @@
 
   <br /><br />
 
-  We divide this large number into one to get a value at which the number is cut off at.
+  We then divide this large number into one to get a value at which the number is cut off at.
 
   <br /><br />
 
@@ -1528,7 +1536,7 @@
 
   <br /><br />
 
-  AS you can see the first time we split to all parts we split right to then end. After we set the limit to half of 53 which is 26.5. We then have over 50% of the number gone.
+  AS you can see. The first time we split to all parts. We split right to the end. After we set the limit to half of 53, which is 26.5. We then have over 50% of the number gone.
 
   <br /><br />
 
@@ -1551,7 +1559,7 @@
 
     //Set limit back to normal.
 
-    pi = pi.limit( 1 / Math.pow(2, 53 ) );
+    pi.limit( 1 / Math.pow(2, 53 ) );
 
     //Split to all parts again.
 
@@ -1566,7 +1574,7 @@
 
   <br /><br />
 
-  Also if you do not like the limit as a positional number place value. You can convert to out of 53 place values into a percentage of 0% to 100%.
+  Also if you do not like the limit as a positional number in place values. You can convert to out of 53 place values into a percentage of 0% to 100%.
 
   <br /><br />
 
@@ -1586,7 +1594,7 @@
 
   <br /><br />
 
-  Setting the cut off point is good, for error correcting a value if you know the number of adds, multiply, basically arithmetic operations that occurred.
+  Setting the cut off point is good, for error correcting a value. If you know the number of adds, multiply, basically arithmetic operations that occurred.
 
   <br /><br />
 
