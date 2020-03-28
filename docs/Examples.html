@@ -85,13 +85,13 @@
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
   Irrational numbers: <a href="#irrational">Link</a><br />
-  Periodic patterns: <a href="#dpate">Link</a><br />
+  Periodic number patterns: <a href="#dpat">Link</a><br />
   Fraction Data type: <a href="#fract">Link</a><br />
   Error Correction: <a href="#er">Link</a><br />
-  Binary operations: <a href="">Link</a><br />
+  Binary operations: <a href="#bits">Link</a><br />
   Vector and Array operation: <a href="">Link</a>
 
-  <h1><a id="parts">Parts.</a></h1>
+  <h1><a id="parts">Number in Parts.</a></h1>
 
   1. Numbers can be split into parts.<br />
   2. Numbers have a length for numbers of parts split into.<br />
@@ -387,9 +387,9 @@
 
   Methods <h3>setA</h3>, and <h3>setB</h3> Use the first value for which part then the second value for which number you wish to set it to.
 
-  <br />
-
   <h2>Transforming parts.</h2>
+
+  <br />
 
   Lets say you want to modify a whole bunch of parts at one time.
 
@@ -456,6 +456,8 @@
   <br /><br />
 
   You can change the starting position to what ever you like to see the effect for your self. Set it 3, or even 5.
+
+  <br /><br />
 
   <a id="cparts"><h1>Creating A number in parts.</h1></a>
 
@@ -720,6 +722,8 @@
 
   <h2>The Natural logarithm.</h2>
 
+  <br />
+
   <table border="1">
     <tr><td colspan="2">Natural log.</td></tr>
     <tr><td>A</td><td>B</td></tr>
@@ -860,25 +864,13 @@
 
   It is possible to determine one from the other even with limited digits.
 
-  <a id="dpate"><h1>Periodic patterns.</h1></a>
+  <a id="dpat"><h1>Periodic number patterns.</h1></a>
 
-  Division has some useful characteristics.
-
-  <br /><br />
-
-  1. Such as algorithms that find, and translate recurring (periodic) patterns quickly in data with a single calculation.
-
-  <br />
-
-  2. Generating fun random looking sequences that repeat infinitely periodically.
-
-  <h2>Periodic pattern explained.</h2>
-
-  IF you already know what periodic division pattern is. How it happens in different number bases differently. You can skip to the examples: <a href="#dpat">link</a>.
+  Periodic number patterns happen when you divide a number that does not divide evenly out of the number of digits per place value.
 
   <br /><br />
 
-  Division creates periodic patterns when you divide a number that does not divide evenly out of the number of digits per place value.
+  Many people use to think that the number PI would eventually repeat. When a number repeats, this means it can be represented as a single fraction.
 
   <br /><br />
 
@@ -939,11 +931,11 @@
 
   <br /><br />
 
-  In this example you can try it out your self. You can also change 3&divide;9(3 / 9) with every value you come up with that is indivisible.
+  In this example you can try it out your self. You can also change 3&divide;9 (3 / 9) with every value you come up with that is indivisible.
 
   <br /><br />
 
-  However division pattern relates to the number of digits you are using to display your value in per place value.
+  However periodic number pattern relates to the number of digits you are using to display your value in per divisible place value.
 
   <br /><br />
 
@@ -997,7 +989,7 @@
 
   <br />
 
-  So it does not matter what the number of digits you use are. You get the same problem. You end up with 50% divisible numbers, and 50% indivisible numbers. Even if you used base 60 numbers.
+  So it does not matter what the number of digits you use are. You get the same problem. You end up with 50% divisible numbers, and 50% indivisible periodic numbers. Even if you used base 60 numbers.
 
   <br />
 
@@ -1018,7 +1010,21 @@
 
   This way you do not have to worry about these messed up types of numbers.
 
-  <a id="dpat"><h2>Creating a division pattern.</h2></a>
+  <br /><br />
+
+  Division has some useful characteristics.
+
+  <br /><br />
+
+  1. Such as algorithms that find, and translate recurring (periodic) patterns quickly in data with a single calculation.
+
+  <br />
+
+  2. Generating fun random looking sequences that repeat infinitely periodically.
+
+  <br />
+
+  <h2>Creating a division pattern.</h2>
 
   To create a new division pattern you use the <h3>Pattern</h3> data type.
 
@@ -1102,7 +1108,7 @@
 
   <h2>Finding the division pattern.</h2>
 
-  <br /><br />
+  <br />
 
   Lets say you wish to find what the periodic pattern of a fraction, or number is.
 
@@ -1194,7 +1200,7 @@
 
   <a id="fract"><h1>Fraction data type.</h1></a>
 
-  Fractions are useful for values that are periodic. See the section on Periodic patterns: <a href="#dpate">Link</a>.
+  Fractions are useful for values that are periodic. See the section on Periodic number patterns: <a href="#dpate">Link</a>.
 
   <br /><br />
 
@@ -1210,7 +1216,7 @@
 
   <br /><br />
 
-  Such values can be converted into two values that divide to the value without error. Which is what the fraction data type does.
+  Such values can be converted into two floating point values that divide to the value without error. Which is what the fraction data type does.
 
   <br /><br />
 
@@ -1241,7 +1247,7 @@
 
   <br /><br />
 
-  Each fraction has a <h3>x</h3>, and <h3>y</h3>. <h3>x</h3> is the numerator, and <h3>y</h3> is the denominator.
+  Each fraction has a <h3>x</h3>, and <h3>y</h3>. <h3>x</h3> is the numerator floating point value, and <h3>y</h3> is the denominator floating point number.
 
   <br /><br />
 
@@ -1413,6 +1419,206 @@
   <br /><br />
 
   There is a lot you can change in this example code if you like. You can change the number used which is variable "n". You can make the error bigger by change the "er = 1" to say "er = 5".
+
+  <br /><br />
+
+  <h1>Average part to fraction.</h1>
+
+  <br />
+
+  There are also other forums of error correction such as translating to a average fraction.
+
+  <br /><br />
+
+  Rather than calling <h3>getFract</h3> on numbers, or the pattern type you can use <h3>avgFract</h3>.
+
+  <br /><br />
+
+  <code>
+    var n = 3.147547;
+
+    var er = 1; //Number Of binary digits.
+
+    //The exponent position using log 2.
+
+    var pos = Math.round(Math.log(n)/Math.log(2));
+
+    //The last binary digit.
+
+    var er = 2**(pos-(53-er)); er -= 2**(pos-53);
+
+    //Show the error that is being introduced.
+
+    console.log( "Value before error is introduced.\r\n\r\n" + n.toString(2) + "\r\n\r\n" );
+
+    console.log( "Value that is going to be added to Number as error.\r\n\r\n" + er.toString(2) + "\r\n\r\n" );
+
+    n += er;
+
+    console.log( "Value After error is introduced.\r\n\r\n" + n.toString(2) + "\r\n\r\n" );
+
+    //Show various stats about the number in question.
+
+    n.stats();
+
+    //Call the error correction method on the number.
+
+    console.log( "\r\n\r\nError corrected value = " + n.avgFract().toString() );
+  </code>
+
+  <br /><br />
+
+  This time when we error correct the value we convert to a fraction that is the average of all "a" parts.
+
+  <br /><br />
+
+  This is very useful if you wish to receive number inputs from a septate method or routine you know may have error.
+
+  <br /><br />
+
+  You then can translate to a fraction and add the fraction data types together to have less error overall.
+
+  <br /><br />
+
+  <h1>Setting a limit.</h1>
+
+  <br />
+
+  The last forum of error correction is setting a cut off range. Normally the cut of range is the last digit in a floating point number.
+
+  <br /><br />
+
+  The last floating point digit is 53 away in place values of 2. So 2^53=9007199254740992 as a number. With a movable exponent.
+
+  <br /><br />
+
+  We divide this large number into one to get a value at which the number is cut off at.
+
+  <br /><br />
+
+  in which 1&divide;9007199254740992=1.110223024625e-16 is the dutiful cut off range when spiting a number into parts.
+
+  <br /><br />
+
+  The methods <h3>split</h3>, <h3>splitAll</h3> use this value to find when all parts are split out of the number.
+
+  <br /><br />
+
+  The methods <h3>getFract</h3>, <h3>avgFract</h3> use this value as well to convert to fraction. As they split to the last part of the number.
+
+  <br /><br />
+
+  The method <h3>Trans</h3>, Stops transforming all parts at the cut off range.
+
+  <br /><br />
+
+  <code>
+    var pi = Math.PI;
+
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+
+    //Set the limit.
+
+    pi.limit( 1 / Math.pow(2, 26.5 ) );
+
+    console.log(pi.toString());
+  </code>
+
+  <br /><br />
+
+  AS you can see the first time we split to all parts the number. After we set the limit to half of 53 which is 26.5. We then have over 50% of the number gone.
+
+  <br /><br />
+
+  The value is 0 as the value is set 0 at cut off range. In this next example the limit is set back to normal.
+
+  <br /><br />
+
+  <code>
+    var pi = Math.PI;
+
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+
+    //Set the limit.
+
+    pi.limit( 1 / Math.pow(2, 26.5 ) );
+
+    console.log(pi.toString());
+
+    //Set limit back to normal.
+
+    pi = pi.limit( 1 / Math.pow(2, 53 ) );
+
+    //Split to all parts again.
+
+    pi = pi.splitAll();
+
+    console.log(pi);
+  </code>
+
+  <br /><br />
+
+  You can change the limit how ever you like without losing the value of the number. It just sets the 0 point.
+
+  <br /><br />
+
+  <code>
+    var pi = Math.PI;
+
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+
+    //Set the limit.
+
+    pi.limit( 1 / Math.pow(2, 26.5 ) );
+
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+
+    //Set limit back to normal.
+
+    pi.limit( 1 / Math.pow(2, 53 ) );
+
+    //Split to all parts again.
+
+    pi = pi.splitAll();
+
+    console.log(pi.toString());
+  </code>
+
+  <br /><br />
+
+  Also if you do not like the limit as a positional number place value. You can convert out of 53 places values into a percentage out of 0 to 100%.
+
+  <br /><br />
+
+  <code>
+    var ac = 50;
+
+    var pi = Math.PI.limit( 1 / ( Math.pow( 2, 53 / ( 100 / ac ) ) );
+
+    var fract = pi.getFract();
+
+    console.log(fract.toString());
+  </code>
+
+  <br /><br />
+
+  You can go by percent or number of places. This is good for error correcting a value if you know the number of adds, multiply, basically arithmetic operations that occurred.
+
+  <br /><br />
+
+  You then can add up the possible error into number of place values. This is called dynamic error correction.
+
+  <br /><br />
+
+  <a id="bits"><h1>Binary operations.</h1></a>
 
   <br /><br />
 
