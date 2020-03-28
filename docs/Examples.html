@@ -1502,15 +1502,15 @@
 
   The methods <h3>split</h3>, <h3>splitAll</h3> use this value to find when all parts are split out of the number.
 
-  <br /><br />
+  <br />
 
   The methods <h3>getFract</h3>, <h3>avgFract</h3> use this value as well to convert to fraction. As they split to the last part of the number.
 
-  <br /><br />
+  <br />
 
   The method <h3>Trans</h3>, Stops transforming all parts at the cut off range.
 
-  <br /><br />
+  <br />
 
   <code>
     var pi = Math.PI;
@@ -1557,7 +1557,7 @@
 
     pi = pi.splitAll();
 
-    console.log(pi);
+    console.log(pi.toString());
   </code>
 
   <br /><br />
@@ -1566,35 +1566,7 @@
 
   <br /><br />
 
-  <code>
-    var pi = Math.PI;
-
-    pi = pi.splitAll();
-
-    console.log(pi.toString());
-
-    //Set the limit.
-
-    pi.limit( 1 / Math.pow(2, 26.5 ) );
-
-    pi = pi.splitAll();
-
-    console.log(pi.toString());
-
-    //Set limit back to normal.
-
-    pi.limit( 1 / Math.pow(2, 53 ) );
-
-    //Split to all parts again.
-
-    pi = pi.splitAll();
-
-    console.log(pi.toString());
-  </code>
-
-  <br /><br />
-
-  Also if you do not like the limit as a positional number place value. You can convert out of 53 places values into a percentage out of 0 to 100%.
+  Also if you do not like the limit as a positional number place value. You can convert to out of 53 places values into a percentage of 0% to 100%.
 
   <br /><br />
 
@@ -1610,7 +1582,11 @@
 
   <br /><br />
 
-  You can go by percent or number of places. This is good for error correcting a value if you know the number of adds, multiply, basically arithmetic operations that occurred.
+  You can go by percent, or number of places.
+
+  <br /><br />
+
+  Setting the cut off point is good for error correcting a value if you know the number of adds, multiply, basically arithmetic operations that occurred.
 
   <br /><br />
 
