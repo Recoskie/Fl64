@@ -1346,27 +1346,27 @@
 
   <br /><br />
 
-  In that section I explain floating point error, and how to overcome it.
+  In that section. I explain floating point error, and how to overcome it.
 
   <br /><br />
 
-  Errors happen at the last place of the number. When you add values together that do not divide evenly into a binary number.
+  Errors happen at the last place value in a number. When you add values together that do not divide evenly into a binary number.
 
   <br /><br />
 
-  When a number is split into parts. The last part is usually where the error is.
+  When a number is split into parts. The last part is usually where the error is accumulated.
 
   <br /><br />
 
-  However removing the last part with a number that has no error will result in error.
+  However removing the last part. Is not possible. If there is no error. As it will create a less accurate number when added back together. Resulting in error.
 
   <br /><br />
 
-  What makes error easy to spot is that the part ends up being rally big in size compared to the other A, B parts.
+  What we can do. Is that the part ends up being rally big in size compared to the other A, B parts. So we average the parts. Then remove the parts at the end of the number that are bigger than average.
 
   <br /><br />
 
-  So here is a example where we introduce error into a floating point value. Then error correct it.
+  So here is an example where we introduce error into a floating point value. Then error correct it.
 
   <br /><br />
 
@@ -1406,7 +1406,7 @@
 
   <br /><br />
 
-  As you can see there is a big jump at the last part in convergence speed. Even average integer part.
+  As you can see there is a big jump at the last part.
 
   <br /><br />
 
@@ -1422,7 +1422,7 @@
 
   <br /><br />
 
-  <h1>Average part to fraction.</h1>
+  <h1>To Average fraction.</h1>
 
   <br />
 
@@ -1430,7 +1430,7 @@
 
   <br /><br />
 
-  Rather than calling <h3>getFract</h3> on numbers, or the pattern type you can use <h3>avgFract</h3>.
+  Rather than calling <h3>getFract</h3> on numbers, or using <h3>getFract</h3> on the pattern data type. Instead you can use <h3>avgFract</h3>.
 
   <br /><br />
 
@@ -1468,11 +1468,11 @@
 
   <br /><br />
 
-  This time when we error correct the value we convert to a fraction that is the average of all "a" parts.
+  This time when error correcting the value. We convert to a fraction that is the average of all "a" parts.
 
   <br /><br />
 
-  This is very useful if you wish to receive number inputs from a septate method or routine you know may have error.
+  This is very useful if you wish to receive number inputs from a septate method, or routine. That you know may have error.
 
   <br /><br />
 
