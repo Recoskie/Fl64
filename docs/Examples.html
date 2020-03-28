@@ -88,7 +88,8 @@
   Periodic number patterns: <a href="#dpat">Link</a><br />
   Fraction Data type: <a href="#fract">Link</a><br />
   Error Correction: <a href="#er">Link</a><br />
-  Binary operations: <a href="#bits">Link</a><br />
+  Binary translation operations: <a href="#bits">Link</a><br />
+  Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
   Vector and Array operation: <a href="">Link</a>
 
   <h1><a id="parts">Number in Parts.</a></h1>
@@ -1496,7 +1497,7 @@
 
   <br /><br />
 
-  The last floating point digit is 53 away in place values of 2. So 2^53=9007199254740992 as a number. Which has a move-able exponent.
+  The last floating point digit is 53 away in place values of 2. So 2^52=4503599627370496 as a number. Which has a move-able exponent.
 
   <br /><br />
 
@@ -1504,7 +1505,7 @@
 
   <br /><br />
 
-  In which 1&divide;9007199254740992=1.110223024625e-16 is the default cut off range when spiting a number into parts.
+  In which 1&divide;4503599627370496=2.22044604925031-16 is the default cut off range when spiting a number into parts.
 
   <br /><br />
 
@@ -1529,14 +1530,14 @@
 
     //Set the limit.
 
-    pi.limit( 1 / Math.pow(2, 26.5 ) );
+    pi.limit( 1 / Math.pow(2, 26 ) );
 
     console.log(pi.toString());
   </code>
 
   <br /><br />
 
-  AS you can see. The first time we split to all parts. We split right to the end. After we set the limit to half of 53, which is 26.5. We then have over 50% of the number gone.
+  AS you can see. The first time we split to all parts. We split right to the end. After we set the limit to half of 52, which is 26. We then have over 50% of the number gone.
 
   <br /><br />
 
@@ -1553,13 +1554,13 @@
 
     //Set the limit.
 
-    pi.limit( 1 / Math.pow(2, 26.5 ) );
+    pi.limit( 1 / Math.pow(2, 26 ) );
 
     console.log(pi.toString());
 
     //Set limit back to normal.
 
-    pi.limit( 1 / Math.pow(2, 53 ) );
+    pi.limit( 1 / Math.pow(2, 52 ) );
 
     //Split to all parts again.
 
@@ -1574,14 +1575,14 @@
 
   <br /><br />
 
-  Also if you do not like the limit as a positional number in place values. You can convert to out of 53 place values into a percentage of 0% to 100%.
+  Also if you do not like the limit as a positional number in place values. You can convert to out of 52 place values into a percentage of 0% to 100%.
 
   <br /><br />
 
   <code>
     var ac = 50;
 
-    var pi = Math.PI.limit( 1 / ( Math.pow( 2, 53 / ( 100 / ac ) ) ) );
+    var pi = Math.PI.limit( 1 / ( Math.pow( 2, 52 / ( 100 / ac ) ) ) );
 
     var fract = pi.getFract();
 
@@ -1602,7 +1603,215 @@
 
   <br /><br />
 
-  <a id="bits"><h1>Binary operations.</h1></a>
+  <a id="bits"><h1>Binary translation operations.</h1></a>
+
+  You can convert the number into pure binary using the <h3>bits</h3> operation. Once the number is in binary. You can manipulate the exponent, mantissa, and even the sing bit.
+
+  <code>
+    var val = 27.34;
+
+    val = val.bits();
+
+    console.log(val.toString());
+
+    val.sing = 1;
+    val.exp += 1;
+    val.mantissa += 1;
+
+    console.log(val.toString());
+  </code>
+
+  In this example we convert the number to it's 64 bit binary value using <h3>toString</h3>. We set the sing bit one at the start of the number that can be a 0, or 1. We move the exponent one place value. Which the exponent is the next 11 binary digits after the sing. Then we add our 52 binary digits of our number by one.
+
+  <br /><br />
+
+  As you can see the binary value from before then after. You can make any floating point number manipulation you like using this.
+
+  <br /><br />
+
+  If <h3>toString</h3> is not used the floating point value is used.
+
+  <br /><br />
+
+  <code>
+    var val = 27.34;
+
+    val = val.bits();
+
+    console.log(val);
+
+    val.sing = 1;
+    val.exp += 1;
+    val.mantissa += 1;
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  However doing any math operation with the binary number will convert the number back to a regular number.
+
+  <br /><br />
+
+  <code>
+    var val = 27.34;
+
+    val = val.bits();
+
+    val = val + 0;
+
+    console.log(val);
+
+    val.sing = 1;
+    val.exp += 1;
+    val.mantissa += 1;
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  It will convert back to a number. So if you want to do binary operations on it's sing, exponent, mantissa. You have to convert it back to binary with the <h3>bits</h3> method.
+
+  <br /><br />
+
+  You can also change the 64 bit binary representation into any number base from 2 to 36 per place value.
+
+  <br /><br />
+
+  <code>
+    var val = 27.34;
+
+    val = val.bits();
+
+    console.log(val.toString(10));
+  </code>
+
+  <br /><br />
+
+  You can also convert any 64 bit binary representation of a number back into a number with the new <h3>parseNumber</h3> method.
+
+  <br /><br />
+
+  <code>
+    var val = parseNumber("04628388743545398231", 10);
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  Normally this method translates 64 binary digits to a floating point number if you leave out the ", 10".
+
+  <br /><br />
+
+  <code>
+    var val = parseNumber("0100000000111011010101110000101000111101011100001010001111010111");
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  This time just the 64 bit binary value is used by default. If no number base is specified.
+
+  <br /><br />
+
+  Also the <h3>parseFloat</h3> operation has been updated to Handel changing floating point numbers in different bases back to a number value.
+
+  <br /><br />
+
+  For example the number PI in base 36.
+
+  <br /><br />
+
+  <code>
+    var val = Math.PI;
+
+    console.log(val.toString(36));
+  </code>
+
+  <br /><br />
+
+  Now with the updated <h3>parseFloat</h3>. We can convert the value back to it's exact number by specifying base 36.
+
+  <br /><br />
+
+  <code>
+    var val = parseFloat("3.53I5AB8P5F", 36);
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  Working with number bases like this with perfect accuracy was not possible before. If you remove ", 36". Then the default is base 10.
+
+  <br /><br />
+
+  <code>
+    var val = parseFloat("3.141592653589793");
+
+    console.log(val);
+  </code>
+
+  <br /><br />
+
+  The round off point is calculated in multiples relative to the rounding off point in binary. This ensures there is no loss when changing numbers between different number bases.
+
+  <br /><br />
+
+  However you can view what the real value looks like in full. Because 0.1 is indivisible as a binary number. So it is rounded off at 0.1 in decimal relative to the last multiple of 10 that is accurate in binary place values.
+
+  <br /><br />
+
+  <code>
+    var val = 0.1;
+
+    console.log( val.toString( 10, true ) );
+  </code>
+
+  <br /><br />
+
+  This gives us the decimal value 0.10000000000000000555111512312578270211815834045410156. Which is rounded off to 0.1. Almost all decimal values do not divide evenly as a binary number.
+
+  <br /><br />
+
+  See the following documentation on why: <a href="https://docs.python.org/2/tutorial/floatingpoint.html" target="_blank">Link</a>.
+
+  <br /><br />
+
+  Using ", true" forces the true representation of a floating point value, without any rounding off in any number base, from 2 to 36.
+
+  <br /><br />
+
+  <code>
+    var val = Math.PI;
+
+    console.log( val.toString( 10, true ) );
+  </code>
+
+  <br /><br />
+
+  The best representation of PI without any rounding off as a 64 bit floating point number is exactly 3.141592653589793115997963468544185161590576171875.
+
+  <br /><br />
+
+  It is rounded off at 3.141592653589793. As that is the only places that are truly accurate to number of binary digits in a floating point number.
+
+  <br /><br />
+
+  <code>
+    var val = Math.PI;
+
+    console.log( val.toString( 36, true ) );
+  </code>
+
+  <br /><br />
+
+  The real representation of PI in base 36. Without any rounding off as a 64 bit floating point number is exactly 3.53I5AB8P5FC5VAYQTER60F6R.
+
+  <a id="bwise"><h1>Bitwise Operations.</h1></a>
 
   <br /><br />
 
