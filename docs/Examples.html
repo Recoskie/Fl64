@@ -401,12 +401,12 @@
 
     function A(x)
     {
-      return(x);
+    return(x);
     }
 
     function B(x)
     {
-      return(x);
+    return(x);
     }
 
     val = val.splitAll();
@@ -512,12 +512,12 @@
 
     function A(x)
     {
-      return(2);
+    return(2);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.split(1,1);
@@ -591,12 +591,12 @@
 
     function A(x)
     {
-      return( 6 );
+    return( 6 );
     }
 
     function B(x)
     {
-      return( 1 + (x * 4) + (x * x * 4) );
+    return( 1 + (x * 4) + (x * x * 4) );
     }
 
     val = val.split(3,1);
@@ -632,12 +632,12 @@
 
     function A(x)
     {
-      return(1);
+    return(1);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.Trans(0,A,B);
@@ -675,12 +675,12 @@
 
     function A(x)
     {
-      return(8);
+    return(8);
     }
 
     function B(x)
     {
-      return(7);
+    return(7);
     }
 
     val = val.split(4,7);
@@ -747,12 +747,12 @@
 
     function A(x)
     {
-      return( x );
+    return( x );
     }
 
     function B(x)
     {
-      return( x );
+    return( x );
     }
 
     val = val.split(2,1);
@@ -1990,6 +1990,24 @@
   <br />
 
   Also you do not have to use just <h3>2.1</h3> as the value you do a "XOR", "AND", "OR", operation with. You can also change <h3>Math.PI</h3> to any number you like.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    for( var i = 0; i < 64; i++ )
+    {
+      n = n.bitRsh(1);
+
+      console.log(n.toString());
+      console.log(n);
+    }
+  </code>
+
+  <br /><br />
+
+  Lastly is right shift. It is the same as left shift. Except it moves the binary digits to the right. Number of places. Instead of to the left.
 
 </body>
 </html>
