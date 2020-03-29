@@ -90,7 +90,7 @@
   Error Correction: <a href="#er">Link</a><br />
   Binary translation operations: <a href="#bits">Link</a><br />
   Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
-  Vector and Array operation: <a href="">Link</a>
+  Vector and Array operation: <a href="#v">Link</a>
 
   <h1><a id="parts">Number in Parts.</a></h1>
 
@@ -831,6 +831,10 @@
 
   <br /><br />
 
+  All numbers have a place along the spiral. Rational numbers are a finite point. While irrational numbers go forever along the spiral. There is no such thing as a random number.
+
+  <br /><br />
+
   You can also calculate the golden ratio as the pentagram.
 
   <br /><br />
@@ -871,7 +875,7 @@
 
   <br /><br />
 
-  Many people use to think that the number PI would eventually repeat. When a number repeats, this means it can be represented as a single fraction.
+  Many people use to think that the number PI would eventually repeat. When a number repeats, this means it can be represented as a "finite value = single fraction".
 
   <br /><br />
 
@@ -2003,7 +2007,7 @@
 
   <br /><br />
 
-  The logical "XOR" operation only outputs a 1 if both place values are different. If both place are the same output is 0.
+  The logical XOR operation only outputs a 1 if both place values are different. If both place are the same output is 0.
 
   <br /><br />
 
@@ -2013,6 +2017,62 @@
 
   Also you do not have to use just <h3>2.1</h3> as the value you do a "XOR", "AND", "OR", operation with. You can also change <h3>Math.PI</h3> to any number you like.
 
+  <a id="v"><h1>Vector and array operations.</h1></a>
 
+  We can also do all the floating point operations on a group of numbers rather than one number at a time.
+
+  <br /><br />
+
+  <code>
+    var array = [7, 7.7, 9.11, 3.11, 723];
+
+    array = array.bits();
+
+    console.log(array.join("\r\n"));
+  </code>
+
+  <br /><br />
+
+  As you can see all numbers in the array are converted to binary numbers with the <h3>bits</h3> operation.
+
+  <br />
+
+  Thus <h3>join</h3> is an array operation. It converts all numbers in the array <h3>toString</h3> using the <h3>toString</h3> operation on all numbers in the array.
+
+  <br /><br />
+
+  The input "\r\n" is what we wish to use as a separator between each thing in the array. Thus "\r\n" is the code for a new line.
+
+  <br /><br />
+
+  <code>
+    var array = [7, 7.7, 9.11, 3.11, 723];
+
+    array = array.getFract();
+
+    console.log(array.join("\r\n"));
+  </code>
+
+  <br /><br />
+
+  Call the method <h3>getFract</h3> on all numbers in the array. Basically all operations. You would use on a single number. Is usable with array.
+
+  <br /><br />
+
+  This makes a big shortcut, for writing algorithms, and code to also error correct all numbers with a single <h3>err</h3> on an array.
+
+  <br /><br />
+
+  <code>
+    var array = [7, 7.7, 9.11, 3.11, 723];
+
+    array = array.bitRsh(1);
+
+    console.log(array.join("\r\n"));
+  </code>
+
+  <br /><br />
+
+  Right shift all numbers by one. All number operations can be used with a group of numbers in an array.
 </body>
 </html>
