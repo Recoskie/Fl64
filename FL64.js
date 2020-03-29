@@ -958,7 +958,7 @@ Number.prototype.bitRsh = function (s1)
 
   if (f[0] < 0) { f[0] += 0x100000000; } if (f[1] < 0) { f[1] += 0x100000000; }
 
-  o.b = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
+  o.bm = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
 
   return (o);
 }
@@ -979,7 +979,7 @@ Number.prototype.bitLsh = function (s1)
 
   if (f[0] < 0) { f[0] += 0x100000000; } if (f[1] < 0) { f[1] += 0x100000000; }
 
-  o.b = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
+  o.bm = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
 
   return (o);
 }

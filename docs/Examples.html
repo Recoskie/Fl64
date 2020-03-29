@@ -1815,6 +1815,181 @@
 
   <br /><br />
 
+  This time around you can now do logical operations on all 64 binary digits of a floating point number.
+
+  <br /><br />
+
+  Doing any bitwise operation on a floating point number changes the number into a binary number. See section on binary translation: <a href="#bits">Link</a>.
+
+  <br /><br />
+
+  Before javascript would convert to a 32 bit number during logical operations. Then back to a floating point number.
+
+  <br /><br />
+
+  Lets start with one of the basics such as a left shift.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    for( var i = 0; i < 64; i++ )
+    {
+      n = n.bitLsh(1);
+
+      console.log(n.toString());
+    }
+  </code>
+
+  <br /><br />
+
+  In this example we left shift the number 64 times by 1. What this does it move all the binary digits to the left by one.
+
+  <br /><br />
+
+  The number get converted to a binary number as soon as you do any logical bitwise operation on the floating point number.
+
+  <br /><br />
+
+  You can also display the decoded float value if you remove the <h3>toString</h3>. Which is the regular behavour for a binary number. In this next example I show to binary and value.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    for( var i = 0; i < 64; i++ )
+    {
+      n = n.bitLsh(1);
+
+      console.log(n);
+    }
+  </code>
+
+  <br /><br />
+
+  This differs greatly as it rally does let you do 64 bit bitwise arithmetic operations as a floating point value.
+
+  <br /><br />
+
+  You can also do operations like the logical not operation which converts all ones to zeros, and all zeros to ones. It inverts the binary number.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    n = n.bits();
+
+    console.log(n);
+    console.log(n.toString());
+
+    n = n.bitNot();
+
+    console.log(n);
+    console.log(n.toString());
+  </code>
+
+  <br /><br />
+
+  This time I convert the number to it's binary using the bit's operation, so I can show the binary value before the bits based operation not.
+
+  <br />
+
+  As you can see the two numbers are opposite to each other. Inverting a floating point number is very inserting. For example you can change <h3>var n = Math.PI;</h3> to <h3>var n = 7;</h3>. You can set it any number you like.
+
+  <br />
+
+  Then we have operations like "XOR", "AND", "OR".
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    n = n.bits();
+
+    console.log(n);
+    console.log(n.toString());
+
+    n = n.bitAnd(2.1);
+
+    console.log(n);
+    console.log(n.toString());
+  </code>
+
+  <br /><br />
+
+  In this example we do a logical and against the number PI with the 64 bit floating point value "2.1".
+
+  <br /><br />
+
+  The value 2.1 in binary is 0100000000000000110011001100110011001100110011001100110011001101
+
+  <br /><br />
+
+  The number PI is 0100000000001001001000011111101101010100010001000010110100011000
+
+  <br /><br />
+
+  The logical "AND" operations only outputs a one if the two binary digits are a 1 in the same place values. This creates a very interspersing operation when it comes to floating point numbers.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    n = n.bits();
+
+    console.log(n);
+    console.log(n.toString());
+
+    n = n.bitOr(2.1);
+
+    console.log(n);
+    console.log(n.toString());
+  </code>
+
+  <br /><br />
+
+  This time we do a logical "OR" with the same values we did with the logical "AND" operation.
+
+  <br /><br />
+
+  The logic operation "OR" outputs a 1 if aether place values from both numbers are a 1. So it sets the place value a one if it is a one in aether number merging the place values. Except place values that are both 0 in both numbers.
+
+  <br /><br />
+
+  This also has some interesting effects on floating point numbers when comparing them just as logical "AND" does.
+
+  <br /><br />
+
+  <code>
+    var n = Math.PI;
+
+    n = n.bits();
+
+    console.log(n);
+    console.log(n.toString());
+
+    n = n.bitXor(2.1);
+
+    console.log(n);
+    console.log(n.toString());
+  </code>
+
+  <br /><br />
+
+  The logical "XOR" operation only outputs a 1 if both place values are different. If both place values are 1 in both numbers you are comparing, or 0 then output is 0. If they do not match the output is a 1.
+
+  <br /><br />
+
+  Doing a XOR with the same number will result in 0 all across the number since the binary digits are the same. Thus you only get a one output if digits do not match.
+
+  <br />
+
+  Also you do not have to use just <h3>2.1</h3> as the value you do a "XOR", "AND", "OR", operation with. You can also change <h3>Math.PI</h3> to any number you like.
 
 </body>
 </html>
