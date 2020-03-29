@@ -401,12 +401,12 @@
 
     function A(x)
     {
-    return(x);
+      return(x);
     }
 
     function B(x)
     {
-    return(x);
+      return(x);
     }
 
     val = val.splitAll();
@@ -512,12 +512,12 @@
 
     function A(x)
     {
-    return(2);
+      return(2);
     }
 
     function B(x)
     {
-    return(1);
+      return(1);
     }
 
     val = val.split(1,1);
@@ -591,12 +591,12 @@
 
     function A(x)
     {
-    return( 6 );
+      return( 6 );
     }
 
     function B(x)
     {
-    return( 1 + (x * 4) + (x * x * 4) );
+      return( 1 + (x * 4) + (x * x * 4) );
     }
 
     val = val.split(3,1);
@@ -632,12 +632,12 @@
 
     function A(x)
     {
-    return(1);
+      return(1);
     }
 
     function B(x)
     {
-    return(1);
+      return(1);
     }
 
     val = val.Trans(0,A,B);
@@ -675,12 +675,12 @@
 
     function A(x)
     {
-    return(8);
+      return(8);
     }
 
     function B(x)
     {
-    return(7);
+      return(7);
     }
 
     val = val.split(4,7);
@@ -747,12 +747,12 @@
 
     function A(x)
     {
-    return( x );
+      return( x );
     }
 
     function B(x)
     {
-    return( x );
+      return( x );
     }
 
     val = val.split(2,1);
@@ -1813,13 +1813,13 @@
 
   <a id="bwise"><h1>Bitwise Operations.</h1></a>
 
+  <br />
+
+  You can now do logical operations on all 64 binary digits of a floating point number.
+
   <br /><br />
 
-  This time around you can now do logical operations on all 64 binary digits of a floating point number.
-
-  <br /><br />
-
-  Doing any bitwise operation on a floating point number changes the number into a binary number. See section on binary translation: <a href="#bits">Link</a>.
+  Doing any bitwise operation on a floating point number changes the number into a binary number. See the section on binary translation: <a href="#bits">Link</a>.
 
   <br /><br />
 
@@ -1848,11 +1848,11 @@
 
   <br /><br />
 
-  The number get converted to a binary number as soon as you do any logical bitwise operation on the floating point number.
+  The number gets converted to a binary number as soon as you do any logical bitwise operation on the floating point number.
 
-  <br /><br />
+  <br />
 
-  You can also display the decoded float value if you remove the <h3>toString</h3>. Which is the regular behavour for a binary number. In this next example I show to binary and value.
+  You can also display the decoded float value if you remove the <h3>toString</h3> method. Which is the regular behavour for a binary number.
 
   <br /><br />
 
@@ -1873,7 +1873,29 @@
 
   <br /><br />
 
-  You can also do operations like the logical not operation which converts all ones to zeros, and all zeros to ones. It inverts the binary number.
+  <code>
+    var n = Math.PI;
+
+    for( var i = 0; i < 64; i++ )
+    {
+      n = n.bitRsh(1);
+
+      console.log(n.toString());
+      console.log(n);
+    }
+  </code>
+
+  <br />
+
+  Also <h3>bitRsh</h3> is right shift. It is the same as left shift. Except it moves the binary digits to the right. Number of places. Instead of to the left.
+
+  <br />
+
+  You can change the number of places from 1 at a time to 2 at a time to the right or more if you like.
+
+  <br /><br />
+
+  You can also do operations like the logical "NOT" operation which converts all ones to zeros, and all zeros to ones. It inverts the binary number.
 
   <br /><br />
 
@@ -1893,11 +1915,11 @@
 
   <br /><br />
 
-  This time I convert the number to it's binary using the bit's operation, so I can show the binary value before the bits based operation not.
+  This time I convert the number to it's binary using the bit's operation, so I can show the binary value before the bits based operation "NOT".
 
   <br />
 
-  As you can see the two numbers are opposite to each other. Inverting a floating point number is very inserting. For example you can change <h3>var n = Math.PI;</h3> to <h3>var n = 7;</h3>. You can set it any number you like.
+  As you can see the two numbers are opposite to each other. Inverting a floating point number is very inserting. For example you can change <h3>var n = Math.PI;</h3> to <h3>var n = 7;</h3>. Change the value to what ever you like.
 
   <br />
 
@@ -1921,7 +1943,7 @@
 
   <br /><br />
 
-  In this example we do a logical and against the number PI with the 64 bit floating point value "2.1".
+  In this example we do a logical "AND" against the number PI with the 64 bit floating point value "2.1".
 
   <br /><br />
 
@@ -1933,7 +1955,7 @@
 
   <br /><br />
 
-  The logical "AND" operations only outputs a one if the two binary digits are a 1 in the same place values. This creates a very interspersing operation when it comes to floating point numbers.
+  The logical "AND" operations only outputs a one if the two binary digits are a 1 in the same place values. This creates a very interesting operation when it comes to floating point numbers.
 
   <br /><br />
 
@@ -1981,7 +2003,7 @@
 
   <br /><br />
 
-  The logical "XOR" operation only outputs a 1 if both place values are different. If both place values are 1 in both numbers you are comparing, or 0 then output is 0. If they do not match the output is a 1.
+  The logical "XOR" operation only outputs a 1 if both place values are different. If both place are the same output is 0.
 
   <br /><br />
 
@@ -1991,23 +2013,6 @@
 
   Also you do not have to use just <h3>2.1</h3> as the value you do a "XOR", "AND", "OR", operation with. You can also change <h3>Math.PI</h3> to any number you like.
 
-  <br /><br />
-
-  <code>
-    var n = Math.PI;
-
-    for( var i = 0; i < 64; i++ )
-    {
-      n = n.bitRsh(1);
-
-      console.log(n.toString());
-      console.log(n);
-    }
-  </code>
-
-  <br /><br />
-
-  Lastly is right shift. It is the same as left shift. Except it moves the binary digits to the right. Number of places. Instead of to the left.
 
 </body>
 </html>
