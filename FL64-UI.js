@@ -433,7 +433,7 @@ FBar.prototype.update = function (force)
 
   //Disable rows or cols. This improves performance as the table body is not reconstructed for the data to display.
 
-  this.enabled = e; for (; i < this.max; i++)
+  for (; e < this.enabled; i++, this.enabled--)
   {
     if (this.Vertical)
     {
@@ -608,6 +608,12 @@ CBar.prototype.auto = function ()
 }
 
 /***********************************************************************
+keep track of enabled rows and cols.
+***********************************************************************/
+
+CBar.prototype.enabled = 0;
+
+/***********************************************************************
 Update the component to page element.
 ***********************************************************************/
 
@@ -619,13 +625,13 @@ CBar.prototype.update = function (force)
 
   //Adjust position within boundaries.
 
-  SCBar.pos[this.n] = Math.max(0, Math.min(SCBar.pos[this.n], SCBar.Ref[this.n].length - SCBar.Bars[this.n].max));
+  SCBar.pos[this.n] = Math.max(0, Math.min(SCBar.pos[this.n], this.Fr.length - SCBar.Bars[this.n].max));
 
   //re-Create bar if necessary.
 
   if (force || this.V != this.Vertical || this.omax != this.max)
   {
-    this.V = this.Vertical; this.omax = this.max;
+    this.V = this.Vertical; this.omax = this.max; this.enabled = this.max;
 
     //Create bar html body.
 
@@ -637,7 +643,7 @@ CBar.prototype.update = function (force)
     {
       //Convergent row.
 
-      html += "<tr><td colspan='2'>Convergents.</td></tr>";
+      html += "<tr><td colspan='2'>Convergent's.</td></tr>";
 
       //Move Up.
 
@@ -656,7 +662,7 @@ CBar.prototype.update = function (force)
 
     else
     {
-      html += "<tr><td rowspan='2'>Convergents:</td>";
+      html += "<tr><td rowspan='2'>Convergent's:</td>";
 
       //Move to the Left. 
 
@@ -685,7 +691,7 @@ CBar.prototype.update = function (force)
   if (SCBar.pos[this.n] > 0) { document.getElementById("c" + this.n + "l").style.display = ""; }
   else { document.getElementById("c" + this.n + "l").style.display = "none"; }
 
-  if ((SCBar.pos[this.n] + this.max) >= SCBar.Ref[this.n].length) { document.getElementById("c" + this.n + "r").style.display = "none"; }
+  if ((SCBar.pos[this.n] + this.max) >= this.Fr.length) { document.getElementById("c" + this.n + "r").style.display = "none"; }
   else { document.getElementById("c" + this.n + "r").style.display = ""; }
 
   //Update Elements. From start to end if defined. Otherwise update all elements.
@@ -697,10 +703,39 @@ CBar.prototype.update = function (force)
     document.getElementById("c" + this.n + "x" + i + "").innerHTML = SCBar.pos[this.n] + i;
     document.getElementById("c" + this.n + "f" + i + "").innerHTML = this.Fr[SCBar.pos[this.n] + i];
   }
-  for (; i < this.max; i++)
+
+  //Enable row and cols. This improves performance as the table body is not reconstructed for the data to display.
+
+  for (; this.enabled < e; this.enabled++)
   {
-    document.getElementById("c" + this.n + "x" + i + "").innerHTML = "";
-    document.getElementById("c" + this.n + "f" + i + "").innerHTML = "";
+    if (this.Vertical)
+    {
+      document.getElementById("c" + this.n + "f" + this.enabled + "").parentElement.parentElement.style.visibility = "";
+    }
+    else
+    {
+      var r = document.getElementById("c" + this.n + "").rows;
+
+      r[1].cells[this.enabled].style.visibility = "";
+      r[0].cells[this.enabled + 2].style.visibility = "";
+    }
+  }
+
+  //Disable rows or cols. This improves performance as the table body is not reconstructed for the data to display.
+
+  for (; e < this.enabled; i++, this.enabled-- )
+  {
+    if (this.Vertical)
+    {
+      document.getElementById("c" + this.n + "f" + i + "").parentElement.parentElement.style.visibility = "hidden";
+    }
+    else
+    {
+      var r = document.getElementById("c" + this.n + "").rows;
+
+      r[1].cells[i].style.visibility = "hidden";
+      r[0].cells[i + 2].style.visibility = "hidden";
+    }
   }
 }
 
@@ -850,7 +885,7 @@ STBar = {
       {
         return (function ()
 {
-  return ("Error");
+  return (0);
 });
       }
 
@@ -880,7 +915,7 @@ STBar = {
 };
 
 /***********************************************************************
-Pre constructed lines to nth element, for simplifyied bar creation.
+Pre constructed lines to nth element, for simplified bar creation.
 ***********************************************************************/
 
 TBar.prototype.A = []; //A-n.
