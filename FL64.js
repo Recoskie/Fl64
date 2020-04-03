@@ -141,7 +141,7 @@ Number.prototype.split = function (a, b)
 
   if (this.length === 0)
   {
-    var n = this.primitive();
+    var n = this.primitive(); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * Number.EPSILON;
 
     a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
 
@@ -199,9 +199,8 @@ Number.prototype.split = function (a, b)
 
   if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
   {
-    this.val[this.length + 1] = 0; this.r[this.length + 1] = 0;
+    this.val[this.length] = 0; this.r[this.length+1] = 0;
   }
-
   this.length += 1; return (this);
 };
 
@@ -215,7 +214,7 @@ Number.prototype.splitAll = function ()
 
   if (this.length === 0)
   {
-    var a = Math.floor(n = this.primitive());
+    var a = Math.floor(n = this.primitive()); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * Number.EPSILON;
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
@@ -261,7 +260,7 @@ Number.prototype.splitAll = function ()
 
   //Val is automatically 0 at cut off range.
 
-  this.length += 1; this.val[this.length] = 0; this.r[this.length] = 0;
+  this.val[this.length] = 0; this.r[this.length + 1] = 0; this.length += 1;
 
   return (this);
 };
@@ -321,7 +320,7 @@ Fract.prototype.split = function (a, b)
 
   //Write remaining value. used by each next split.
 
-  this.r[this.length+1] = new Fract(n.y, (n.x - (n.y * a)) / b);
+  this.r[this.length + 1] = new Fract(n.y, (n.x - (n.y * a)) / b);
 
   //Add up each split into fx, fy per split.
 
@@ -342,7 +341,7 @@ Fract.prototype.split = function (a, b)
 
   if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
   {
-    this.val[this.length + 1] = 0; this.r[this.length + 1] = 0;
+    this.val[this.length] = 0; this.r[this.length + 1] = 0;
   }
 
   this.length += 1; return (this);
@@ -406,7 +405,7 @@ Fract.prototype.splitAll = function ()
 
     //Write remaining value. used by each next split.
 
-    this.r[this.length+1] = new Fract(n.y, n.x - (n.y * a));
+    this.r[this.length + 1] = new Fract(n.y, n.x - (n.y * a));
 
     //Add up each split into fx, fy per split.
 
@@ -416,7 +415,7 @@ Fract.prototype.splitAll = function ()
 
   //Val is automatically 0 at cut off range.
 
-  this.length += 1; this.val[this.length] = 0; this.r[this.length] = 0;
+  this.val[this.length] = 0; this.r[this.length + 1] = 0; this.length += 1;
 
   return (this);
 };
