@@ -157,9 +157,9 @@ Number.prototype.split = function (a, b)
 
     if (this.r[1] == Infinity) { this.r[1] = 0; }
 
-    this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
+    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
-    this.valueOf = function () { return (this.val[this.length - 1]); };
+    this.valueOf = function () { return (this.val[this.length]); };
 
     this.length += 1; return (this);
   }
@@ -197,9 +197,9 @@ Number.prototype.split = function (a, b)
 
   //Val is automatically 0 at cut off range.
 
-  if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
+  if ((this.val[this.length+1] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
   {
-    this.val[this.length] = 0; this.r[this.length+1] = 0;
+    this.val[this.length + 1] = 0; this.r[this.length + 1] = 0;
   }
   this.length += 1; return (this);
 };
@@ -226,9 +226,9 @@ Number.prototype.splitAll = function ()
 
     this.r = [n, 1 / (n - a)];
 
-    this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
+    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
-    this.valueOf = function () { return (this.val[this.length - 1]); };
+    this.valueOf = function () { return (this.val[this.length]); };
   }
   else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
 
@@ -238,7 +238,7 @@ Number.prototype.splitAll = function ()
 
   //loop till cut off range.
 
-  while ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) > this.ac)
+  while ((this.val[this.length + 1] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) > this.ac)
   {
     //Default scale a=int, b=1.
 
@@ -260,7 +260,7 @@ Number.prototype.splitAll = function ()
 
   //Val is automatically 0 at cut off range.
 
-  this.val[this.length] = 0; this.r[this.length + 1] = 0; this.length += 1;
+  this.length += 1; this.val[this.length] = 0; this.r[this.length] = 0;
 
   return (this);
 };
@@ -295,7 +295,7 @@ Fract.prototype.split = function (a, b)
 
     if (this.r[1] == Infinity) { this.r[1] = 0; }
 
-    this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
+    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
     this.valueOf = function () { return (this.val[this.length - 1]); };
     this.toString = function ()
