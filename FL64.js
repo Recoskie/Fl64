@@ -229,7 +229,7 @@ Number.prototype.splitAll = function ()
 
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
-    this.valueOf = function () { return (this.val[this.length]); };
+    this.valueOf = function () { return (this.val[this.length - 1]); };
   }
   else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
 
