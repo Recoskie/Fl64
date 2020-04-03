@@ -251,6 +251,15 @@
         document.getElementById("in").innerHTML = 'Input = <input id="num" type="text">'
       }
     }
+
+    //Internet Explorer Fix for tanh.
+
+    Math.tanh = Math.tanh || function (x)
+    {
+      var a = Math.exp(+x), b = Math.exp(-x);
+
+      return( a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (a + b) );
+    }
   </script>
   <center>
     <table style="width:100%;" border="1">
