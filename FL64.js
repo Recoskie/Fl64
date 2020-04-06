@@ -141,7 +141,7 @@ Number.prototype.split = function (a, b)
 
   if (this.length === 0)
   {
-    var n = this.primitive(); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * Number.EPSILON;
+    var n = this.primitive(); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * (Number.EPSILON / 2);
 
     a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
 
@@ -214,7 +214,7 @@ Number.prototype.splitAll = function ()
 
   if (this.length === 0)
   {
-    var a = Math.floor(n = this.primitive()); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * Number.EPSILON;
+    var a = Math.floor(n = this.primitive()); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * (Number.EPSILON / 2);
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
@@ -238,7 +238,7 @@ Number.prototype.splitAll = function ()
 
   //loop till cut off range.
 
-  while ((this.val[this.length + 1] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) > this.ac)
+  while ((this.val[this.length + 1] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) >= this.ac)
   {
     //Default scale a=int, b=1.
 
