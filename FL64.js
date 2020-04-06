@@ -145,7 +145,7 @@ Number.prototype.split = function (a, b)
 
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
-  if (!this.init_ac) { this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2; }
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (Number.EPSILON / 2); }
 
   if (this.length === 0)
   {
@@ -220,7 +220,7 @@ Number.prototype.splitAll = function ()
 {
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
-  if (!this.init_ac) { this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2; }
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (Number.EPSILON / 2); }
 
   if (this.length === 0)
   {
