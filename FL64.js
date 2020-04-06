@@ -124,6 +124,12 @@ Fract.prototype.val = Number.prototype.val = [undefined];
 Number.prototype.ac = Fract.prototype.ac = Number.EPSILON;
 
 //**********************************************************************************
+//The cut off range has to be calculated once for each number, or can be set using limit.
+//**********************************************************************************
+
+Number.prototype.init_ac = false;
+
+//**********************************************************************************
 //The next part.
 //**********************************************************************************
 
@@ -139,9 +145,11 @@ Number.prototype.split = function (a, b)
 
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
+  if (!this.init_ac) { this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2; }
+
   if (this.length === 0)
   {
-    var n = this.primitive(); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * (Number.EPSILON / 2);
+    var n = this.primitive();
 
     a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
 
@@ -212,9 +220,11 @@ Number.prototype.splitAll = function ()
 {
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
+  if (!this.init_ac) { this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2; }
+
   if (this.length === 0)
   {
-    var a = Math.floor(n = this.primitive()); this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(n)) / 0.6931471805599453))) * (Number.EPSILON / 2);
+    var a = Math.floor(n = this.primitive());
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
@@ -550,7 +560,7 @@ Fract.prototype.limit = Number.prototype.limit = function (ac)
 {
   //Set accuracy limit.
 
-  this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
+  this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2;
 
   //Set length to accuracy limit.
 
