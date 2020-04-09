@@ -133,7 +133,8 @@ Number.prototype.init_ac = false;
 //The next part.
 //**********************************************************************************
 
-Number.prototype.reValue = Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).valueOf()); };
+Number.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).valueOf()); };
+Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).toString()); };
 
 //*****************************************************************************************************
 //Split a number and return the number object.
@@ -300,7 +301,7 @@ Fract.prototype.split = function (a, b)
 
     this.r = [
       new Fract(this.x, this.y),
-      new Fract(this.y, (this.x - (this.y * a)) / b)
+      new Fract(this.y * b, this.x - (this.y * a))
     ];
 
     if (this.r[1] == Infinity) { this.r[1] = 0; }
@@ -330,7 +331,7 @@ Fract.prototype.split = function (a, b)
 
   //Write remaining value. used by each next split.
 
-  this.r[this.length + 1] = new Fract(n.y, (n.x - (n.y * a)) / b);
+  this.r[this.length + 1] = new Fract(n.y * b, n.x - (n.y * a));
 
   //Add up each split into fx, fy per split.
 
@@ -380,7 +381,7 @@ Fract.prototype.splitAll = function ()
 
     this.r = [
       new Fract(this.x, this.y),
-      new Fract(this.y, (this.x - (this.y * a)) / b)
+      new Fract(this.y * b, this.x - (this.y * a))
     ];
 
     this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];

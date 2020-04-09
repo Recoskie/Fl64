@@ -125,7 +125,7 @@ SFBar = {
 
   clear: function (bar)
   {
-    this.Ref[bar] = new Number(this.Ref[bar].primitive()); this.Bars[bar].update();
+    this.Ref[bar].length = 0; this.Bars[bar].update();
 
     this.Bars[bar].onChange(this.Ref[bar].calc(0, this.Ref[bar].length - 1));
   },
