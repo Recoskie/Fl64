@@ -3,7 +3,7 @@
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
   <title>FL64 Examples.</title>
 </head>
-<body onload="setup();">
+<body onload="setup(); updateT();">
   <style type="text/css">
     <!--
     input[type=button] {
@@ -47,8 +47,7 @@
   <script type="text/javascript">
     var output = "";
 
-    function setup()
-    {
+    function setup() {
       var list = document.getElementsByTagName("code");
 
       var html = "", lines = 0, spaces = 0;
@@ -66,8 +65,7 @@
       }
     }
 
-    function runExamp(id)
-    {
+    function runExamp(id) {
       var code = document.getElementById(id).value;
 
       try { eval(code); } catch (e) { console.log(e.toString()); }
@@ -76,6 +74,48 @@
     }
 
     console.log = function (msg) { output += msg + "\r\n"; }
+
+    var base = 3, pos = 1;
+
+    function updateT() {
+      if (pos < 1) { pos = 1; }
+
+      var d = Math.pow(base, Math.floor(Math.log(pos) / Math.log(base)) + 1) - 1;
+
+      var n1 = [], n2 = [];
+
+      for (var i = 0, n = pos; i < 12; i++, n++) {
+        //D can not match pattern part.
+
+        if (d == n) { d = ((d + 1) * base) - 1; n += 1; }
+
+        n1[i] = n; n2[i] = d;
+      }
+
+      document.getElementById("t1").innerHTML = "<table border=\"1\">\
+          <tr>\
+            <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
+            <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
+            <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 36) ? "display: none; " : "") + "\" value=\"&#8594;\" onclick=\"base++;updateT();\" /></td>\
+          </tr>\
+          <tr><td>Decimal Fraction.</td><td>Decimal Value.</td><td>Base " + base + " Fraction.</td><td>Base " + base + " Value.</td><td>Pattern.</td></tr>\
+          <tr><td>" + n1[0] + "&divide;" + n2[0] + "</td><td>" + (n1[0] / n2[0]) + "</td><td>" + n1[0].toString(base) + "&divide;" + n2[0].toString(base) + "</td><td>" + (n1[0] / n2[0]).toString(base) + "</td><td>" + new Fract(n1[0], n2[0]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[1] + "&divide;" + n2[1] + "</td><td>" + (n1[1] / n2[1]) + "</td><td>" + n1[1].toString(base) + "&divide;" + n2[1].toString(base) + "</td><td>" + (n1[1] / n2[1]).toString(base) + "</td><td>" + new Fract(n1[1], n2[1]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[2] + "&divide;" + n2[2] + "</td><td>" + (n1[2] / n2[2]) + "</td><td>" + n1[2].toString(base) + "&divide;" + n2[2].toString(base) + "</td><td>" + (n1[2] / n2[2]).toString(base) + "</td><td>" + new Fract(n1[2], n2[2]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[3] + "&divide;" + n2[3] + "</td><td>" + (n1[3] / n2[3]) + "</td><td>" + n1[3].toString(base) + "&divide;" + n2[3].toString(base) + "</td><td>" + (n1[3] / n2[3]).toString(base) + "</td><td>" + new Fract(n1[3], n2[3]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[4] + "&divide;" + n2[4] + "</td><td>" + (n1[4] / n2[4]) + "</td><td>" + n1[4].toString(base) + "&divide;" + n2[4].toString(base) + "</td><td>" + (n1[4] / n2[4]).toString(base) + "</td><td>" + new Fract(n1[4], n2[4]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[5] + "&divide;" + n2[5] + "</td><td>" + (n1[5] / n2[5]) + "</td><td>" + n1[5].toString(base) + "&divide;" + n2[5].toString(base) + "</td><td>" + (n1[5] / n2[5]).toString(base) + "</td><td>" + new Fract(n1[5], n2[5]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[6] + "&divide;" + n2[6] + "</td><td>" + (n1[6] / n2[6]) + "</td><td>" + n1[6].toString(base) + "&divide;" + n2[6].toString(base) + "</td><td>" + (n1[6] / n2[6]).toString(base) + "</td><td>" + new Fract(n1[6], n2[6]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[7] + "&divide;" + n2[7] + "</td><td>" + (n1[7] / n2[7]) + "</td><td>" + n1[7].toString(base) + "&divide;" + n2[7].toString(base) + "</td><td>" + (n1[7] / n2[7]).toString(base) + "</td><td>" + new Fract(n1[7], n2[7]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[8] + "&divide;" + n2[8] + "</td><td>" + (n1[8] / n2[8]) + "</td><td>" + n1[8].toString(base) + "&divide;" + n2[8].toString(base) + "</td><td>" + (n1[8] / n2[8]).toString(base) + "</td><td>" + new Fract(n1[8], n2[8]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[9] + "&divide;" + n2[9] + "</td><td>" + (n1[9] / n2[9]) + "</td><td>" + n1[9].toString(base) + "&divide;" + n2[9].toString(base) + "</td><td>" + (n1[9] / n2[9]).toString(base) + "</td><td>" + new Fract(n1[9], n2[9]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[10] + "&divide;" + n2[10] + "</td><td>" + (n1[10] / n2[10]) + "</td><td>" + n1[10].toString(base) + "&divide;" + n2[10].toString(base) + "</td><td>" + (n1[10] / n2[10]).toString(base) + "</td><td>" + new Fract(n1[10], n2[10]).divP(base) + "</td></tr>\
+          <tr><td>" + n1[11] + "&divide;" + n2[11] + "</td><td>" + (n1[11] / n2[11]) + "</td><td>" + n1[11].toString(base) + "&divide;" + n2[11].toString(base) + "</td><td>" + (n1[11] / n2[11]).toString(base) + "</td><td>" + new Fract(n1[11], n2[11]).divP(base) + "</td></tr>\
+          <tr>\
+            <td colspan=\"5\"><input type=\"button\" style=\"width:100%;\" value=\"&#8595;\" onclick=\"pos+=11;updateT();\" /></td>\
+          </tr>\
+        </table>";
+    }
   </script>
 
   <h1>Indexed contents.</h1>
@@ -402,12 +442,12 @@
 
     function A(x)
     {
-      return(x);
+    return(x);
     }
 
     function B(x)
     {
-      return(x);
+    return(x);
     }
 
     val = val.splitAll();
@@ -513,12 +553,12 @@
 
     function A(x)
     {
-      return(2);
+    return(2);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.split(1,1);
@@ -592,12 +632,12 @@
 
     function A(x)
     {
-      return( 6 );
+    return( 6 );
     }
 
     function B(x)
     {
-      return( 1 + (x * 4) + (x * x * 4) );
+    return( 1 + (x * 4) + (x * x * 4) );
     }
 
     val = val.split(3,1);
@@ -633,12 +673,12 @@
 
     function A(x)
     {
-      return(1);
+    return(1);
     }
 
     function B(x)
     {
-      return(1);
+    return(1);
     }
 
     val = val.Trans(0,A,B);
@@ -676,12 +716,12 @@
 
     function A(x)
     {
-      return(8);
+    return(8);
     }
 
     function B(x)
     {
-      return(7);
+    return(7);
     }
 
     val = val.split(4,7);
@@ -748,12 +788,12 @@
 
     function A(x)
     {
-      return( x );
+    return( x );
     }
 
     function B(x)
     {
-      return( x );
+    return( x );
     }
 
     val = val.split(2,1);
@@ -771,7 +811,7 @@
   <br /><br />
 
   <a id="s"><h3>Each of these numbers relate to each other. Think of this as the golden ratio to the square, and then to natural log. In which PI is like a spiral stir case squared.</h3></a>
-  
+
   <div style="background-color:#808080;">
     <br /><br />
 
@@ -834,7 +874,11 @@
 
   <br /><br />
 
-  The golden ratio is also a perfect rectangle called the golden rectangle. Also the Fibonacci sequence, and golden ratio is also a spiral in nature.
+  The golden ratio is also a perfect rectangle called the golden rectangle.
+
+  <br /><br />
+
+  Also the Fibonacci sequence, and golden ratio is also a spiral in nature.
 
   <br /><br />
 
@@ -862,7 +906,7 @@
 
   <br /><br />
 
-  Computers have a limit for the number of digits we can store. So making the determination between the two is hard.
+  Computers have a limit for the number of digits we can store. So making the determination between the Rational/Irrational is hard. However it is possible.
 
   <br /><br />
 
@@ -979,23 +1023,13 @@
 
   <br /><br />
 
-  As the first place value is 3. So 3-1=2.
+  <div id="t1"></div>
 
   <br />
 
-  And the second place value is 3*3=6. So 6-1=5.
+  Use the left and right arrows to change the number base. Use the up and down arrows to navigate through all number patterns combinations.
 
   <br /><br />
-
-  <table border="1">
-    <tr><td>1&divide;2</td><td>0.111111111111111</td></tr>
-    <tr><td>1&divide;5</td><td>0.012101210121012</td></tr>
-    <tr><td>2&divide;5</td><td>0.101210121012101</td></tr>
-    <tr><td>3&divide;5</td><td>0.121012101210121</td></tr>
-    <tr><td>4&divide;5</td><td>0.210121012101210</td></tr>
-  </table>
-
-  <br />
 
   For example half of something can never be dividable out of thirds per place value. However half of ten digits is evenly 5, so a half out of ten units is 0.5.
 
@@ -1847,9 +1881,9 @@
 
     for( var i = 0; i < 64; i++ )
     {
-      n = n.bitLsh(1);
+    n = n.bitLsh(1);
 
-      console.log(n.toString());
+    console.log(n.toString());
     }
   </code>
 
@@ -1872,9 +1906,9 @@
 
     for( var i = 0; i < 64; i++ )
     {
-      n = n.bitLsh(1);
+    n = n.bitLsh(1);
 
-      console.log(n);
+    console.log(n);
     }
   </code>
 
@@ -1889,10 +1923,10 @@
 
     for( var i = 0; i < 64; i++ )
     {
-      n = n.bitRsh(1);
+    n = n.bitRsh(1);
 
-      console.log(n.toString());
-      console.log(n);
+    console.log(n.toString());
+    console.log(n);
     }
   </code>
 

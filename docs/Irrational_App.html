@@ -60,10 +60,12 @@
     {
       var n = NaN;
 
-      if (input == 1) {
+      if (input == 1)
+      {
         n = new Fract(document.getElementById("f1").value, document.getElementById("f2").value);
       }
-      else {
+      else
+      {
         n = new Number(document.getElementById("num").value);
       }
 
@@ -96,19 +98,18 @@
 
     Fracts.onCreate = function (n)
     {
-      //Change to number type only.
-
-      document.getElementsByName("Input")[0].checked = "true"; input = 0; UpdateI();
-
       //Update input/output.
 
-      document.getElementById("num").value = n.primitive() + "";
       document.getElementById("r").innerHTML = "Output = " + n.primitive() + "";
       CVerg.set(n);
 
       //Update n_ac number.
 
       n_ac = n.primitive();
+
+      //Change to number type only.
+
+      UpdateI();
     }
 
     //Update output and accuracy comparision.
@@ -144,19 +145,15 @@
 <td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td></table>";
       }
 
-      else {
-        //Change input type.
-
-        document.getElementsByName("Input")[0].checked = "true"; input = 0; UpdateI();
+      else
+      {
 
         //Solve the golden ratio.
 
         if (type == 1) {
-          var n = 1.618033988749895.limit(CutOff);
+          var n = 1.618033988749895.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
           n_ac = n.primitive(); CVerg.set(n.splitAll());
-
-          document.getElementById("num").value = n.primitive() + "";
 
           n = n.split(); Fracts.set(n);
 
@@ -166,11 +163,9 @@
         //Solve the natural logritham.
 
         else if (type == 2) {
-          var n = 2.718281828459045.limit(CutOff);
+          var n = 2.718281828459045.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
           n_ac = n.primitive(); CVerg.set(n.splitAll());
-
-          document.getElementById("num").value = n.primitive() + "";
 
           n = n.split(); Fracts.set(n);
 
@@ -180,11 +175,9 @@
         //Solve the number PI.
 
         else if (type == 3) {
-          var n = Math.PI.limit(CutOff);
+          var n = Math.PI.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
           n_ac = n.primitive(); CVerg.set(n.splitAll());
-
-          document.getElementById("num").value = n.primitive() + "";
 
           n = n.split(); Fracts.set(n);
 
@@ -194,11 +187,9 @@
         //Solve a Sqaure root.
 
         else if (type == 4) {
-          var n = Math.pow(sq, 0.5).limit(CutOff);
+          var n = Math.pow(sq, 0.5).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
           n_ac = n.primitive(); CVerg.set(n.splitAll());
-
-          document.getElementById("num").value = n.primitive() + "";
 
           var a = Math.floor(n.primitive()), b = sq - (a * a);
 
@@ -215,17 +206,21 @@
         //Solve the heperbolic function.
 
         else if (type == 5) {
-          var n = Math.tanh(1 / tanh).limit(CutOff);
+          var n = Math.tanh(1 / tanh).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
-          n_ac = n.primitive(); CVerg.set(n.splitAll());
+          n_ac = n.primitive();
 
-          document.getElementById("num").value = n.primitive() + "";
+          CVerg.set(n.splitAll());
 
-          n = n.split(0, 1); Fracts.set(n);
+         n = n.split(0, 1); Fracts.set(n);
 
           Trans.index = 1; Trans.set([tanh, tanh * 2], [1, 0]);
         }
       }
+
+      //Update input type.
+
+      UpdateI();
     }
 
     //Adjust the cut off range and acuracy.
@@ -245,11 +240,17 @@
 
     function UpdateI()
     {
-      if (input == 1) {
-        document.getElementById("in").innerHTML = '<input id="f1" type="text" value="Number Value" onclick="this.select();">&div;<input id="f2" type="text" value="Number Value" onclick="this.select();">';
+      var x = "Number Value", y = "Number Value";
+
+      if (input == 1)
+      {
+        if (!isNaN(n_ac)) { n_ac = n_ac.valueOf().getFract(); x = n_ac.x; y = n_ac.y; }
+
+        document.getElementById("in").innerHTML = '<input id="f1" type="text" value="' + x + '" onclick="this.select();">&div;<input id="f2" type="text" value="' + y + '" onclick="this.select();">';
       }
-      else {
-        document.getElementById("in").innerHTML = '<input id="num" type="text" value="Number Value" onclick="this.select();">';
+      else
+      {
+        document.getElementById("in").innerHTML = '<input id="num" type="text" value="' + ( isNaN(n_ac) ? x : n_ac ) + '" onclick="this.select();">';
       }
     }
 
