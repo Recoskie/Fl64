@@ -11,32 +11,39 @@
       height: 48px;
     }
 
-    h3 {
+    h3
+    {
       display: inline-block;
     }
 
-    @media (orientation: landscape) {
-      textarea.c {
+    @media (orientation: landscape)
+    {
+      textarea.c
+      {
         resize: none;
         width: 70%;
         max-height: 70%;
       }
 
-      textarea.o {
+      textarea.o
+      {
         resize: none;
         width: 30%;
         max-height: 70%;
       }
     }
 
-    @media (orientation: portrait) {
-      textarea.c {
+    @media (orientation: portrait)
+    {
+      textarea.c
+      {
         resize: none;
         width: 100%;
         max-height: 40%;
       }
 
-      textarea.o {
+      textarea.o
+      {
         resize: none;
         width: 100%;
         max-height: 20%;
@@ -47,12 +54,14 @@
   <script type="text/javascript">
     var output = "";
 
-    function setup() {
+    function setup()
+    {
       var list = document.getElementsByTagName("code");
 
       var html = "", lines = 0, spaces = 0;
 
-      for (var i1 = 0; i1 < list.length; i1++) {
+      for (var i1 = 0; i1 < list.length; i1++)
+      {
         html = list[i1].innerHTML;
 
         var t = html.split("\n"); lines = t.length - 1; spaces = html.search(/\S|$/) - 1;
@@ -65,7 +74,8 @@
       }
     }
 
-    function runExamp(id) {
+    function runExamp(id)
+    {
       var code = document.getElementById(id).value;
 
       try { eval(code); } catch (e) { console.log(e.toString()); }
@@ -77,14 +87,16 @@
 
     var base = 3, pos = 1;
 
-    function updateT() {
+    function updateT()
+    {
       if (pos < 1) { pos = 1; }
 
       var d = Math.pow(base, Math.floor(Math.log(pos) / Math.log(base)) + 1) - 1;
 
       var n1 = [], n2 = [];
 
-      for (var i = 0, n = pos; i < 12; i++, n++) {
+      for (var i = 0, n = pos; i < 12; i++, n++)
+      {
         //D can not match pattern part.
 
         if (d == n) { d = ((d + 1) * base) - 1; n += 1; }
@@ -125,7 +137,7 @@
   Manipulating parts: <a href="#mparts">Link</a><br />
   Creating a number in Parts: <a href="#cparts">Link</a><br />
   Irrational numbers: <a href="#irrational">Link</a><br />
-  Periodic number patterns: <a href="#dpat">Link</a><br />
+  Periodic Recurring/number patterns: <a href="#dpat">Link</a><br />
   The secrete to all numbers (No such thing as random numbers): <a href="#s">Link</a><br />
   Fraction Data type: <a href="#fract">Link</a><br />
   Error Correction: <a href="#er">Link</a><br />
@@ -442,12 +454,12 @@
 
     function A(x)
     {
-    return(x);
+      return(x);
     }
 
     function B(x)
     {
-    return(x);
+      return(x);
     }
 
     val = val.splitAll();
@@ -553,12 +565,12 @@
 
     function A(x)
     {
-    return(2);
+      return(2);
     }
 
     function B(x)
     {
-    return(1);
+      return(1);
     }
 
     val = val.split(1,1);
@@ -632,12 +644,12 @@
 
     function A(x)
     {
-    return( 6 );
+      return( 6 );
     }
 
     function B(x)
     {
-    return( 1 + (x * 4) + (x * x * 4) );
+      return( 1 + (x * 4) + (x * x * 4) );
     }
 
     val = val.split(3,1);
@@ -673,12 +685,12 @@
 
     function A(x)
     {
-    return(1);
+      return(1);
     }
 
     function B(x)
     {
-    return(1);
+      return(1);
     }
 
     val = val.Trans(0,A,B);
@@ -716,12 +728,12 @@
 
     function A(x)
     {
-    return(8);
+      return(8);
     }
 
     function B(x)
     {
-    return(7);
+      return(7);
     }
 
     val = val.split(4,7);
@@ -788,12 +800,12 @@
 
     function A(x)
     {
-    return( x );
+      return( x );
     }
 
     function B(x)
     {
-    return( x );
+      return( x );
     }
 
     val = val.split(2,1);
