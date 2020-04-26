@@ -794,7 +794,7 @@ Pattern.prototype.getFract = function ()
 
   //return the fraction.
 
-  return (new Fract(f2, f1).reduce());
+  return (new Fract(f2, f1).limit(3.552713678800501e-15).reduce());
 }
 
 //**********************************************************************************
