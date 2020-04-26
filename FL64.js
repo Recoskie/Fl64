@@ -8,7 +8,17 @@ Object.prototype.isNum = function () { if (isNaN(this)) { throw new TypeError("E
 //Construct the new fraction data type.
 //**********************************************************************************
 
-var Fract = function (X, Y) { this.x = X; this.y = Y; return (this); }
+var Fract = function (X, Y)
+{
+  this.x = X; this.y = Y;
+
+  if (this.x > 3.99168061906944e+292 || this.y > 3.99168061906944e+292)
+  {
+    this.x /= 1.7726622920963562e+277; this.y /= 1.7726622920963562e+277;
+  }
+
+  return (this);
+}
 
 //**********************************************************************************
 //Teach compiler how to display fraction data type, or to combine it as code.
@@ -146,7 +156,7 @@ Number.prototype.split = function (a, b)
 
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (Number.EPSILON / 2); }
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
 
   if (this.length === 0)
   {
@@ -221,7 +231,7 @@ Number.prototype.splitAll = function ()
 {
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (Number.EPSILON / 2); }
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
 
   if (this.length === 0)
   {
@@ -283,6 +293,8 @@ Number.prototype.splitAll = function ()
 
 Fract.prototype.split = function (a, b)
 {
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
+
   if (this.r[this.length] === 0) { return (this); }
 
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
@@ -365,6 +377,8 @@ Fract.prototype.split = function (a, b)
 
 Fract.prototype.splitAll = function ()
 {
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
+
   //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
   if (this.length === 0)
@@ -404,7 +418,7 @@ Fract.prototype.splitAll = function ()
 
   //loop till cut off range.
 
-  while ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) > this.ac)
+  while ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) >= this.ac)
   {
     //Default scale a=int, b=1.
 
@@ -561,7 +575,7 @@ Fract.prototype.limit = Number.prototype.limit = function (ac)
 {
   //Set accuracy limit.
 
-  this.init_ac = true; this.ac = (Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON)) / 2;
+  this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
 
   //Set length to accuracy limit.
 
@@ -578,6 +592,8 @@ Fract.prototype.limit = Number.prototype.limit = function (ac)
 
 Number.prototype.getFract = Fract.prototype.reduce = function ()
 {
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
+
   var v = (n = this.primitive()), r = 0;
 
   this.fx = 1; this.fy=0; this.tx = 0; this.ty=1;
