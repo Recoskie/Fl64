@@ -43,7 +43,7 @@
         max-height: 40%;
       }
 
-      textarea.o
+      textarea.o 
       {
         resize: none;
         width: 100%;
@@ -55,8 +55,7 @@
   <script type="text/javascript">
     var output = "";
 
-    function setup()
-    {
+    function setup() {
       var list = document.getElementsByTagName("code");
 
       var html = "", lines = 0, spaces = 0;
@@ -106,28 +105,28 @@
       }
 
       document.getElementById("t1").innerHTML = "<table border=\"1\">\
-          <tr>\
-            <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
-            <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
-            <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 36) ? "display: none; " : "") + "\" value=\"&#8594;\" onclick=\"base++;updateT();\" /></td>\
-          </tr>\
-          <tr><td>Decimal Fraction.</td><td>Decimal Value.</td><td>Base " + base + " Fraction.</td><td>Base " + base + " Value.</td><td>Pattern.</td></tr>\
-          <tr><td>" + n1[0] + "&divide;" + n2[0] + "</td><td>" + (n1[0] / n2[0]) + "</td><td>" + n1[0].toString(base) + "&divide;" + n2[0].toString(base) + "</td><td>" + (n1[0] / n2[0]).toString(base) + "</td><td>" + new Fract(n1[0], n2[0]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[1] + "&divide;" + n2[1] + "</td><td>" + (n1[1] / n2[1]) + "</td><td>" + n1[1].toString(base) + "&divide;" + n2[1].toString(base) + "</td><td>" + (n1[1] / n2[1]).toString(base) + "</td><td>" + new Fract(n1[1], n2[1]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[2] + "&divide;" + n2[2] + "</td><td>" + (n1[2] / n2[2]) + "</td><td>" + n1[2].toString(base) + "&divide;" + n2[2].toString(base) + "</td><td>" + (n1[2] / n2[2]).toString(base) + "</td><td>" + new Fract(n1[2], n2[2]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[3] + "&divide;" + n2[3] + "</td><td>" + (n1[3] / n2[3]) + "</td><td>" + n1[3].toString(base) + "&divide;" + n2[3].toString(base) + "</td><td>" + (n1[3] / n2[3]).toString(base) + "</td><td>" + new Fract(n1[3], n2[3]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[4] + "&divide;" + n2[4] + "</td><td>" + (n1[4] / n2[4]) + "</td><td>" + n1[4].toString(base) + "&divide;" + n2[4].toString(base) + "</td><td>" + (n1[4] / n2[4]).toString(base) + "</td><td>" + new Fract(n1[4], n2[4]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[5] + "&divide;" + n2[5] + "</td><td>" + (n1[5] / n2[5]) + "</td><td>" + n1[5].toString(base) + "&divide;" + n2[5].toString(base) + "</td><td>" + (n1[5] / n2[5]).toString(base) + "</td><td>" + new Fract(n1[5], n2[5]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[6] + "&divide;" + n2[6] + "</td><td>" + (n1[6] / n2[6]) + "</td><td>" + n1[6].toString(base) + "&divide;" + n2[6].toString(base) + "</td><td>" + (n1[6] / n2[6]).toString(base) + "</td><td>" + new Fract(n1[6], n2[6]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[7] + "&divide;" + n2[7] + "</td><td>" + (n1[7] / n2[7]) + "</td><td>" + n1[7].toString(base) + "&divide;" + n2[7].toString(base) + "</td><td>" + (n1[7] / n2[7]).toString(base) + "</td><td>" + new Fract(n1[7], n2[7]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[8] + "&divide;" + n2[8] + "</td><td>" + (n1[8] / n2[8]) + "</td><td>" + n1[8].toString(base) + "&divide;" + n2[8].toString(base) + "</td><td>" + (n1[8] / n2[8]).toString(base) + "</td><td>" + new Fract(n1[8], n2[8]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[9] + "&divide;" + n2[9] + "</td><td>" + (n1[9] / n2[9]) + "</td><td>" + n1[9].toString(base) + "&divide;" + n2[9].toString(base) + "</td><td>" + (n1[9] / n2[9]).toString(base) + "</td><td>" + new Fract(n1[9], n2[9]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[10] + "&divide;" + n2[10] + "</td><td>" + (n1[10] / n2[10]) + "</td><td>" + n1[10].toString(base) + "&divide;" + n2[10].toString(base) + "</td><td>" + (n1[10] / n2[10]).toString(base) + "</td><td>" + new Fract(n1[10], n2[10]).divP(base) + "</td></tr>\
-          <tr><td>" + n1[11] + "&divide;" + n2[11] + "</td><td>" + (n1[11] / n2[11]) + "</td><td>" + n1[11].toString(base) + "&divide;" + n2[11].toString(base) + "</td><td>" + (n1[11] / n2[11]).toString(base) + "</td><td>" + new Fract(n1[11], n2[11]).divP(base) + "</td></tr>\
-          <tr>\
-            <td colspan=\"5\"><input type=\"button\" style=\"width:100%;\" value=\"&#8595;\" onclick=\"pos+=11;updateT();\" /></td>\
-          </tr>\
-        </table>";
+                                    <tr>\
+                                      <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
+                                      <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
+                                      <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 36) ? "display: none; " : "") + "\" value=\"&#8594;\" onclick=\"base++;updateT();\" /></td>\
+                                    </tr>\
+                                    <tr><td>Decimal Fraction.</td><td>Decimal Value.</td><td>Base " + base + " Fraction.</td><td>Base " + base + " Value.</td><td>Pattern.</td></tr>\
+                                    <tr><td>" + n1[0] + "&divide;" + n2[0] + "</td><td>" + (n1[0] / n2[0]) + "</td><td>" + n1[0].toString(base) + "&divide;" + n2[0].toString(base) + "</td><td>" + (n1[0] / n2[0]).toString(base) + "</td><td>" + new Fract(n1[0], n2[0]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[1] + "&divide;" + n2[1] + "</td><td>" + (n1[1] / n2[1]) + "</td><td>" + n1[1].toString(base) + "&divide;" + n2[1].toString(base) + "</td><td>" + (n1[1] / n2[1]).toString(base) + "</td><td>" + new Fract(n1[1], n2[1]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[2] + "&divide;" + n2[2] + "</td><td>" + (n1[2] / n2[2]) + "</td><td>" + n1[2].toString(base) + "&divide;" + n2[2].toString(base) + "</td><td>" + (n1[2] / n2[2]).toString(base) + "</td><td>" + new Fract(n1[2], n2[2]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[3] + "&divide;" + n2[3] + "</td><td>" + (n1[3] / n2[3]) + "</td><td>" + n1[3].toString(base) + "&divide;" + n2[3].toString(base) + "</td><td>" + (n1[3] / n2[3]).toString(base) + "</td><td>" + new Fract(n1[3], n2[3]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[4] + "&divide;" + n2[4] + "</td><td>" + (n1[4] / n2[4]) + "</td><td>" + n1[4].toString(base) + "&divide;" + n2[4].toString(base) + "</td><td>" + (n1[4] / n2[4]).toString(base) + "</td><td>" + new Fract(n1[4], n2[4]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[5] + "&divide;" + n2[5] + "</td><td>" + (n1[5] / n2[5]) + "</td><td>" + n1[5].toString(base) + "&divide;" + n2[5].toString(base) + "</td><td>" + (n1[5] / n2[5]).toString(base) + "</td><td>" + new Fract(n1[5], n2[5]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[6] + "&divide;" + n2[6] + "</td><td>" + (n1[6] / n2[6]) + "</td><td>" + n1[6].toString(base) + "&divide;" + n2[6].toString(base) + "</td><td>" + (n1[6] / n2[6]).toString(base) + "</td><td>" + new Fract(n1[6], n2[6]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[7] + "&divide;" + n2[7] + "</td><td>" + (n1[7] / n2[7]) + "</td><td>" + n1[7].toString(base) + "&divide;" + n2[7].toString(base) + "</td><td>" + (n1[7] / n2[7]).toString(base) + "</td><td>" + new Fract(n1[7], n2[7]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[8] + "&divide;" + n2[8] + "</td><td>" + (n1[8] / n2[8]) + "</td><td>" + n1[8].toString(base) + "&divide;" + n2[8].toString(base) + "</td><td>" + (n1[8] / n2[8]).toString(base) + "</td><td>" + new Fract(n1[8], n2[8]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[9] + "&divide;" + n2[9] + "</td><td>" + (n1[9] / n2[9]) + "</td><td>" + n1[9].toString(base) + "&divide;" + n2[9].toString(base) + "</td><td>" + (n1[9] / n2[9]).toString(base) + "</td><td>" + new Fract(n1[9], n2[9]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[10] + "&divide;" + n2[10] + "</td><td>" + (n1[10] / n2[10]) + "</td><td>" + n1[10].toString(base) + "&divide;" + n2[10].toString(base) + "</td><td>" + (n1[10] / n2[10]).toString(base) + "</td><td>" + new Fract(n1[10], n2[10]).divP(base) + "</td></tr>\
+                                    <tr><td>" + n1[11] + "&divide;" + n2[11] + "</td><td>" + (n1[11] / n2[11]) + "</td><td>" + n1[11].toString(base) + "&divide;" + n2[11].toString(base) + "</td><td>" + (n1[11] / n2[11]).toString(base) + "</td><td>" + new Fract(n1[11], n2[11]).divP(base) + "</td></tr>\
+                                    <tr>\
+                                      <td colspan=\"5\"><input type=\"button\" style=\"width:100%;\" value=\"&#8595;\" onclick=\"pos+=11;updateT();\" /></td>\
+                                    </tr>\
+                                  </table>";
     }
   </script>
 
@@ -887,15 +886,39 @@
 
   <br /><br />
 
+  <img src="bg\fig1.jpg" />
+
+  <br /><br />
+
   The golden ratio is also a perfect rectangle called the golden rectangle.
 
   <br /><br />
 
-  Also the Fibonacci sequence, and golden ratio is also a spiral in nature.
+  You can also create the golden rectangle with the Fibonacci sequence by using the square length of each number.
+
+  <br /><br />
+
+  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio. The bigger the rectangle the more accurate the number is.
+
+  <br /><br />
+
+  Thus the Fibonacci sequence, and golden ratio is a spiral in nature.
 
   <br /><br />
 
   All numbers have a place along the spiral. Rational numbers are a finite point. While irrational numbers go forever along the spiral. There is no such thing as a random number.
+
+  <br /><br />
+
+  You can create a geometric space of all numbers. You can give them meaning to the natural world, or just have them represent them selves.
+
+  <br /><br />
+
+  It also exists in the formation of galaxies.Spaning from 0 as 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377.
+
+  <br /><br />
+
+  <img style="width:30%;height:30%;" src="https://blogs.unimelb.edu.au/sciencecommunication/files/2018/09/fibonacci-spiral-galaxy-1pbbryd.jpg" />
 
   <br /><br />
 
@@ -1937,7 +1960,7 @@
     for( var i = 0; i < 64; i++ )
     {
       n = n.bitRsh(1);
-
+      
       console.log(n.toString());
       console.log(n);
     }
