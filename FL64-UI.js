@@ -100,8 +100,10 @@ SFBar = {
   setA: function (bar,el,v)
   {
     this.Ref[bar].setA(this.pos[bar] + el, this.Ref[bar].a[this.pos[bar] + el] + v);
+
     document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el];
-    document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue();
+
+    if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
     this.Bars[bar].onChange(this.Ref[bar].calc(0, this.Ref[bar].length - 1));
   },
@@ -113,8 +115,10 @@ SFBar = {
   setB: function (bar, el,v)
   {
     this.Ref[bar].setB(this.pos[bar] + el, this.Ref[bar].b[this.pos[bar] + el] + v);
+
     document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el];
-    document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue();
+
+    if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
     this.Bars[bar].onChange(this.Ref[bar].calc(0, this.Ref[bar].length - 1));
   },
@@ -340,7 +344,7 @@ FBar.prototype.update = function (force)
 
       //The split button at the bottom across all 4 all columns.
 
-      html += "<tr><td colspan='4'><input type='button' style='min-width:100%;' value='Split' onclick='SFBar.split(" + this.n + ");' /></td></tr>";
+      html += "<tr><td colspan='4'><input type='button' style='min-width:100%;' value='Split(B=1)' onclick='SFBar.split(" + this.n + ");' /></td></tr>";
 
       //The remainder on it own row across all columns.
 
@@ -583,7 +587,7 @@ CBar.prototype.set = function (v)
 
   this.Fr = []; for (var i = 0; i < v.length; i++) { this.Fr[i] = v.calcF(0, i); }
 
-  this.update();
+  this.update(true);
 }
 
 /***********************************************************************
@@ -911,6 +915,35 @@ STBar = {
     n.update(true); this.Bars[bar].update(); 
 
     n.onChange(SFBar.Ref[bar].calc(0, SFBar.Ref[bar].length - 1));
+  },
+
+  /***********************************************************************
+  Force seq of factors.
+  ***********************************************************************/
+
+  seq: function (bar)
+  {
+    //Transform values.
+
+    var n = this.Ref[bar]; //The FBar reference.
+
+    var A = SFBar.Ref[n.n].a, B = SFBar.Ref[n.n].b;
+
+    A = A.slice(this.Bars[bar].index, Math.min(SFBar.Ref[n.n].length, 12));
+    B = B.slice(this.Bars[bar].index, Math.min(SFBar.Ref[n.n].length, 12));
+		
+    AI_Mat.adjustSMat(A.length);
+
+    if ( A.length > 0 )
+    {
+      eval("var temp = function( s )\r\n{\r\n  var s = s.slice( 0 );\r\n\r\n\
+        " + AI_Mat.MkS("s", AI_Mat.SMat.slice(0, A.length - 1), true) + "\r\n\
+        return( s );\r\n}" );
+
+      A = temp(A); B = temp(B);
+
+      this.Bars[bar].set(A, B);
+    }
   }
 };
 
@@ -975,6 +1008,12 @@ Set a transformation.
 
 TBar.prototype.set = function (a, b)
 {
+	//Trim out 0.
+	
+  for (var i1 = a.length - 1; i1 > 0 && a[i1] == 0; i1--); for (var i2 = b.length - 1; i2 > 0 && b[i2] == 0; i2--);
+
+  a = a.slice(0, Math.max(i1, i2) + 1); b = b.slice(0, a.length);
+	
   this.setMaxIndex(this.index); this.setMax(a.length);
 
   this.Ta = a; this.Tb = b; STBar.Trans(this.n);
@@ -1000,7 +1039,7 @@ TBar.prototype.update = function (force)
 
     //Add selection.
 
-    html += "<tr><td rowspan='4'><select id='ts" + this.n + "' onchange='STBar.setIndex(" + this.n + ",this);'>" + this.S + "</select>";
+    html += "<tr><td rowspan='3'><select id='ts" + this.n + "' onchange='STBar.setIndex(" + this.n + ",this);'>" + this.S + "</select>";
 
     //by Col.
 
@@ -1020,9 +1059,13 @@ TBar.prototype.update = function (force)
 
     html += "</tr><tr><td>B=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
 
+    //Seq current factors.
+
+    html += "</tr><tr><td><input type='button' style='min-width:100%;' value='Seq' onclick='STBar.seq( " + this.n + " );' /></td>";
+
     //Reset.
 
-    html += "</tr><tr><td><input type='button' style='min-width:100%;' value='X' onclick='STBar.reset(" + this.n + ");' /></td>";
+    html += "<td><input type='button' style='min-width:100%;' value='X' onclick='STBar.reset(" + this.n + ");' /></td>";
 
     //Individually remove factors.
 

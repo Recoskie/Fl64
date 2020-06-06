@@ -545,7 +545,7 @@ Number.prototype.Trans = Fract.prototype.Trans = function (x, fa, fb)
 {
   if (isNaN(fa(1)) || isNaN(fb(1))) { return (this); }
 
-  var a = fa(1), b = fb(1), i = 1;
+  var a = Math.round(fa(1)), b = Math.round(fb(1)), i = 1;
 
   if (isNaN(this)) { while (this.length < x) { this.split(1,1); }; }
 
@@ -557,12 +557,12 @@ Number.prototype.Trans = Fract.prototype.Trans = function (x, fa, fb)
 
   if (isNaN(this))
   {
-    while (x < 10000) { x += 1; i += 1; this.split(a, b); a = fa(i); b = fb(i); }
+    while (x < 10000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
   }
 
   //Transform as many factors as possible. In range of each split.
 
-  else { while (this.r[this.length] > 0) { x += 1; i += 1; this.split(a, b); a = fa(i); b = fb(i); } }
+  else { while (this.r[this.length] > 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
 
   return (this);
 }

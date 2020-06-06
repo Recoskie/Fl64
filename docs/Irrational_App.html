@@ -270,7 +270,7 @@
           Value:<input type="radio" onclick="input = 0; UpdateI();" name="Input" checked="true" />Fraction:<input type="radio" onclick="input = 1; UpdateI();" name="Input" />
         </td>
         <td>
-          <div id="in" style=" display:inline;"><input id="num" type="text" value="Number Value" onclick="this.select();"></div><input type="button" value="Split Value." onclick="GetInput();">
+          <div id="in" style=" display:inline;"><input id="num" type="text" value="Number Value" onclick="this.select();"></div><input type="button" value="Split Value." onclick="GetInput();"><input type="button" value="X" onclick="var n = NaN; Fracts.set(n); CVerg.set(n); n_ac = n; update(); UpdateI();" />
         </td>
         <td>
           Cut Off Range = <div style=" display:inline;" id="ac">100</div>%<input type="button" value="&#x2191;" onclick="ac=Math.min(ac+1,100);setAC();" /><input type="button" value="&#x2193;" onclick="ac=Math.max(ac-1,1);setAC();" />
