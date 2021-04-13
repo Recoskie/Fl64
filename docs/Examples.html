@@ -49,7 +49,8 @@
         width: 100%;
         max-height: 20%;
       }
-      -->
+    }
+    -->
   </style>
   <script src="../FL64.js" type="text/javascript"></script>
   <script type="text/javascript">
@@ -148,7 +149,7 @@
   <h1><a id="parts">Number in Parts.</a></h1>
 
   1. Numbers can be split into parts.<br />
-  2. Numbers have a length for numbers of parts split into.<br />
+  2. Numbers have a length, for numbers of parts split into.<br />
 
   <h3>Using the split method.</h3>
 
@@ -166,11 +167,11 @@
     console.log(pi);
   </code>
 
-  <br /><br />
+  <br />
 
   As you can see the more we split the value. The closer we get to 0. You can also view each part by calling the <h3>toString</h3> method.
 
-  <br /><br />
+  <br />
 
   <code>
     var pi = 3.1415;
@@ -186,7 +187,7 @@
 
   <br /><br />
 
-  As you can see we now show all A to B parts. Followed by the remaining value.
+  As you can the example shows the A to B parts. Followed by the remaining value.
 
   <br /><br />
 
@@ -203,13 +204,13 @@
 
   <br /><br />
 
-  If b is 3 then it is third in scale to the next part across the number and so on.
+  If b is 3 then it is a third in scale to the next part across the number, and so on.
 
   <br />
 
   The method <h3>reValue</h3> displays the next part after each split.
 
-  <br /><br />
+  <br />
 
   <code>
     var pi = 3.1415;
@@ -231,7 +232,7 @@
 
   <br />
 
-  You can change the A, and B part to what ever you like per split. Using splits that are out of range will be accommodated for in regular <h3>split</h3> without a, or b input.
+  You can change the A, and B part to what ever you like per split.
 
   <br /><br />
 
@@ -251,7 +252,7 @@
 
   <br /><br />
 
-  In this example we split by different values per part. We can continue to split to all parts till the value is 0.
+  In this example we split by different values per part. In the next example we will continue to split till value is 0.
 
   <br /><br />
 
@@ -292,6 +293,40 @@
 
     pi = pi.splitAll();
 
+    var fract = pi.calcF();
+
+    var Number = pi.calc();
+
+    console.log(pi.toString());
+
+    console.log(fract.toString());
+
+    console.log(Number.toString());
+  </code>
+
+  <br />
+
+  Methods <h3>calcF</h3>, and <h3>calc</h3> add the parts together.
+
+  <br />
+
+  <h3>calcF</h3> adds start to End parts to a fraction.
+
+  <br />
+
+  <h3>calcF</h3>, and <h3>calc</h3> can also add from start to end parts.
+
+  <br />
+
+  In the next example above we will start at part 2, and add up parts till part 5.
+
+  <br /><br />
+
+  <code>
+    var pi = 3.1415;
+
+    pi = pi.splitAll();
+
     var fract = pi.calcF(2, 5);
 
     var Number = pi.calc(2, 5);
@@ -305,49 +340,7 @@
 
   <br /><br />
 
-  Methods <h3>calcF</h3>, and <h3>calc</h3> add the parts together.
-
-  <br /><br />
-
-  <h3>calcF</h3> adds start to End parts to a fraction.
-
-  <br />
-
-  <h3>calc</h3> adds to a number from start to end parts.
-
-  <br /><br />
-
-  In the example above we start at part 2, and add up parts till part 5.
-
-  <br /><br />
-
-  If you leave both inputs blank.
-
-  <br /><br />
-
-  Then all parts are added to fraction by default if you do not specify where to start or end.
-
-  <br /><br />
-
-  <code>
-    var pi = 3.1415;
-
-    pi = pi.splitAll();
-
-    var fract = pi.calcF();
-
-    var Number = pi.calc();
-
-    console.log(pi.toString());
-
-    console.log(fract.toString());
-
-    console.log(Number.toString());
-  </code>
-
-  <br /><br />
-
-  You can also use the length value to stop at one part less before the end.
+  You can also use the length to stop at one part less before the end. This is useful for rounding off the part at the end of a number such as filtering out error.
 
   <br /><br />
 
@@ -410,13 +403,9 @@
 
   <br />
 
-  Because we changed the parts the value is no longer 0, so method <h3>splitAll</h3> is used to split to all remaining parts before displaying the after result.
+  Because we changed the parts the value is no longer 0, so method <h3>splitAll</h3> is used to split to all remaining parts before displaying the result again.
 
   <br />
-
-  You can see that the change was accommodated for with a=-2, b=1. Per largest part out of the number till 0 parts remain.
-
-  <br /><br />
 
   <code rows="23">
     var pi = 3.1415;
@@ -485,19 +474,19 @@
 
   <br />
 
-  The transform method needs two functions as inputs. Both functions take a single input. In the above example code I label it as <h3>x</h3>.
+  The transform method needs two functions as inputs. Both functions take a single input which is part number.
 
   <br />
 
-  The input to the function adds by 1 per part. So it goes like this 1,2,3,4,5,6 and so on per part.
+  The input to the functions A, and B is 1,2,3,4,5,6 by part number.
 
   <br />
 
-  It is up to you what you want to return as a value from the two functions. In the example I return the value <h3>x</h3> which goes 1,2,3,4,5,6 and so on.
+  It is up to you what you want to return as a value from the two functions. In the example I return the value <h3>x</h3> which goes 1,2,3,4,5,6 and so on by part number.
 
   <br />
 
-  Each input to your fraction that is 1,2,3,4,5,6 can even be used as a array index if you wish to transform by specific values, or you can calculate each value per value.
+  Each 1,2,3,4,5,6 can even be used as a array index if you wish to transform by specific values, or you can calculate each value per value.
 
   <br /><br />
 
@@ -548,7 +537,7 @@
 
   <br /><br />
 
-  We create the square root of 2. Using this split sequence.
+  We can create the square root of 2 using this split sequence.
 
   <br /><br />
 
@@ -599,7 +588,7 @@
 
   <br /><br />
 
-  You can change this however you like. You can create any irrational number you like using this.
+  You can change this, however you like. You can create any number you like using this.
 
   <a id="irrational"><h1>Irrational Numbers.</h1></a>
 
@@ -619,15 +608,44 @@
 
   <br /><br />
 
+  <code>
+    var val = NaN;
+
+    function A(x)
+    {
+      return( Math.pow( 2, x + 1 ) + 1 );
+    }
+
+    function B(x)
+    {
+      return( -Math.pow( 2, x + 1 ) );
+    }
+
+    val = val.split(1,1);
+    val = val.split(4,-4);
+
+    val = val.Trans(2, A, B);
+
+    val = val.calc(0,8);
+
+    console.log(val.toString(2));
+  </code>
+
+  <br /><br />
+
+  We can also create the binary number pattern using the above code.
+
+  <br /><br />
+
   You can split irrational numbers into smaller parts. You can also add together irrational numbers using per smaller parts.
 
   <br /><br />
 
-  But the digits in the number never repeat. For example PI to a billion digits: <a href="https://stuff.mit.edu/afs/sipb/contrib/pi/pi-billion.txt" target="_blank">Link</a>.
+  However, the digits in the number will never repeat. For, example PI to a billion digits: <a href="https://stuff.mit.edu/afs/sipb/contrib/pi/pi-billion.txt" target="_blank">Link</a>.
 
   <br /><br />
 
-  Irrational numbers are created when you measure something that gets a tiny bit bigger each time in reference to say another number.
+  Irrational numbers can also be created when you measure something that gets a tiny bit bigger each time in reference to say another number.
 
   <br /><br />
 
@@ -635,7 +653,7 @@
 
   <br /><br />
 
-  This means you are going to get a different number each time. The farther down the decimal place per bigger circle. AS the two lengths change in ratio as you go bigger down the decimal place.
+  This means you are going to get a different number each time you make the circle bigger. The pattern continues farther down the decimal place per bigger circle. AS the two lengths change in ratio as you go bigger down the decimal place.
 
   <br /><br />
 
@@ -662,7 +680,7 @@
 
   <br /><br />
 
-  The above example calculates the number PI per additional part Rally quickly.
+  The above example calculates the number PI per additional part.
 
   <br /><br />
 
@@ -702,7 +720,7 @@
 
   <h2>Square roots.</h2>
 
-  Every square root is related to that of the golden ratio. Here is a table of every square root.
+  Every square root is related to the golden ratio. Here is a table of every square root.
 
   <br /><br />
 
@@ -768,7 +786,7 @@
 
   This includes <h3>sine, cosine, tangent, x to y root, logarithms, and even PI</h3>.
 
-  <br />
+  <br /><br />
 
   Even numbers you create per digit such as 1.01001000100001. Which the irrational pattern is obvious.
 
@@ -910,11 +928,11 @@
 
   <br /><br />
 
-  You can create a geometric space of all numbers. You can give them meaning to the natural world, or just have them represent them selves.
+  You can create a geometric space of all numbers. You can also give them meaning to the natural world, or just have them represent them selves.
 
   <br /><br />
 
-  It also exists in the formation of galaxies.Spaning from 0 as 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377.
+  It also exists in the formation of galaxies. Spanning from 0 as 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377.
 
   <br /><br />
 
@@ -930,7 +948,7 @@
 
   <h2>Rational Vs Irrational.</h2>
 
-  In theory if we could store a infinite number of digits.
+  In theory, if we could store a infinite number of digits.
 
   <br />
 
@@ -954,7 +972,7 @@
 
   <br /><br />
 
-  It is possible to determine one from the other even with limited digits. However it requires you to solve the squaring of B to A parts. Then using the matrix to solve the pattern.
+  It is possible to determine one from the other even with limited digits. However, it requires you to solve the squaring of B to A parts. Then using the matrix to solve the pattern.
 
   <a id="dpat"><h1>Periodic number patterns.</h1></a>
 
@@ -966,7 +984,7 @@
 
   <br /><br />
 
-  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9 it will create a remainder that is the same going in and out across the number forever.
+  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9, it will create a remainder that is the same going in, and out across the number forever.
 
   <br /><br />
 
@@ -1039,7 +1057,7 @@
 
   <br /><br />
 
-  In this example the fraction 3&divide;9 works out as 0.1. This is because we are dividing the number up in place values of 3. Which is what <h3>toString(3)</h3> does.
+  In this example the fraction 3&divide;9 works out as 0.1. This is, because we are dividing the number up in place values of 3. Which is what <h3>toString(3)</h3> does.
 
   <br /><br />
 
@@ -1055,7 +1073,7 @@
 
   <br /><br />
 
-  However even base three has the following indivisible values.
+  However, even base three has the following indivisible values.
 
   <br /><br />
 
@@ -1075,7 +1093,7 @@
 
   <br />
 
-  Don't worry so much about divisibility of place values in a number system though. Since you can split these types of numbers into parts. Then add the parts together into smallest fraction with <h3>calcF</h3>.
+  But, don't worry so much about divisibility of place values in a number system. Since you can split these types of numbers into parts. Then add the parts together into smallest fraction with <h3>calcF</h3>.
 
   <br />
 
@@ -1933,7 +1951,7 @@
 
   <br />
 
-  You can also display the decoded float value if you remove the <h3>toString</h3> method. Which is the regular behavour for a binary number.
+  You can also display the decoded float value if you remove the <h3>toString</h3> method. Which is the regular behavior for a binary number.
 
   <br /><br />
 
@@ -2138,7 +2156,7 @@
 
   This makes a big shortcut, for writing algorithms, and code to also error correct all numbers with a single <h3>err</h3> on an array.
 
-  <br /><br />
+  <br />
 
   <code>
     var array = [7, 7.7, 9.11, 3.11, 723];
