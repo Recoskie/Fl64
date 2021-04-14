@@ -613,22 +613,22 @@
 
     function A(x)
     {
-      return( Math.pow( 2, x + 1 ) + 1 );
+      return( Math.pow( 10, x + 1 ) + 1 );
     }
 
     function B(x)
     {
-      return( -Math.pow( 2, x + 1 ) );
+      return( -Math.pow( 10, x + 1 ) );
     }
 
     val = val.split(1,1);
-    val = val.split(4,-4);
+    val = val.split(10,-10);
 
     val = val.Trans(2, A, B);
 
-    val = val.calc(0,8);
+    val = val.calc(0,9);
 
-    console.log(val.toString(2));
+    console.log(val);
   </code>
 
   <br /><br />
@@ -641,19 +641,19 @@
     <tr><td colspan="2">Pattern.</td></tr>
     <tr><td>A</td><td>B</td></tr>
     <tr><td>1</td><td>1</td></tr>
-    <tr><td>4</td><td>-4</td></tr>
-    <tr><td>9</td><td>-8</td></tr>
-    <tr><td>17</td><td>-16</td></tr>
-    <tr><td>33</td><td>-32</td></tr>
-    <tr><td>65</td><td>-64</td></tr>
-    <tr><td>129</td><td>-128</td></tr>
-    <tr><td>257</td><td>-256</td></tr>
-    <tr><td>513</td><td>-512</td></tr>
+    <tr><td>10</td><td>-10</td></tr>
+    <tr><td>101</td><td>-100</td></tr>
+    <tr><td>1001</td><td>-1000</td></tr>
+    <tr><td>10001</td><td>-10000</td></tr>
+    <tr><td>100001</td><td>-100000</td></tr>
+    <tr><td>1000001</td><td>-1000000</td></tr>
+    <tr><td>10000001</td><td>-10000000</td></tr>
+    <tr><td>100000001</td><td>-100000000</td></tr>
   </table>
 
   <br />
 
-  Each A part doubles plus 1, and each B part doubles, for scale.
+  Each A part is 10 times bigger plus 1, and each B part 10 times bigger, for scale.
 
   <br /><br />
 
