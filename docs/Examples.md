@@ -135,7 +135,7 @@ layout: default
   Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
   Vector and Array operation: <a href="#v">Link</a>
 
-  <br />
+  <br /><br />
 
   <a id="parts" class="cmd"></a><h1>Number in Parts.</h1>
 
@@ -279,7 +279,7 @@ layout: default
     console.log(pi.toString());
   </code>
 
-  <br />
+  <br /><br />
 
   <a id="calc" class="cmd"></a><h1>Adding parts back together.</h1>
 
@@ -359,7 +359,7 @@ layout: default
 
   Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are adding one part less before the end.
 
-  <br />
+  <br /><br />
 
   <a id="mparts" class="cmd"></a><h1>Manipulating parts</h1>
 
@@ -495,7 +495,7 @@ layout: default
 
   You can change the starting position to what ever you like to see the effect for your self. Set it 3, or even 5.
 
-  <br />
+  <br /><br />
 
   <a id="cparts" class="cmd"></a><h1>Creating A number in parts.</h1>
 
@@ -585,7 +585,7 @@ layout: default
 
   You can change this, however you like. You can create any number you like using this.
 
-  <br />
+  <br /><br />
 
   <a id="irrational" class="cmd"></a><h1>Irrational Numbers.</h1>
 
