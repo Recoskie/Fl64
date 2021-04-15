@@ -135,6 +135,8 @@ layout: default
   Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
   Vector and Array operation: <a href="#v">Link</a>
 
+  <br />
+
   <a id="parts" class="cmd"></a><h1>Number in Parts.</h1>
 
   1. Numbers can be split into parts.<br />
@@ -277,6 +279,8 @@ layout: default
     console.log(pi.toString());
   </code>
 
+  <br />
+
   <a id="calc" class="cmd"></a><h1>Adding parts back together.</h1>
 
   <code>
@@ -355,6 +359,8 @@ layout: default
 
   Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are adding one part less before the end.
 
+  <br />
+
   <a id="mparts" class="cmd"></a><h1>Manipulating parts</h1>
 
   The parts a number is split into can also be manipulated.
@@ -418,6 +424,8 @@ layout: default
   <br /><br />
 
   Methods <strong>setA</strong>, and <strong>setB</strong> Use the first value for which part then the second value for which number you wish to set it to.
+
+  <br />
 
   <h2>Transforming parts.</h2>
 
@@ -486,6 +494,8 @@ layout: default
   <br /><br />
 
   You can change the starting position to what ever you like to see the effect for your self. Set it 3, or even 5.
+
+  <br />
 
   <a id="cparts" class="cmd"></a><h1>Creating A number in parts.</h1>
 
@@ -574,6 +584,8 @@ layout: default
   <br /><br />
 
   You can change this, however you like. You can create any number you like using this.
+
+  <br />
 
   <a id="irrational" class="cmd"></a><h1>Irrational Numbers.</h1>
 
@@ -691,6 +703,8 @@ layout: default
 
   This is much different than the physical measurement. As we add per part together to create the number.
 
+  <br />
+
   <h2>The golden ratio.</h2>
 
   The golden ratio is a very fascinating irrational number as each part is as small as it possibly can be per part.
@@ -720,6 +734,8 @@ layout: default
 
     console.log(val.toString());
   </code>
+
+  <br />
 
   <h2>Square roots.</h2>
 
@@ -861,6 +877,8 @@ layout: default
     <br /><br />
   </div>
 
+  <br />
+
   <h2>At the smallest scale.</h2>
 
   The Golden ratio is the sub structure to all other numbers. Including all irrational numbers.
@@ -953,6 +971,8 @@ layout: default
 
   <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
 
+  <br />
+
   <h2>Rational Vs Irrational.</h2>
 
   In theory, if we could store a infinite number of digits.
@@ -980,6 +1000,8 @@ layout: default
   <br /><br />
 
   It is possible to determine one from the other even with limited digits. However, it requires you to solve the squaring of B to A parts. Then using the matrix to solve the pattern.
+
+  <br />
 
   <a id="dpat" class="cmd"></a><h1>Periodic number patterns.</h1>
 
@@ -1209,6 +1231,8 @@ layout: default
 
   However you have to remind yourself that it is all in binary place values. Even though we can round stuff off, and divide by different place values.
 
+  <br />
+
   <h2>Finding the division pattern.</h2>
 
   Lets say you wish to find what the periodic pattern of a fraction, or number is.
@@ -1296,6 +1320,8 @@ layout: default
 
     console.log(pat.toString());
   </code>
+
+  <br />
 
   <a id="fract" class="cmd"></a><h1>Fraction data type.</h1>
 
@@ -1447,6 +1473,8 @@ layout: default
 
   It is important for you to know this so you do not use a method like <strong>divP</strong>, or even <strong>reduce</strong>. Unless you convert to a fraction data type first.
 
+  <br />
+
   <a id="er" class="cmd"></a><h1>Error Correction.</h1>
 
   Generally error correction is not rally necessary. If you write your code, and algorithms using the fraction data type: <a href="#fract">Link</a>.
@@ -1529,6 +1557,8 @@ layout: default
 
   There is a lot you can change in this example code if you like. You can change the number used which is variable "n". You can make the error bigger by change the "er = 2" to say "er = 5".
 
+  <br />
+
   <h1>To Average fraction.</h1>
 
   There are also other forums of error correction such as translating to a average fraction.
@@ -1582,6 +1612,8 @@ layout: default
   <br /><br />
 
   You then can translate to a fraction. Then you can do arithmetic with fraction data types. To have less error overall.
+
+  <br />
 
   <h1>Setting a limit.</h1>
 
@@ -1692,6 +1724,8 @@ layout: default
   <br /><br />
 
   You then can add up the max possible error into number of place values. This is called dynamic error correction.
+
+  <br />
 
   <a id="bits" class="cmd"></a><h1>Binary translation operations.</h1>
 
@@ -1905,6 +1939,8 @@ layout: default
 
   The real representation of PI in base 36. Without any rounding off as a 64 bit floating point number is exactly 3.53I5AB8P5FC5VAYQTER60F6R.
 
+  <br />
+
   <a id="bwise" class="cmd"></a><h1>Bitwise Operations.</h1>
 
   You can now do logical operations on all 64 binary digits of a floating point number.
@@ -2104,6 +2140,8 @@ layout: default
   <br /><br />
 
   Also you do not have to use just <strong>2.1</strong> as the value you do a "XOR", "AND", "OR", operation with. You can also change <strong>Math.PI</strong> to any number you like.
+
+  <br />
 
   <a id="v" class="cmd"></a><h1>Vector and array operations.</h1>
 
