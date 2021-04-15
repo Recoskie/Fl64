@@ -1297,7 +1297,7 @@ layout: default
     console.log(pat.toString());
   </code>
 
-  <h1 id="fract">Fraction data type.</h1>
+  <a id="fract" class="cmd"></a><h1>Fraction data type.</h1>
 
   Fractions are useful for values that are periodic. See the section on Periodic number patterns: <a href="#dpat">Link</a>.
 
