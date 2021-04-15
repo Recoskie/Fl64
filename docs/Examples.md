@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 <html>
 <head>
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
@@ -10,40 +14,23 @@
     {
       width: 100%;
       height: 48px;
+      clear: both;
+    }
+    
+    textarea.c
+    {
+      resize: none;
+      width: 100%;
+      max-height: 40%;
+      float: left;
     }
 
-    @media (orientation: landscape)
+    textarea.o 
     {
-      textarea.c
-      {
-        resize: none;
-        width: 70%;
-        max-height: 70%;
-      }
-
-      textarea.o
-      {
-        resize: none;
-        width: 30%;
-        max-height: 70%;
-      }
-    }
-
-    @media (orientation: portrait)
-    {
-      textarea.c
-      {
-        resize: none;
-        width: 100%;
-        max-height: 40%;
-      }
-
-      textarea.o 
-      {
-        resize: none;
-        width: 100%;
-        max-height: 20%;
-      }
+      resize: none;
+      width: 100%;
+      max-height: 20%;
+      float: left;
     }
     -->
   </style>
@@ -101,28 +88,28 @@
       }
 
       document.getElementById("t1").innerHTML = "<table border=\"1\">\
-                                    <tr>\
-                                      <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
-                                      <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
-                                      <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 36) ? "display: none; " : "") + "\" value=\"&#8594;\" onclick=\"base++;updateT();\" /></td>\
-                                    </tr>\
-                                    <tr><td>Decimal Fraction.</td><td>Decimal Value.</td><td>Base " + base + " Fraction.</td><td>Base " + base + " Value.</td><td>Pattern.</td></tr>\
-                                    <tr><td>" + n1[0] + "&divide;" + n2[0] + "</td><td>" + (n1[0] / n2[0]) + "</td><td>" + n1[0].toString(base) + "&divide;" + n2[0].toString(base) + "</td><td>" + (n1[0] / n2[0]).toString(base) + "</td><td>" + new Fract(n1[0], n2[0]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[1] + "&divide;" + n2[1] + "</td><td>" + (n1[1] / n2[1]) + "</td><td>" + n1[1].toString(base) + "&divide;" + n2[1].toString(base) + "</td><td>" + (n1[1] / n2[1]).toString(base) + "</td><td>" + new Fract(n1[1], n2[1]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[2] + "&divide;" + n2[2] + "</td><td>" + (n1[2] / n2[2]) + "</td><td>" + n1[2].toString(base) + "&divide;" + n2[2].toString(base) + "</td><td>" + (n1[2] / n2[2]).toString(base) + "</td><td>" + new Fract(n1[2], n2[2]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[3] + "&divide;" + n2[3] + "</td><td>" + (n1[3] / n2[3]) + "</td><td>" + n1[3].toString(base) + "&divide;" + n2[3].toString(base) + "</td><td>" + (n1[3] / n2[3]).toString(base) + "</td><td>" + new Fract(n1[3], n2[3]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[4] + "&divide;" + n2[4] + "</td><td>" + (n1[4] / n2[4]) + "</td><td>" + n1[4].toString(base) + "&divide;" + n2[4].toString(base) + "</td><td>" + (n1[4] / n2[4]).toString(base) + "</td><td>" + new Fract(n1[4], n2[4]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[5] + "&divide;" + n2[5] + "</td><td>" + (n1[5] / n2[5]) + "</td><td>" + n1[5].toString(base) + "&divide;" + n2[5].toString(base) + "</td><td>" + (n1[5] / n2[5]).toString(base) + "</td><td>" + new Fract(n1[5], n2[5]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[6] + "&divide;" + n2[6] + "</td><td>" + (n1[6] / n2[6]) + "</td><td>" + n1[6].toString(base) + "&divide;" + n2[6].toString(base) + "</td><td>" + (n1[6] / n2[6]).toString(base) + "</td><td>" + new Fract(n1[6], n2[6]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[7] + "&divide;" + n2[7] + "</td><td>" + (n1[7] / n2[7]) + "</td><td>" + n1[7].toString(base) + "&divide;" + n2[7].toString(base) + "</td><td>" + (n1[7] / n2[7]).toString(base) + "</td><td>" + new Fract(n1[7], n2[7]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[8] + "&divide;" + n2[8] + "</td><td>" + (n1[8] / n2[8]) + "</td><td>" + n1[8].toString(base) + "&divide;" + n2[8].toString(base) + "</td><td>" + (n1[8] / n2[8]).toString(base) + "</td><td>" + new Fract(n1[8], n2[8]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[9] + "&divide;" + n2[9] + "</td><td>" + (n1[9] / n2[9]) + "</td><td>" + n1[9].toString(base) + "&divide;" + n2[9].toString(base) + "</td><td>" + (n1[9] / n2[9]).toString(base) + "</td><td>" + new Fract(n1[9], n2[9]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[10] + "&divide;" + n2[10] + "</td><td>" + (n1[10] / n2[10]) + "</td><td>" + n1[10].toString(base) + "&divide;" + n2[10].toString(base) + "</td><td>" + (n1[10] / n2[10]).toString(base) + "</td><td>" + new Fract(n1[10], n2[10]).divP(base) + "</td></tr>\
-                                    <tr><td>" + n1[11] + "&divide;" + n2[11] + "</td><td>" + (n1[11] / n2[11]) + "</td><td>" + n1[11].toString(base) + "&divide;" + n2[11].toString(base) + "</td><td>" + (n1[11] / n2[11]).toString(base) + "</td><td>" + new Fract(n1[11], n2[11]).divP(base) + "</td></tr>\
-                                    <tr>\
-                                      <td colspan=\"5\"><input type=\"button\" style=\"width:100%;\" value=\"&#8595;\" onclick=\"pos+=11;updateT();\" /></td>\
-                                    </tr>\
-                                  </table>";
+        <tr>\
+        <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
+        <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
+        <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 36) ? "display: none; " : "") + "\" value=\"&#8594;\" onclick=\"base++;updateT();\" /></td>\
+        </tr>\
+        <tr><td>Decimal Fraction.</td><td>Decimal Value.</td><td>Base " + base + " Fraction.</td><td>Base " + base + " Value.</td><td>Pattern.</td></tr>\
+        <tr><td>" + n1[0] + "&divide;" + n2[0] + "</td><td>" + (n1[0] / n2[0]) + "</td><td>" + n1[0].toString(base) + "&divide;" + n2[0].toString(base) + "</td><td>" + (n1[0] / n2[0]).toString(base) + "</td><td>" + new Fract(n1[0], n2[0]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[1] + "&divide;" + n2[1] + "</td><td>" + (n1[1] / n2[1]) + "</td><td>" + n1[1].toString(base) + "&divide;" + n2[1].toString(base) + "</td><td>" + (n1[1] / n2[1]).toString(base) + "</td><td>" + new Fract(n1[1], n2[1]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[2] + "&divide;" + n2[2] + "</td><td>" + (n1[2] / n2[2]) + "</td><td>" + n1[2].toString(base) + "&divide;" + n2[2].toString(base) + "</td><td>" + (n1[2] / n2[2]).toString(base) + "</td><td>" + new Fract(n1[2], n2[2]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[3] + "&divide;" + n2[3] + "</td><td>" + (n1[3] / n2[3]) + "</td><td>" + n1[3].toString(base) + "&divide;" + n2[3].toString(base) + "</td><td>" + (n1[3] / n2[3]).toString(base) + "</td><td>" + new Fract(n1[3], n2[3]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[4] + "&divide;" + n2[4] + "</td><td>" + (n1[4] / n2[4]) + "</td><td>" + n1[4].toString(base) + "&divide;" + n2[4].toString(base) + "</td><td>" + (n1[4] / n2[4]).toString(base) + "</td><td>" + new Fract(n1[4], n2[4]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[5] + "&divide;" + n2[5] + "</td><td>" + (n1[5] / n2[5]) + "</td><td>" + n1[5].toString(base) + "&divide;" + n2[5].toString(base) + "</td><td>" + (n1[5] / n2[5]).toString(base) + "</td><td>" + new Fract(n1[5], n2[5]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[6] + "&divide;" + n2[6] + "</td><td>" + (n1[6] / n2[6]) + "</td><td>" + n1[6].toString(base) + "&divide;" + n2[6].toString(base) + "</td><td>" + (n1[6] / n2[6]).toString(base) + "</td><td>" + new Fract(n1[6], n2[6]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[7] + "&divide;" + n2[7] + "</td><td>" + (n1[7] / n2[7]) + "</td><td>" + n1[7].toString(base) + "&divide;" + n2[7].toString(base) + "</td><td>" + (n1[7] / n2[7]).toString(base) + "</td><td>" + new Fract(n1[7], n2[7]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[8] + "&divide;" + n2[8] + "</td><td>" + (n1[8] / n2[8]) + "</td><td>" + n1[8].toString(base) + "&divide;" + n2[8].toString(base) + "</td><td>" + (n1[8] / n2[8]).toString(base) + "</td><td>" + new Fract(n1[8], n2[8]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[9] + "&divide;" + n2[9] + "</td><td>" + (n1[9] / n2[9]) + "</td><td>" + n1[9].toString(base) + "&divide;" + n2[9].toString(base) + "</td><td>" + (n1[9] / n2[9]).toString(base) + "</td><td>" + new Fract(n1[9], n2[9]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[10] + "&divide;" + n2[10] + "</td><td>" + (n1[10] / n2[10]) + "</td><td>" + n1[10].toString(base) + "&divide;" + n2[10].toString(base) + "</td><td>" + (n1[10] / n2[10]).toString(base) + "</td><td>" + new Fract(n1[10], n2[10]).divP(base) + "</td></tr>\
+        <tr><td>" + n1[11] + "&divide;" + n2[11] + "</td><td>" + (n1[11] / n2[11]) + "</td><td>" + n1[11].toString(base) + "&divide;" + n2[11].toString(base) + "</td><td>" + (n1[11] / n2[11]).toString(base) + "</td><td>" + new Fract(n1[11], n2[11]).divP(base) + "</td></tr>\
+        <tr>\
+          <td colspan=\"5\"><input type=\"button\" style=\"width:100%;\" value=\"&#8595;\" onclick=\"pos+=11;updateT();\" /></td>\
+        </tr>\
+      </table>";
     }
   </script>
 
@@ -732,21 +719,23 @@
   Every square root is related to the golden ratio. Here is a table of every square root.
 
   <br /><br />
-
-  <table border="1">
-    <tr><td colspan="2">&radic;1</td><td>_</td><td colspan="2">&radic;2</td><td>_</td><td colspan="2">&radic;3</td><td>_</td><td colspan="2">&radic;4</td><td>_</td><td colspan="2">&radic;5</td><td>_</td><td colspan="2">&radic;6</td><td>_</td><td colspan="2">&radic;7</td><td>_</td><td colspan="2">&radic;8</td><td>_</td><td colspan="2">&radic;9</td><td>_</td><td colspan="2">&radic;10</td><td>_</td><td colspan="2">&radic;11</td><td>_</td><td colspan="2">&radic;12</td><td>_</td><td colspan="2">&radic;13</td><td>_</td><td colspan="2">&radic;14</td><td>_</td><td colspan="2">&radic;15</td><td>_</td><td colspan="2">&radic;16</td><td>_</td><td colspan="2">&radic;17</td><td>_</td><td colspan="2">&radic;18</td><td>_</td><td colspan="2">&radic;19</td><td>_</td><td colspan="2">&radic;20</td><td>_</td><td colspan="2">&radic;21</td><td>_</td><td colspan="2">&radic;22</td><td>_</td><td colspan="2">&radic;23</td><td>_</td><td colspan="2">&radic;24</td></tr>
-    <tr><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td></tr>
-    <tr><td>1</td><td>0</td><td>_</td><td>1</td><td>1</td><td>_</td><td>1</td><td>2</td><td>_</td><td>2</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>2</td><td>3</td><td>_</td><td>2</td><td>4</td><td>_</td><td>3</td><td>0</td><td>_</td><td>3</td><td>1</td><td>_</td><td>3</td><td>2</td><td>_</td><td>3</td><td>3</td><td>_</td><td>3</td><td>4</td><td>_</td><td>3</td><td>5</td><td>_</td><td>3</td><td>6</td><td>_</td><td>4</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>4</td><td>5</td><td>_</td><td>4</td><td>6</td><td>_</td><td>4</td><td>7</td><td>_</td><td>4</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-    <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>7</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
-  </table>
+  
+  <div style="width:100%;overflow:auto;">
+    <table border="1">
+      <tr><td colspan="2">&radic;1</td><td>_</td><td colspan="2">&radic;2</td><td>_</td><td colspan="2">&radic;3</td><td>_</td><td colspan="2">&radic;4</td><td>_</td><td colspan="2">&radic;5</td><td>_</td><td colspan="2">&radic;6</td><td>_</td><td colspan="2">&radic;7</td><td>_</td><td colspan="2">&radic;8</td><td>_</td><td colspan="2">&radic;9</td><td>_</td><td colspan="2">&radic;10</td><td>_</td><td colspan="2">&radic;11</td><td>_</td><td colspan="2">&radic;12</td><td>_</td><td colspan="2">&radic;13</td><td>_</td><td colspan="2">&radic;14</td><td>_</td><td colspan="2">&radic;15</td><td>_</td><td colspan="2">&radic;16</td><td>_</td><td colspan="2">&radic;17</td><td>_</td><td colspan="2">&radic;18</td><td>_</td><td colspan="2">&radic;19</td><td>_</td><td colspan="2">&radic;20</td><td>_</td><td colspan="2">&radic;21</td><td>_</td><td colspan="2">&radic;22</td><td>_</td><td colspan="2">&radic;23</td><td>_</td><td colspan="2">&radic;24</td></tr>
+      <tr><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td><td>_</td><td>A</td><td>B</td></tr>
+      <tr><td>1</td><td>0</td><td>_</td><td>1</td><td>1</td><td>_</td><td>1</td><td>2</td><td>_</td><td>2</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>2</td><td>3</td><td>_</td><td>2</td><td>4</td><td>_</td><td>3</td><td>0</td><td>_</td><td>3</td><td>1</td><td>_</td><td>3</td><td>2</td><td>_</td><td>3</td><td>3</td><td>_</td><td>3</td><td>4</td><td>_</td><td>3</td><td>5</td><td>_</td><td>3</td><td>6</td><td>_</td><td>4</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>4</td><td>5</td><td>_</td><td>4</td><td>6</td><td>_</td><td>4</td><td>7</td><td>_</td><td>4</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>8</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+      <tr><td>0</td><td>0</td><td>_</td><td>2</td><td>1</td><td>_</td><td>2</td><td>2</td><td>_</td><td>0</td><td>0</td><td>_</td><td>4</td><td>1</td><td>_</td><td>4</td><td>2</td><td>_</td><td>4</td><td>3</td><td>_</td><td>4</td><td>4</td><td>_</td><td>0</td><td>0</td><td>_</td><td>6</td><td>1</td><td>_</td><td>6</td><td>2</td><td>_</td><td>6</td><td>3</td><td>_</td><td>6</td><td>4</td><td>_</td><td>6</td><td>5</td><td>_</td><td>6</td><td>6</td><td>_</td><td>0</td><td>0</td><td>_</td><td>7</td><td>1</td><td>_</td><td>8</td><td>2</td><td>_</td><td>8</td><td>3</td><td>_</td><td>8</td><td>4</td><td>_</td><td>8</td><td>5</td><td>_</td><td>8</td><td>6</td><td>_</td><td>8</td><td>7</td><td>_</td><td>8</td><td>8</td></tr>
+    </table>
+  </div>
 
   <br /><br />
 
