@@ -28,6 +28,7 @@ FL64 is an library allowing javascript to.<br />
 * Nicely format double precision numbers as proper fractions, or as script code.<br />
 
 ------------------------------------------------------------------------------
+
 FL64_App is an sample web application using this library which allows you. <br />
 
 * To analyze recurring patterns in bases 2 through 36. <br />
@@ -36,7 +37,9 @@ FL64_App is an sample web application using this library which allows you. <br /
 
 * To generate rally long randomized periodic patterns in different number bases and convert them back, and fourth between fractions that produce the periodic pattern in division.<br />
   Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
+
 ------------------------------------------------------------------------------
+
 Irrational_App is an sample web application using this library which allows you. <br />
 
 * To analyze Irrational numbers. <br />

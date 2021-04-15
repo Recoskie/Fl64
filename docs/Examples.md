@@ -122,18 +122,20 @@ layout: default
 
   <h1>Indexed contents.</h1>
 
-  Number in Parts: <a href="#parts">Link</a><br />
-  Adding parts back together: <a href="#calc">Link</a><br />
-  Manipulating parts: <a href="#mparts">Link</a><br />
-  Creating a number in Parts: <a href="#cparts">Link</a><br />
-  Irrational numbers: <a href="#irrational">Link</a><br />
-  Periodic Recurring/number patterns: <a href="#dpat">Link</a><br />
-  The secrete to all numbers (No such thing as random numbers): <a href="#s">Link</a><br />
-  Fraction Data type: <a href="#fract">Link</a><br />
-  Error Correction: <a href="#er">Link</a><br />
-  Binary translation operations: <a href="#bits">Link</a><br />
-  Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
-  Vector and Array operation: <a href="#v">Link</a>
+<table border="1">
+    <tr><td>Number in Parts: <a href="#parts">Link</a></td><td rowspan="4">Basics.</td></tr>
+    <tr><td>Adding parts back together: <a href="#calc">Link</a></td></tr>
+    <tr><td>Manipulating parts: <a href="#mparts">Link</a></td></tr>
+    <tr><td>Creating a number in Parts: <a href="#cparts">Link</a></td></tr>
+    <tr><td>Irrational numbers: <a href="#irrational">Link</a></td><td rowspan="3">Analyzing Numbers.</td></tr>
+    <tr><td>Periodic Recurring/number patterns: <a href="#dpat">Link</a></td></tr>
+    <tr><td>The secrete to all numbers (No such thing as random numbers): <a href="#s">Link</a></td></tr>
+    <tr><td>Fraction Data type: <a href="#fract">Link</a></td><td rowspan="2">Error correction.</td></tr>
+    <tr><td>Error Correction: <a href="#er">Link</a></td></tr>
+    <tr><td>Binary translation operations: <a href="#bits">Link</a></td><td rowspan="3">Binary, and bitwise operations.</td></tr>
+    <tr><td>Direct Binary bitwise operations: <a href="#bwise">Link</a></td></tr>
+    <tr><td>Vector and Array operation: <a href="#v">Link</a></td></tr>
+  </table>
 
   <br /><br />
 
