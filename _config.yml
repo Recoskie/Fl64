@@ -1,5 +1,5 @@
-title: IEEE-754 Float 64 analytics project.
-description: FL64 is a number analytics, and error correction library.
+title: IEEE-754 Float 64 library.
+description: FL64 is an number analytics, and error correction library.
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-midnight
