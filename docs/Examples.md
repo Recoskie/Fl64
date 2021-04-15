@@ -32,6 +32,13 @@ layout: default
       max-height: 20%;
       float: left;
     }
+
+    .cmd:target
+    {
+      display: block;
+      height: 4rem; margin-top: -4rem;
+      visibility: hidden;
+    }
     -->
   </style>
   <script src="../FL64.js" type="text/javascript"></script>
@@ -128,7 +135,7 @@ layout: default
   Direct Binary bitwise operations: <a href="#bwise">Link</a><br />
   Vector and Array operation: <a href="#v">Link</a>
 
-  <h1 id="parts">Number in Parts.</h1>
+  <a id="parts" class="cmd"></a><h1>Number in Parts.</h1>
 
   1. Numbers can be split into parts.<br />
   2. Numbers have a length, for numbers of parts split into.
@@ -270,7 +277,7 @@ layout: default
     console.log(pi.toString());
   </code>
 
-  <h1 id="calc">Adding parts back together.</h1>
+  <a id="calc" class="cmd"></a><h1>Adding parts back together.</h1>
 
   <code>
     var pi = 3.1415;
@@ -348,7 +355,7 @@ layout: default
 
   Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are adding one part less before the end.
 
-  <h1 id="mparts">Manipulating parts</h1>
+  <a id="mparts" class="cmd"></a><h1>Manipulating parts</h1>
 
   The parts a number is split into can also be manipulated.
 
@@ -480,7 +487,7 @@ layout: default
 
   You can change the starting position to what ever you like to see the effect for your self. Set it 3, or even 5.
 
-  <h1 id="cparts">Creating A number in parts.</h1>
+  <a id="cparts" class="cmd"></a><h1>Creating A number in parts.</h1>
 
   In order to create a number you start with a value that is <strong>NaN</strong>. Which stands for <strong>Not a Number</strong>.
 
@@ -568,7 +575,7 @@ layout: default
 
   You can change this, however you like. You can create any number you like using this.
 
-  <h1 id="irrational">Irrational Numbers.</h1>
+  <a id="irrational" class="cmd"></a><h1>Irrational Numbers.</h1>
 
   An irrational number is a value that can never be solved to it's exact value.
 
@@ -719,7 +726,7 @@ layout: default
   Every square root is related to the golden ratio. Here is a table of every square root.
 
   <br /><br />
-  
+
   <div style="width:100%;overflow:auto;">
     <table border="1">
       <tr><td colspan="2">&radic;1</td><td>_</td><td colspan="2">&radic;2</td><td>_</td><td colspan="2">&radic;3</td><td>_</td><td colspan="2">&radic;4</td><td>_</td><td colspan="2">&radic;5</td><td>_</td><td colspan="2">&radic;6</td><td>_</td><td colspan="2">&radic;7</td><td>_</td><td colspan="2">&radic;8</td><td>_</td><td colspan="2">&radic;9</td><td>_</td><td colspan="2">&radic;10</td><td>_</td><td colspan="2">&radic;11</td><td>_</td><td colspan="2">&radic;12</td><td>_</td><td colspan="2">&radic;13</td><td>_</td><td colspan="2">&radic;14</td><td>_</td><td colspan="2">&radic;15</td><td>_</td><td colspan="2">&radic;16</td><td>_</td><td colspan="2">&radic;17</td><td>_</td><td colspan="2">&radic;18</td><td>_</td><td colspan="2">&radic;19</td><td>_</td><td colspan="2">&radic;20</td><td>_</td><td colspan="2">&radic;21</td><td>_</td><td colspan="2">&radic;22</td><td>_</td><td colspan="2">&radic;23</td><td>_</td><td colspan="2">&radic;24</td></tr>
@@ -834,7 +841,7 @@ layout: default
 
   <br /><br />
 
-  <a id="s"><strong>Each number relates to each other. Think of this as the golden ratio to the square, and then to natural log, and PI as a spiral stir case squared.</strong></a>
+  <a id="s" class="cmd"></a><strong>Each number relates to each other. Think of this as the golden ratio to the square, and then to natural log, and PI as a spiral stir case squared.</strong>
 
   <br /><br />
 
@@ -854,7 +861,7 @@ layout: default
     <br /><br />
   </div>
 
-  <h2 id="s">At the smallest scale.</h2>
+  <h2>At the smallest scale.</h2>
 
   The Golden ratio is the sub structure to all other numbers. Including all irrational numbers.
 
@@ -974,7 +981,7 @@ layout: default
 
   It is possible to determine one from the other even with limited digits. However, it requires you to solve the squaring of B to A parts. Then using the matrix to solve the pattern.
 
-  <h1 id="dpat">Periodic number patterns.</h1>
+  <a id="dpat" class="cmd"></a><h1>Periodic number patterns.</h1>
 
   Periodic number patterns happen when you divide a number that does not divide evenly out of the number of digits you are using per place value.
 
@@ -1440,7 +1447,7 @@ layout: default
 
   It is important for you to know this so you do not use a method like <strong>divP</strong>, or even <strong>reduce</strong>. Unless you convert to a fraction data type first.
 
-  <h1 id="er">Error Correction.</h1>
+  <a id="er" class="cmd"></a><h1>Error Correction.</h1>
 
   Generally error correction is not rally necessary. If you write your code, and algorithms using the fraction data type: <a href="#fract">Link</a>.
 
@@ -1686,7 +1693,7 @@ layout: default
 
   You then can add up the max possible error into number of place values. This is called dynamic error correction.
 
-  <h1 id="bits">Binary translation operations.</h1>
+  <a id="bits" class="cmd"></a><h1>Binary translation operations.</h1>
 
   You can convert the number into pure binary using the <strong>bits</strong> operation. Once the number is in binary. You can manipulate the exponent, mantissa, and even the sing bit.
 
@@ -1898,7 +1905,7 @@ layout: default
 
   The real representation of PI in base 36. Without any rounding off as a 64 bit floating point number is exactly 3.53I5AB8P5FC5VAYQTER60F6R.
 
-  <h1 id="bwise">Bitwise Operations.</h1>
+  <a id="bwise" class="cmd"></a><h1>Bitwise Operations.</h1>
 
   You can now do logical operations on all 64 binary digits of a floating point number.
 
@@ -2098,7 +2105,7 @@ layout: default
 
   Also you do not have to use just <strong>2.1</strong> as the value you do a "XOR", "AND", "OR", operation with. You can also change <strong>Math.PI</strong> to any number you like.
 
-  <h1 id="v">Vector and array operations.</h1>
+  <a id="v" class="cmd"></a><h1>Vector and array operations.</h1>
 
   We can also do all the floating point operations on a group of numbers rather than one number at a time.
 
