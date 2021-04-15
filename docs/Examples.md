@@ -425,7 +425,7 @@ layout: default
 
   Methods <strong>setA</strong>, and <strong>setB</strong> Use the first value for which part then the second value for which number you wish to set it to.
 
-  <br />
+  <br /><br />
 
   <h2>Transforming parts.</h2>
 
@@ -703,7 +703,7 @@ layout: default
 
   This is much different than the physical measurement. As we add per part together to create the number.
 
-  <br />
+  <br /><br />
 
   <h2>The golden ratio.</h2>
 
@@ -735,7 +735,7 @@ layout: default
     console.log(val.toString());
   </code>
 
-  <br />
+  <br /><br />
 
   <h2>Square roots.</h2>
 
@@ -877,7 +877,7 @@ layout: default
     <br /><br />
   </div>
 
-  <br />
+  <br /><br />
 
   <h2>At the smallest scale.</h2>
 
@@ -971,7 +971,7 @@ layout: default
 
   <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
 
-  <br />
+  <br /><br />
 
   <h2>Rational Vs Irrational.</h2>
 
@@ -1001,7 +1001,7 @@ layout: default
 
   It is possible to determine one from the other even with limited digits. However, it requires you to solve the squaring of B to A parts. Then using the matrix to solve the pattern.
 
-  <br />
+  <br /><br />
 
   <a id="dpat" class="cmd"></a><h1>Periodic number patterns.</h1>
 
@@ -1151,6 +1151,8 @@ layout: default
 
   2. Generating fun random looking sequences that repeat infinitely periodically.
 
+  <br /><br />
+
   <h2>Creating a division pattern.</h2>
 
   To create a new division pattern you use the <strong>Pattern</strong> data type.
@@ -1231,7 +1233,7 @@ layout: default
 
   However you have to remind yourself that it is all in binary place values. Even though we can round stuff off, and divide by different place values.
 
-  <br />
+  <br /><br />
 
   <h2>Finding the division pattern.</h2>
 
@@ -1321,7 +1323,7 @@ layout: default
     console.log(pat.toString());
   </code>
 
-  <br />
+  <br /><br />
 
   <a id="fract" class="cmd"></a><h1>Fraction data type.</h1>
 
@@ -1473,7 +1475,7 @@ layout: default
 
   It is important for you to know this so you do not use a method like <strong>divP</strong>, or even <strong>reduce</strong>. Unless you convert to a fraction data type first.
 
-  <br />
+  <br /><br />
 
   <a id="er" class="cmd"></a><h1>Error Correction.</h1>
 
@@ -1557,7 +1559,7 @@ layout: default
 
   There is a lot you can change in this example code if you like. You can change the number used which is variable "n". You can make the error bigger by change the "er = 2" to say "er = 5".
 
-  <br />
+  <br /><br />
 
   <h1>To Average fraction.</h1>
 
@@ -1613,7 +1615,7 @@ layout: default
 
   You then can translate to a fraction. Then you can do arithmetic with fraction data types. To have less error overall.
 
-  <br />
+  <br /><br />
 
   <h1>Setting a limit.</h1>
 
@@ -1725,7 +1727,7 @@ layout: default
 
   You then can add up the max possible error into number of place values. This is called dynamic error correction.
 
-  <br />
+  <br /><br />
 
   <a id="bits" class="cmd"></a><h1>Binary translation operations.</h1>
 
@@ -1939,7 +1941,7 @@ layout: default
 
   The real representation of PI in base 36. Without any rounding off as a 64 bit floating point number is exactly 3.53I5AB8P5FC5VAYQTER60F6R.
 
-  <br />
+  <br /><br />
 
   <a id="bwise" class="cmd"></a><h1>Bitwise Operations.</h1>
 
@@ -2141,7 +2143,7 @@ layout: default
 
   Also you do not have to use just <strong>2.1</strong> as the value you do a "XOR", "AND", "OR", operation with. You can also change <strong>Math.PI</strong> to any number you like.
 
-  <br />
+  <br /><br />
 
   <a id="v" class="cmd"></a><h1>Vector and array operations.</h1>
 
