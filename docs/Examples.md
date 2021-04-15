@@ -94,7 +94,7 @@ layout: default
         n1[i] = n; n2[i] = d;
       }
 
-      document.getElementById("t1").innerHTML = "<table border=\"1\">\
+      document.getElementById("t1").innerHTML = "<table border=\"1\" style=\"font-size: 0.6vw;\">\
         <tr>\
         <td rowspan=\"15\"><input type=\"button\" style=\"height:256px;" + ((base === 2) ? "display:none;" : "") + "\" value=\"&#8592;\" onclick=\"base--;updateT();\" /></td>\
         <td colspan=\"5\"><input type=\"button\" style=\"width:100%;" + ((pos === 1) ? "display:none;" : "") + "\" value=\"&#8593;\" onclick=\"pos-=11;updateT();\" /></td>\
