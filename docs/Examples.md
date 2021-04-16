@@ -1,12 +1,10 @@
 ---
 layout: default
+image:
+    path: https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff
 ---
 
 <html>
-<head>
-  <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
-  <title>FL64 Examples.</title>
-</head>
 <body onload="setup(); updateT();">
   <style type="text/css">
     <!--
