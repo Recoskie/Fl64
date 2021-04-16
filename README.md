@@ -54,21 +54,26 @@ Code_App allows you to run and test custom code using the library.
   
 ------------------------------------------------------------------------------
 1. ### Adds the following to double precision numbers:
-    1. Numbers have a **length**.
+    1. Numbers have a **length**
+        >
         > ```javascript
         > var MyNum = 7;
         > alert( MyNum.length + "" );
         > ```
+        >
         > The inital length of all numbers is 0.
+        >
     2. Method **num.split()**
         > #### num.split()
         >> ##### Takes a whole part out of the number.
         >> ##### Adds one to the number length.
         >> ##### Return number minus the part taken out of the number.
+        >
         > #### num.split( a, b )
         >> ##### Takes selected "a" part out of the number. With selected scale size "b".
         >> ##### Adds one to the number length.
         >> ##### Return number minus the part taken out of the number.
+        >
      3. Method **num.Trans( x, A, B )**
         > ##### Number is split into whole parts till x.
         > ##### Then your functions A, and B are used to calculate the split into A by B parts there after.
@@ -82,19 +87,23 @@ Code_App allows you to run and test custom code using the library.
         > ##### Chaining this affects the number of parts a number can be split into before 0.
      6. Method **num.toString()** Enhanced:
         > #### num.toString( true )
-        >> #### Displays all parts the number has been split into. In A, B with the remaining value on the last line.
+           >> #### Displays all parts the number has been split into. In A, B with the remaining value on the last line.
+        >
         > #### num.toString( base )
-        >> ##### Display value in base 2 through 36.
+           >> ##### Display value in base 2 through 36.
+        >
         > #### num.toString( base, true )
-        >> ##### If true then display the float value past round off point in bases 2 through 36.
-        >> The exact value of the number PI as an double precision number in decimal (base 10) is 3.141592653589793115997963468544185161590576171875, but is rounded off at 3.141592653589793.
+           >> ##### If true then display the float value past round off point in bases 2 through 36.
+           >> The exact value of the number PI as an double precision number in decimal (base 10) is 3.141592653589793115997963468544185161590576171875, but is rounded off at 3.141592653589793.
+        >
         > #### num.toString()
-        >> ##### Double precision number to decimal string.
+           >> ##### Double precision number to decimal string.
       7. Method **parseFloat()** Enhanced:
          > #### parseFloat( str, base )
-         >> ##### Convert string base 2 through 36 to an float value.
+            >> ##### Convert string base 2 through 36 to an float value.
+         >
          > #### parseFloat( str )
-         >> ##### Converts decimal string to double precision number.
+            >> ##### Converts decimal string to double precision number.
       8. Method **num.remove( el )**
          > ##### Remove a A by B part from the number.
          > ##### Returns the changed number value.
@@ -106,18 +115,20 @@ Code_App allows you to run and test custom code using the library.
           > ##### Returns the changed number value.
       11. Method **num.calc()**
           > #### num.calc()
-          >> ##### Add all parts back to a number.
-          >> ##### Returns a new added up number.
+             >> ##### Add all parts back to a number.
+             >> ##### Returns a new added up number.
+          >
           > #### num.calc( start, end )
-          >> ##### Add selected parts back to A number.
-          >> ##### Returns a new added up number.
+             >> ##### Add selected parts back to A number.
+             >> ##### Returns a new added up number.
       12. Method **num.calcF()**
           > #### num.calcF()
-          >> ##### Add all parts back to a fraction.
-          >> ##### Returns Fraction.
+             >> ##### Add all parts back to a fraction.
+             >> ##### Returns Fraction.
+          >
           > #### num.calc( start, end )
-          >> ##### Add selected parts to a fraction.
-          >> ##### Returns Fraction. 
+             >> ##### Add selected parts to a fraction.
+             >> ##### Returns Fraction. 
       13. Method **num.getFract()**
           > #### Split number to all parts add to fraction.
           > #### Using **num.limit( ac )** changes the end point.
@@ -139,77 +150,81 @@ Code_App allows you to run and test custom code using the library.
           > ##### Return number as an bitNumber.
       19. Method **num.toPattern()**
           > #### num.toPattern().
-          >> ##### Converts the bits in the mantissa to an pattern data type.
+             >> ##### Converts the bits in the mantissa to an pattern data type.
+          >
           > #### num.toPattern( base ).
-          >> ##### Converts the bits in the mantissa to an different base then pattern data type.
+             >> ##### Converts the bits in the mantissa to an different base then pattern data type.
+
 ------------------------------------------------------------------------------
+
 2. ### Bit Number Data type.
     1. Bit Numbers act as an regular number with three new properties **num.sing**, **num.exp**, **num.mantissa** which can be manipulated, or read.
-        ```javascript
-        var num = ( 3.14 ).bits();
+       ```javascript
+       var num = ( 3.14 ).bits();
         
-        alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
+       alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
         
-        alert( "Value = " + num ); //3.14 when added to String.
+       alert( "Value = " + num ); //3.14 when added to String.
         
-        alert( num.exp );  //The number value of the double precision exponent.
+       alert( num.exp );  //The number value of the double precision exponent.
         
-        alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
+       alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
         
-        //Right shift the double precision exponent by one, and subtract 1.
+       //Right shift the double precision exponent by one, and subtract 1.
         
-        num.exp = ( num.exp >> 1 ) -1;
+       num.exp = ( num.exp >> 1 ) -1;
         
-        alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
+       alert( num );  //The number is displayed as 64 bits in binary as it is in the computer memory.
         
-        alert( "Value = " + num ); //The new manipulated number value.
+       alert( "Value = " + num ); //The new manipulated number value.
         
-        alert( num.exp );  //The new number value of the double precision exponent.
+       alert( num.exp );  //The new number value of the double precision exponent.
         
-        alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
-        ```
+       alert( num.exp.toString(2) );  //The number value of the double precision exponent in binary.
+       ```
     2. Bit Numbers convert to Number during any Math, or Arithmetic/Logic operation.
-        ```javascript
-        var num = ( 3.14 ).bits();
+       ```javascript
+       var num = ( 3.14 ).bits();
 
-        //Any Number operation that does not return "bitNumber" will convert back to "Number".
+       //Any Number operation that does not return "bitNumber" will convert back to "Number".
 
-        num = ( ( num + 9 ) * 7 ) << 2;
+       num = ( ( num + 9 ) * 7 ) << 2;
 
-        alert( "Add 9, multiply by 7, Left Shift 2 = " + num );
+       alert( "Add 9, multiply by 7, Left Shift 2 = " + num );
         
-        alert( "Exponet = " + num.exp + "" ); //No "bitNumber" exponent.
+       alert( "Exponet = " + num.exp + "" ); //No "bitNumber" exponent.
         
-        alert( "Exponet = " + num.bits().exp + "" ); //To "bitNumber" then exponent.
+       alert( "Exponet = " + num.bits().exp + "" ); //To "bitNumber" then exponent.
         
-        alert( "Exponet = " + num.bitLsh(1).exp + "" ); //Or do "bitLsh()" gives "bitNumber".
-        ```
-    3. Method **parseNumber()**:
-        > #### parseNumber( str, base )
-        ```javascript
-        //The number PI in IEEE-754 double precision binary format.
-        
-        var num = parseNumber( "0100000000001001001000011111101101010010111011001001010000101010" );
-        
-        alert( num ); //Displays "3.141592643589793".
-        
-        //The number PI in IEEE-754 double precision hex format 0x400921FB52EC942A.
-        
-        var num2 = parseNumber( "400921FB52EC942A", 16 );
-        
-        alert( num2 ); //Displays "3.141592643589793".
-        
-        //Convert Number to Bit Number.
-        
-        var num = ( 79.6771716761117 ).bits();
-        
-        //Display Number in base 36 IEEE-754 double precision, and parse back to an Number.
-        
-        var str36 = num.toString(36);
-        
-        alert( str36 + " = " + parseNumber( str36, 36 ) );
-        ```
+       alert( "Exponet = " + num.bitLsh(1).exp + "" ); //Or do "bitLsh()" gives "bitNumber".
+       ```
+    3. Method **parseNumber( str, base )**:
+        > ```javascript
+        > //The number PI in IEEE-754 double precision binary format.
+        >
+        > var num = parseNumber( "0100000000001001001000011111101101010010111011001001010000101010" );
+        >
+        > alert( num ); //Displays "3.141592643589793".
+        >
+        > //The number PI in IEEE-754 double precision hex format 0x400921FB52EC942A.
+        >
+        > var num2 = parseNumber( "400921FB52EC942A", 16 );
+        >
+        > alert( num2 ); //Displays "3.141592643589793".
+        >
+        > //Convert Number to Bit Number.
+        >
+        > var num = ( 79.6771716761117 ).bits();
+        >
+        > //Display Number in base 36 IEEE-754 double precision, and parse back to an Number.
+        >
+        > var str36 = num.toString(36);
+        >
+        > alert( str36 + " = " + parseNumber( str36, 36 ) );
+        > ```
+
 ------------------------------------------------------------------------------
+
 3. ### Fraction Data type.
      1. Fractions are displayed in proper fraction format.
         ```javascript
@@ -222,57 +237,57 @@ Code_App allows you to run and test custom code using the library.
         alert( "Value = " + f.toString() );  //The Fraction "14÷100+3" is displayed.
         ```
     2. Fractions convert to Number during any Math, or Arithmetic/Logic operation.
-        ```javascript
-        var f1 = new Fract( 9, 17 ), f2 = new Fract( 99, 10 );
+       ```javascript
+       var f1 = new Fract( 9, 17 ), f2 = new Fract( 99, 10 );
 
-        //Any Number operation, or arithmetic operation will convert back to "Number".
-        //This includes adding fractions, or multiplying.
+       //Any Number operation, or arithmetic operation will convert back to "Number".
+       //This includes adding fractions, or multiplying.
         
-        f1 = f1 + 71;
+       f1 = f1 + 71;
         
-        alert( f1 );  //The number "71.52941176470588" is displayed.
+       alert( f1 );  //The number "71.52941176470588" is displayed.
         
-        //Ask the number to be an fraction again.
+       //Ask the number to be an fraction again.
 
-        f1 = f1.getFract();
+       f1 = f1.getFract();
 
-        alert( f1 );  //9÷17+71 is displayed.
+       alert( f1 );  //9÷17+71 is displayed.
 
-        //Multiply fractions.
+       //Multiply fractions.
 
-        f1 = f1 * f2;
+       f1 = f1 * f2;
 
-        alert( f1 );  //The number "708.1411764705882" is displayed.
+       alert( f1 );  //The number "708.1411764705882" is displayed.
 
-        //Ask the number to be an fraction again.
+       //Ask the number to be an fraction again.
 
-        f1 = f1.getFract();
+       f1 = f1.getFract();
 
-        alert( f1 );  //The fraction "12÷85+708" is displayed.
+       alert( f1 );  //The fraction "12÷85+708" is displayed.
 
-        //Convert Fraction to number then to bit number.
+       //Convert Fraction to number then to bit number.
 
-        f2 = ( f2 + 0 ).bits();
+       f2 = ( f2 + 0 ).bits();
 
-        //Add the Bit number to fraction. Both convert to Number during Math operation.
+       //Add the Bit number to fraction. Both convert to Number during Math operation.
 
-        f1 = f1 + f2;
+       f1 = f1 + f2;
 
-        alert( f1 );  //The Number "718.0411764705882" is displayed.
-        ```
+       alert( f1 );  //The Number "718.0411764705882" is displayed.
+       ```
     3. Method **Fract.divP()**:
         > Divides the fraction in select number base 2 through 36 returns the periodic Pattern part.<br />
         For Example 1÷7 = 0.142857142857 in which the recurring digits "142857" repeat over and over to infinity.<br />
         However 1÷7 divides evenly in (base 7), but not out of per 10 digits.<br />
-        ```javascript
-        var Pat = new Fract( 1, 7 ).divP(); //Divide 1 into 7 in binary.
-        
-        alert( Pat ); //The repeating pattern in an double precision numbers mantissa bits is "001∞".
-        
-        Pat = new Fract( 1, 7 ).divP( 10 ); //Divide 1 into 7 in decimal (base 10).
-        
-        alert( Pat ); //The repeating pattern in decimal is "142857∞".
-        ```
+        > ```javascript
+        > var Pat = new Fract( 1, 7 ).divP(); //Divide 1 into 7 in binary.
+        >
+        > alert( Pat ); //The repeating pattern in an double precision numbers mantissa bits is "001∞".
+        >
+        > Pat = new Fract( 1, 7 ).divP( 10 ); //Divide 1 into 7 in decimal (base 10).
+        >
+        > alert( Pat ); //The repeating pattern in decimal is "142857∞".
+        > ```
     4. Method **Fract.Reduce()**:
         > Reduce fraction to lowest possible whole value. <br />
         Returns Fraction data type.
@@ -281,47 +296,50 @@ Code_App allows you to run and test custom code using the library.
     6. Method **Fract.toString( op )**:
         > Returns an string of the fraction as script code combined with any operator such as comparison, or logic/arithmetic, or math operator. <br />
         Main use is self building code that then can be compiled using **eval()**.
-        ```javascript
-        var x = 1;
-        
-        var f = ( Math.random() * 1000 ).getFract(1);
-        
-        var code = "";
-        
-        for( var i = 0; i < 7; f = ( Math.random() * 1000 ).getFract(1), i++ )
-        {
-          code += "x" + f.toString( "*=" ) + ";\r\n";
-        }
-        
-        //Put the code into an function.
-        
-        code = "var MyFunc = function( x ) {\r\n" + code + "return( x ); };"
-        
-        //Display the Self generated function.
-        
-        alert( "Self generated code =\r\n" + code );
-        
-        //Compile the function.
-        
-        eval(code);
-        
-        //Pass random values to the function.
-        
-        x = Math.random();
-        alert( x + " = " + MyFunc( x ) + "" );
-        
-        x = Math.random();
-        alert( x + " = " + MyFunc( x ) + "" );
-        
-        x = Math.random();
-        alert( x + " = " + MyFunc( x ) + "" );
-        ```
+        > ```javascript
+        > var x = 1;
+        >
+        > var f = ( Math.random() * 1000 ).getFract(1);
+        >
+        > var code = "";
+        >
+        > for( var i = 0; i < 7; f = ( Math.random() * 1000 ).getFract(1), i++ )
+        > {
+        >   code += "x" + f.toString( "*=" ) + ";\r\n";
+        > }
+        >
+        > //Put the code into an function.
+        >
+        > code = "var MyFunc = function( x ) {\r\n" + code + "return( x ); };"
+        >
+        > //Display the Self generated function.
+        >
+        > alert( "Self generated code =\r\n" + code );
+        >
+        > //Compile the function.
+        >
+        > eval(code);
+        >
+        > //Pass random values to the function.
+        >
+        > x = Math.random();
+        > alert( x + " = " + MyFunc( x ) + "" );
+        >
+        > x = Math.random();
+        > alert( x + " = " + MyFunc( x ) + "" );
+        >
+        > x = Math.random();
+        > alert( x + " = " + MyFunc( x ) + "" );
+        > ```
         > Note if one wants to you can create an array of random functions with this and link them together. <br />
         Or one can combine this with an algorithm to generate an function based on an data set.
+        
 ------------------------------------------------------------------------------
+
 4. ### Recurring Pattern Data type.
      1. The recurring pattern data type is for fractions that do not divide by number base properly.<br />
-     For example 1÷7 in decimal can not divide producing recurring digits "142857".
+     For example 1÷7 in decimal can not divide producing recurring digits "142857".<br />
+     
         ```javascript
         var Pat = new Pattern( "142857", 10 );
         
@@ -335,7 +353,8 @@ Code_App allows you to run and test custom code using the library.
         
         alert( "Value = " + Fract ); //Displays "0.14285714285714285" In which digits "142857" repeats.
         ```
-        > If no base is specified binary is amused.
+     If no base is specified binary is amused.
+        
         ```javascript
         var Pat = new Pattern( "001" );
         
@@ -358,16 +377,18 @@ Code_App allows you to run and test custom code using the library.
           Note it is possible to use this as an high performance alternative to finding the best matching rescuing pattern in data.
       4. Method **Pat.toFract( num )**:
           > Removes the pattern component of an float number then compute the Fraction.
-          ```javascript
-          var Pat = new Pattern( "142857", 10 ); //The Pattern of "1÷7".
-          
-          var num = ( 1 / 7 ) * 3; //The fraction "(1÷7)x3".
-          
-          alert( Pat.toFract( num ) ); //Gives the fraction "3÷7".
-          ```
+          > ```javascript
+          > var Pat = new Pattern( "142857", 10 ); //The Pattern of "1÷7".
+          >
+          > var num = ( 1 / 7 ) * 3; //The fraction "(1÷7)x3".
+          >
+          > alert( Pat.toFract( num ) ); //Gives the fraction "3÷7".
+          > ```
       5. Method **Pat.toString()**:
           > The infinite repeating pattern to an string.
+          
 ------------------------------------------------------------------------------
+
 5. ### Vector/Array based operations.
       All functions in this library can be used with an group of numbers rather than just one number at an time.<br />
       This includes error correct all numbers in array by calling method ".err()" on the array for example.<br />
