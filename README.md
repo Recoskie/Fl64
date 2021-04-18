@@ -353,7 +353,8 @@ Code_App allows you to run and test custom code using the library.
         
         alert( "Value = " + Fract ); //Displays "0.14285714285714285" In which digits "142857" repeats.
         ```
-     If no base is specified binary is amused.
+        
+        If no base is specified binary is amused.
         
         ```javascript
         var Pat = new Pattern( "001" );

@@ -1,7 +1,7 @@
 ---
 layout: default
 image:
-    path: https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff
+  path: https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff
 ---
 
 <html>
