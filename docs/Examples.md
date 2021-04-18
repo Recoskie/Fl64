@@ -1339,7 +1339,7 @@ image:
 
   <br /><br />
 
-  In binary. Lots of decimal values become un-dividable in place values of two. See the following documentation: <a href="https://docs.python.org/2/tutorial/floatingpoint.html" target="_blank">Link</a>.
+  In binary. Lots of decimal values become un-dividable in place values of two. See the following documentation: <a href="https://docs.python.org/3/tutorial/floatingpoint.html" target="_blank">Link</a>.
 
   <br /><br />
 
@@ -1907,7 +1907,7 @@ image:
 
   <br /><br />
 
-  See the following documentation on why: <a href="https://docs.python.org/2/tutorial/floatingpoint.html" target="_blank">Link</a>.
+  See the following documentation on why: <a href="https://docs.python.org/3/tutorial/floatingpoint.html" target="_blank">Link</a>.
 
   <br /><br />
 
