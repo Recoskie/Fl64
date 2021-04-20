@@ -2,7 +2,7 @@ FL64.
 =============================
 
 <table>
-  <tr><td>Main Page:</td><td><a href="https://recoskie.github.io/FL64/">Link</a></td></tr>
+  <tr><td>Main Page:</td><td><a href="https://recoskie.github.io/Fl64/">Link</a></td></tr>
 </table>
 
 ## Documentation, and tools.
