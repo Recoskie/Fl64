@@ -63,15 +63,20 @@ SFBar = {
   X: ["<td>X<sup><div style='display: inline;' id='f", "#", "x", "*", "'></div></sup></td>"
   ],
   A: ["<td>\
-  <input type='button' style='float:left;' value='&#x2191;' onclick='SFBar.setA(","#",",","*",",1);' />\
+  <input type='button' style='float:left;' value='&#x2191;' onclick='SFBar.adjA(","#",",","*",",1);' />\
   <div style='display: inline;' id='f", "#", "a", "*","'></div>\
-  <input type='button' style='float:right;' value='&#x2193;' onclick='SFBar.setA(" , "#" , "," , "*" , ",-1);' />\
+  <input type='button' style='float:right;' value='&#x2193;' onclick='SFBar.adjA(" , "#" , "," , "*" , ",-1);' />\
   </td>"
   ],
   B: ["<td>\
-  <input type='button' style='float:left;' value='&#x2191;' onclick='SFBar.setB(", "#", ",", "*", ",1);' />\
+  <input type='button' style='float:left;' value='&#x2191;' onclick='SFBar.adjB(", "#", ",", "*", ",1);' />\
   <div style='display: inline;' id='f", "#", "b", "*", "'></div>\
-  <input type='button' style='float:right;' value = '&#x2193;' onclick='SFBar.setB(" , "#", ",", "*", ",-1);' />\
+  <input type='button' style='float:right;' value = '&#x2193;' onclick='SFBar.adjB(" , "#", ",", "*", ",-1);' />\
+  </td>"
+  ],
+  AB: ["<td>\
+  <input type='button' value='Set A' onclick='SFBar.setA(","#",",","*",");' />\
+  <input type='button' value='Set B' onclick='SFBar.setB(","#",",","*",");' />\
   </td>"
   ],
   R: ["<td>\
@@ -97,7 +102,7 @@ SFBar = {
   Passes bar number, and element across.
   ***********************************************************************/
 
-  setA: function (bar,el,v)
+  adjA: function (bar,el,v)
   {
     this.Ref[bar].setA(this.pos[bar] + el, this.Ref[bar].a[this.pos[bar] + el] + v);
 
@@ -112,7 +117,7 @@ SFBar = {
   Passes bar number, and element across.
   ***********************************************************************/
 
-  setB: function (bar, el,v)
+  adjB: function (bar, el,v)
   {
     this.Ref[bar].setB(this.pos[bar] + el, this.Ref[bar].b[this.pos[bar] + el] + v);
 
@@ -176,6 +181,42 @@ SFBar = {
 
     this.Bars[bar].update();
   },
+  
+  /***********************************************************************
+  Set A, or B to a value.
+  ***********************************************************************/
+  
+  setA: function(bar, el)
+  {
+    if( v = prompt("Enter the Value you want to set A.") )
+    {
+      if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
+      
+      this.Ref[bar].setA(this.pos[bar] + el, v);
+
+      document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el];
+
+      if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
+
+      this.Bars[bar].onChange(this.Ref[bar].calc(0, this.Ref[bar].length - 1));
+    }
+  },
+  
+  setB: function(bar, el)
+  {
+    if( v = prompt("Enter the Value you want to set B.") )
+    {
+      if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
+    
+      this.Ref[bar].setB(this.pos[bar] + el, v);
+
+      document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el];
+
+      if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
+
+      this.Bars[bar].onChange(this.Ref[bar].calc(0, this.Ref[bar].length - 1));
+    }
+  },
 
   /***********************************************************************
   Navigate to the left.
@@ -198,6 +239,7 @@ Only necessary when changing orientation.
 FBar.prototype.X = []; //X-n.
 FBar.prototype.A = []; //A-n.
 FBar.prototype.B = []; //B-n.
+FBar.prototype.AB = [] //Edit A, or B.
 FBar.prototype.R = []; //Remove/Edit.
 
 /***********************************************************************
@@ -215,6 +257,7 @@ FBar.prototype.omax = FBar.prototype.max = 0; FBar.prototype.setMax = function (
     for (; i < SFBar.X.length; s += SFBar.X[i] + (SFBar.X[i + 1] ? (SFBar.X[i + 1] == "#" ? this.n : this.max) : ""), i += 2); this.X[this.max] = s; i = 0; s = "";
     for (; i < SFBar.A.length; s += SFBar.A[i] + (SFBar.A[i + 1] ? (SFBar.A[i + 1] == "#" ? this.n : this.max) : ""), i += 2); this.A[this.max] = s; i = 0; s = "";
     for (; i < SFBar.B.length; s += SFBar.B[i] + (SFBar.B[i + 1] ? (SFBar.B[i + 1] == "#" ? this.n : this.max) : ""), i += 2); this.B[this.max] = s; i = 0; s = "";
+    for (; i < SFBar.AB.length; s += SFBar.AB[i] + (SFBar.AB[i + 1] ? (SFBar.AB[i + 1] == "#" ? this.n : this.max) : ""), i += 2); this.AB[this.max] = s; i = 0; s = "";
     for (; i < SFBar.R.length; s += SFBar.R[i] + (SFBar.R[i + 1] ? (SFBar.R[i + 1] == "#" ? this.n : this.max) : ""), i += 2); this.R[this.max] = s; i = 0; s = "";
   }
 
@@ -325,6 +368,10 @@ FBar.prototype.update = function (force)
       //Columns X, A, B.
 
       html += "<tr><td>X</td><td>A</td><td>B</td>";
+      
+      //Set A, or B to a value.
+      
+      html += "<td>Set A, or B</td>"
 
       //Remove all factors column with button "X".
 
@@ -336,7 +383,10 @@ FBar.prototype.update = function (force)
 
       //Put each row together in X, A, B, R. In which R is the button to remove a individual factor.
 
-      for (var i = 0; i < this.max; i++) { html += "<tr>" + this.X[i] + this.A[i] + this.B[i] + this.R[i] + "</tr>"; }
+      for (var i = 0; i < this.max; i++)
+      {
+        html += "<tr>" + this.X[i] + this.A[i] + this.B[i] + this.AB[i] + this.R[i] + "</tr>";
+      }
 
       //Move Down.
 
@@ -344,11 +394,11 @@ FBar.prototype.update = function (force)
 
       //The split button at the bottom across all 4 all columns.
 
-      html += "<tr><td colspan='4'><input type='button' style='min-width:100%;' value='Split(B=1)' onclick='SFBar.split(" + this.n + ");' /></td></tr>";
+      html += "<tr><td colspan='5'><input type='button' style='min-width:100%;' value='Split(B=1)' onclick='SFBar.split(" + this.n + ");' /></td></tr>";
 
       //The remainder on it own row across all columns.
 
-      html += "<tr><td id='f" + this.n + "re' colspan='4'></td></tr>";
+      html += "<tr><td id='f" + this.n + "re' colspan='5'></td></tr>";
     }
 
     //by Col.
@@ -359,17 +409,17 @@ FBar.prototype.update = function (force)
 
       //Move to the Left. 
 
-      html += "<td id='f" + this.n + "l' rowspan='4'><input type='button' style='width:100%;height:102px;' value='<' onclick='SFBar.left(" + this.n + ");' /></td>";
+      html += "<td id='f" + this.n + "l' rowspan='5'><input type='button' style='width:100%;height:102px;' value='<' onclick='SFBar.left(" + this.n + ");' /></td>";
 
       for (var i = 0; i < this.max; i++) { html += this.X[i]; }
 
       //Move to the Right.
 
-      html += "<td id='f" + this.n + "r' rowspan='4'><input type='button' style='width:100%;min-height:102px;' value='>' onclick='SFBar.right(" + this.n + ");' /></td>";
+      html += "<td id='f" + this.n + "r' rowspan='5'><input type='button' style='width:100%;min-height:102px;' value='>' onclick='SFBar.right(" + this.n + ");' /></td>";
 
       //The reminder as id="f#re" spans -1 col so the split button fits on the last col.
 
-      html += "<td id='f" + this.n + "re' rowspan='3'></td></tr>";
+      html += "<td id='f" + this.n + "re' rowspan='4'></td></tr>";
 
       //Create row "A=".
 
@@ -378,7 +428,11 @@ FBar.prototype.update = function (force)
       //Create row "B=".
 
       html += "</tr><tr><td>B=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
+      
+      //Create row "AB".
 
+      html += "</tr><tr><td>AB</td>"; i = 0; for (; i < this.max; i++) { html += this.AB[i]; }
+      
       //Create row "X" clear factors button.
 
       html += "</tr><tr><td><input style='min-width:100%;' type='button' value='X' onclick='SFBar.clear(" + this.n + ");' /></td>";
