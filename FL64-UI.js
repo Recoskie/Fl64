@@ -379,7 +379,7 @@ FBar.prototype.update = function (force)
 
       //Move Up.
 
-      html += "<tr><td id='f" + this.n + "l' colspan='4'><input style='min-width:100%;' type='button' value='&#x2191;' onclick='SFBar.left(" + this.n + ");' /></td></tr>";
+      html += "<tr><td id='f" + this.n + "l' colspan='5'><input style='min-width:100%;' type='button' value='&#x2191;' onclick='SFBar.left(" + this.n + ");' /></td></tr>";
 
       //Put each row together in X, A, B, R. In which R is the button to remove a individual factor.
 
@@ -390,7 +390,7 @@ FBar.prototype.update = function (force)
 
       //Move Down.
 
-      html += "<tr><td id='f" + this.n + "r' colspan='4'><input style='min-width:100%;' type='button' value='&#x2193;' onclick='SFBar.right(" + this.n + ");' /></td></tr>";
+      html += "<tr><td id='f" + this.n + "r' colspan='5'><input style='min-width:100%;' type='button' value='&#x2193;' onclick='SFBar.right(" + this.n + ");' /></td></tr>";
 
       //The split button at the bottom across all 4 all columns.
 
