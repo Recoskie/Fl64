@@ -431,7 +431,7 @@ FBar.prototype.update = function (force)
       
       //Create row "AB".
 
-      html += "</tr><tr><td>AB</td>"; i = 0; for (; i < this.max; i++) { html += this.AB[i]; }
+      html += "</tr><tr><td>Adj</td>"; i = 0; for (; i < this.max; i++) { html += this.AB[i]; }
       
       //Create row "X" clear factors button.
 
@@ -482,6 +482,7 @@ FBar.prototype.update = function (force)
     {
       var r = document.getElementById("f" + this.n + "").rows;
 
+      r[4].cells[this.enabled + 1].style.visibility = "";
       r[3].cells[this.enabled + 1].style.visibility = "";
       r[2].cells[this.enabled + 1].style.visibility = "";
       r[1].cells[this.enabled + 1].style.visibility = "";
@@ -501,6 +502,7 @@ FBar.prototype.update = function (force)
     {
       var r = document.getElementById("f" + this.n + "").rows;
 
+      r[4].cells[i + 1].style.visibility = "hidden";
       r[3].cells[i + 1].style.visibility = "hidden";
       r[2].cells[i + 1].style.visibility = "hidden";
       r[1].cells[i + 1].style.visibility = "hidden";

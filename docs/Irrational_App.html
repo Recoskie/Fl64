@@ -184,7 +184,7 @@
           Trans.index = 1; Trans.set([6, 0, 0], [9, 16, 8]);
         }
 
-        //Solve a Sqaure root.
+        //Solve a Square root.
 
         else if (type == 4) {
           var n = Math.pow(sq, 0.5).limit(CutOff); if (input == 1) { n = n.getFract(); }
@@ -203,7 +203,7 @@
           else { Fracts.set(n); Trans.index = 1; Trans.set([0], [0]); }
         }
 
-        //Solve the heperbolic function.
+        //Solve the hyperbolic function.
 
         else if (type == 5) {
           var n = Math.tanh(1 / tanh).limit(CutOff); if (input == 1) { n = n.getFract(); }
