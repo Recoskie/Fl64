@@ -112,11 +112,11 @@
       UpdateI();
     }
 
-    //Update output and accuracy comparision.
+    //Update output and accuracy comparison.
 
     Fracts.onChange = function (n)
     {
-      //Caulate the acuraccy of the value to the Cut off range.
+      //Calculate the accuracy of the value to the Cut off range.
 
       var re = Math.ceil((((-Math.log(Math.abs(1 - (n.primitive() / n_ac))) / Math.log(2)) / (52 / (100 / ac))) * 100));
 
@@ -131,7 +131,7 @@
 
     //Load a example.
 
-    var sq = 2, tanh = 1;
+    var sq = 2, tanh = 1, pat = 1;
 
     function LoadExample(type)
     {
@@ -142,7 +142,7 @@
 <td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /></td>\
 <td><input type='button' value='PI' onclick='LoadExample(3);' /></td>\
 <td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td>\
-<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td></table>";
+<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td><td><input type='button' value='Patern " + pat + "' onclick='LoadExample(6);' /><input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td></table>";
       }
 
       else
@@ -160,7 +160,7 @@
           Trans.index = 0; Trans.set([1], [1]);
         }
 
-        //Solve the natural logritham.
+        //Solve the natural logarithm.
 
         else if (type == 2) {
           var n = 2.718281828459045.limit(CutOff); if (input == 1) { n = n.getFract(); }
@@ -212,9 +212,41 @@
 
           CVerg.set(n.splitAll());
 
-         n = n.split(0, 1); Fracts.set(n);
+          n = n.split(0, 1); Fracts.set(n);
 
           Trans.index = 1; Trans.set([tanh, tanh * 2], [1, 0]);
+        }
+        
+        //Solve base 10 irrational pattern.
+        //Note we can do the same operation in binary, or hexadecimal.
+      
+        else if (type == 6) {
+          var base = 10;
+          
+          dif = Math.floor(Math.log(pat)/Math.log(base));
+          
+          for( var n1 = dif, n2 = 0, val = 0; n1 < 6; n1++, n2 += n1 ) { val += Math.pow(base, -n2) * pat; }
+        
+          val = val.limit(CutOff);
+        
+          n_ac = val.primitive();
+        
+          CVerg.set(val.splitAll());
+          
+          val = val.primitive();
+        
+          val = val.split(pat, pat);
+          
+          dif += 1;
+          
+          for( var n1 = dif; n1 < 6; n1++ )
+          {
+            val = val.split(Math.pow(base,n1)+(n1>dif),-Math.pow(base,n1));
+          }
+          
+          dif -= 1;
+        
+          Fracts.set( val );
         }
       }
 
