@@ -100,7 +100,7 @@
     {
       //Update input/output.
 
-      document.getElementById("r").innerHTML = "Output = " + n.primitive() + "";
+      document.getElementById("r").innerHTML = n.primitive() + "";
       CVerg.set(n);
 
       //Update n_ac number.
@@ -283,7 +283,7 @@
       }
       else
       {
-        document.getElementById("in").innerHTML = '<input id="num" type="text" value="' + ( isNaN(n_ac) ? x : n_ac ) + '" onclick="this.select();">';
+        document.getElementById("in").innerHTML = '<input type="text" style="width:75%;" id="num" value="' + ( isNaN(n_ac) ? x : n_ac ) + '" onclick="this.select();">';
       }
     }
 
@@ -303,7 +303,7 @@
           Value:<input type="radio" onclick="input = 0; UpdateI();" name="Input" checked="true" />
         </td>
         <td>
-          <input type="button" value="X" onclick="var n = NaN; Fracts.set(n); CVerg.set(n); n_ac = n; update(); UpdateI();" /><div id="in" style=" display:inline;"><input id="num" type="text" value="Number Value" onclick="this.select();"></div>
+          <input type="button" value="X" style="width:25%;" onclick="var n = NaN; Fracts.set(n); CVerg.set(n); n_ac = n; update(); UpdateI();" /><div style="display:inline;" id="in"><input type="text" style="width:75%;" id="num" value="Number Value" onclick="this.select();"></div>
         </td>
         <td>
           <center>Cut Off Range</center>
@@ -320,7 +320,7 @@
           Fraction:<input type="radio" onclick="input = 1; UpdateI();" name="Input" />
         </td>
         <td>
-          <input type="button" value="Split Value." onclick="GetInput();">
+          <input type="button" style="width:100%;" value="Split Value." onclick="GetInput();">
         </td>
         <td>
           <center><input type="button" value="&#x2191;" onclick="ac=Math.min(ac+1,100);setAC();" /><div style="display:inline;" id="ac">100</div>%<input type="button" value="&#x2193;" onclick="ac=Math.max(ac-1,1);setAC();" /></center>
