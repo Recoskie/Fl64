@@ -1443,6 +1443,200 @@ var parseNumber = function (str, base)
   var fl = new Number(0); fl.bm = true; fl.sing = (f[0] >> 31) & 1; fl.exp = (f[0] >> 20) & 0x7FF; fl.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1]; return (fl);
 }
 
+function TNumber( v )
+{
+  if( v )
+  {
+    this.r[0] = this.v = v;
+    
+    this.sing = v < 0 ? -1 : 1;
+    
+    this.whole = Math.ceil( v * this.sing );
+    
+    return(this);
+  }
+  
+  this.r[0] = this.v = NaN;
+    
+  this.sing = this.whole = 1;
+    
+  return(this);
+}
+
+TNumber.prototype.v = NaN;
+TNumber.prototype.r = [];
+TNumber.prototype.f = [];
+TNumber.prototype.init_ac = false;
+TNumber.prototype.ac = 0;
+TNumber.prototype.sing = 1;
+TNumber.prototype.whole = 1;
+TNumber.prototype.length = 0;
+
+TNumber.prototype.set = function( fn, f, o )
+{
+  var t = this.length; this.length = fn;
+  
+  this.split( f ); fn += 1;
+    
+  for( var i = fn; i < t; i++ )
+  {
+    this.split( this.f[i] );
+  }
+}
+
+TNumber.prototype.Trans = function( n, Fn )
+{
+  this.length = n;
+  
+  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
+  
+  var f = 0; n+= 1;
+  
+  if( !this.v )
+  {
+    for(var i = 0; i < 2000000; i++)
+    {
+      f = Math.round(Fn(n++));
+      
+      if( f <= (this.f[this.length - 1]||0) ){ return(this); }
+      
+      this.f[this.length] = f;
+      
+      this.length += 1;
+    }
+  }
+  else
+  {
+    for( var i = 0; i < 20000000; i++)
+    {
+      f = Math.round(Fn(n++));
+      
+      if( f < this.getMin() || f > this.getMax() ){ return(this); }
+      
+      this.r[this.length+1] = this.r[this.length] - this.whole / (f * s); s = -s;
+      
+      this.f[this.length] = f;
+      
+      this.length += 1;
+      
+      if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; i = 20000001; }
+    }
+  }
+  
+  return(this);
+}
+
+TNumber.prototype.calc = function()
+{
+  var n = this.whole, s = this.sing, o = 0;
+  
+  for( var i = 0; i < this
+  .length; i++ )
+  {
+    o += n / ( this.f[i] * s ); s = -s;
+  }
+  
+  return( o );
+}
+
+TNumber.prototype.getMax = function()
+{
+  return( Math.floor( Math.abs( this.whole / this.r[this.length] ) ) );
+}
+
+TNumber.prototype.getMin = function()
+{
+  return( Math.round( Math.sqrt( Math.abs( this.whole / this.r[this.length] ) ) ) );
+}
+
+TNumber.prototype.split = function( f )
+{
+  if( this.r[this.length] == 0 ){ return; }
+  
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.v / 0.6931471805599453))))) * Number.EPSILON; }
+  
+  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
+  
+  if(this.v)
+  {
+    max = this.getMax();
+    min = this.getMin();
+    
+    if ( isNaN(f) ) { f = max; } else if( f > max ) { f = max; } else if( f < min ) { f = min; }
+  }
+  
+  if( f <= this.f[this.length - 1] )
+  {
+    f = this.f[this.length - 1] + 1;
+  }
+  
+  this.f[this.length] = f;
+  
+  this.r[this.length+1] = this.r[this.length] - this.whole / (this.f[this.length] * s);
+  
+  this.length += 1; if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; }
+  
+  return( this );
+}
+
+TNumber.prototype.splitAll = function()
+{
+  while( this != 0 ){ this.split(); }
+  
+  return( this );
+}
+
+TNumber.prototype.remove = function( el )
+{
+  var t = this.length - 1; this.length = el;
+  
+  this.f[el] = this.f[el-1] || 0;
+  
+  for( var i = el; i < t; i++ )
+  {
+    this.split(this.f[i+1]);
+  }
+  
+  return( this );
+}
+
+TNumber.prototype.primitive = function()
+{
+  return( this.v.valueOf() );
+}
+
+TNumber.prototype.limit = function (ac)
+{
+  //Set accuracy limit.
+
+  this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
+
+  //Set length to accuracy limit.
+
+  for (; this.r[this.length - 1] < this.ac; this.length-- );
+  this.split( this.f[this.length] );
+
+  return (this);
+};
+
+TNumber.prototype.valueOf = function()
+{
+  return( this.r[ this.length] );
+}
+
+TNumber.prototype.toString = function()
+{
+  var o = "", s = 0;
+  
+  for( var i = Math.max( 0, this.length - 100 ); i < this.length; i++ )
+  {
+    s = ( i % 2 == 0 ) ? this.sing : -this.sing;
+    o += "X" + i + " = " + this.whole + " / " + ( s < 0 ? "-" : "" ) + this.f[i] + "\r\n";
+  }
+  
+  return( o );
+}
+
 //**********************************************************************************
 //Allow Arrays to do float number operations on all numbers in array. Similar to vector.
 //**********************************************************************************
