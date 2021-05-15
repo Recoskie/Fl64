@@ -6,7 +6,8 @@
 <body onload="update(); Trans[alg].update(); LoadExample();" onresize="update();">
   <style type="text/css">
     <!--
-    body {
+    body
+    {
       background-color: #0033AA;
       background-image: url(bg/bg.jpg);
       background-repeat: no-repeat;
@@ -15,15 +16,18 @@
       -webkit-background-size: cover;
     }
 
-    table {
+    table
+    {
       background-color: rgba(200,200,200,0.50);
     }
 
-    input[type=button] {
+    input[type=button]
+    {
       background-color: rgba(0, 200, 255, 0.50);
     }
 
-    input[type=text] {
+    input[type=text]
+    {
       background-color: rgba(255, 255, 255, 0.50);
     }
     -->
@@ -32,7 +36,7 @@
   <script src="../FL64-UI.js" type="text/javascript"></script>
   <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
   <script type="text/javascript">
-    //Cf is defualt Algorithm.
+    //Cf is default Algorithm.
     
     var alg = 0;
     
@@ -161,7 +165,8 @@
         {
           //Solve the golden ratio.
 
-          if (type == 1) {
+          if (type == 1)
+          {
             var n = 1.618033988749895.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -173,7 +178,8 @@
 
           //Solve the natural logarithm.
 
-          else if (type == 2) {
+          else if (type == 2)
+          {
             var n = 2.718281828459045.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -185,7 +191,8 @@
 
           //Solve the number PI.
 
-          else if (type == 3) {
+          else if (type == 3)
+          {
             var n = Math.PI.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -197,7 +204,8 @@
 
           //Solve a Square root.
 
-          else if (type == 4) {
+          else if (type == 4)
+          {
             var n = Math.pow(sq, 0.5).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -206,7 +214,8 @@
 
             n.length = 0;
 
-            if ((n - a) !== 0) {
+            if ((n - a) !== 0)
+            {
               n = n.split(a, b); Fracts[0].set(n);
 
               Trans[0].index = 1; Trans[0].set([a * 2], [b]);
@@ -216,7 +225,8 @@
 
           //Solve the hyperbolic function.
 
-          else if (type == 5) {
+          else if (type == 5)
+          {
             var n = Math.tanh(1 / tanh).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive();
@@ -231,8 +241,9 @@
           //Solve base 10 irrational pattern.
           //Note we can do the same operation in binary, or hexadecimal.
       
-          else if (type == 6) {
-          var base = 10;
+          else if (type == 6)
+          {
+            var base = 10;
           
             dif = Math.floor(Math.log(pat)/Math.log(base));
           
@@ -306,8 +317,7 @@
     
     function changeAlg(s)
     {
-      alg = s & 0x03;
-      Fracts[alg].update(true);Trans[alg].update(true);
+      alg = s & 0x03; Fracts[alg].update(true);Trans[alg].update(true);
       
       if( !isNaN(n_ac) )
       {
@@ -316,7 +326,6 @@
       else
       {
         Fracts[alg].set(alg == 0 ? n_ac : new TNumber(n_ac));
-        
       }
       
       update(); LoadExample();

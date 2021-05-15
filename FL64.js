@@ -24,7 +24,7 @@ var Fract = function (X, Y)
 //Teach compiler how to display fraction data type, or to combine it as code.
 //**********************************************************************************
 
-var Oporators = [
+var Operators = [
   "*", "*=", "/", "/=", "+", "+=", "-", "-=", "%", "%=", "**", "**=",
   "&", "&=", "|", "|=", "~", "~", "^", "^=", "<<", "<<=", ">>", ">>=", ">>>", ">>>=",
   "<", "<=", ">", ">=", "==", "===", "!=", "!==", "&&", "&&=", "||", "||=", "!", "!=", "", "="
@@ -34,7 +34,7 @@ Fract.prototype.toString = function (op, s)
 {
   //Check if operator is valid.
 
-  if (op != undefined && (op = Oporators.indexOf(op)) < 0) { throw (new Error("Operator is not supported.")); }
+  if (op != undefined && (op = Operators.indexOf(op)) < 0) { throw (new Error("Operator is not supported.")); }
 
   //Is the value of the fraction negative or positive. Note if "s" is true force absolute value.
 
@@ -81,7 +81,7 @@ Fract.prototype.toString = function (op, s)
 
   if ((out === "1" || out === "") && (op < 4)) { return (""); } //Divide multiply by one is no operation.
 
-  if (Oporators[op]) { out = Oporators[op] + " " + out; } else { out = out.replace(/ /g, ""); }
+  if (Operators[op]) { out = Operators[op] + " " + out; } else { out = out.replace(/ /g, ""); }
 
   return (out !== "" ? out : "0");
 }
@@ -1046,7 +1046,7 @@ Number.prototype.toString = function (base, MostAcurate)
   {
     //Output and select operator.
 
-    var out = this, op = Oporators.indexOf(base);
+    var out = this, op = Operators.indexOf(base);
 
     //Check if operator is valid.
 
@@ -1062,7 +1062,7 @@ Number.prototype.toString = function (base, MostAcurate)
 
     //Return output.
 
-    return ((Oporators[op] !== "" ? Oporators[op] + " " : "") + out + "");
+    return ((Operators[op] !== "" ? Operators[op] + " " : "") + out + "");
   }
 
   //Else Check if invalid base setting.
@@ -1472,13 +1472,13 @@ TNumber.prototype.sing = 1;
 TNumber.prototype.whole = 1;
 TNumber.prototype.length = 0;
 
-TNumber.prototype.set = function( fn, f, o )
+TNumber.prototype.set = function( Fn, f )
 {
-  var t = this.length; this.length = fn;
+  var t = this.length; this.length = Fn;
   
   this.split( f ); fn += 1;
     
-  for( var i = fn; i < t; i++ )
+  for( var i = Fn; i < t; i++ )
   {
     this.split( this.f[i] );
   }
@@ -1530,8 +1530,7 @@ TNumber.prototype.calc = function()
 {
   var n = this.whole, s = this.sing, o = 0;
   
-  for( var i = 0; i < this
-  .length; i++ )
+  for( var i = 0; i < this.length; i++ )
   {
     o += n / ( this.f[i] * s ); s = -s;
   }
@@ -1559,16 +1558,12 @@ TNumber.prototype.split = function( f )
   
   if(this.v)
   {
-    max = this.getMax();
-    min = this.getMin();
+    max = this.getMax(); min = this.getMin();
     
     if ( isNaN(f) ) { f = max; } else if( f > max ) { f = max; } else if( f < min ) { f = min; }
   }
   
-  if( f <= this.f[this.length - 1] )
-  {
-    f = this.f[this.length - 1] + 1;
-  }
+  if( f <= this.f[this.length - 1] ) { f = this.f[this.length - 1] + 1; }
   
   this.f[this.length] = f;
   
@@ -1613,16 +1608,10 @@ TNumber.prototype.limit = function (ac)
 
   //Set length to accuracy limit.
 
-  for (; this.r[this.length - 1] < this.ac; this.length-- );
-  this.split( this.f[this.length] );
-
-  return (this);
-};
-
-TNumber.prototype.valueOf = function()
-{
-  return( this.r[ this.length] );
+  for (; this.r[this.length - 1] < this.ac; this.length-- ); this.split( this.f[this.length] ); return (this);
 }
+
+TNumber.prototype.valueOf = function() { return( this.r[ this.length] ); }
 
 TNumber.prototype.toString = function()
 {
