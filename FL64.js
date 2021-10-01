@@ -18,7 +18,7 @@ var Fract = function (X, Y)
   }
 
   return (this);
-}
+};
 
 //**********************************************************************************
 //Teach compiler how to display fraction data type, or to combine it as code.
@@ -84,23 +84,24 @@ Fract.prototype.toString = function (op, s)
   if (Oporators[op]) { out = Oporators[op] + " " + out; } else { out = out.replace(/ /g, ""); }
 
   return (out !== "" ? out : "0");
-}
+};
 
 //**********************************************************************************
 //Teach the compiler how to read the value of an fraction.
 //**********************************************************************************
 
-Fract.prototype.primitive = Fract.prototype.valueOf = function () { return (this.x / this.y); }
+Fract.prototype.primitive = Fract.prototype.valueOf = function () { return (this.x / this.y); };
+Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length].valueOf().getFract()).toString()); };
 
 //**********************************************************************************
 //factorial number.
 //**********************************************************************************
 
-FNumber = function( v ) { this.r[0] = Math.abs( v ); this.s = v < 0 ? -1 : 1; }
+FNumber = function( v ) { this.r[0] = Math.abs( v ); this.s = v < 0 ? -1 : 1; };
 
 FNumber.prototype.s = 0;
 
-FNumber.prototype.primitive = function() { return( new FNumber( this.r[0] * this.s ) ); }
+FNumber.prototype.primitive = function() { return( new FNumber( this.r[0] * this.s ) ); };
 
 FNumber.prototype.valueOf = function () { return ( this.r[this.length] * this.s ); };
 
@@ -118,11 +119,60 @@ FNumber.prototype.toString = function( pos )
   }
   
   return( o );
-}
+};
+
+//**********************************************************************************
+//Transcendental number.
+//This needs o be cleaned up. Note that both A, and B are adjustable.
+//We are not limited to one factor, and the closest whole value.
+//A Transcendental is equivalent to split factorials.
+//**********************************************************************************
+
+function TNumber( v )
+{
+  if( v )
+  {
+    this.r[0] = this.v = v;
+    
+    this.sing = v < 0 ? -1 : 1;
+    
+    this.whole = Math.ceil( v * this.sing );
+    
+    return(this);
+  }
+  
+  this.r[0] = this.v = NaN;
+    
+  this.sing = this.whole = 1;
+    
+  return(this);
+};
+
+TNumber.prototype.v = NaN;
+TNumber.prototype.f = [];
+TNumber.prototype.sing = 1;
+TNumber.prototype.whole = 1;
+
+TNumber.prototype.primitive = function() { return( this.v.valueOf() ); };
+
+TNumber.prototype.valueOf = function() { return( this.r[ this.length] ); };
+
+TNumber.prototype.toString = function()
+{
+  var o = "", s = 0;
+  
+  for( var i = Math.max( 0, this.length - 100 ); i < this.length; i++ )
+  {
+    s = ( i % 2 == 0 ) ? this.sing : -this.sing;
+    o += "X" + i + " = " + this.whole + " / " + ( s < 0 ? "-" : "" ) + this.f[i] + "\r\n";
+  }
+  
+  return( o );
+};
 
 //**********************************************************************************
 //Last binary digit of accuracy in an float 64 number.
-//This value is not predefined in some of the older script engines.
+//This value is not predefined in older script engines.
 //**********************************************************************************
 
 Number.EPSILON = 1 / Math.pow(2, 52);
@@ -131,15 +181,15 @@ Number.EPSILON = 1 / Math.pow(2, 52);
 //Number of parts number, or fraction is split into.
 //**********************************************************************************
 
-Number.prototype.length = FNumber.prototype.length = Fract.prototype.length = 0;
+Number.prototype.length = Fract.prototype.length = FNumber.prototype.length = TNumber.prototype.length = 0;
 
 //*****************************************************************************************************
 //Each part as we split number, or fraction apart.
 //*****************************************************************************************************
 
-Number.prototype.a = FNumber.prototype.a = Fract.prototype.a = [undefined];
-Number.prototype.b = FNumber.prototype.b = Fract.prototype.b = [undefined];
-Number.prototype.r = FNumber.prototype.r = Fract.prototype.r = [undefined];
+Number.prototype.a = Fract.prototype.a = FNumber.prototype.a = [undefined];
+Number.prototype.b = Fract.prototype.b = FNumber.prototype.b = [undefined];
+Number.prototype.r = Fract.prototype.r = FNumber.prototype.r = TNumber.prototype.r = [undefined];
 
 //*****************************************************************************************************
 //Parts are added up by these values to compute the remaining value.
@@ -159,20 +209,13 @@ Fract.prototype.val = Number.prototype.val = [undefined];
 //It can be set to a different cut off limit via the limit function.
 //**********************************************************************************
 
-Number.prototype.ac = FNumber.prototype.ac = Fract.prototype.ac = Number.EPSILON;
+Number.prototype.ac = Fract.prototype.ac = FNumber.prototype.ac = TNumber.prototype.ac = Number.EPSILON;
 
 //**********************************************************************************
 //The cut off range has to be calculated once for each number, or can be set using limit.
 //**********************************************************************************
 
-Number.prototype.init_ac = FNumber.prototype.init_ac = false;
-
-//**********************************************************************************
-//The next part.
-//**********************************************************************************
-
-Number.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).valueOf()); };
-Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length].valueOf().getFract()).toString()); };
+Number.prototype.init_ac = Fract.prototype.init_ac = FNumber.prototype.init_ac = TNumber.prototype.init_ac = false;
 
 //*****************************************************************************************************
 //Split a number and return the number object.
@@ -252,70 +295,90 @@ Number.prototype.split = function (a, b)
 };
 
 //*****************************************************************************************************
-//Split a number into all parts as fast as possible.
+//Split a fraction and return the fraction object.
 //*****************************************************************************************************
 
-Number.prototype.splitAll = function ()
+Fract.prototype.split = function (a, b)
 {
-  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
-
   if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
+
+  if (this.r[this.length] === 0) { return (this); }
+
+  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
 
   if (this.length === 0)
   {
-    var a = Math.floor(n = this.primitive());
+    a = isNaN(a) ? Math.floor(this.primitive()) : a, b = b || 1;
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
 
-    this.fx[0] = this.tx[0] + (this.tx[0] = this.fx[0]) * a;
-    this.fy[0] = this.ty[0] + (this.ty[0] = this.fy[0]) * a;
+    this.fx[0] = this.tx[0] + (this.tx[0] = this.fx[0] * b) * a / b;
+    this.fy[0] = this.ty[0] + (this.ty[0] = this.fy[0] * b) * a / b;
 
-    this.a = [a]; this.b = [1];
+    this.a = [a]; this.b = [b];
 
-    this.r = [n, 1 / (n - a)];
+    this.r = [
+      new Fract(this.x, this.y),
+      new Fract(this.y * b, this.x - (this.y * a))
+    ];
+
+    if (this.r[1] == Infinity) { this.r[1] = 0; }
 
     this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
 
-    this.valueOf = function () { return (this.val[this.length]); };
-  }
-  else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
+    this.valueOf = function () { return (this.val[this.length - 1]); };
+    this.toString = function ()
+    {
+      var s = "";
 
-  //initialize cut off range.
+      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
 
-  var a = 0, n = 0;
+      return (s + this.valueOf().getFract().toString());
+    };
 
-  //loop till cut off range.
+    this.length += 1; return ( this );
+  };
 
-  while ((this.val[this.length + 1] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) >= this.ac)
+  //Split value a by b. Or by default scale a=int, b=1.
+
+  var n = this.r[this.length]; a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
+
+  //Add a by b point.
+
+  this.a[this.length] = a; this.b[this.length] = b;
+
+  //Write remaining value. used by each next split.
+
+  this.r[this.length + 1] = new Fract(n.y * b, n.x - (n.y * a));
+
+  //Add up each split into fx, fy per split.
+
+  this.fx[this.length] = this.tx[this.length - 1] + (this.tx[this.length] = this.fx[this.length - 1] * b) * a / b;
+  this.fy[this.length] = this.ty[this.length - 1] + (this.ty[this.length] = this.fy[this.length - 1] * b) * a / b;
+
+  //Only re-factor FX, FY, TX, TY when values get to the end of the exponent.
+  //For the time being we will just move the exponent.
+  //Note to self. Max is 2^1023, so 2^(1023-51)=3.99168061906944e+292. Thus 2^(1023-51*2)=1.7726622920963562e+277
+
+  if (this.fx[this.length] > 3.99168061906944e+292 || this.fy[this.length] > 3.99168061906944e+292)
   {
-    //Default scale a=int, b=1.
-
-    this.length += 1; n = this.r[this.length]; a = Math.floor(n);
-
-    //Add a by b point.
-
-    this.a[this.length] = a; this.b[this.length] = 1;
-
-    //Write remaining value. used by each next split.
-
-    this.r[this.length + 1] = 1 / (n - a);
-
-    //Add up each split into fx, fy per split.
-
-    this.fx[this.length] = this.tx[this.length - 1] + (this.tx[this.length] = this.fx[this.length - 1]) * a;
-    this.fy[this.length] = this.ty[this.length - 1] + (this.ty[this.length] = this.fy[this.length - 1]) * a;
+    this.fx[this.length] /= 1.7726622920963562e+277; this.fy[this.length] /= 1.7726622920963562e+277;
+    this.tx[this.length] /= 1.7726622920963562e+277; this.ty[this.length] /= 1.7726622920963562e+277;
   }
 
   //Val is automatically 0 at cut off range.
 
-  this.length += 1; this.val[this.length] = 0; this.r[this.length] = 0;
+  if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
+  {
+    this.val[this.length] = 0; this.r[this.length + 1] = 0;
+  }
 
-  return (this);
+  this.length += 1; return (this);
 };
 
 //*****************************************************************************************************
-//Split a number and return the number object.
+//Split a number and return the factorial number object.
 //*****************************************************************************************************
 
 FNumber.prototype.split = function (a, b)
@@ -380,16 +443,145 @@ FNumber.prototype.split = function (a, b)
 };
 
 //*****************************************************************************************************
-//Split a number into all parts as fast as possible.
+//Split a Transcendental number and return the Transcendental number object.
 //*****************************************************************************************************
 
-FNumber.prototype.splitAll = function ()
+TNumber.prototype.getMax = function()
 {
-  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
+  return( Math.floor( Math.abs( this.whole / this.r[this.length] ) ) );
+};
 
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.r[0])) / 0.6931471805599453))) * Number.EPSILON; }
+TNumber.prototype.getMin = function()
+{
+  return( Math.round( Math.sqrt( Math.abs( this.whole / this.r[this.length] ) ) ) );
+};
 
+TNumber.prototype.split = function( f )
+{
+  if( this.r[this.length] == 0 ){ return; }
+  
+  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.v / 0.6931471805599453))))) * Number.EPSILON; }
+  
+  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
+  
+  if(this.v)
+  {
+    max = this.getMax(); min = this.getMin();
+    
+    if ( isNaN(f) ) { f = max; } else if( f > max ) { f = max; } else if( f < min ) { f = min; }
+  }
+  
+  if( f <= this.f[this.length - 1] )
+  {
+    f = this.f[this.length - 1] + 1;
+  }
+  
+  this.f[this.length] = f;
+  
+  this.r[this.length+1] = this.r[this.length] - this.whole / (this.f[this.length] * s);
+  
+  this.length += 1; if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; }
+  
+  return( this );
+};
+
+//*****************************************************************************************************
+//Split a number into all parts.
+//*****************************************************************************************************
+
+Number.prototype.splitAll = Fract.prototype.splitAll = FNumber.prototype.splitAll = TNumber.prototype.splitAll = function ()
+{
   while( this.split() != 0 ); return (this);
+};
+
+//**********************************************************************************
+//Remove a factor.
+//**********************************************************************************
+
+Number.prototype.remove = FNumber.prototype.remove = Fract.prototype.remove = function (el)
+{
+  var n = this;
+
+  var End = n.length - 1, ba = n.a, bb = n.b; n.length = el;
+
+  while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
+
+  return (n);
+};
+
+TNumber.prototype.remove = function( el )
+{
+  var t = this.length - 1; this.length = el;
+  
+  this.f[el] = this.f[el-1] || 0;
+  
+  for( var i = el; i < t; i++ )
+  {
+    this.split(this.f[i+1]);
+  }
+  
+  return( this );
+};
+
+//**********************************************************************************
+//set the A, or B factors.
+//**********************************************************************************
+
+Number.prototype.setA = FNumber.prototype.setA = Fract.prototype.setA = function (el, v)
+{
+  var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
+
+  n = n.split(v, bb[el]); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
+
+  return(n);
+};
+
+Number.prototype.setB = FNumber.prototype.setB = Fract.prototype.setB = function (el, v)
+{
+  //The value cant be set 0 so it is set -1 or +1 based on direction.
+  
+  if (v === 0) { v = this.b[el] > v ? -1 : 1; }
+
+  //Continue with function.
+
+  var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
+
+  n = n.split(ba[el], v); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
+
+  return (n);
+};
+
+TNumber.prototype.set = function( fn, f, o )
+{
+  var t = this.length; this.length = fn;
+  
+  this.split( f ); fn += 1;
+    
+  for( var i = fn; i < t; i++ )
+  {
+    this.split( this.f[i] );
+  }
+};
+
+//*****************************************************************************************************
+//Directly calculate parts to a floating point number.
+//*****************************************************************************************************
+
+Number.prototype.calc = Fract.prototype.calc = function (Start, End)
+{
+  if (this.length == 0) { return (0); }
+
+  var Start = Start || 0; if (typeof (End) === "undefined") { End = this.length - 1; }
+
+  //If start position is unaltered and is 0. Then each added split from 0 is prerecorded.
+
+  if (Start === 0) { return (this.fx[End] / this.fy[End]); }
+
+  //Else calculate the value.
+
+  for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f = this.a[i] + (this.b[i] / f); }
+
+  return (f);
 };
 
 FNumber.prototype.calc = function (Start, End)
@@ -411,182 +603,18 @@ FNumber.prototype.calc = function (Start, End)
   for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f += this.a[i] / this.b[i]; }
 
   return ( new FNumber( f * this.s ) );
-}
-
-FNumber.prototype.calcF = function (Start, End)
-{
-  if (this.length == 0) { return (new Fract(0, 1)); }
-
-  var Start = Start || 0; if (typeof (End) === "undefined") { End = this.length - 1; }
-
-  //If start position is unaltered and is 0. Then each added split from 0 is prerecorded.
-
-  if (Start === 0) { return ( ( this.val[End + 1] * this.s ).getFract() ); }
-
-  //Else calculate the value.
-
-  for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f += this.a[i] / this.b[i]; }
-
-  return ( ( f * this.s ).getFract() );
-}
-
-//*****************************************************************************************************
-//Split a fraction and return the fraction object.
-//Debating on removing this operation since spiting number is faster than fraction.
-//*****************************************************************************************************
-
-Fract.prototype.split = function (a, b)
-{
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
-
-  if (this.r[this.length] === 0) { return (this); }
-
-  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
-
-  if (this.length === 0)
-  {
-    a = isNaN(a) ? Math.floor(this.primitive()) : a, b = b || 1;
-
-    this.tx = [0]; this.ty = [1];
-    this.fx = [1]; this.fy = [0];
-
-    this.fx[0] = this.tx[0] + (this.tx[0] = this.fx[0] * b) * a / b;
-    this.fy[0] = this.ty[0] + (this.ty[0] = this.fy[0] * b) * a / b;
-
-    this.a = [a]; this.b = [b];
-
-    this.r = [
-      new Fract(this.x, this.y),
-      new Fract(this.y * b, this.x - (this.y * a))
-    ];
-
-    if (this.r[1] == Infinity) { this.r[1] = 0; }
-
-    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
-
-    this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function ()
-    {
-      var s = "";
-
-      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-
-      return (s + this.valueOf().getFract().toString());
-    };
-
-    this.length += 1; return ( this );
-  }
-
-  //Split value a by b. Or by default scale a=int, b=1.
-
-  var n = this.r[this.length]; a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
-
-  //Add a by b point.
-
-  this.a[this.length] = a; this.b[this.length] = b;
-
-  //Write remaining value. used by each next split.
-
-  this.r[this.length + 1] = new Fract(n.y * b, n.x - (n.y * a));
-
-  //Add up each split into fx, fy per split.
-
-  this.fx[this.length] = this.tx[this.length - 1] + (this.tx[this.length] = this.fx[this.length - 1] * b) * a / b;
-  this.fy[this.length] = this.ty[this.length - 1] + (this.ty[this.length] = this.fy[this.length - 1] * b) * a / b;
-
-  //Only re-factor FX, FY, TX, TY when values get to the end of the exponent.
-  //For the time being we will just move the exponent.
-  //Note to self. Max is 2^1023, so 2^(1023-51)=3.99168061906944e+292. Thus 2^(1023-51*2)=1.7726622920963562e+277
-
-  if (this.fx[this.length] > 3.99168061906944e+292 || this.fy[this.length] > 3.99168061906944e+292)
-  {
-    this.fx[this.length] /= 1.7726622920963562e+277; this.fy[this.length] /= 1.7726622920963562e+277;
-    this.tx[this.length] /= 1.7726622920963562e+277; this.ty[this.length] /= 1.7726622920963562e+277;
-  }
-
-  //Val is automatically 0 at cut off range.
-
-  if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
-  {
-    this.val[this.length] = 0; this.r[this.length + 1] = 0;
-  }
-
-  this.length += 1; return (this);
 };
 
-//*****************************************************************************************************
-//Split a fraction into all parts as fast as possible.
-//Debating on removing this operation since spiting number is faster than fraction.
-//*****************************************************************************************************
-
-Fract.prototype.splitAll = function ()
+TNumber.prototype.calc = function()
 {
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
-
-  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
-
-  if (this.length === 0)
+  var n = this.whole, s = this.sing, o = 0;
+  
+  for( var i = 0; i < this.length; i++ )
   {
-    var a = a || Math.floor(this.x / this.y), b = b || 1;
-
-    this.tx = [0]; this.ty = [1];
-    this.fx = [1]; this.fy = [0];
-
-    this.fx[0] = this.tx[0] + (this.tx[0] = this.fx[0] * b) * a / b;
-    this.fy[0] = this.ty[0] + (this.ty[0] = this.fy[0] * b) * a / b;
-
-    this.a = [a]; this.b = [b];
-
-    this.r = [
-      new Fract(this.x, this.y),
-      new Fract(this.y * b, this.x - (this.y * a))
-    ];
-
-    this.val = [Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
-
-    this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function ()
-    {
-      var s = "";
-
-      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-
-      return (s + this.valueOf().getFract().toString());
-    };
+    o += n / ( this.f[i] * s ); s = -s;
   }
-  else { this.length -= 1; } //If not 0 step back one factor to recursively split the number.
-
-  //initialize cut off range.
-
-  var n = 0, a = 0;
-
-  //loop till cut off range.
-
-  while ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) >= this.ac)
-  {
-    //Default scale a=int, b=1.
-
-    this.length += 1; n = this.r[this.length]; a = Math.floor(n);
-
-    //Add a by b point.
-
-    this.a[this.length] = r; this.b[this.length] = 1;
-
-    //Write remaining value. used by each next split.
-
-    this.r[this.length + 1] = new Fract(n.y, n.x - (n.y * a));
-
-    //Add up each split into fx, fy per split.
-
-    this.fx[this.length] = this.tx[this.length - 1] + (this.tx[this.length] = this.fx[this.length - 1]) * a;
-    this.fy[this.length] = this.ty[this.length - 1] + (this.ty[this.length] = this.fy[this.length - 1]) * a;
-  }
-
-  //Val is automatically 0 at cut off range.
-
-  this.val[this.length] = 0; this.r[this.length + 1] = 0; this.length += 1;
-
-  return (this);
+  
+  return( o );
 };
 
 //**********************************************************************************
@@ -612,73 +640,24 @@ Number.prototype.calcF = Fract.prototype.calcF = function (Start, End)
   }
 
   return (new Fract(x1, y1));
-}
+};
 
-//**********************************************************************************
-//Directly calculate parts to a floating point number.
-//**********************************************************************************
-
-Number.prototype.calc = Fract.prototype.calc = function (Start, End)
+FNumber.prototype.calcF = function (Start, End)
 {
-  if (this.length == 0) { return (0); }
+  if (this.length == 0) { return (new Fract(0, 1)); }
 
   var Start = Start || 0; if (typeof (End) === "undefined") { End = this.length - 1; }
 
   //If start position is unaltered and is 0. Then each added split from 0 is prerecorded.
 
-  if (Start === 0) { return (this.fx[End] / this.fy[End]); }
+  if (Start === 0) { return ( ( this.val[End + 1] * this.s ).getFract() ); }
 
   //Else calculate the value.
 
-  for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f = this.a[i] + (this.b[i] / f); }
+  for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f += this.a[i] / this.b[i]; }
 
-  return (f);
-}
-
-//**********************************************************************************
-//Remove a factor and keep preceding factors the same.
-//Warning un-optimized code. It would be best to inline the Split method.
-//**********************************************************************************
-
-Number.prototype.remove = FNumber.prototype.remove = Fract.prototype.remove = function (el)
-{
-  var n = this;
-
-  var End = n.length - 1, ba = n.a, bb = n.b; n.length = el;
-
-  while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
-
-  return (n);
-}
-
-//**********************************************************************************
-//set the A, or B factors.
-//Warning un-optimized code. It would be best to inline the Split method.
-//**********************************************************************************
-
-Number.prototype.setA = FNumber.prototype.setA = Fract.prototype.setA = function (el, v)
-{
-  var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
-
-  n = n.split(v, bb[el]); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
-
-  return (n);
-}
-
-Number.prototype.setB = FNumber.prototype.setB = Fract.prototype.setB = function (el, v)
-{
-  //The value cant be set 0 so it is set -1 or +1 based on direction.
-  
-  if (v === 0) { v = this.b[el] > v ? -1 : 1; }
-
-  //Continue with function.
-
-  var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
-
-  n = n.split(ba[el], v); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
-
-  return (n);
-}
+  return ( ( f * this.s ).getFract() );
+};
 
 //**********************************************************************************
 //Transform All factors by two functions.
@@ -713,7 +692,49 @@ Number.prototype.Trans = FNumber.prototype.Trans = Fract.prototype.Trans = funct
   }
 
   return (this);
-}
+};
+
+TNumber.prototype.Trans = function( n, Fn )
+{
+  this.length = n;
+  
+  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
+  
+  var f = 0; n+= 1;
+  
+  if( !this.v )
+  {
+    for(var i = 0; i < 2000000; i++)
+    {
+      f = Math.round(Fn(n++));
+      
+      if( f <= (this.f[this.length - 1]||0) ){ return(this); }
+      
+      this.f[this.length] = f;
+      
+      this.length += 1;
+    }
+  }
+  else
+  {
+    for( var i = 0; i < 20000000; i++)
+    {
+      f = Math.round(Fn(n++));
+      
+      if( f < this.getMin() || f > this.getMax() ){ return(this); }
+      
+      this.r[this.length+1] = this.r[this.length] - this.whole / (f * s); s = -s;
+      
+      this.f[this.length] = f;
+      
+      this.length += 1;
+      
+      if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; i = 20000001; }
+    }
+  }
+  
+  return(this);
+};
 
 //**********************************************************************************
 //Remove factors that are past a set accuracy limit.
@@ -747,6 +768,17 @@ FNumber.prototype.limit = function (ac)
   if (this.length > 0) { this.length -= 1; this.split(this.a[this.length], this.b[this.length]); }
 
   return (this);
+};
+
+TNumber.prototype.limit = function (ac)
+{
+  //Set accuracy limit.
+
+  this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
+
+  //Set length to accuracy limit.
+
+  for (; this.r[this.length - 1] < this.ac; this.length-- ); this.split( this.f[this.length] ); return (this);
 };
 
 //*****************************************************************************************************
@@ -783,7 +815,7 @@ Number.prototype.avgFract = function ()
   for (var i = 0, o = 0, n = this.splitAll(); i < n.length; o += n.a[i++]); o = Math.round(o / i);
 
   i = 0; while (n.a[i] <= o) { i += 1; }; i -= 1; return (new Fract(n.fx[i], n.fy[i]));
-}
+};
 
 //**********************************************************************************
 //Error correct an number.
@@ -806,7 +838,7 @@ Number.prototype.err = function ()
   }
   
   return( new Fract( n.fx[n.lenght-1], n.fy[n.length-1] ) );
-}
+};
 
 //**********************************************************************************
 //Show different stats about Numbers.
@@ -857,7 +889,7 @@ Number.prototype.stats = function()
 	}
 	
 	console.log("Accuracy levels, and factors.\r\n" + ac.toString().replace(/,/g, "\r\n"));
-}
+};
 
 //**********************************************************************************
 //The pattern data type is used for numbers that do not divide thus the pattern can be stored separably as an data type.
@@ -882,7 +914,7 @@ var Pattern = function (str, base)
   //Return the pattern data.
 
   return (this);
-}
+};
 
 //**********************************************************************************
 //Do division one step at an time stopping at the pattern in the division.
@@ -939,7 +971,7 @@ Fract.prototype.divP = function (base)
   //return the pattern at the first matching element to current element.
 
   pat.data = null; pat.pat = pat.pat.slice(El, pat.pat.length); return (pat);
-}
+};
 
 //**********************************************************************************
 //Convert patterns into an fraction that generates the division pattern.
@@ -958,7 +990,7 @@ Pattern.prototype.getFract = function ()
   //return the fraction.
 
   return (new Fract(f2, f1).limit(3.552713678800501e-15).reduce());
-}
+};
 
 //**********************************************************************************
 //This method is broken after the updates.
@@ -988,7 +1020,7 @@ Pattern.prototype.avgFract = function ()
   //Return the division pattern.
 
   return (m);
-}
+};
 
 //**********************************************************************************
 //Teach the compiler how to display patterns into the repeating binary sequence.
@@ -1001,7 +1033,7 @@ Pattern.prototype.toString = function ()
   for (var i = 0; i < this.pat.length; out += String.fromCharCode(this.pat[i] < 10 ? 0x30 + this.pat[i] : 0x37 + this.pat[i]), i++);
 
   return (out + "\u221E");
-}
+};
 
 //**********************************************************************************
 //Reverse float number pattern, and exponent adjust to smallest fraction.
@@ -1024,7 +1056,7 @@ Pattern.prototype.toFract = function (Float)
   //Result.
 
   fr.x = Math.round(fr.x); fr.y = Math.round(fr.y); return (fr);
-}
+};
 
 //**********************************************************************************
 //Adjust Float64 binary into sections extending from number.
@@ -1071,7 +1103,7 @@ Number.prototype.bits = function ()
   if (o.mantissa > 4503599627370495) { o.exp++; o.mantissa -= Math.floor(o.mantissa / 4503599627370496) * 4503599627370496; }
 
   return (o);
-}
+};
 
 //**********************************************************************************
 //Logical Bitwise "and" float64 binary values.
@@ -1086,7 +1118,7 @@ Number.prototype.bitAnd = function (fl2)
   f += ((fl1.mantissa / 0x100000000) & (fl2.mantissa / 0x100000000)) * 0x100000000;
 
   fl1.mantissa = f; fl1.exp &= fl2.exp; fl1.sing &= fl2.sing; return (fl1);
-}
+};
 
 //**********************************************************************************
 //Logical Bitwise "or" float64 binary values.
@@ -1101,7 +1133,7 @@ Number.prototype.bitOr = function (fl2)
   f += ((fl1.mantissa / 0x100000000) | (fl2.mantissa / 0x100000000)) * 0x100000000;
 
   fl1.mantissa = f; fl1.exp |= fl2.exp; fl1.sing |= fl2.sing; return (fl1);
-}
+};
 
 //**********************************************************************************
 //Logical Bitwise "xor" float64 binary values.
@@ -1116,7 +1148,7 @@ Number.prototype.bitXor = function (fl2)
   f += ((fl1.mantissa / 0x100000000) ^ (fl2.mantissa / 0x100000000)) * 0x100000000;
 
   fl1.mantissa = f; fl1.exp ^= fl2.exp; fl1.sing ^= fl2.sing; return (fl1);
-}
+};
 
 //**********************************************************************************
 //Logical Bitwise "not" float64 binary values.
@@ -1129,7 +1161,7 @@ Number.prototype.bitNot = function ()
   f = ~fl1.mantissa; if (f < 0) { f += 0x100000000; } f += ((~(fl1.mantissa / 0x100000000)) & 0xFFFFF) * 0x100000000;
 
   fl1.mantissa = f; fl1.exp = (~fl1.exp) & 0x7FF; fl1.sing = (fl1.sing === 0) & 1; return (fl1);
-}
+};
 
 //**********************************************************************************
 //Right shift float64 binary values.
@@ -1150,7 +1182,7 @@ Number.prototype.bitRsh = function (s1)
   o.bm = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
 
   return (o);
-}
+};
 
 //**********************************************************************************
 //Left shift float64 binary values.
@@ -1171,7 +1203,7 @@ Number.prototype.bitLsh = function (s1)
   o.bm = true; o.sing = (f[0] >> 31) & 1; o.exp = (f[0] >> 20) & 0x7FF; o.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1];
 
   return (o);
-}
+};
 
 //**********************************************************************************
 //Convert number to an pattern. Default base is binary, but as an bit of extra fun any base is possible.
@@ -1193,7 +1225,7 @@ Number.prototype.toPattern = function (base)
   //Return the pattern data.
 
   return (pat);
-}
+};
 
 //**********************************************************************************
 //Create the new toString function to give the full number format.
@@ -1447,7 +1479,7 @@ Number.prototype.toString = function (base, MostAcurate)
   //Return the String representation of the float numbers value, or bit's.
 
   return (parts + str);
-}
+};
 
 //**********************************************************************************
 //Convert the float number to value when adding, or doing integer logic operations.
@@ -1481,7 +1513,9 @@ Number.prototype.primitive = Number.prototype.valueOf; Number.prototype.valueOf 
   //return Float value with proper sing.
 
   return (this.sing >= 1 ? -float : float);
-}
+};
+
+Number.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length]).valueOf()); };
 
 //**********************************************************************************
 //Update the parse float function to be more accurate, and to support all number bases.
@@ -1572,7 +1606,7 @@ function parseFloat(str, base)
   //Return the decoded value.
 
   return (o.valueOf());
-}
+};
 
 //**********************************************************************************
 //Create the new parse to Number function.
@@ -1604,196 +1638,7 @@ var parseNumber = function (str, base)
   //Put number together.
 
   var fl = new Number(0); fl.bm = true; fl.sing = (f[0] >> 31) & 1; fl.exp = (f[0] >> 20) & 0x7FF; fl.mantissa = ((f[0] & 0xFFFFF) * 0x100000000) + f[1]; return (fl);
-}
-
-function TNumber( v )
-{
-  if( v )
-  {
-    this.r[0] = this.v = v;
-    
-    this.sing = v < 0 ? -1 : 1;
-    
-    this.whole = Math.ceil( v * this.sing );
-    
-    return(this);
-  }
-  
-  this.r[0] = this.v = NaN;
-    
-  this.sing = this.whole = 1;
-    
-  return(this);
-}
-
-TNumber.prototype.v = NaN;
-TNumber.prototype.r = [];
-TNumber.prototype.f = [];
-TNumber.prototype.init_ac = false;
-TNumber.prototype.ac = 0;
-TNumber.prototype.sing = 1;
-TNumber.prototype.whole = 1;
-TNumber.prototype.length = 0;
-
-TNumber.prototype.set = function( fn, f, o )
-{
-  var t = this.length; this.length = fn;
-  
-  this.split( f ); fn += 1;
-    
-  for( var i = fn; i < t; i++ )
-  {
-    this.split( this.f[i] );
-  }
-}
-
-TNumber.prototype.Trans = function( n, Fn )
-{
-  this.length = n;
-  
-  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
-  
-  var f = 0; n+= 1;
-  
-  if( !this.v )
-  {
-    for(var i = 0; i < 2000000; i++)
-    {
-      f = Math.round(Fn(n++));
-      
-      if( f <= (this.f[this.length - 1]||0) ){ return(this); }
-      
-      this.f[this.length] = f;
-      
-      this.length += 1;
-    }
-  }
-  else
-  {
-    for( var i = 0; i < 20000000; i++)
-    {
-      f = Math.round(Fn(n++));
-      
-      if( f < this.getMin() || f > this.getMax() ){ return(this); }
-      
-      this.r[this.length+1] = this.r[this.length] - this.whole / (f * s); s = -s;
-      
-      this.f[this.length] = f;
-      
-      this.length += 1;
-      
-      if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; i = 20000001; }
-    }
-  }
-  
-  return(this);
-}
-
-TNumber.prototype.calc = function()
-{
-  var n = this.whole, s = this.sing, o = 0;
-  
-  for( var i = 0; i < this.length; i++ )
-  {
-    o += n / ( this.f[i] * s ); s = -s;
-  }
-  
-  return( o );
-}
-
-TNumber.prototype.getMax = function()
-{
-  return( Math.floor( Math.abs( this.whole / this.r[this.length] ) ) );
-}
-
-TNumber.prototype.getMin = function()
-{
-  return( Math.round( Math.sqrt( Math.abs( this.whole / this.r[this.length] ) ) ) );
-}
-
-TNumber.prototype.split = function( f )
-{
-  if( this.r[this.length] == 0 ){ return; }
-  
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.v / 0.6931471805599453))))) * Number.EPSILON; }
-  
-  var s = ( this.length % 2 == 0 ) ? this.sing : -this.sing;
-  
-  if(this.v)
-  {
-    max = this.getMax(); min = this.getMin();
-    
-    if ( isNaN(f) ) { f = max; } else if( f > max ) { f = max; } else if( f < min ) { f = min; }
-  }
-  
-  if( f <= this.f[this.length - 1] )
-  {
-    f = this.f[this.length - 1] + 1;
-  }
-  
-  this.f[this.length] = f;
-  
-  this.r[this.length+1] = this.r[this.length] - this.whole / (this.f[this.length] * s);
-  
-  this.length += 1; if( Math.abs(this.r[this.length]) < this.ac ){ this.r[this.length] = 0; }
-  
-  return( this );
-}
-
-TNumber.prototype.splitAll = function()
-{
-  while( this != 0 ){ this.split(); }
-  
-  return( this );
-}
-
-TNumber.prototype.remove = function( el )
-{
-  var t = this.length - 1; this.length = el;
-  
-  this.f[el] = this.f[el-1] || 0;
-  
-  for( var i = el; i < t; i++ )
-  {
-    this.split(this.f[i+1]);
-  }
-  
-  return( this );
-}
-
-TNumber.prototype.primitive = function()
-{
-  return( this.v.valueOf() );
-}
-
-TNumber.prototype.limit = function (ac)
-{
-  //Set accuracy limit.
-
-  this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * (ac || Number.EPSILON);
-
-  //Set length to accuracy limit.
-
-  for (; this.r[this.length - 1] < this.ac; this.length-- ); this.split( this.f[this.length] ); return (this);
 };
-
-TNumber.prototype.valueOf = function()
-{
-  return( this.r[ this.length] );
-}
-
-TNumber.prototype.toString = function()
-{
-  var o = "", s = 0;
-  
-  for( var i = Math.max( 0, this.length - 100 ); i < this.length; i++ )
-  {
-    s = ( i % 2 == 0 ) ? this.sing : -this.sing;
-    o += "X" + i + " = " + this.whole + " / " + ( s < 0 ? "-" : "" ) + this.f[i] + "\r\n";
-  }
-  
-  return( o );
-}
 
 //**********************************************************************************
 //Allow Arrays to do float number operations on all numbers in array. Similar to vector.
@@ -1806,4 +1651,4 @@ for (var i = 0, a = ["divP", "reduce", "valueOf", "getFract", "avgFract", "bits"
   c += " } return( o ); }\r\n";
 }
 
-eval(c); i = undefined; c = undefined; a = undefined;
+eval(c); c = undefined; i = undefined; a = undefined;
