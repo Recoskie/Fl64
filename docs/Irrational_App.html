@@ -6,8 +6,7 @@
 <body onload="update(); Trans[alg].update(); LoadExample();" onresize="update();">
   <style type="text/css">
     <!--
-    body
-    {
+    body {
       background-color: #0033AA;
       background-image: url(bg/bg.jpg);
       background-repeat: no-repeat;
@@ -16,18 +15,15 @@
       -webkit-background-size: cover;
     }
 
-    table
-    {
+    table {
       background-color: rgba(200,200,200,0.50);
     }
 
-    input[type=button]
-    {
+    input[type=button] {
       background-color: rgba(0, 200, 255, 0.50);
     }
 
-    input[type=text]
-    {
+    input[type=text] {
       background-color: rgba(255, 255, 255, 0.50);
     }
     -->
@@ -79,11 +75,13 @@
 
       if (isNaN(n) || Math.abs(n) == Infinity) { alert("Please enter a Number value, or Fraction to split."); }
 
-      else { n_ac = n.primitive();
+      else
+      {
+        n_ac = n.primitive();
         
         CVerg.set(n.splitAll());
         
-        Fracts[alg].set((alg == 0 ? n_ac : new TNumber(n_ac)).splitAll());
+        Fracts[ ( alg > 1 ) & 0x01 ].set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
     }
 
@@ -104,7 +102,7 @@
 
       //Update the page elements b1, and b2 to proper width and dimensions.
       
-      CVerg.auto(); Fracts[alg].auto();
+      CVerg.auto(); Fracts[ ( alg > 1 ) & 0x01 ].auto();
     }
 
     //Update the convergent bar on creating a new number in FBar.
@@ -148,108 +146,105 @@
 
     function LoadExample(type)
     {
-      var type = type || 0;
+      var sing = type < 0 ? -1 : 1, type = Math.abs(type) || 0;
       
       if( alg == 0 )
       {
         if (type == 0)
         {
-           document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='Golden Ratio' onclick='LoadExample(1);' /></td>\
-<td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td>\
-<td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /></td>\
-<td><input type='button' value='Pattern " + pat + "' onclick='LoadExample(6);' /><input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
-<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
-<td><input type='button' value='PI' onclick='LoadExample(3);' /></td></table>";
+           document.getElementById("Exp").innerHTML = "<table border='1'><tr><td rowspan='2'>Load Example:</td>\
+<td><input type='button' value='Golden Ratio' onclick='LoadExample(1);' /><input type='button' value='-Golden Ratio' onclick='LoadExample(-1);' /></td>\
+<td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-2);' /></td>\
+<td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='-&radic;"+ sq + "' onclick='LoadExample(-4);' />\
+<input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td></tr>\
+<tr><td><input type='button' value='Pattern " + pat + "' onclick='LoadExample(6);' /><input type='button' value='-Pattern " + pat + "' onclick='LoadExample(-6);' />\
+<input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
+<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />\
+<input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
+<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></table>";
         }
         else
         {
           //Solve the golden ratio.
 
-          if (type == 1)
-          {
-            var n = 1.618033988749895.limit(CutOff); if (input == 1) { n = n.getFract(); }
+          if (type == 1) {
+            var n = ( 1.618033988749895 * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
             n = n.split(); Fracts[0].set(n);
 
-            Trans[0].index = 0; Trans[0].set([1], [1]);
+            Trans[0].index = 0; Trans[0].set([sing], [1]);
           }
 
           //Solve the natural logarithm.
 
-          else if (type == 2)
-          {
-            var n = 2.718281828459045.limit(CutOff); if (input == 1) { n = n.getFract(); }
+          else if (type == 2) {
+            var n = ( 2.718281828459045 * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            n = n.split(); Fracts[0].set(n);
+            n = n.setA(0, 2 * sing); Fracts[0].set(n);
 
-            Trans[0].index = 1; Trans[0].set([1, 1], [1, 1]);
+            Trans[0].index = 1; Trans[0].set([sing, sing], [1, 1]);
           }
 
           //Solve the number PI.
 
-          else if (type == 3)
-          {
-            var n = Math.PI.limit(CutOff); if (input == 1) { n = n.getFract(); }
+          else if (type == 3) {
+            var n = ( Math.PI * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            n = n.split(); Fracts[0].set(n);
+            n = n.setA(0, 3 * sing); Fracts[0].set(n);
 
-            Trans[0].index = 1; Trans[0].set([6, 0, 0], [9, 16, 8]);
+            Trans[0].index = 1; Trans[0].set([6 * sing, 0, 0], [9, 16, 8]);
           }
 
           //Solve a Square root.
 
-          else if (type == 4)
-          {
-            var n = Math.pow(sq, 0.5).limit(CutOff); if (input == 1) { n = n.getFract(); }
+          else if (type == 4) {
+            var n = ( Math.pow(sq, 0.5) * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            var a = Math.floor(n.primitive()), b = sq - (a * a);
+            var a = Math.floor(n.primitive() * sing), b = sq - (a * a);
 
             n.length = 0;
 
-            if ((n - a) !== 0)
-            {
-              n = n.split(a, b); Fracts[0].set(n);
+            if ((n - a) !== 0) {
+              n = n.split(a * sing, b); Fracts[0].set(n);
 
-              Trans[0].index = 1; Trans[0].set([a * 2], [b]);
+              Trans[0].index = 1; Trans[0].set([a * 2 * sing], [b]);
             }
             else { Fracts[0].set(n); Trans[0].index = 1; Trans[0].set([0], [0]); }
           }
 
           //Solve the hyperbolic function.
 
-          else if (type == 5)
-          {
-            var n = Math.tanh(1 / tanh).limit(CutOff); if (input == 1) { n = n.getFract(); }
+          else if (type == 5) {
+            var n = ( Math.tanh(1 / tanh) * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive();
 
             CVerg.set(n.splitAll());
 
-            n = n.split(0, 1); Fracts[0].set(n);
+            n = n.setA( 0, 0 ); Fracts[0].set(n);
 
-            Trans[0].index = 1; Trans[0].set([tanh, tanh * 2], [1, 0]);
+            Trans[0].index = 1; Trans[0].set([tanh * sing, tanh * 2 * sing ], [1, 0]);
           }
         
           //Solve base 10 irrational pattern.
           //Note we can do the same operation in binary, or hexadecimal.
       
-          else if (type == 6)
-          {
-            var base = 10;
+          else if (type == 6) {
+          var base = 10;
           
             dif = Math.floor(Math.log(pat)/Math.log(base));
           
             for( var n1 = dif, n2 = 0, val = 0; n1 < 6; n1++, n2 += n1 ) { val += Math.pow(base, -n2) * pat; }
         
-            val = val.limit(CutOff);
+            val = val * sing; val = val.limit(CutOff);
         
             n_ac = val.primitive();
         
@@ -257,13 +252,13 @@
           
             val = val.primitive();
         
-            val = val.split(pat, pat);
+            val = val.split(pat * sing, pat);
           
             dif += 1;
           
             for( var n1 = dif; n1 < 6; n1++ )
             {
-              val = val.split(Math.pow(base,n1)+(n1>dif),-Math.pow(base,n1));
+              val = val.split( ( Math.pow(base,n1)+(n1>dif) ) * sing, -Math.pow(base,n1) );
             }
           
             dif -= 1;
@@ -272,7 +267,7 @@
           }
         }
       }
-      else
+      else if( alg == 2 )
       {
         if (type == 0)
         {
@@ -298,6 +293,17 @@
           }
         }
       }
+      else
+      {
+        if (type == 0)
+        {
+          document.getElementById("Exp").innerHTML = "";
+        }
+        else
+        {
+          //Natural Log.
+        }
+      }
 
       //Update input type.
 
@@ -310,22 +316,23 @@
     {
       CutOff = 1 / Math.pow(2, (52 * (ac / 100)));
 
-      if (!isNaN(Fracts[alg].get())) { Fracts[alg].set(Fracts[alg].get().limit(CutOff)); }
+      if (!isNaN(Fracts[ ( alg > 1 ) & 0x01 ].get())) { Fracts[ ( alg > 1 ) & 0x01 ].set(Fracts[ ( alg > 1 ) & 0x01 ].get().limit(CutOff)); }
 
       document.getElementById("ac").innerHTML = ac + "";
     }
     
     function changeAlg(s)
     {
-      alg = s & 0x03; Fracts[alg].update(true);Trans[alg].update(true);
+      alg = s & 0x03;
+      Fracts[ ( alg > 1 ) & 0x01 ].update(true); Trans[ ( alg > 1 ) & 0x01 ].update(true);
       
       if( !isNaN(n_ac) )
       {
-        Fracts[alg].set((alg == 0 ? n_ac : new TNumber(n_ac)).splitAll());
+        Fracts[ ( alg > 1 ) & 0x01 ].set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
       else
       {
-        Fracts[alg].set(alg == 0 ? n_ac : new TNumber(n_ac));
+        Fracts[ ( alg > 1 ) & 0x01 ].set(alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
       }
       
       update(); LoadExample();
@@ -391,7 +398,8 @@
         <td>
           <select onchange="changeAlg(this.value);" style="width:100%;">
             <option value="0">Cf</option>
-            <option value="1">Tf-\+</option>
+            <option value="1">Tf</option>
+            <option value="2">Tf-\+</option>
           </select>
         </td>
         <td>

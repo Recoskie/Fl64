@@ -34,7 +34,7 @@
 
     //Allow console to log to external output on page.
 
-    var output = ""; console.log = function (msg) { output += msg + "\r\n"; }
+    var output = "", l = console.log; console.log = function (msg) { l(msg); output += msg + "\r\n"; }
   </script>
   <textarea id="code" style="width:70%;height:93%;background-color:rgba(255,255,255,0.5);">
 var pi = Math.PI;
