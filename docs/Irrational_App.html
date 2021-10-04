@@ -3,7 +3,7 @@
   <title>IEEE-754 Float 64 library.</title>
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
-<body onload="update(); Trans[alg].update(); LoadExample();" onresize="update();">
+<body onload="update(); Trans.update(); LoadExample();" onresize="update();">
   <style type="text/css">
     <!--
     body {
@@ -42,11 +42,11 @@
 
     //Set up Control/Edit factor bar.
 
-    var Fracts = [new FBar("Fracts"), new TFBar("Fracts")];
+    var Fracts = new FBar("Fracts");
 
     //Setup factor transformation bar.
 
-    var Trans = [new TBar("Trans", Fracts[0]), new TTBar("Trans", Fracts[1])];
+    var Trans = new TBar("Trans", Fracts);
 
     /*A floating point number is incomplete at it's last digit of accuracy.
     Thus this creates factors that are partially incomplete*/
@@ -81,7 +81,7 @@
         
         CVerg.set(n.splitAll());
         
-        Fracts[ ( alg > 1 ) & 0x01 ].set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
+        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
     }
 
@@ -102,12 +102,12 @@
 
       //Update the page elements b1, and b2 to proper width and dimensions.
       
-      CVerg.auto(); Fracts[ ( alg > 1 ) & 0x01 ].auto();
+      CVerg.auto(); Fracts.auto();
     }
 
     //Update the convergent bar on creating a new number in FBar.
 
-    Fracts[1].onCreate = Fracts[0].onCreate = function (n)
+    Fracts.onCreate = function (n)
     {
       //Update input/output.
 
@@ -125,7 +125,7 @@
 
     //Update output and accuracy comparison.
 
-    Fracts[1].onChange = Fracts[0].onChange = function (n)
+    Fracts.onChange = function (n)
     {
       //Calculate the accuracy of the value to the Cut off range.
 
@@ -172,9 +172,9 @@
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            n = n.split(); Fracts[0].set(n);
+            n = n.split(); Fracts.set(n);
 
-            Trans[0].index = 0; Trans[0].set([sing], [1]);
+            Trans.index = 0; Trans.set([sing], [1]);
           }
 
           //Solve the natural logarithm.
@@ -184,9 +184,9 @@
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            n = n.setA(0, 2 * sing); Fracts[0].set(n);
+            n = n.setA(0, 2 * sing); Fracts.set(n);
 
-            Trans[0].index = 1; Trans[0].set([sing, sing], [1, 1]);
+            Trans.index = 1; Trans.set([sing, sing], [1, 1]);
           }
 
           //Solve the number PI.
@@ -196,9 +196,9 @@
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
 
-            n = n.setA(0, 3 * sing); Fracts[0].set(n);
+            n = n.setA(0, 3 * sing); Fracts.set(n);
 
-            Trans[0].index = 1; Trans[0].set([6 * sing, 0, 0], [9, 16, 8]);
+            Trans.index = 1; Trans.set([6 * sing, 0, 0], [9, 16, 8]);
           }
 
           //Solve a Square root.
@@ -213,11 +213,11 @@
             n.length = 0;
 
             if ((n - a) !== 0) {
-              n = n.split(a * sing, b); Fracts[0].set(n);
+              n = n.split(a * sing, b); Fracts.set(n);
 
-              Trans[0].index = 1; Trans[0].set([a * 2 * sing], [b]);
+              Trans.index = 1; Trans.set([a * 2 * sing], [b]);
             }
-            else { Fracts[0].set(n); Trans[0].index = 1; Trans[0].set([0], [0]); }
+            else { Fracts.set(n); Trans.index = 1; Trans.set(); }
           }
 
           //Solve the hyperbolic function.
@@ -229,9 +229,9 @@
 
             CVerg.set(n.splitAll());
 
-            n = n.setA( 0, 0 ); Fracts[0].set(n);
+            n = n.setA( 0, 0 ); Fracts.set(n);
 
-            Trans[0].index = 1; Trans[0].set([tanh * sing, tanh * 2 * sing ], [1, 0]);
+            Trans.index = 1; Trans.set([tanh * sing, tanh * 2 * sing ], [1, 0]);
           }
         
           //Solve base 10 irrational pattern.
@@ -263,7 +263,7 @@
           
             dif -= 1;
         
-            Fracts[0].set( val );
+            Fracts.set( val );
           }
         }
       }
@@ -271,7 +271,7 @@
       {
         if (type == 0)
         {
-          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='PI' onclick='LoadExample(1);' /></td></table>";
+          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='PI' onclick='LoadExample(1);' /><input type='button' value='-PI' onclick='LoadExample(-1);' /></td></table>";
         }
         else
         {
@@ -281,15 +281,15 @@
           {
             ac = 44; setAC();
           
-            n = new TNumber(Math.PI).limit(CutOff);
+            n = new TNumber(Math.PI * sing).limit(CutOff);
 
             n_ac = n.primitive();
           
             CVerg.set(n.primitive().splitAll()); 
           
-            Fracts[1].set(n);
+            Fracts.set(n);
 
-            Trans[1].index = 0; Trans[1].set([1,2]);
+            Trans.index = 0; Trans.set([4,0],[1,2]);
           }
         }
       }
@@ -316,7 +316,7 @@
     {
       CutOff = 1 / Math.pow(2, (52 * (ac / 100)));
 
-      if (!isNaN(Fracts[ ( alg > 1 ) & 0x01 ].get())) { Fracts[ ( alg > 1 ) & 0x01 ].set(Fracts[ ( alg > 1 ) & 0x01 ].get().limit(CutOff)); }
+      if (!isNaN(Fracts.get())) { Fracts.set(Fracts.get().limit(CutOff)); }
 
       document.getElementById("ac").innerHTML = ac + "";
     }
@@ -324,15 +324,15 @@
     function changeAlg(s)
     {
       alg = s & 0x03;
-      Fracts[ ( alg > 1 ) & 0x01 ].update(true); Trans[ ( alg > 1 ) & 0x01 ].update(true);
+      Fracts.update(true); Trans.update(true);
       
       if( !isNaN(n_ac) )
       {
-        Fracts[ ( alg > 1 ) & 0x01 ].set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
+        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
       else
       {
-        Fracts[ ( alg > 1 ) & 0x01 ].set(alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
+        Fracts.set(alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
       }
       
       update(); LoadExample();
@@ -363,7 +363,7 @@
     {
       var n = alg > 0 ? new TNumber() : NaN;
       
-      Fracts[alg].set(n);
+      Fracts.set(n);
       
       CVerg.set(n.primitive());
       

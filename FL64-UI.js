@@ -106,7 +106,15 @@ SFBar = {
   {
     this.Ref[bar].setA(this.pos[bar] + el, this.Ref[bar].a[this.pos[bar] + el] + v);
 
-    document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el];
+    //Depending on the number type the preceding factors may change if one factor changes.
+
+    if( this.Ref[bar].reFact ) { for( var i = el, e = this.Bars[bar].enabled; i < e; i++ )
+      {
+        document.getElementById("f" + bar + "a" + i).innerHTML = this.Ref[bar].a[this.pos[bar] + i];
+        document.getElementById("f" + bar + "b" + i).innerHTML = this.Ref[bar].b[this.pos[bar] + i];
+      }
+    }
+    else { document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el]; }
 
     if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
@@ -121,7 +129,15 @@ SFBar = {
   {
     this.Ref[bar].setB(this.pos[bar] + el, this.Ref[bar].b[this.pos[bar] + el] + v);
 
-    document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el];
+    //Depending on the number type the preceding factors may change if one factor changes.
+
+    if( this.Ref[bar].reFact ) { for( var i = el, e = this.Bars[bar].enabled; i < e; i++ )
+      {
+        document.getElementById("f" + bar + "a" + i).innerHTML = this.Ref[bar].a[this.pos[bar] + i];
+        document.getElementById("f" + bar + "b" + i).innerHTML = this.Ref[bar].b[this.pos[bar] + i];
+      }
+    }
+    else { document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el]; }
 
     if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
@@ -194,7 +210,15 @@ SFBar = {
       
       this.Ref[bar].setA(this.pos[bar] + el, v);
 
-      document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el];
+      //Depending on the number type the preceding factors may change if one factor changes.
+
+      if( this.Ref[bar].reFact ) { for( var i = el, e = this.Bars[bar].enabled; i < e; i++ )
+        {
+          document.getElementById("f" + bar + "a" + i).innerHTML = this.Ref[bar].a[this.pos[bar] + i];
+          document.getElementById("f" + bar + "b" + i).innerHTML = this.Ref[bar].b[this.pos[bar] + i];
+        }
+      }
+      else { document.getElementById("f" + bar + "a" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el]; }
 
       if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
@@ -210,7 +234,15 @@ SFBar = {
     
       this.Ref[bar].setB(this.pos[bar] + el, v);
 
-      document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el];
+      //Depending on the number type the preceding factors may change if one factor changes.
+
+      if( this.Ref[bar].reFact ) { for( var i = el, e = this.Bars[bar].enabled; i < e; i++ )
+        {
+          document.getElementById("f" + bar + "a" + i).innerHTML = this.Ref[bar].a[this.pos[bar] + i];
+          document.getElementById("f" + bar + "b" + i).innerHTML = this.Ref[bar].b[this.pos[bar] + i];
+        }
+      }
+      else { document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el]; }
 
       if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 
