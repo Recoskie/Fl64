@@ -10,14 +10,17 @@ Object.prototype.isNum = function () { if (isNaN(this)) { throw new TypeError("E
 
 var Fract = function (X, Y)
 {
-  this.x = X; this.y = Y;
+  var n = new Number( X / Y ); for( k in this ){ n[k] = this[k]; }
+  n.reduce = this.getFract;
+  
+  n.x = X; n.y = Y;
 
-  if (this.x > 3.99168061906944e+292 || this.y > 3.99168061906944e+292)
+  if (n.x > 3.99168061906944e+292 || n.y > 3.99168061906944e+292)
   {
-    this.x /= 1.7726622920963562e+277; this.y /= 1.7726622920963562e+277;
+    n.x /= 1.7726622920963562e+277; n.y /= 1.7726622920963562e+277;
   }
 
-  return (this);
+  return (n);
 };
 
 //**********************************************************************************
@@ -90,18 +93,24 @@ Fract.prototype.toString = function (op, s)
 //Teach the compiler how to read the value of an fraction.
 //**********************************************************************************
 
-Fract.prototype.primitive = Fract.prototype.valueOf = function () { return (this.x / this.y); };
 Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length].valueOf().getFract()).toString()); };
 
 //**********************************************************************************
 //factorial number.
 //**********************************************************************************
 
-FNumber = function( v ) { this.r = [Math.abs( v.primitive() )]; this.val = [0]; this.sing = v < 0 ? -1 : 1; };
+FNumber = function( v )
+{
+  var n = new Number( v ); for( k in this ){ n[k] = this[k]; }
+  n.abLim = true;
+  
+  n.r = [Math.abs( v )];
+  n.val = [0]; n.sing = v < 0 ? -1 : 1;
+  
+  return (n);
+};
 
-FNumber.prototype.sing = 1;
-
-FNumber.prototype.primitive = function() { return( this.r[0] * this.sing ); };
+Number.prototype.sing = 1;
 
 FNumber.prototype.valueOf = function () { return ( this.r[this.length] * this.sing ); };
 
@@ -127,23 +136,22 @@ FNumber.prototype.toString = function( pos )
 
 function TNumber( v )
 {
+  var n = new Number(v); for( k in this ){ n[k] = this[k]; }
+  n.abLim = true;
+    
   if( v )
   {
-    this.r = [v.primitive()]; this.val = [0];
+    n.r = [v.primitive()]; n.val = [0];
     
-    this.sing = v < 0 ? -1 : 1;
+    n.sing = v < 0 ? -1 : 1;
     
-    return(this);
+    return(n);
   }
   
-  this.r = [NaN]; this.val = [0];
+  n.r = [NaN]; n.val = [0];
   
-  return(this);
+  return( n );
 };
-
-TNumber.prototype.sing = 1;
-
-TNumber.prototype.primitive = function() { return( this.r[0] ); };
 
 TNumber.prototype.valueOf = function() { return( this.r[this.length] ); };
 
@@ -174,46 +182,46 @@ Number.EPSILON = 1 / Math.pow(2, 52);
 //Number of parts number, or fraction is split into.
 //**********************************************************************************
 
-Number.prototype.length = Fract.prototype.length = FNumber.prototype.length = TNumber.prototype.length = 0;
+Number.prototype.length = 0;
 
 //*****************************************************************************************************
 //Each part as we split number, or fraction apart.
 //*****************************************************************************************************
 
-Number.prototype.a = Fract.prototype.a = FNumber.prototype.a = TNumber.prototype.a = [undefined];
-Number.prototype.b = Fract.prototype.b = FNumber.prototype.b = TNumber.prototype.b = [undefined];
-Number.prototype.r = Fract.prototype.r = FNumber.prototype.r = TNumber.prototype.r = [undefined];
+Number.prototype.a = [undefined];
+Number.prototype.b = [undefined];
+Number.prototype.r = [undefined];
 
 //*****************************************************************************************************
 //Parts are added up by these values to compute the remaining value.
 //*****************************************************************************************************
 
-Number.prototype.tx = Fract.prototype.tx = [0]; Number.prototype.fx = Fract.prototype.fx = [1]; Number.prototype.ty = Fract.prototype.ty = [1]; Number.prototype.fy = Fract.prototype.fy = [0];
+Number.prototype.tx = [0]; Number.prototype.fx = [1]; Number.prototype.ty = [1]; Number.prototype.fy = [0];
 
 //*****************************************************************************************************
 //Remaining value.
 //*****************************************************************************************************
 
-Number.prototype.val = Fract.prototype.val = FNumber.prototype.val = TNumber.prototype.val = [undefined];
+Number.prototype.val = [undefined];
 
 //**********************************************************************************
 //Anything past the last binary digit of accuracy is inaccurate.
 //It can be set to a different cut off limit via the limit function.
 //**********************************************************************************
 
-Number.prototype.ac = Fract.prototype.ac = FNumber.prototype.ac = TNumber.prototype.ac = Number.EPSILON;
+Number.prototype.ac = Number.EPSILON;
 
 //**********************************************************************************
 //The cut off range has to be calculated once for each number, or can be set using limit.
 //**********************************************************************************
 
-Number.prototype.init_ac = Fract.prototype.init_ac = FNumber.prototype.init_ac = TNumber.prototype.init_ac = false;
+Number.prototype.init_ac = false;
 
 //**********************************************************************************
 //The FL64 UI tool needs to know which number types need to refactor after one factor changes.
 //**********************************************************************************
 
-Number.prototype.reFact = Fract.prototype.reFact = false; FNumber.prototype.reFact = TNumber.prototype.reFact = true;
+Number.prototype.reFact = false;
 
 //*****************************************************************************************************
 //Split a number and return the number object.
@@ -497,7 +505,7 @@ TNumber.prototype.split = function( a, b )
 //Split a number into all parts.
 //*****************************************************************************************************
 
-Number.prototype.splitAll = Fract.prototype.splitAll = FNumber.prototype.splitAll = TNumber.prototype.splitAll = function ()
+Number.prototype.splitAll = function ()
 {
   while( this.split() != 0 ); return (this);
 };
@@ -506,7 +514,7 @@ Number.prototype.splitAll = Fract.prototype.splitAll = FNumber.prototype.splitAl
 //Remove a factor.
 //**********************************************************************************
 
-Number.prototype.remove = Fract.prototype.remove = FNumber.prototype.remove = TNumber.prototype.remove = function (el)
+Number.prototype.remove = function (el)
 {
   var n = this;
 
@@ -521,7 +529,7 @@ Number.prototype.remove = Fract.prototype.remove = FNumber.prototype.remove = TN
 //set the A, or B factors.
 //**********************************************************************************
 
-Number.prototype.setA = Fract.prototype.setA = FNumber.prototype.setA = TNumber.prototype.setA = function (el, v)
+Number.prototype.setA = function (el, v)
 {
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
@@ -530,7 +538,7 @@ Number.prototype.setA = Fract.prototype.setA = FNumber.prototype.setA = TNumber.
   return(n);
 };
 
-Number.prototype.setB = Fract.prototype.setB = FNumber.prototype.setB = TNumber.prototype.setB = function (el, v)
+Number.prototype.setB = function (el, v)
 {
   //The value cant be set 0 so it is set -1 or +1 based on direction.
   
@@ -549,7 +557,7 @@ Number.prototype.setB = Fract.prototype.setB = FNumber.prototype.setB = TNumber.
 //Directly calculate parts to a floating point number.
 //*****************************************************************************************************
 
-Number.prototype.calc = Fract.prototype.calc = function (Start, End)
+Number.prototype.calc = function (Start, End)
 {
   if (this.length == 0) { return (0); }
 
@@ -578,13 +586,13 @@ FNumber.prototype.calc = function (Start, End)
 
   //If start position is unaltered and is 0. Then each added split from 0 is prerecorded.
 
-  if (Start === 0) { return (new FNumber( this.val[End + 1] * this.sing ) ); }
+  if (Start === 0) { return ( this.val[End + 1] * this.sing ); }
 
   //Else calculate the value.
 
   for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f += this.a[i] / this.b[i]; }
 
-  return ( new FNumber( f * this.sing ) );
+  return ( f * this.sing );
 };
 
 TNumber.prototype.calc = function (Start, End)
@@ -599,20 +607,20 @@ TNumber.prototype.calc = function (Start, End)
 
   //If start position is unaltered and is 0. Then each added split from 0 is prerecorded.
 
-  if (Start === 0) { return (new TNumber( this.val[End + 1] ) ); }
+  if (Start === 0) { return ( this.val[End + 1] ); }
 
   //Else calculate the value.
 
   for (var i = End - 1, f = this.a[End] / this.b[End]; i >= Start; i--) { f += this.a[i] / this.b[i]; }
 
-  return ( new TNumber( f ) );
+  return ( f );
 };
 
 //**********************************************************************************
 //Combine Start to end parts as a whole fraction.
 //**********************************************************************************
 
-Number.prototype.calcF = Fract.prototype.calcF = function (Start, End)
+Number.prototype.calcF = function (Start, End)
 {
   var Start = Start || 0; if (typeof (End) === "undefined") { End = this.length - 1; }
 
@@ -671,9 +679,9 @@ TNumber.prototype.calcF = function (Start, End)
 //Transform All factors by two functions.
 //**********************************************************************************
 
-Number.prototype.abLim = Fract.prototype.abLim = false; FNumber.prototype.abLim = TNumber.prototype.abLim = true;
+Number.prototype.abLim = false;
 
-Number.prototype.Trans = Fract.prototype.Trans = FNumber.prototype.Trans = TNumber.prototype.Trans = function (x, fa, fb)
+Number.prototype.Trans = function (x, fa, fb)
 {
   if (isNaN(fa(1)) || isNaN(fb(1))) { return (this); }
 
@@ -717,7 +725,7 @@ Number.prototype.Trans = Fract.prototype.Trans = FNumber.prototype.Trans = TNumb
 //Remove factors that are past a set accuracy limit.
 //**********************************************************************************
 
-Number.prototype.limit = Fract.prototype.limit = FNumber.prototype.limit = TNumber.prototype.limit = function (ac)
+Number.prototype.limit = function (ac)
 {
   //Set accuracy limit.
 
@@ -736,7 +744,7 @@ Number.prototype.limit = Fract.prototype.limit = FNumber.prototype.limit = TNumb
 //Split and add number to smallest fraction. Works for reducing a fraction as well.
 //*****************************************************************************************************
 
-Number.prototype.getFract = Fract.prototype.reduce = function ()
+Number.prototype.getFract = function ()
 {
   if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
 
