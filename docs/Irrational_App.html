@@ -365,7 +365,7 @@
       
       if( !isNaN(n_ac) )
       {
-        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
+        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
       }
       else
       {

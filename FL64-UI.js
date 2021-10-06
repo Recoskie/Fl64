@@ -137,7 +137,7 @@ SFBar = {
         document.getElementById("f" + bar + "b" + i).innerHTML = this.Ref[bar].b[this.pos[bar] + i];
       }
     }
-    else { document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].a[this.pos[bar] + el]; }
+    else { document.getElementById("f" + bar + "b" + el).innerHTML = this.Ref[bar].b[this.pos[bar] + el]; }
 
     if (!isNaN(this.Ref[bar].primitive())) { document.getElementById("f" + bar + "re").innerHTML = this.Ref[bar].reValue(); }
 

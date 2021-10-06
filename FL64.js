@@ -102,7 +102,7 @@ Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? th
 FNumber = function( v )
 {
   var n = new Number( v ); for( k in this ){ n[k] = this[k]; }
-  n.abLim = true;
+  n.abLim = n.reFact = true;
   
   n.r = [Math.abs( v )];
   n.val = [0]; n.sing = v < 0 ? -1 : 1;
@@ -137,7 +137,7 @@ FNumber.prototype.toString = function( pos )
 function TNumber( v )
 {
   var n = new Number(v); for( k in this ){ n[k] = this[k]; }
-  n.abLim = true;
+  n.abLim = n.reFact = true;
     
   if( v )
   {
