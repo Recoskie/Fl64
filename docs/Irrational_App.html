@@ -267,6 +267,32 @@
           }
         }
       }
+      else if( alg == 1 )
+      {
+        if (type == 0)
+        {
+          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='PI' onclick='LoadExample(1);' /><input type='button' value='-PI' onclick='LoadExample(-1);' /></td></table>";
+        }
+        else
+        {
+          //Solve the number PI.
+
+          if (type == 1)
+          {
+            ac = 44; setAC();
+          
+            n = new FNumber(Math.PI * sing).limit(CutOff);
+
+            n_ac = n.primitive();
+          
+            CVerg.set(n.primitive().splitAll()); 
+          
+            Fracts.set(n);
+
+            Trans.index = 0; Trans.set([8,0,0],[3,32,32]);
+          }
+        }
+      }
       else if( alg == 2 )
       {
         if (type == 0)

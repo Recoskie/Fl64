@@ -701,7 +701,7 @@ Number.prototype.Trans = Fract.prototype.Trans = FNumber.prototype.Trans = TNumb
       x += 1; i += 1; this.split(a, b);
     
       if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = Math.round(fa(i)); b = Math.round(fb(i)); }
-      else { break; }
+      else { this.length -= 1; break; }
     }
   }
   else
