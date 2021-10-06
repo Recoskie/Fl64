@@ -97,7 +97,7 @@ Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? th
 //factorial number.
 //**********************************************************************************
 
-FNumber = function( v ) { this.r[0] = Math.abs( v ); this.val[0] = 0; this.sing = v < 0 ? -1 : 1; };
+FNumber = function( v ) { this.r = [Math.abs( v.primitive() )]; this.val = [0]; this.sing = v < 0 ? -1 : 1; };
 
 FNumber.prototype.sing = 1;
 

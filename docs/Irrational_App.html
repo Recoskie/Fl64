@@ -271,13 +271,35 @@
       {
         if (type == 0)
         {
-          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='PI' onclick='LoadExample(1);' /><input type='button' value='-PI' onclick='LoadExample(-1);' /></td></table>";
+          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='Natural LOG' onclick='LoadExample(1);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-1);' /></td><td><input type='button' value='PI' onclick='LoadExample(2);' /><input type='button' value='-PI' onclick='LoadExample(-2);' /></td></table>";
         }
         else
         {
-          //Solve the number PI.
+          //Solve the natural logarithm.
 
           if (type == 1)
+          {
+            ac = 44; setAC();
+          
+            n = new FNumber( 2.718281828459045 * sing ).limit(CutOff);
+
+            n_ac = n.primitive();
+          
+            CVerg.set(n.primitive().splitAll());
+            
+            n.length = 0;
+          
+            for( var i = 1, pf = 1; i < 18; i++ )
+            {
+              n = n.split(i,pf); pf *= i + 1;
+            }
+            
+            Fracts.set(n);
+          }
+          
+          //Solve the number PI.
+
+          if (type == 2)
           {
             ac = 44; setAC();
           
@@ -317,17 +339,6 @@
 
             Trans.index = 0; Trans.set([4,0],[1,2]);
           }
-        }
-      }
-      else
-      {
-        if (type == 0)
-        {
-          document.getElementById("Exp").innerHTML = "";
-        }
-        else
-        {
-          //Natural Log.
         }
       }
 
