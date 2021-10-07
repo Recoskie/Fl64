@@ -77,9 +77,9 @@
 
       else
       {
-        n_ac = n.primitive();
+        n_ac = n;
         
-        CVerg.set(n.splitAll());
+        CVerg.set(n.primitive().splitAll());
         
         Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
@@ -109,6 +109,7 @@
 
     Fracts.onCreate = function (n)
     {
+      debugger;
       //Update input/output.
 
       document.getElementById("r").innerHTML = n.primitive() + "";
@@ -116,7 +117,7 @@
 
       //Update n_ac number.
 
-      n_ac = n.primitive();
+      if( input == 0 ) { n_ac = n.primitive(); } else { n_ac = n.getFract(); }
 
       //Change to number type only.
 
@@ -365,7 +366,14 @@
       
       if( !isNaN(n_ac) )
       {
-        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
+        if( alg == 0 )
+        {
+          Fracts.set((input == 0 ? new Number(n_ac) : new Fract(n_ac.x, n_ac.y)).limit(CutOff).splitAll());
+        }
+        else
+        {
+          Fracts.set((alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
+        }
       }
       else
       {
@@ -385,7 +393,7 @@
       var x = "Number Value", y = "Number Value";
 
       if (input == 1)
-      {        
+      {
         if (!isNaN(n_ac)) { n_ac = n_ac.valueOf().getFract(); x = n_ac.x; y = n_ac.y; }
 
         document.getElementById("in").innerHTML = '<input id="f1" type="text" value="' + x + '" onclick="this.select();">&div;<input id="f2" type="text" value="' + y + '" onclick="this.select();">';
