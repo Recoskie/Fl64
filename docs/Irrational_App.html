@@ -109,15 +109,15 @@
 
     Fracts.onCreate = function (n)
     {
-      debugger;
-      //Update input/output.
-
-      document.getElementById("r").innerHTML = n.primitive() + "";
-      CVerg.set(n.primitive().splitAll());
-
       //Update n_ac number.
 
-      if( input == 0 ) { n_ac = n.primitive(); } else { n_ac = n.getFract(); }
+      if( input == 1 && alg == 0 ) { n_ac = n.calcF(); } else { n_ac = n.calc(); }
+      
+      //Update input/output.
+      
+      n = n_ac.splitAll();
+
+      CVerg.set(n); this.set(n);
 
       //Change to number type only.
 
@@ -394,7 +394,11 @@
 
       if (input == 1)
       {
-        if (!isNaN(n_ac)) { n_ac = n_ac.valueOf().getFract(); x = n_ac.x; y = n_ac.y; }
+        if (!isNaN(n_ac))
+        {
+          if( !n_ac.x ) { n_ac = n_ac.primitive().getFract(); }
+          x = n_ac.x; y = n_ac.y;
+        }
 
         document.getElementById("in").innerHTML = '<input id="f1" type="text" value="' + x + '" onclick="this.select();">&div;<input id="f2" type="text" value="' + y + '" onclick="this.select();">';
       }

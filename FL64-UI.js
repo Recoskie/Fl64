@@ -189,13 +189,7 @@ SFBar = {
 
   create: function (bar)
   {
-    this.Ref[bar] = this.Ref[bar].calc().splitAll();
-
-    this.pos[bar] = this.Ref[bar].length - this.Bars[bar].max;
-
-    this.Bars[bar].onCreate(this.Ref[bar]); this.Bars[bar].onChange(this.Ref[bar].primitive());
-
-    this.Bars[bar].update();
+    this.Bars[bar].onCreate(this.Ref[bar]);
   },
   
   /***********************************************************************
@@ -327,9 +321,13 @@ FBar.prototype.get = function () { return (SFBar.Ref[this.n]); }
 
 /***********************************************************************
 Event that is trigged on creating a new number.
+It can be override to add more flexability.
 ***********************************************************************/
 
-FBar.prototype.onCreate = function () { }
+FBar.prototype.onCreate = function (val)
+{
+  this.set(val.calc().splitAll());
+}
 
 /***********************************************************************
 When user makes changes to a number or fraction.
