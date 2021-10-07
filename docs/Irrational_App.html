@@ -130,7 +130,7 @@
     {
       //Calculate the accuracy of the value to the Cut off range.
 
-      var re = Math.ceil((((-Math.log(Math.abs(1 - (n.primitive() / n_ac))) / Math.log(2)) / (52 / (100 / ac))) * 100));
+      var re = Math.ceil((((-Math.log(Math.abs(1 - (n.primitive() / n_ac.primitive()))) / Math.log(2)) / (52 / (100 / ac))) * 100));
 
       if (re == Infinity || re > 100) { re = 100; }
 
