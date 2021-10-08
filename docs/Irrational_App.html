@@ -238,33 +238,28 @@
           //Solve base 10 irrational pattern.
           //Note we can do the same operation in binary, or hexadecimal.
       
-          else if (type == 6) {
-          var base = 10;
+          else if (type == 6)
+          {
+            var base = 10;
           
             dif = Math.floor(Math.log(pat)/Math.log(base));
           
-            for( var n1 = dif, n2 = 0, val = 0; n1 < 6; n1++, n2 += n1 ) { val += Math.pow(base, -n2) * pat; }
+            for( var n1 = dif, n2 = 0, n = 0; n1 < 6; n1++, n2 += n1 ) { n += Math.pow(base, -n2) * pat; }
         
-            val = val * sing; val = val.limit(CutOff);
-        
-            n_ac = val.primitive();
-        
-            CVerg.set(val.splitAll());
-          
-            val = val.primitive();
-        
-            val = val.split(pat * sing, pat);
-          
-            dif += 1;
-          
-            for( var n1 = dif; n1 < 6; n1++ )
-            {
-              val = val.split( ( Math.pow(base,n1)+(n1>dif) ) * sing, -Math.pow(base,n1) );
-            }
-          
-            dif -= 1;
-        
-            Fracts.set( val );
+            n = ( n * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
+
+            n_ac = n.primitive();
+
+            CVerg.set(n.splitAll());
+            
+            n = n.setA(0, pat * sing); n = n.setB(0, pat);
+            n = n.setA(1, base * sing); n = n.setB(1, -base);
+            
+            Fracts.set(n);
+            
+            eval("var a = function(x)\r\n{\r\n  return( " + (sing < 0 ? "-" : "") + "Math.pow( " + base + ", x + 1 ) " + (sing < 0 ? "-" : "+") + " 1 );\r\n}, b = function(x)\r\n{\r\n return( -Math.pow( " + base + ", x + 1 ) );\r\n}");
+            
+            Trans.index = 2; Trans.setF(a,b);
           }
         }
       }
@@ -281,21 +276,18 @@
           if (type == 1)
           {
             ac = 44; setAC();
-          
+            
             n = new FNumber( 2.718281828459045 * sing ).limit(CutOff);
 
             n_ac = n.primitive();
-          
-            CVerg.set(n.primitive().splitAll());
-            
-            n.length = 0;
-          
-            for( var i = 1, pf = 1; i < 18; i++ )
-            {
-              n = n.split(i,pf); pf *= i + 1;
-            }
+
+            CVerg.set(n.splitAll());
             
             Fracts.set(n);
+            
+            eval("var a = function(x)\r\n\{\r\n\  return(x);\r\n\}; var b = function(x)\r\n\{\r\n\  for(var i = 0, pf = 1; i < x; pf*=(++i));\r\n\  return( pf );\r\n\};");
+            
+            Trans.index = 0; Trans.setF(a,b);
           }
           
           //Solve the number PI.
@@ -362,7 +354,7 @@
     function changeAlg(s)
     {
       alg = s & 0x03;
-      Fracts.update(true); Trans.update(true);
+      Fracts.update(true); Trans.reset();
       
       if( !isNaN(n_ac) )
       {
@@ -412,7 +404,7 @@
     {
       var n = alg > 0 ? new TNumber() : NaN;
       
-      Fracts.set(n);
+      Fracts.set(n); Trans.reset();
       
       CVerg.set(n.primitive());
       

@@ -899,9 +899,19 @@ STBar = {
 
   setA: function (bar, el, v)
   {
+    if( isNaN(this.Bars[bar].Ta[0]) )
+    {
+      this.Bars[bar].Ta[0] = el == 0 ? 0 : 1;
+    }
+    if( isNaN(this.Bars[bar].Tb[0]) )
+    {
+      this.Bars[bar].Tb[0] = 1;
+    }
+      
+    
     document.getElementById("t" + bar + "a" + el).innerHTML = this.Bars[bar].Ta[el] += v;
 
-    this.Trans(bar);
+    this.Bars[bar].set(this.Bars[bar].Ta, this.Bars[bar].Tb);
   },
 
   /***********************************************************************
@@ -910,9 +920,18 @@ STBar = {
 
   setB: function (bar, el, v)
   {
+    if( isNaN(this.Bars[bar].Ta[0]) )
+    {
+      this.Bars[bar].Ta[0] = 1;
+    }
+    if( isNaN(this.Bars[bar].Tb[0]) )
+    {
+      this.Bars[bar].Tb[0] = el == 0 ? 0 : 1;
+    }
+    
     document.getElementById("t" + bar + "b" + el).innerHTML = this.Bars[bar].Tb[el] += v;
 
-    this.Trans(bar);
+    this.Bars[bar].set(this.Bars[bar].Ta, this.Bars[bar].Tb);
   },
 
   /***********************************************************************
@@ -921,6 +940,8 @@ STBar = {
 
   reset: function (bar)
   {
+    document.getElementById("t"+bar+"r").innerHTML = "";
+    
     this.Bars[bar].Ta = [1]; this.Bars[bar].Tb = [1];
 
     this.Bars[bar].setMax(1); this.Bars[bar].update();
@@ -963,32 +984,9 @@ STBar = {
 
   Trans: function (bar)
   {
-    //Create a sequence of selected dimensions.
-
-    function createFunc(Dims)
-    {
-      AI_Mat.adjustPMat(Dims.length);
-
-      for(var i = 0; i < Dims.length && Dims[i] == 0; i++ );
-
-      if (i == Dims.length)
-      {
-        return (function ()
-{
-  return (0);
-});
-      }
-
-      eval("var temp = function( s )\r\n{\r\n  var s = s.slice( 0 );\r\n\r\n\
-        " + AI_Mat.MkD("s", AI_Mat.PMat.slice(0, Dims.length - 1), true) + "\r\n\
-        return( new DSet( s, [ 0 ], [ 0, 0 ] ) );\r\n}" );
-
-      return ((temp(Dims)).getFunc());
-    }
-
     //Transform values.
 
-    var A = createFunc(this.Bars[bar].Ta), B = createFunc(this.Bars[bar].Tb);
+    var A = this.Bars[bar].Fa, B = this.Bars[bar].Fb;
 
     document.getElementById("t"+bar+"r").innerHTML = "<table border='1'><tr><td><center>A</center></td><td><center>B</center></td></tr><tr><td>" + A.toString().html() + "</td><td>" + B.toString().html() + "</td></tr></table>";
 
@@ -1046,6 +1044,7 @@ The bars transformation bar settings.
 ***********************************************************************/
 
 TBar.prototype.Ta = []; TBar.prototype.Tb = [];
+TBar.prototype.Fa = function() {}; TBar.prototype.Fb = function() {};
 
 /***********************************************************************
 Create bar cols to max set size.
@@ -1089,11 +1088,40 @@ FBar reference number. The element specific to this FBar in shared Ref, and ID.
 TBar.prototype.n = 0;
 
 /***********************************************************************
+FBar reference number. The element specific to this FBar in shared Ref, and ID.
+***********************************************************************/
+
+TBar.prototype.reset = function() { STBar.reset(this.n); }
+
+/***********************************************************************
 Set a transformation.
 ***********************************************************************/
 
 TBar.prototype.set = function (a, b)
 {
+  //Create a sequence of selected dimensions.
+
+  function createFunc(Dims)
+  {
+    AI_Mat.adjustPMat(Dims.length);
+
+    for(var i = 0; i < Dims.length && Dims[i] == 0; i++ );
+
+    if (i == Dims.length)
+    {
+      return (function ()
+{
+  return (0);
+});
+    }
+
+    eval("var temp = function( s )\r\n{\r\n  var s = s.slice( 0 );\r\n\r\n\
+        " + AI_Mat.MkD("s", AI_Mat.PMat.slice(0, Dims.length - 1), true) + "\r\n\
+        return( new DSet( s, [ 0 ], [ 0, 0 ] ) );\r\n}" );
+
+    return ((temp(Dims)).getFunc());
+  }
+  
 	//Trim out 0.
 	
   for (var i1 = a.length - 1; i1 > 0 && a[i1] == 0; i1--); for (var i2 = b.length - 1; i2 > 0 && b[i2] == 0; i2--);
@@ -1102,7 +1130,24 @@ TBar.prototype.set = function (a, b)
 	
   this.setMaxIndex(this.index); this.setMax(a.length);
 
-  this.Ta = a; this.Tb = b; STBar.Trans(this.n);
+  this.Ta = a; this.Tb = b;
+  
+  this.Fa = createFunc( this.Ta ); this.Fb = createFunc( this.Tb );
+  
+  STBar.Trans(this.n);
+}
+
+/***********************************************************************
+Set a transformation.
+***********************************************************************/
+
+TBar.prototype.setF = function (a, b)
+{
+  this.setMaxIndex(this.index); this.setMax(1);
+  
+  this.Ta = [NaN]; this.Tb = [NaN];
+
+  this.Fa = a; this.Fb = b; STBar.Trans(this.n);
 }
 
 /***********************************************************************
@@ -1174,7 +1219,7 @@ TBar.prototype.update = function (force)
 
   for (var i = 0; i < STBar.Bars[this.n].max; i++)
   {
-    document.getElementById("t" + this.n + "a" + i + "").innerHTML = STBar.Bars[this.n].Ta[i];
-    document.getElementById("t" + this.n + "b" + i + "").innerHTML = STBar.Bars[this.n].Tb[i];
+    document.getElementById("t" + this.n + "a" + i + "").innerHTML = isNaN(STBar.Bars[this.n].Ta[i]) ? "?" : STBar.Bars[this.n].Ta[i];
+    document.getElementById("t" + this.n + "b" + i + "").innerHTML = isNaN(STBar.Bars[this.n].Tb[i]) ? "?" : STBar.Bars[this.n].Tb[i];
   }
 }
