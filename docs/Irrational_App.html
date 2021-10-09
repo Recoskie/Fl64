@@ -6,7 +6,8 @@
 <body onload="update(); Trans.update(); LoadExample();" onresize="update();">
   <style type="text/css">
     <!--
-    body {
+    body
+    {
       background-color: #0033AA;
       background-image: url(bg/bg.jpg);
       background-repeat: no-repeat;
@@ -15,15 +16,18 @@
       -webkit-background-size: cover;
     }
 
-    table {
+    table
+    {
       background-color: rgba(200,200,200,0.50);
     }
 
-    input[type=button] {
+    input[type=button]
+    {
       background-color: rgba(0, 200, 255, 0.50);
     }
 
-    input[type=text] {
+    input[type=text]
+    {
       background-color: rgba(255, 255, 255, 0.50);
     }
     -->
@@ -168,7 +172,8 @@
         {
           //Solve the golden ratio.
 
-          if (type == 1) {
+          if (type == 1)
+          {
             var n = ( 1.618033988749895 * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -180,7 +185,8 @@
 
           //Solve the natural logarithm.
 
-          else if (type == 2) {
+          else if (type == 2)
+          {
             var n = ( 2.718281828459045 * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -192,7 +198,8 @@
 
           //Solve the number PI.
 
-          else if (type == 3) {
+          else if (type == 3)
+          {
             var n = ( Math.PI * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -204,7 +211,8 @@
 
           //Solve a Square root.
 
-          else if (type == 4) {
+          else if (type == 4)
+          {
             var n = ( Math.pow(sq, 0.5) * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive(); CVerg.set(n.splitAll());
@@ -223,7 +231,8 @@
 
           //Solve the hyperbolic function.
 
-          else if (type == 5) {
+          else if (type == 5)
+          {
             var n = ( Math.tanh(1 / tanh) * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
 
             n_ac = n.primitive();
@@ -246,7 +255,9 @@
           
             for( var n1 = dif, n2 = 0, n = 0; n1 < 6; n1++, n2 += n1 ) { n += Math.pow(base, -n2) * pat; }
         
-            n = ( n * sing ).limit(CutOff); if (input == 1) { n = n.getFract(); }
+            n = n * sing; if (input == 1) { n = n.getFract(); }
+            
+            n = n.limit(CutOff);
 
             n_ac = n.primitive();
 
