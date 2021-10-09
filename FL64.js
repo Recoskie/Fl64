@@ -93,6 +93,8 @@ Fract.prototype.toString = function (op, s)
 //Teach the compiler how to read the value of an fraction.
 //**********************************************************************************
 
+Fract.prototype.valueOf = function() { return( this.x / this.y ); }
+
 Fract.prototype.reValue = function () { return ((isNaN(this.r[this.length]) ? this : this.r[this.length].valueOf().getFract()).toString()); };
 
 //**********************************************************************************
