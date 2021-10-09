@@ -11,7 +11,7 @@ Object.prototype.isNum = function () { if (isNaN(this)) { throw new TypeError("E
 var Fract = function (X, Y)
 {
   var n = new Number( X / Y ); for( k in this ){ n[k] = this[k]; }
-  n.reduce = this.getFract;
+  n.reduce = n.getFract;
   
   n.x = X; n.y = Y;
 
