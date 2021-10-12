@@ -226,10 +226,10 @@ Number.prototype.init_ac = false;
 Number.prototype.reFact = false;
 
 //*****************************************************************************************************
-//Split a number and return the number object.
+//Split a number, or Fraction and return the object.
 //*****************************************************************************************************
 
-Number.prototype.split = function (a, b)
+Number.prototype.split = Fract.prototype.split = function (a, b)
 {
   if (this.r[this.length] === 0) { return (this); }
 
@@ -255,7 +255,22 @@ Number.prototype.split = function (a, b)
 
     if (this.r[1] == Infinity) { this.r[1] = 0; }
 
-    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
+    if( this instanceof Number )
+    {
+      this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
+    }
+    else
+    {
+      this.r = [ new Fract(this.x, this.y), new Fract(this.y * b, this.x - (this.y * a)) ];
+      this.toString = function ()
+      {
+        var s = "";
+  
+        for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
+  
+        return (s + this.valueOf().getFract().toString());
+      };
+    }
 
     this.valueOf = function () { return (this.val[this.length]); };
 
@@ -276,7 +291,8 @@ Number.prototype.split = function (a, b)
 
   //Write remaining value. used by each next split.
 
-  var r = (1 / (n - a)) * b; this.r[this.length + 1] = r;
+  if( this instanceof Number ) { this.r[this.length + 1] = (1 / (n - a)) * b; }
+  else { this.r[this.length + 1] = new Fract(n.y * b, n.x - (n.y * a)); }
 
   //Add up each split into fx, fy per split
 
@@ -299,89 +315,6 @@ Number.prototype.split = function (a, b)
   {
     this.val[this.length + 1] = 0; this.r[this.length + 1] = 0;
   }
-  this.length += 1; return (this);
-};
-
-//*****************************************************************************************************
-//Split a fraction and return the fraction object.
-//*****************************************************************************************************
-
-Fract.prototype.split = function (a, b)
-{
-  if (!this.init_ac) { this.init_ac = true; this.ac = Math.pow(2, (Math.round(Math.log(Math.abs(this.primitive())) / 0.6931471805599453))) * Number.EPSILON; }
-
-  if (this.r[this.length] === 0) { return (this); }
-
-  //On first split override the to string operation to show the remaining part, and value of to return the remaining value.
-
-  if (this.length === 0)
-  {
-    a = isNaN(a) ? Math.floor(this.primitive()) : a, b = b || 1;
-
-    this.tx = [0]; this.ty = [1];
-    this.fx = [1]; this.fy = [0];
-
-    this.fx[0] = this.tx[0] + (this.tx[0] = this.fx[0] * b) * a / b;
-    this.fy[0] = this.ty[0] + (this.ty[0] = this.fy[0] * b) * a / b;
-
-    this.a = [a]; this.b = [b];
-
-    this.r = [
-      new Fract(this.x, this.y),
-      new Fract(this.y * b, this.x - (this.y * a))
-    ];
-
-    if (this.r[1] == Infinity) { this.r[1] = 0; }
-
-    this.val = [n, Math.abs(this.r[0] - (this.fx[0] / this.fy[0]))];
-
-    this.valueOf = function () { return (this.val[this.length - 1]); };
-    this.toString = function ()
-    {
-      var s = "";
-
-      for (var i = 0; i < this.length; s += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
-
-      return (s + this.valueOf().getFract().toString());
-    };
-
-    this.length += 1; return ( this );
-  };
-
-  //Split value a by b. Or by default scale a=int, b=1.
-
-  var n = this.r[this.length]; a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
-
-  //Add a by b point.
-
-  this.a[this.length] = a; this.b[this.length] = b;
-
-  //Write remaining value. used by each next split.
-
-  this.r[this.length + 1] = new Fract(n.y * b, n.x - (n.y * a));
-
-  //Add up each split into fx, fy per split.
-
-  this.fx[this.length] = this.tx[this.length - 1] + (this.tx[this.length] = this.fx[this.length - 1] * b) * a / b;
-  this.fy[this.length] = this.ty[this.length - 1] + (this.ty[this.length] = this.fy[this.length - 1] * b) * a / b;
-
-  //Only re-factor FX, FY, TX, TY when values get to the end of the exponent.
-  //For the time being we will just move the exponent.
-  //Note to self. Max is 2^1023, so 2^(1023-51)=3.99168061906944e+292. Thus 2^(1023-51*2)=1.7726622920963562e+277
-
-  if (this.fx[this.length] > 3.99168061906944e+292 || this.fy[this.length] > 3.99168061906944e+292)
-  {
-    this.fx[this.length] /= 1.7726622920963562e+277; this.fy[this.length] /= 1.7726622920963562e+277;
-    this.tx[this.length] /= 1.7726622920963562e+277; this.ty[this.length] /= 1.7726622920963562e+277;
-  }
-
-  //Val is automatically 0 at cut off range.
-
-  if ((this.val[this.length] = Math.abs(this.r[0] - (this.fx[this.length] / this.fy[this.length]))) < this.ac)
-  {
-    this.val[this.length] = 0; this.r[this.length + 1] = 0;
-  }
-
   this.length += 1; return (this);
 };
 
