@@ -857,7 +857,7 @@ function TBar(el, FBar)
 
   //Create bar to init size.
 
-  this.setMax(1); this.setMaxIndex(3);
+  this.setMax(1); this.setMaxIndex(12);
 }
 
 STBar = {
