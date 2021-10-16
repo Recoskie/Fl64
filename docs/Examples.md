@@ -180,10 +180,6 @@ image:
 
   <br /><br />
 
-  As you can the example shows the A to B parts. Followed by the remaining value.
-
-  <br /><br />
-
   Each "a" is a part taken out of the number.<br />
   Each "b" is the scale used.
 
@@ -221,7 +217,7 @@ image:
 
   <br /><br />
 
-  Each <strong>reValue</strong> is what each next "a" part is at max that can be taken out of the number in the next split.
+  Each <strong>reValue</strong> is what each next "a" part is at maximum value that can be taken out of the number in the next split.
 
   <br /><br />
 
@@ -229,7 +225,7 @@ image:
 
   <br /><br />
 
-  Also the larger you set "b". The bigger "a" becomes in the next part, because of the scale size.
+  Also the larger you set "b", then the bigger "a" becomes in the next part, because of the scale size.
 
   <br /><br />
 
@@ -263,7 +259,7 @@ image:
 
   <br /><br />
 
-  Instead of using <strong>split</strong> when you want to <strong>split</strong> a number into all remaining parts. You are best off using the method <strong>splitAll</strong>. The method <strong>splitAll</strong> is much faster than <strong>split</strong> when you want to <strong>split</strong> the value till it is 0 in value.
+  Instead of using <strong>split</strong> in a loop till 0 when you want to <strong>split</strong> a number into all remaining parts. You are best off using the method <strong>splitAll</strong>.
 
   <br /><br />
 
@@ -313,7 +309,7 @@ image:
 
   <br /><br />
 
-  In the next example above we will start at part 2, and add up parts till part 5.
+  In the next example we will start at part 2, and add up parts till part 5.
 
   <br /><br />
 
@@ -357,7 +353,7 @@ image:
 
   <br /><br />
 
-  Each time you split a number the length gets bigger by one. Thus the length is the number of parts a number has been split into. In the above example we subtract the length by 2. When we add the parts into a fraction or number we are adding one part less before the end.
+  Each time you split a number the length gets bigger by one. The length is the number of parts a number has been split into. When adding parts together the last part is -1 of length. In the above example we subtract the length by 2 which is one part less before the end of the number. When we add the parts into a fraction or number we are adding one part less before the end.
 
   <br /><br />
 
@@ -593,7 +589,7 @@ image:
 
   <br /><br />
 
-  An irrational number is something that looks like this: 1.01001000100001.
+  An irrational number is a number like this: 1.01001000100001.
 
   <br /><br />
 
@@ -662,7 +658,7 @@ image:
 
   <br /><br />
 
-  Irrational numbers can also be created when you measure something that gets a tiny bit bigger each time in reference to say another number.
+  Irrational numbers can also be created when you measure something that gets a tiny bit bigger in ratio to another distance.
 
   <br /><br />
 
@@ -797,7 +793,7 @@ image:
 
   <br /><br />
 
-  However there is a method in which you square the remaining part to find the best A to B per part.
+  There is a method in which you square the remaining part to find the best A to B per part ratio.
 
   <br /><br />
 
@@ -809,7 +805,7 @@ image:
 
   <br /><br />
 
-  Even numbers you create per digit such as 1.01001000100001. Which the irrational pattern is obvious.
+  Even numbers you create per digit such as 1.01001000100001. Which the pattern is obvious.
 
   <h2>The Natural logarithm.</h2>
 
@@ -864,11 +860,11 @@ image:
   <div style="background-color:#808080;">
     <br /><br />
 
-    If you really do understand, and really work out the A to B part square. Then you can line up any number to it's pattern.
+    If you really do understand, and really work out the A to B part square ratio. Then you can line up any number to it's pattern.
 
     <br /><br />
 
-    Then you can use the quantum matrix to convert all parts into the exact pattern <a href="https://recoskie.github.io/AI-Matrix/docs/Examples.html" target="_blank">Link</a>.
+    Then you can use the quantum matrix to convert all parts into the exact number pattern <a href="https://recoskie.github.io/AI-Matrix/docs/Examples.html" target="_blank">Link</a>.
 
     <br /><br />
 
@@ -889,27 +885,7 @@ image:
 
   <br /><br />
 
-  The smallest split out of a number is a=1, b=1. Which is the golden ratio. In which each part is as close together as they can be.
-
-  <br /><br />
-
-  Adding all a, and b together per next part is added the same way as the Fibonacci numbers. This how you change All parts back into a fraction.
-
-  <br /><br />
-
-  By adding previous number to next number, while multiplying by A=1 parts creates the Fibonacci sequence.
-
-  <br /><br />
-
-  By adding previous number to next number, while multiplying by B=1 parts creates the Fibonacci as well.
-
-  <br /><br />
-
-  Multiplying by all a=1, b=1 leaves the numbers unchanged.
-
-  <br /><br />
-
-  0,1,1,2,3,5,8,13,21,34,55,89,144,233,377
+  Fibonacci = 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377
 
   <br /><br />
 
@@ -917,15 +893,15 @@ image:
 
   <br /><br />
 
-  The further back you go like 55&divide;34=1.617647. Makes a less accurate value, because you are adding fewer parts together per a=1, and b=1.
-
-  <br /><br />
-
-  All numbers can be split into parts, and then added back to their smallest fraction this way. Except all A, and B parts can be further apart in size.
+  If you pick 8 and do 8&divide;5=1.6. You will find 1.6 splits in a=1, and b=1 the same number of times as it took to add to the Fibonacci number 8.
 
   <br /><br />
 
   By adding previous number to next number, and multiplying by each A, and B forums the fraction.
+
+  <br /><br />
+
+  All numbers can be split into parts, and then added back to their smallest fraction this way. Except all A, and B parts can be further apart in size.
 
   <br /><br />
 

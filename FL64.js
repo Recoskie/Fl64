@@ -229,7 +229,7 @@ Number.prototype.reFact = false;
 //Split a number, or Fraction and return the object.
 //*****************************************************************************************************
 
-Number.prototype.split = Fract.prototype.split = function (a, b)
+Number.prototype.split = function (a, b)
 {
   if (this.r[this.length] === 0) { return (this); }
 
@@ -1127,7 +1127,7 @@ Number.prototype.toPattern = function (base)
 
 Number.prototype.toString = function (base, MostAcurate)
 {
-  for (var i = 0, parts = ""; i < this.length; parts += "a=" + this.a[i] + ", b=" + this.b[i] + "\r\n", i++);
+  for (var i = 0, parts = ""; i < this.length; parts += "X" + i + " = a:" + this.a[i] + ", b:" + this.b[i] + "\r\n", i++);
 
   //If base is an string then it is an operation.
 
