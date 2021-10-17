@@ -909,7 +909,7 @@ image:
   
   <br /><br />
   
-  We take our remember and divide it by the number we previously divided by which was 5. We go 5&divide;3. We end up with it dividing once, making A=1 with a remainder of 2. We can do this same process two more times before we have 0 remaining.
+  We take our remainder and divide it by the number we previously divided by which was 5. We go 5&divide;3. We end up with it dividing once, making A=1 with a remainder of 2. We can do this same process two more times before we have 0 remaining.
   
   <br /><br />
 
@@ -921,7 +921,7 @@ image:
   
   <br /><br />
   
-  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 as well making the have no Scaling.
+  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 as well (no Scaling).
   
   <br /><br />
   
@@ -981,7 +981,7 @@ image:
 
   <h2>Rational Vs Irrational.</h2>
 
-  In theory, if we could store a infinite number of digits.
+  In theory, if we could store an infinite number of digits.
 
   <br /><br />
 
@@ -1001,7 +1001,7 @@ image:
 
   <br /><br />
 
-  The other method is calculating it in A to B ratio into a pattern. Combined with the quantum matrix: <a href="https://recoskie.github.io/AI-Matrix/docs/Examples.html" target="_blank">Link</a>
+  The other method is calculating A to B ratio square. Finding both A and B. Then solving the number pattern with the quantum matrix: <a href="https://recoskie.github.io/AI-Matrix/docs/Examples.html" target="_blank">Link</a>
 
   <br /><br />
 
