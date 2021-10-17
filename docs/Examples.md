@@ -877,7 +877,7 @@ image:
 
   <h2>At the smallest scale.</h2>
 
-  The Golden ratio is the sub structure to all other numbers. Including all irrational numbers.
+  The Golden ratio is the smallest distance possible per part across a number. It can be added together by adding previous number to the next number creating a set called the Fibonacci sequence.
 
   <br /><br />
 
@@ -897,15 +897,43 @@ image:
 
   <br /><br />
 
-  By adding previous number to next number, and multiplying by each A, and B forums the fraction.
-
+  By adding previous number to next number starting with 0, 1, and multiplying by each A-part creates the numerator. Doing the same thing starting with 1, 0 with B creates the denominator. Which forums the fraction.
+  
+  <br /><br />
+  
+  If we wish to split the fraction 8&divide;5. The value for A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3.
+  
+  <br /><br />
+  
+  We divide the remainder 3 by the value we wish to use for B. In this example we will chose not to scale the remainder smaller going into next part so we will keep B=1.
+  
+  <br /><br />
+  
+  We take our remember and divide it by the number we previously divided by which was 5. We go 5&divide;3. We end up with it dividing once, making A=1 with a remainder of 2. We can do this same process two more times before we have 0 remaining.
+  
   <br /><br />
 
-  All numbers can be split into parts, and then added back to their smallest fraction this way. Except all A, and B parts can be further apart in size.
+  All fractions and numbers can be split into parts, and then added back to their smallest fraction this way. As the number of times A-part goes into numerator will always match even if the fraction is larger than it should be. As 30 by 20 is still the same as 3 by 2 if you split it.
 
   <br /><br />
+  
+  Splitting a number into parts is almost the same process. The number before the decimal point is each A-part. The value 1.6 is A=1 so we take the part away leaving 0.6 remainder.
+  
+  <br /><br />
+  
+  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 as well making the have no Scaling.
+  
+  <br /><br />
+  
+  We divide 0.6 into 1 to find the next part. We go 1&divide;0.6=1.6666666666666. We do the Same A to B process till 0.
+  
+  <br /><br />
+  
+  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction split.
+  
+  <br /><br />
 
-  So the Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by a bigger value than 1. The golden ratio is a direct 1:1 relation to the whole. As it runs through the center.
+  The Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by a bigger value than 1. The golden ratio is a direct 1:1 relation to the whole. As it runs through the center.
 
   <br /><br />
 
@@ -913,19 +941,19 @@ image:
 
   <br /><br />
 
-  You can also create the golden rectangle with the Fibonacci sequence by using the square length of each number.
+  You can also create the golden rectangle with the Fibonacci sequence by using squares of each length of each Fibonacci number.
 
   <br /><br />
 
-  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio. The bigger the rectangle the more accurate the number is.
+  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio per part as well per sqaure. The bigger the rectangle the more accurate the number is.
 
   <br /><br />
 
-  Thus the Fibonacci sequence, and golden ratio is a spiral in nature.
+  The Fibonacci sequence, and golden ratio is a spiral in nature.
 
   <br /><br />
 
-  All numbers have a place along the spiral. Rational numbers are a finite point. While irrational numbers go forever along the spiral. There is no such thing as a random number.
+  All numbers have a place along the spiral. Rational numbers are a finite point. While irrational numbers go forever along the spiral. There is also no such thing as a random number.
 
   <br /><br />
 
@@ -948,6 +976,8 @@ image:
   <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
 
   <br /><br />
+  
+  The golden ratio is the most irrational number as each part across the number per smaller part is exactly 1 away per A=1, and B=1.
 
   <h2>Rational Vs Irrational.</h2>
 
@@ -955,7 +985,7 @@ image:
 
   <br /><br />
 
-  All rational numbers can be split to 0 parts remain. Then added back to smallest fraction using <strong>calcF</strong>.
+  All rational numbers can be split to 0 parts remain across the number. Then added back to smallest fraction using <strong>calcF</strong>.
 
   <br /><br />
 
@@ -1086,7 +1116,7 @@ image:
 
   <br /><br />
 
-  Use the left and right arrows to change the number base. Use the up and down arrows to navigate through all number patterns combinations.
+  Use the left and right arrows to change the number base. Use the up and down arrows to navigate through all number patterns combinations. You might have to zoom in if you are on a small display, or cell phone to use it.
 
   <br /><br />
 
