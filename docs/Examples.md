@@ -1205,11 +1205,11 @@ image:
 
   <br /><br />
 
-  You can encode things like this if you like. When I display the value my name is 0.DAMIAN<div style="display:inline-block;color:#FF0000;">DAMIB</div>.
+  You can encode things like this if you like. When I display the value my name is 0.DAMIAN<div style="display:inline-block;color:#FF0000;">DAMID</div>.
 
   <br /><br />
 
-  It gets cut off at DAMIB the second time. The last digit that should be an A gets rounded up to B, because it is the last digit of accuracy in the floating point value.
+  It gets cut off at DAMID the second time. The last digit should be an A, but it is cut off as it is the last partial digit of accuracy in the floating point value.
 
   <br /><br />
 
