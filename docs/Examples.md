@@ -785,7 +785,11 @@ image:
   
   <br /><br />
   
-  You can also use square root to calculate a number in which All A and B parts are the same using (A&div;2) + &radic;(A<sup>2</sup>&div;4+B).
+  You can also use square root to calculate a number in which All A and B parts are the same using:
+
+  <br /><br />
+  
+  <strong>(A&div;2) + &radic;(A<sup>2</sup>&div;4+B)</strong>
 
   <br /><br />
   
