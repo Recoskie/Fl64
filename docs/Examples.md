@@ -782,10 +782,26 @@ image:
   <br /><br />
 
   In this example we calculate the square root of 23.
+  
+  <br /><br />
+  
+  You can also use square root to calculate a number in which All A and B parts are the same using (A&div;2) + &radic;(A<sup>2</sup>&div;4+B).
 
   <br /><br />
+  
+  Replace A and B with what you want each part to be.
+  
+  <br /><br />
 
-  Also you can calculate the golden ratio as the square root of <strong>0.5+&radic;1.25=1.618033988749895</strong>.
+  We then can calculate the golden ratio as (1&div;2) + &radic;(1<sup>2</sup>&div;4+1).
+  
+  <br /><br />
+  
+  We go 1<sup>2</sup>&div;4 = 0.25 then add the + 1 = 1.25 is the square root, and 1&div;2 is 0.5 which is added to the square root.
+  
+  <br /><br />
+ 
+  Which makes the square root of <strong>0.5+&radic;1.25=1.618033988749895</strong>.
 
   <br /><br />
 
