@@ -809,7 +809,9 @@ image:
   
   <br /><br />
   
-  The example code below uses the calculation with whatever you set A and B to generate a number value. This calculated value should split apart by what you set, A and B equally with 0 remainder. This code basically proves the calculation for you.
+  The example code below uses what you set A and B then uses the calculation to generate the value. The calculated value is then split apart by what you set, A and B equally till 0 remainder. Which proves the calculation.
+  
+  <br /><br />
   
   <code>
     var a = 71, b = -11;
@@ -829,11 +831,11 @@ image:
 
   <br /><br />
 
-  There also is more than one way to line up per A(part) to B(scale) part. As "B" is the scale going to each "A" part.
+  There also is more than one way to line up per A(part) to B(scale) part. As "B" is the scale going to each "A" part. You should always line up the closest A to B and never expand B and make A smaller.
 
   <br /><br />
 
-  There is a method in which you square the remaining part to find the best A to B per part ratio.
+  There is a method in which you square the remaining part to find the best A to B part.
 
   <br /><br />
 
@@ -846,6 +848,8 @@ image:
   <br /><br />
 
   Even numbers you create per digit such as 1.01001000100001. Which the pattern is obvious.
+  
+  <br />
 
   <h2>The Natural logarithm.</h2>
 
