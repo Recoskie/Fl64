@@ -1124,7 +1124,7 @@ image:
   
   <br /><br />
   
-  The pattern does not have to start right away as we can offset the pattern by adding a starting value. Say we want to do a pattern of 23. We need 23&divide;99. Adding an zero to 99 will offset the pattern by one place value 23&divide;990 = 0.023232323. Adding another zero will offset it by another place value 37&divide;9900 = 0.0023232323 and so on. Useing 9900 we can set two place values after the decimal point to whatever we like. Using the calculation (23+r*9900)&divide;9900 in which r is our chosen digits. We multiply 9900 by 97.16 as our chosen digits 9900x97.16=961884 we then add our patten 23 making 961884 + 23 = 961907. Lastly 961884&divide;9900 = 97.16232323232323.
+  The pattern does not have to start right away as we can offset the pattern by adding a starting value. Say we want to do a pattern of 73. We need 73&divide;99. Adding an zero to 99 will offset the pattern by one place value 73&divide;990 = 0.073737373. Adding another zero will offset it by another place value 73&divide;9900 = 0.0073737373 and so on. Useing 9900 we can set two place values after the decimal point to whatever we like. Using the calculation (73+r*9900)&divide;9900 in which r is our chosen digits. We multiply 9900 by 97.16 as our chosen digits 9900x97.16=961884 we then add our patten 73 making 961884 + 73 = 961957. Lastly 961957&divide;9900 = 97.16737373737373.
 
   <br /><br />
 
