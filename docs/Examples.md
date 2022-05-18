@@ -589,7 +589,7 @@ image:
 
   <br /><br />
 
-  An irrational number is a number like this: 1.01001000100001.
+  An irrational number is a number like this: 1.101001000100001.
 
   <br /><br />
 
@@ -847,7 +847,7 @@ image:
 
   <br /><br />
 
-  Even numbers you create per digit such as 1.01001000100001. Which the pattern is obvious.
+  Even numbers you create per digit such as 1.101001000100001. Which the pattern is obvious.
   
   <br />
 
@@ -1121,10 +1121,14 @@ image:
   <br /><br />
 
   In this example you can try it out your self. You can also change the 3&divide;9 (3 / 9) with every value you come up with that is indivisible.
+  
+  <br /><br />
+  
+  The pattern does not have to start right away as we can offset the pattern by adding a starting value. Say we want to do a pattern of 23. We need 23&divide;99. Adding an zero to 99 will offset the pattern by one place value 37&divide;990 = 0.037373737. Adding another zero will offset it by another place value 37&divide;9900 = 0.003737373737 and so on. We can set the two place values after the decimal point to whatever we like. Using the calculation (23+r*9900)&divide;9900 in which r is our chosen digits. We multiply 9900 by 97.16 as our chosen digits 9900x97.16=961884 we then add our patten 23 making 961884 + 23 = 961907. Lastly 961884&divide;9900 = 97.16232323232323.
 
   <br /><br />
 
-  However periodic number patterns relate to the number of digits you are using to display your value in per divisible place value.
+  Periodic number patterns relate to the number of digits you are using to display your value in per divisible place value.
 
   <br /><br />
 
