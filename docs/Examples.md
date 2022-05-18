@@ -806,10 +806,30 @@ image:
   <br /><br />
  
   Which makes the square root of <strong>0.5+&radic;1.25=1.618033988749895</strong>.
+  
+  <br /><br />
+  
+  The example code below uses the calculation with whatever you set A and B to generate a number value. This calculated value should split apart by what you set, A and B equally with 0 remainder. This code basically proves the calculation for you.
+  
+  <code>
+    var a = 71, b = -11;
+
+    var v = a/2 + Math.sqrt(a*a/4 + b);
+
+    console.log( "Calculated value = " + v + "" );
+
+    while( v != 0 ){ v=v.split(a,b); }
+
+    console.log( "Value split in A by B\r\n" + v.toString() );
+  </code>
+  
+  <br /><br />
+  
+  Set <strong>a = 71, b = -11;</strong> to whatever you like, and it will calculate a different number using the math calculation and should always split apart equally in A by B.
 
   <br /><br />
 
-  You have probably realized by now there are many different ways to line up per A(part) to B(scale) part. As "B" is the scale going to each "A" part.
+  There also is more than one way to line up per A(part) to B(scale) part. As "B" is the scale going to each "A" part.
 
   <br /><br />
 
