@@ -507,9 +507,9 @@
         g2d.strokeStyle = "#FF0000";
         
         var aCenter = amx - (arng / 2);
-        var axc = Math.abs( 198.5 / (aCenter - amn) );
+        var axc = -198.5 / (aCenter - amn);
         var bCenter = bmx - (brng / 2);
-        var bxc = Math.abs( 198.5 / (bCenter - bmn) );
+        var bxc = -198.5 / (bCenter - bmn);
 
         if( !isFinite(axc) ){ axc = 1; }
         if( !isFinite(bxc) ){ bxc = 1; }
