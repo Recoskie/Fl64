@@ -481,7 +481,7 @@
       
       g2d.beginPath();
       
-      var fc = (f.length-1)/1254;
+      var fc = (f.length-1)/1252;
       
       g2d.strokeStyle = "#00FF00";
       g2d.fillStyle = "#0000FF"
@@ -507,25 +507,25 @@
         g2d.strokeStyle = "#FF0000";
         
         var aCenter = amx - (arng / 2);
-        var axc = Math.abs( 200 / (aCenter - amn) );
+        var axc = Math.abs( 199 / (aCenter - amn) );
         var bCenter = bmx - (brng / 2);
-        var bxc = Math.abs( 200 / (bCenter - bmn) );
+        var bxc = Math.abs( 199 / (bCenter - bmn) );
 
-        if( axc >= 1 || isNaN(axc) ){ axc = 1; }
-        if( bxc >= 1 || isNaN(bxc) ){ bxc = 1; }
+        if( !isFinite(axc) ){ axc = 1; }
+        if( !isFinite(bxc) ){ bxc = 1; }
       
-        g2d.moveTo(201.5+((aCenter - f.a[0])*axc)&-1,40);
+        g2d.moveTo((200+((aCenter - f.a[0])*axc))&-1,41);
       
-        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(201.5+((aCenter - f.a[p])*axc)&-1,i+40);
+          g2d.lineTo((200+((aCenter - f.a[p])*axc))&-1,i+41);
         }
       
-        g2d.moveTo(601.5+((bCenter - f.b[0])*bxc)&-1,40);
+        g2d.moveTo(600+(((bCenter - f.b[0])*bxc))&-1,41);
       
-        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(601.5+((bCenter - f.b[p])*bxc)&-1,i+40);
+          g2d.lineTo((600+((bCenter - f.b[p])*bxc))&-1,i+41);
         }
       }
       else
@@ -548,25 +548,25 @@
         g2d.strokeStyle = "#FF0000";
         
         var aCenter = amx - (arng / 2);
-        var axc = 200 / (aCenter - amn);
+        var axc = 199 / (aCenter - amn);
         var bCenter = bmx - (brng / 2);
-        var bxc = 200 / (bCenter - bmn);
+        var bxc = 199 / (bCenter - bmn);
 
-        if( axc >= 1 || isNaN(axc) ){ axc = 1; }
-        if( bxc >= 1 || isNaN(bxc) ){ bxc = 1; }
+        if( !isFinite(axc) ){ axc = 1; }
+        if( !isFinite(bxc) ){ bxc = 1; }
       
-        g2d.moveTo(40,201.5+((aCenter - f.a[0])*axc)&-1);
+        g2d.moveTo(41,(200+((aCenter - f.a[0])*axc))&-1);
       
-        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,201.5+((aCenter - f.a[p])*axc)&-1);
+          g2d.lineTo(i+41,(200+((aCenter - f.a[p])*axc))&-1);
         }
       
-        g2d.moveTo(40,601.5+((bCenter - f.b[0])*bxc)&-1);
+        g2d.moveTo(41,(600+((bCenter - f.b[0])*bxc))&-1);
       
-        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,601.5+((bCenter - f.b[p])*bxc)&-1);
+          g2d.lineTo(i+41,(600+((bCenter - f.b[p])*bxc))&-1);
         }
       }
       
