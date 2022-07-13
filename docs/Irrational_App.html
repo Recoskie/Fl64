@@ -497,8 +497,8 @@
         g2d.strokeRect(0,0,400,40);
         g2d.strokeRect(400,0,400,40);
         
-        g2d.fillText("A", 400/2, 35);
-        g2d.fillText("B", 400/2+400, 35);
+        g2d.fillText("A", 185, 35);
+        g2d.fillText("B", 585, 35);
         
         g2d.stroke();
         
@@ -507,25 +507,25 @@
         g2d.strokeStyle = "#FF0000";
         
         var aCenter = amx - (arng / 2);
-        var axc = Math.abs( 199 / (aCenter - amn) );
+        var axc = Math.abs( 198.5 / (aCenter - amn) );
         var bCenter = bmx - (brng / 2);
-        var bxc = Math.abs( 199 / (bCenter - bmn) );
+        var bxc = Math.abs( 198.5 / (bCenter - bmn) );
 
         if( !isFinite(axc) ){ axc = 1; }
         if( !isFinite(bxc) ){ bxc = 1; }
       
-        g2d.moveTo((200+((aCenter - f.a[0])*axc))&-1,41);
+        g2d.moveTo((200.5+((aCenter - f.a[0])*axc))&-1,41);
       
         for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo((200+((aCenter - f.a[p])*axc))&-1,i+41);
+          g2d.lineTo((200.5+((aCenter - f.a[p])*axc))&-1,i+41);
         }
       
-        g2d.moveTo(600+(((bCenter - f.b[0])*bxc))&-1,41);
+        g2d.moveTo(600.5+(((bCenter - f.b[0])*bxc))&-1,41);
       
         for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo((600+((bCenter - f.b[p])*bxc))&-1,i+41);
+          g2d.lineTo((600.5+((bCenter - f.b[p])*bxc))&-1,i+41);
         }
       }
       else
@@ -533,13 +533,13 @@
         //Draw rects.
 
         g2d.clearRect(0,0,1294,800);
-        g2d.strokeRect(40,0,1294,400);
-        g2d.strokeRect(40,400,1294,400);
+        g2d.strokeRect(40,0,1254,400);
+        g2d.strokeRect(40,400,1254,400);
         g2d.strokeRect(0,0,40,400);
         g2d.strokeRect(0,400,40,400);
         
-        g2d.fillText("A", 5, 400/2);
-        g2d.fillText("B", 5, 400/2+400);
+        g2d.fillText("A", 5, 215);
+        g2d.fillText("B", 5, 615);
         
         g2d.stroke();
         
@@ -548,25 +548,25 @@
         g2d.strokeStyle = "#FF0000";
         
         var aCenter = amx - (arng / 2);
-        var axc = 199 / (aCenter - amn);
+        var axc = 198.5 / (aCenter - amn);
         var bCenter = bmx - (brng / 2);
-        var bxc = 199 / (bCenter - bmn);
+        var bxc = 198.5 / (bCenter - bmn);
 
         if( !isFinite(axc) ){ axc = 1; }
         if( !isFinite(bxc) ){ bxc = 1; }
       
-        g2d.moveTo(41,(200+((aCenter - f.a[0])*axc))&-1);
+        g2d.moveTo(41,(200.5+((aCenter - f.a[0])*axc))&-1);
       
         for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,(200+((aCenter - f.a[p])*axc))&-1);
+          g2d.lineTo(i+41,(200.5+((aCenter - f.a[p])*axc))&-1);
         }
       
-        g2d.moveTo(41,(600+((bCenter - f.b[0])*bxc))&-1);
+        g2d.moveTo(41,(600.5+((bCenter - f.b[0])*bxc))&-1);
       
         for(var i = 1, p = 0; i < 1252; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,(600+((bCenter - f.b[p])*bxc))&-1);
+          g2d.lineTo(i+41,(600.5+((bCenter - f.b[p])*bxc))&-1);
         }
       }
       
