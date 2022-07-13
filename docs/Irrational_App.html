@@ -458,6 +458,26 @@
       document.getElementById("g").hidden = false;
       
       var f = Fracts.get();
+
+      //min/max value in set A and B.
+
+      var amx = f.a[0], amn = f.a[0];
+      var bmx = f.b[0], bmn = f.b[0];
+
+      for( var i = 1; i < f.length; i++ )
+      {
+        if( amx < f.a[i] ){ amx = f.a[i]; }
+        if( amn > f.a[i] ){ amn = f.a[i]; }
+        if( bmx < f.b[i] ){ bmx = f.b[i]; }
+        if( bmn > f.b[i] ){ bmn = f.b[i]; }
+      }
+
+      //Range of movement in set A and B.
+
+      var arng = amx - amn;
+      var brng = bmx - bmn;
+
+      //begin the plotting function.
       
       g2d.beginPath();
       
@@ -483,24 +503,29 @@
         g2d.stroke();
         
         //Plot
-        
+
         g2d.strokeStyle = "#FF0000";
         
-        var axc = 358/f.a[f.length-1];
-        var bxc = 358/f.b[f.length-1];
+        var aCenter = amx - (arng / 2);
+        var axc = Math.abs( 200 / (aCenter - amn) );
+        var bCenter = bmx - (brng / 2);
+        var bxc = Math.abs( 200 / (bCenter - bmn) );
+
+        if( axc >= 1 || isNaN(axc) ){ axc = 1; }
+        if( bxc >= 1 || isNaN(bxc) ){ bxc = 1; }
       
-        g2d.moveTo((1.5+f.a[0]*axc)&-1,41);
+        g2d.moveTo(201.5+((aCenter - f.a[0])*axc)&-1,40);
       
         for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo((1.5+f.a[p]*axc)&-1,i+40);
+          g2d.lineTo(201.5+((aCenter - f.a[p])*axc)&-1,i+40);
         }
       
-        g2d.moveTo((401.5+(f.b[0]*bxc))&-1,41);
+        g2d.moveTo(601.5+((bCenter - f.b[0])*bxc)&-1,40);
       
         for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo((401.5+(f.b[p]*bxc))&-1,i+40);
+          g2d.lineTo(601.5+((bCenter - f.b[p])*bxc)&-1,i+40);
         }
       }
       else
@@ -522,21 +547,26 @@
         
         g2d.strokeStyle = "#FF0000";
         
-        var axc = 398/f.a[f.length-1];
-        var bxc = 398/f.b[f.length-1];
+        var aCenter = amx - (arng / 2);
+        var axc = 200 / (aCenter - amn);
+        var bCenter = bmx - (brng / 2);
+        var bxc = 200 / (bCenter - bmn);
+
+        if( axc >= 1 || isNaN(axc) ){ axc = 1; }
+        if( bxc >= 1 || isNaN(bxc) ){ bxc = 1; }
       
-        g2d.moveTo(41,(1.5+f.a[0]*axc)&-1);
+        g2d.moveTo(40,201.5+((aCenter - f.a[0])*axc)&-1);
       
         for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,(1.5+f.a[p]*axc)&-1);
+          g2d.lineTo(i+41,201.5+((aCenter - f.a[p])*axc)&-1);
         }
       
-        g2d.moveTo(41,(401.5+(f.b[0]*bxc))&-1);
+        g2d.moveTo(40,601.5+((bCenter - f.b[0])*bxc)&-1);
       
         for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
         {
-          g2d.lineTo(i+41,(401.5+(f.b[p]*bxc))&-1);
+          g2d.lineTo(i+41,601.5+((bCenter - f.b[p])*bxc)&-1);
         }
       }
       
