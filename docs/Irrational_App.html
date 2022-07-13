@@ -30,8 +30,32 @@
     {
       background-color: rgba(255, 255, 255, 0.50);
     }
+    
+    .cc
+    {
+      position: fixed;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      bottom: 0px;
+      z-index: 1;
+      background-color: Black;
+    }
+
+   .cg
+   {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     left: 0px;
+     top: 0px;
+     z-index: 1;
+    }
     -->
   </style>
+  <div id="g" class="cc" onclick="document.getElementById('g').hidden = true;" hidden="true">
+    <canvas width="800" height="1294" id="gr" class="cg"></canvas>
+  </div>
   <script src="../FL64.js" type="text/javascript"></script>
   <script src="../FL64-UI.js" type="text/javascript"></script>
   <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
@@ -39,6 +63,14 @@
     //Cf is default Algorithm.
     
     var alg = 0;
+    
+    //Graphics object for plotting data.
+    
+    var g2d = document.getElementById("gr").getContext("2d");
+    
+    //If vertical or horzontal.
+    
+    var hr = true;
     
     //Setup convergent bar.
 
@@ -97,16 +129,21 @@
       var w = window.innerWidth, h = window.innerHeight;
 
       //If width is longer do regular row alignment.
+      
+      hr = w < h;
 
-      if (CVerg.Vertical && w > h) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; }
+      if (CVerg.Vertical && !hr) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; document.getElementById("gr").width=1294; document.getElementById("gr").height=800; }
 
       //Else lay the bars out side by side in cells.
 
-      else if (!CVerg.Vertical && w < h) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; }
+      else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; document.getElementById("gr").height=1294; document.getElementById("gr").width=800; }
 
       //Update the page elements b1, and b2 to proper width and dimensions.
       
       CVerg.auto(); Fracts.auto();
+    
+      //Replot the canvas.
+      if( document.getElementById('g').hidden == false ) { plot(); }
     }
 
     //Update the convergent bar on creating a new number in FBar.
@@ -411,6 +448,96 @@
       }
     }
     
+    function plot()
+    {
+      document.getElementById('g').hidden = false;
+      
+      var f = Fracts.get();
+      
+      g2d.beginPath();
+      
+      g2d.clearRect(0,0,800,1294);
+      
+      var fc = (f.length-1)/1254;
+      
+      g2d.strokeStyle = "#00FF00";
+      g2d.fillStyle = "#0000FF"
+      g2d.font = "40px Arial";
+      
+      if( hr )
+      {
+        //Draw rects.
+        
+        g2d.strokeRect(0,0,400,1294);
+        g2d.strokeRect(400,0,400,1294);
+        g2d.strokeRect(0,0,400,40);
+        g2d.strokeRect(400,0,400,40);
+        
+        g2d.fillText("A", 400/2, 35);
+        g2d.fillText("B", 400/2+400, 35);
+        
+        g2d.stroke();
+        
+        //Plot
+        
+        g2d.strokeStyle = "#FF0000";
+        
+        var axc = 358/f.a[f.length-1];
+        var bxc = 358/f.b[f.length-1];
+      
+        g2d.moveTo((1.5+f.a[0]*axc)&-1,41);
+      
+        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        {
+        g2d.lineTo((1.5+f.a[p]*axc)&-1,i+40);
+        }
+      
+        g2d.moveTo((401.5+(f.b[0]*bxc))&-1,41);
+      
+        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        {
+          g2d.lineTo((401.5+(f.b[p]*bxc))&-1,i+40);
+        }
+      }
+      else
+      {
+        //Draw rects.
+        
+        g2d.strokeRect(40,0,1294,400);
+        g2d.strokeRect(40,400,1294,400);
+        g2d.strokeRect(0,0,40,400);
+        g2d.strokeRect(0,400,40,400);
+        
+        g2d.fillText("A", 5, 400/2);
+        g2d.fillText("B", 5, 400/2+400);
+        
+        g2d.stroke();
+        
+        //Plot
+        
+        g2d.strokeStyle = "#FF0000";
+        
+        var axc = 398/f.a[f.length-1];
+        var bxc = 398/f.b[f.length-1];
+      
+        g2d.moveTo(41,(1.5+f.a[0]*axc)&-1);
+      
+        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        {
+          g2d.lineTo(i+41,(1.5+f.a[p]*axc)&-1);
+        }
+      
+        g2d.moveTo(41,(401.5+(f.b[0]*bxc))&-1);
+      
+        for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
+        {
+          g2d.lineTo(i+41,(401.5+(f.b[p]*bxc))&-1);
+        }
+      }
+      
+      g2d.stroke(); g2d.closePath();
+    }
+    
     function reset()
     {
       var n = alg > 0 ? new TNumber() : NaN;
@@ -444,6 +571,9 @@
         </td>
         <td>
           <center>Accuracy</center>
+        </td>
+        <td rowspan="2">
+          <center><input type="button" onclick="plot();" value="Plot" /></center>
         </td>
       </tr>
       <tr>
