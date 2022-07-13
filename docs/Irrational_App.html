@@ -39,7 +39,7 @@
       top: 0px;
       bottom: 0px;
       z-index: 1;
-      background-color: Black;
+      background: rgba(40, 40, 40, 0.80);
     }
 
    .cg
@@ -53,8 +53,8 @@
     }
     -->
   </style>
-  <div id="g" class="cc" onclick="document.getElementById('g').hidden = true;" hidden="true">
-    <canvas width="800" height="1294" id="gr" class="cg"></canvas>
+  <div id="g" class="cc" onclick="this.hidden = true;" hidden="true">
+    <canvas width="1294" height="800" id="gr" class="cg"></canvas>
   </div>
   <script src="../FL64.js" type="text/javascript"></script>
   <script src="../FL64-UI.js" type="text/javascript"></script>
@@ -63,10 +63,14 @@
     //Cf is default Algorithm.
     
     var alg = 0;
+
+    //Graphics area used for adjusting width and height and visabilty.
+
+    var gar = document.getElementById("gr");
     
     //Graphics object for plotting data.
     
-    var g2d = document.getElementById("gr").getContext("2d");
+    var g2d = gar.getContext("2d");
     
     //If vertical or horzontal.
     
@@ -132,17 +136,18 @@
       
       hr = w < h;
 
-      if (CVerg.Vertical && !hr) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; document.getElementById("gr").width=1294; document.getElementById("gr").height=800; }
+      if (CVerg.Vertical && !hr) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
 
       //Else lay the bars out side by side in cells.
 
-      else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; document.getElementById("gr").height=1294; document.getElementById("gr").width=800; }
+      else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
 
       //Update the page elements b1, and b2 to proper width and dimensions.
       
       CVerg.auto(); Fracts.auto();
     
       //Replot the canvas.
+
       if( document.getElementById('g').hidden == false ) { plot(); }
     }
 
@@ -450,13 +455,11 @@
     
     function plot()
     {
-      document.getElementById('g').hidden = false;
+      document.getElementById("g").hidden = false;
       
       var f = Fracts.get();
       
       g2d.beginPath();
-      
-      g2d.clearRect(0,0,800,1294);
       
       var fc = (f.length-1)/1254;
       
@@ -468,6 +471,7 @@
       {
         //Draw rects.
         
+        g2d.clearRect(0,0,800,1294);
         g2d.strokeRect(0,0,400,1294);
         g2d.strokeRect(400,0,400,1294);
         g2d.strokeRect(0,0,400,40);
@@ -489,7 +493,7 @@
       
         for(var i = 1, p = 0; i < 1254; p=(fc*(i++)+0.5)&-1 )
         {
-        g2d.lineTo((1.5+f.a[p]*axc)&-1,i+40);
+          g2d.lineTo((1.5+f.a[p]*axc)&-1,i+40);
         }
       
         g2d.moveTo((401.5+(f.b[0]*bxc))&-1,41);
@@ -502,7 +506,8 @@
       else
       {
         //Draw rects.
-        
+
+        g2d.clearRect(0,0,1294,800);
         g2d.strokeRect(40,0,1294,400);
         g2d.strokeRect(40,400,1294,400);
         g2d.strokeRect(0,0,40,400);
