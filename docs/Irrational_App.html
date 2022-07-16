@@ -413,6 +413,8 @@
       
       if( !isNaN(n_ac) )
       {
+        n_ac = n_ac.primitive();
+        
         if( alg <= 0 )
         {
           Fracts.set((input == 0 ? new Number(n_ac) : new Fract(n_ac.x, n_ac.y)).limit(CutOff).splitAll());
@@ -621,7 +623,7 @@
             <option value="1">Cf(A=A)</option>
             <option value="2">Cf(A=A,B>=B)</option>
             <option value="3">Tf</option>
-            <option value="4">Tf-\+</option>
+            <option value="4">Tf(-\+)</option>
           </select>
         </td>
         <td>
