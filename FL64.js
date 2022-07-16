@@ -229,6 +229,15 @@ Number.prototype.reFact = false;
 //Split a number, or Fraction and return the object.
 //*****************************************************************************************************
 
+Number.prototype.rA = false; Number.prototype.rB = false;
+
+function cfAdj( A, B )
+{
+  Number.prototype.rA = A;
+  Number.prototype.rB = B;
+  Number.prototype.reFact = A || B;
+}
+
 Number.prototype.split = function (a, b)
 {
   if (this.r[this.length] === 0) { return (this); }
@@ -242,6 +251,8 @@ Number.prototype.split = function (a, b)
     var n = this.primitive();
 
     a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
+    
+    if( !isNaN(n) && this.rA ){ b = Math.ceil(a/(1/(n-a))); }
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
@@ -281,9 +292,33 @@ Number.prototype.split = function (a, b)
 
   var n = this.r[this.length];
 
-  //Split value a by b. Or by default scale a=int, b=1.
+  //Split value a by b. Default is a=int, b=1.
 
   a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
+  
+  //If rA is active adjust the value for B so that the next value for A is as close to the previous value for A.
+        
+  if( this.rA )
+  {
+    var r = Math.ceil(a/(1/(n-a)));
+    
+    //Allow the value for B to be adjusted higher than r.
+    
+    var s = r < 0 ? -1 : 1;
+    if( b * s < r * s ) { b = r; }
+  }
+  
+  //Force b >= b.
+  
+  if( this.rB )
+  {
+    var s = this.b[this.length-1] < 0 ? -1 : 1;
+    
+    if( b * s < this.b[this.length-1] * s )
+    {
+      b = this.b[this.length-1];
+    }
+  }
 
   //Add a by b point.
 

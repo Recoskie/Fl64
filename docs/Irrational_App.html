@@ -64,7 +64,7 @@
   <script type="text/javascript">
     //Cf is default Algorithm.
     
-    var alg = 0;
+    var alg = -2;
 
     //Graphics area used for adjusting width and height and visabilty.
 
@@ -123,7 +123,7 @@
         
         CVerg.set(n.primitive().splitAll());
         
-        Fracts.set((alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
+        Fracts.set((alg <= 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).splitAll());
       }
     }
 
@@ -159,7 +159,7 @@
     {
       //Update n_ac number.
 
-      if( input == 1 && alg == 0 ) { n_ac = n.calcF(); } else { n_ac = n.calc(); }
+      if( input == 1 && alg <= 0 ) { n_ac = n.calcF(); } else { n_ac = n.calc(); }
       
       //Update input/output.
       
@@ -197,11 +197,11 @@
     {
       var sing = type < 0 ? -1 : 1, type = Math.abs(type) || 0;
       
-      if( alg == 0 )
+      if( alg <= 0 )
       {
         if (type == 0)
         {
-           document.getElementById("Exp").innerHTML = "<table border='1'><tr><td rowspan='2'>Load Example:</td>\
+          document.getElementById("Exp").innerHTML = alg == -2 ? "<table border='1'><tr><td rowspan='2'>Load Example:</td>\
 <td><input type='button' value='Golden Ratio' onclick='LoadExample(1);' /><input type='button' value='-Golden Ratio' onclick='LoadExample(-1);' /></td>\
 <td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-2);' /></td>\
 <td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='-&radic;"+ sq + "' onclick='LoadExample(-4);' />\
@@ -210,7 +210,7 @@
 <input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
 <td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />\
 <input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
-<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></table>";
+<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></table>" : "";
         }
         else
         {
@@ -324,7 +324,7 @@
         {
           document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='Natural LOG' onclick='LoadExample(1);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-1);' /></td><td><input type='button' value='PI' onclick='LoadExample(2);' /><input type='button' value='-PI' onclick='LoadExample(-2);' /></td></table>";
         }
-        else
+        else if( alg == 2 )
         {
           //Solve the natural logarithm.
 
@@ -408,12 +408,12 @@
     
     function changeAlg(s)
     {
-      alg = s & 0x03;
+      alg = s - 2; cfAdj(alg >= -1, alg == 0);
       Fracts.update(true); Trans.reset();
       
       if( !isNaN(n_ac) )
       {
-        if( alg == 0 )
+        if( alg <= 0 )
         {
           Fracts.set((input == 0 ? new Number(n_ac) : new Fract(n_ac.x, n_ac.y)).limit(CutOff).splitAll());
         }
@@ -424,7 +424,7 @@
       }
       else
       {
-        Fracts.set(alg == 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
+        Fracts.set(alg <= 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
       }
       
       update(); LoadExample();
@@ -618,8 +618,10 @@
         <td>
           <select onchange="changeAlg(this.value);" style="width:100%;">
             <option value="0">Cf</option>
-            <option value="1">Tf</option>
-            <option value="2">Tf-\+</option>
+            <option value="1">Cf(A=A)</option>
+            <option value="2">Cf(A=A,B>=B)</option>
+            <option value="3">Tf</option>
+            <option value="4">Tf-\+</option>
           </select>
         </td>
         <td>
