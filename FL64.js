@@ -503,7 +503,7 @@ Number.prototype.setA = function (el, v)
 {
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
-  n = n.split(v, bb[el]); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
+  n = n.split(v, bb[el]); while (el < End) { el += 1; n = n.split(ba[el], bb[el]); }
 
   return(n);
 };
@@ -518,7 +518,7 @@ Number.prototype.setB = function (el, v)
 
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
-  n = n.split(ba[el], v); while (n.length < End) { el += 1; n = n.split(ba[el], bb[el]); }
+  n = n.split(ba[el], v); while (el < End) { el += 1; n = n.split(ba[el], bb[el]); }
 
   return (n);
 };
