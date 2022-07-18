@@ -4,7 +4,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-mobile-web-app-title" content="FL64">
-  <meta name="viewport" content="width=device-width, initial-scale=0.5">
+  <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5" id="vp" />
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
@@ -67,7 +67,16 @@
   <script type="text/javascript">
     //Body onresize dose not always get called on ios.
     
-    var mobile = !isNaN( window.orientation );
+    var mobile = !isNaN( window.orientation ), eventVP = true;
+    
+    function resetVP()
+    {
+      document.getElementById("vp").content = 'initial-scale=0.5';
+      
+      document.removeEventListener("gesturestart", resetVP);
+      
+      eventVP = true;
+    }
     
     if( mobile )
     {
@@ -147,6 +156,13 @@
 
     function update()
     {
+      if( mobile && eventVP )
+      {
+        document.getElementById("vp").content='width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5';
+        
+        document.addEventListener("gesturestart", resetVP, eventVP = false);
+      }
+      
       var ng = document.getElementById("group");
       var w = window.innerWidth, h = window.innerHeight;
 
