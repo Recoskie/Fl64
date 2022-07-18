@@ -4,7 +4,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-mobile-web-app-title" content="FL64">
-  <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5" id="vp" />
+  <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no" id="vp" />
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
@@ -71,7 +71,7 @@
     
     function resetVP()
     {
-      document.getElementById("vp").content = 'initial-scale=0.5';
+      document.getElementById("vp").content = "initial-scale=0.5, user-scalable=yes";
       
       document.removeEventListener("gesturestart", resetVP);
       
@@ -158,7 +158,7 @@
     {
       if( mobile && eventVP )
       {
-        document.getElementById("vp").content='width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5';
+        document.getElementById("vp").content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
         
         document.addEventListener("gesturestart", resetVP, eventVP = false);
       }
