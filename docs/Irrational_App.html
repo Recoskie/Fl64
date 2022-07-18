@@ -73,7 +73,7 @@
     {
       document.getElementById("vp").content = "initial-scale=0.5, user-scalable=yes";
       
-      document.removeEventListener("gesturestart", resetVP);
+      document.removeEventListener("touchstart", resetVP);
       
       eventVP = true;
     }
@@ -160,7 +160,7 @@
       {
         document.getElementById("vp").content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
         
-        document.addEventListener("gesturestart", resetVP, eventVP = false);
+        document.addEventListener("touchstart", resetVP, eventVP = false);
       }
       
       var ng = document.getElementById("group");
