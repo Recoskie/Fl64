@@ -4,6 +4,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-mobile-web-app-title" content="FL64">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5">
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
@@ -64,6 +65,10 @@
   <script src="../FL64-UI.js" type="text/javascript"></script>
   <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
   <script type="text/javascript">
+    //Body onresize dose not always get called on ios.
+      
+    window.onorientationchange = update;
+    
     //Cf is default Algorithm.
     
     var alg = -2;
@@ -135,6 +140,8 @@
     {
       var ng = document.getElementById("group");
       var w = window.innerWidth, h = window.innerHeight;
+      
+      console.log(window.orientation);
 
       //If width is longer do regular row alignment.
       
