@@ -235,7 +235,7 @@ function cfAdj( A, B )
 {
   Number.prototype.rA = A;
   Number.prototype.rB = B;
-  Number.prototype.reFact = A || B;
+  Number.prototype.abLim = Number.prototype.reFact = A || B;
 }
 
 Number.prototype.split = function (a, b)
@@ -300,11 +300,12 @@ Number.prototype.split = function (a, b)
         
   if( this.rA )
   {
-    var r = Math.ceil(a/(1/(n-a)));
+    var r = a/(1/(n-a)), s = r < 0 ? -1 : 1;
+    
+    r = Math.ceil( r * s ) * s;
     
     //Allow the value for B to be adjusted higher than r.
     
-    var s = r < 0 ? -1 : 1;
     if( b * s < r * s ) { b = r; }
   }
   
