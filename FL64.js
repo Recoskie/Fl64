@@ -504,6 +504,8 @@ Number.prototype.setA = function (el, v)
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
   n = n.split(v, bb[el]); while (el < End) { el += 1; n = n.split(ba[el], bb[el]); }
+  
+  while( End < this.length ) { this.length -= 1; n.a.pop(); n.b.pop(); }
 
   return(n);
 };
@@ -519,6 +521,8 @@ Number.prototype.setB = function (el, v)
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
   n = n.split(ba[el], v); while (el < End) { el += 1; n = n.split(ba[el], bb[el]); }
+  
+  while( End < this.length ) { this.length -= 1; n.a.pop(); n.b.pop(); }
 
   return (n);
 };
