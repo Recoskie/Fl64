@@ -197,7 +197,7 @@
       
       n = n_ac.splitAll();
 
-      CVerg.set(n); this.set(n);
+      CVerg.set(n); this.set(alg <= 0 ? n.limit(CutOff) : (alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
 
       //Change to number type only.
 
