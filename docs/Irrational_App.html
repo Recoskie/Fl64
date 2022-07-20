@@ -612,7 +612,7 @@
     
     function reset()
     {
-      var n = alg > 0 ? new TNumber() : NaN;
+      var n = alg <= 0 ? NaN : alg == 1 ? new FNumber() : new TNumber();
       
       Fracts.set(n); Trans.reset();
       
