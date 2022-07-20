@@ -252,7 +252,16 @@ Number.prototype.split = function (a, b)
 
     a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
     
-    if( !isNaN(n) && this.rA ){ b = Math.ceil(a/(1/(n-a))); }
+    if( !isNaN(n) && this.rA )
+    {
+      b = a/(1/(n-a));
+     
+      var s = b < 0 ? -1 : 1;
+      
+      b = Math.ceil( b * s ) * s;
+      
+      b = b == 0 ? 1 : b;
+    }
 
     this.tx = [0]; this.ty = [1];
     this.fx = [1]; this.fy = [0];
@@ -320,6 +329,10 @@ Number.prototype.split = function (a, b)
       b = this.b[this.length-1];
     }
   }
+  
+  //The value for b should never be zero.
+  
+  b = b == 0 ? 1 : b;
 
   //Add a by b point.
 

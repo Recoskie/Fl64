@@ -440,7 +440,7 @@
     
     function changeAlg(s)
     {
-      alg = s - 2; cfAdj(alg >= -1, alg == 0);
+      alg = s - 2; cfAdj(alg == -1 || alg == 0, alg == 0);
       Fracts.update(true); Trans.reset();
       
       if( !isNaN(n_ac) )
