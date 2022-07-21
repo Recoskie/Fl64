@@ -385,7 +385,7 @@ FNumber.prototype.split = function (a, b)
   {
     //Denominator can not be made smaller once it is incremented in a number expansion.
 
-    a = ( a || 0 ) < this.a[this.length - 1] ? this.a[this.length - 1] : a;
+    a = ((a = ( a || 1 )) < this.a[this.length - 1] ? this.a[this.length - 1] : a);
 
     //New factor must expand past at least +1 past current factor.
     
@@ -416,7 +416,13 @@ FNumber.prototype.split = function (a, b)
   {
     if( a && b ) { if( ( a / b ) > this.r[0] ){ a = null; b = null; } }
     
-    this.a = [a || Math.floor( this.r[0] )]; this.b = [b || 1];
+    //Zero can not be used.
+    
+    if( (this.a = [a || Math.floor( this.r[0] )])[0] == 0 )
+    {
+      this.a = [1]; this.b = [Math.round( 2 / this.r[0] )];
+    }
+    else{ this.b = [b || 1]; }
 
     this.val[1] = this.a[0] / this.b[0];
 
