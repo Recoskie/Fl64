@@ -254,13 +254,13 @@ Number.prototype.split = function (a, b)
     
     if( !isNaN(n) && this.rA )
     {
-      b = a/(1/(n-a));
-     
-      var s = b < 0 ? -1 : 1;
-      
-      b = Math.ceil( b * s ) * s;
-      
-      b = b == 0 ? 1 : b;
+      var r = a/(1/(n-a)), s = r < 0 ? -1 : 1;
+    
+      r = Math.ceil( r * s ) * s;
+    
+      //Allow the value for B to be adjusted higher than r.
+    
+      if( b * s < r * s ) { b = r; }
     }
 
     this.tx = [0]; this.ty = [1];
