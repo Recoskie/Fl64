@@ -356,43 +356,41 @@
         {
           document.getElementById("Exp").innerHTML = "<table border='1'><tr><td>Load Example:</td><td><input type='button' value='Natural LOG' onclick='LoadExample(1);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-1);' /></td><td><input type='button' value='PI' onclick='LoadExample(2);' /><input type='button' value='-PI' onclick='LoadExample(-2);' /></td></table>";
         }
-        else if( alg == 2 )
+        
+        //Solve the natural logarithm.
+
+        if (type == 1)
         {
-          //Solve the natural logarithm.
-
-          if (type == 1)
-          {
-            ac = 44; setAC();
+          ac = 44; setAC();
             
-            n = new FNumber( 2.718281828459045 * sing ).limit(CutOff);
+          n = new FNumber( 2.718281828459045 * sing ).limit(CutOff);
 
-            n_ac = n.primitive();
+          n_ac = n.primitive();
 
-            CVerg.set(n.splitAll());
+          CVerg.set(n.splitAll());
             
-            Fracts.set(n);
+          Fracts.set(n);
             
-            eval("var a = function(x)\r\n\{\r\n\  return(x);\r\n\}; var b = function(x)\r\n\{\r\n\  for(var i = 0, pf = 1; i < x; pf*=(++i));\r\n\  return( pf );\r\n\};");
+          eval("var a = function(x)\r\n\{\r\n\  return(x);\r\n\}; var b = function(x)\r\n\{\r\n\  for(var i = 0, pf = 1; i < x; pf*=(++i));\r\n\  return( pf );\r\n\};");
             
-            Trans.index = 0; Trans.setF(a,b);
-          }
+          Trans.index = 0; Trans.setF(a,b);
+        }
           
-          //Solve the number PI.
+        //Solve the number PI.
 
-          if (type == 2)
-          {
-            ac = 44; setAC();
+        if (type == 2)
+        {
+          ac = 44; setAC();
           
-            n = new FNumber(Math.PI * sing).limit(CutOff);
+          n = new FNumber(Math.PI * sing).limit(CutOff);
 
-            n_ac = n.primitive();
+          n_ac = n.primitive();
           
-            CVerg.set(n.primitive().splitAll()); 
+          CVerg.set(n.primitive().splitAll()); 
           
-            Fracts.set(n);
+          Fracts.set(n);
 
-            Trans.index = 0; Trans.set([8,0,0],[3,32,32]);
-          }
+          Trans.index = 0; Trans.set([8,0,0],[3,32,32]);
         }
       }
       else if( alg == 2 )
