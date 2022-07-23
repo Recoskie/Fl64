@@ -620,6 +620,19 @@
       
       update(); UpdateI();
     }
+    
+    function adjAC()
+    {
+      if( v = prompt("Percentage you want to cut the number off at.") )
+      {
+        if( isNaN( v = parseInt(v, 10) ) )
+        { 
+          alert("Please enter an valid Number!"); return;
+        }
+      }
+      
+      ac = Math.min(Math.max(v,1),100); setAC();
+    }
   </script>
   <center>
     <table style="width:100%;" border="1">
@@ -666,7 +679,7 @@
           <input type="button" style="width:100%;" value="Split Value." onclick="GetInput();">
         </td>
         <td>
-          <center><input type="button" value="&#x2191;" onclick="ac=Math.min(ac+1,100);setAC();" /><div style="display:inline;" id="ac">100</div>%<input type="button" value="&#x2193;" onclick="ac=Math.max(ac-1,1);setAC();" /></center>
+          <center><div style="display:inline;" id="ac">100</div>%<input type="button" value="SetAC" onclick="adjAC();" /></center>
         </td>
         <td>
           <center><div id="r">?</div></center>
