@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
-<body onload="update(); Trans.update(); LoadExample();">
+<body onload="update(true); Trans.update(); LoadExample();">
   <style type="text/css">
     <!--
     body
@@ -154,7 +154,7 @@
 
     //Switch div elements between cell and row alignment based on window dimensions.
 
-    function update()
+    function update(init)
     {
       if( mobile && eventVP )
       {
@@ -178,7 +178,7 @@
 
       //Update the page elements b1, and b2 to proper width and dimensions.
       
-      CVerg.auto(); Fracts.auto();
+      CVerg.auto(init); Fracts.auto(init);
     
       //Replot the canvas.
 
@@ -465,7 +465,7 @@
         Fracts.set(alg <= 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac));
       }
       
-      update(); LoadExample();
+      update(true); LoadExample();
     }
 
     //Change the input method.

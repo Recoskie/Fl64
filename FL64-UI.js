@@ -2,7 +2,7 @@
 Basic embedded CSS for basic layout.
 ***********************************************************************/
 
-var WPAMode = (window.navigator.standalone === true) || (window.matchMedia('(display-mode: standalone)').matches), init = false;
+var WPAMode = (window.navigator.standalone === true) || (window.matchMedia('(display-mode: standalone)').matches);
 
 document.body.innerHTML = "<style type='text/css'>\
 <!--\
@@ -341,7 +341,7 @@ FBar.prototype.onChange = function () { }
 Auto adjust for best layout on resize event.
 ***********************************************************************/
 
-FBar.prototype.auto = function ()
+FBar.prototype.auto = function (init)
 {
   //Vertical or horizontal best fits the screen,
 
@@ -350,8 +350,10 @@ FBar.prototype.auto = function ()
   this.Vertical = h > w;
 
   //Number of rows best fit.
+  
+  //alert(init);
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || !init ? init = 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (WPAMode || !init ? init = 1 : 2)) - 3); }
+  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || (init == true) ? 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (WPAMode || (init == true) ? 1 : 2)) - 3); }
 
   //If number is NaN. Then automatically split to number of rows, or cols on display.
 
@@ -688,13 +690,13 @@ CBar.prototype.get = function (v) { return (SCBar.Ref[this.n]); }
 Auto adjust for best layout on resize event.
 ***********************************************************************/
 
-CBar.prototype.auto = function ()
+CBar.prototype.auto = function (init)
 {
   var w = document.getElementById(SCBar.ID[this.n]).offsetWidth, h = document.getElementById(SCBar.ID[this.n]).offsetHeight;
 
   this.Vertical = h > w;
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32) - 2); } else { this.setMax(Math.floor(w / 180) - 1); }
+  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || (init == true) ? 1 : 2)) - 2); } else { this.setMax(Math.floor(w / 180 * (WPAMode || (init == true) ? 1 : 2)) - 1); }
 
   this.update();
 }
