@@ -2,6 +2,8 @@
 Basic embedded CSS for basic layout.
 ***********************************************************************/
 
+var WPAMode = (window.navigator.standalone === true) || (window.matchMedia('(display-mode: standalone)').matches), init = false;
+
 document.body.innerHTML = "<style type='text/css'>\
 <!--\
 .FBarV {\
@@ -349,7 +351,7 @@ FBar.prototype.auto = function ()
 
   //Number of rows best fit.
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32) - 5); } else { this.setMax(Math.floor(w / 120) - 3); }
+  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || !init ? init = 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (WPAMode || !init ? init = 1 : 2)) - 3); }
 
   //If number is NaN. Then automatically split to number of rows, or cols on display.
 
