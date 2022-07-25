@@ -2,6 +2,7 @@
 Basic embedded CSS for basic layout.
 ***********************************************************************/
 
+var mobile = !isNaN( window.orientation );
 var WPAMode = (window.navigator.standalone === true) || (window.matchMedia('(display-mode: standalone)').matches);
 
 document.body.innerHTML = "<style type='text/css'>\
@@ -353,7 +354,7 @@ FBar.prototype.auto = function (init)
   
   //alert(init);
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || (init == true) ? 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (WPAMode || (init == true) ? 1 : 2)) - 3); }
+  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 3); }
 
   //If number is NaN. Then automatically split to number of rows, or cols on display.
 
@@ -696,7 +697,7 @@ CBar.prototype.auto = function (init)
 
   this.Vertical = h > w;
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (WPAMode || (init == true) ? 1 : 2)) - 2); } else { this.setMax(Math.floor(w / 180 * (WPAMode || (init == true) ? 1 : 2)) - 1); }
+  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 2); } else { this.setMax(Math.floor(w / 180 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 1); }
 
   this.update();
 }
