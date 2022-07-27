@@ -29,6 +29,10 @@ document.body.innerHTML = "<style type='text/css'>\
 .TBar {\
   text-align: center;\
 }\
+*\
+{\
+  touch-action: manipulation;\
+}\
 -->\
 </style>" + document.body.innerHTML;
 
