@@ -233,20 +233,14 @@
       {
         if (type == 0)
         {
-          document.getElementById("Exp").innerHTML = alg == -2 ? "<table border='1'><tr><td rowspan='2'>Load Example:</td>\
+          document.getElementById("Exp").innerHTML = "<table border='1'><tr><td rowspan='2'>Load Example:</td>\
 <td><input type='button' value='Golden Ratio' onclick='LoadExample(1);' /><input type='button' value='-Golden Ratio' onclick='LoadExample(-1);' /></td>\
 <td><input type='button' value='Natural LOG' onclick='LoadExample(2);' /><input type='button' value='-Natural LOG' onclick='LoadExample(-2);' /></td>\
 <td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='-&radic;"+ sq + "' onclick='LoadExample(-4);' />\
 <input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td></tr>\
 <tr><td><input type='button' value='Pattern " + pat + "' onclick='LoadExample(6);' /><input type='button' value='-Pattern " + pat + "' onclick='LoadExample(-6);' />\
 <input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
-<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />\
-<input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
-<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></tr></table>" : "<table border='1'><tr><td>Load Example:</td>\
-<td><input type='button' value='Golden Ratio' onclick='LoadExample(1);' /><input type='button' value='-Golden Ratio' onclick='LoadExample(-1);' /></td>\
-<td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='-&radic;"+ sq + "' onclick='LoadExample(-4);' />\
-<input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td>\
-<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' />\
+<td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' />" + (alg == -2 ? "<input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />" : "") + "\
 <input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
 <td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></tr></table>";
         }
@@ -275,7 +269,7 @@
 
             n = n.setA(0, 2 * sing); Fracts.set(n);
 
-            Trans.index = 1; Trans.set([sing, sing], [1, 1]);
+            Trans.index = 1; Trans.set([(alg == -2 ? 1 : 2) * sing, sing], [alg == -2 ? 1 : 3, 1]);
           }
 
           //Solve the number PI.
@@ -344,15 +338,25 @@
             n_ac = n.primitive();
 
             CVerg.set(n.splitAll());
-            
+          
             n = n.setA(0, pat * sing); n = n.setB(0, pat);
-            n = n.setA(1, base * sing); n = n.setB(1, -base);
+              
+            if( alg == -2 )
+            {
+              n = n.setA(1, base * sing); n = n.setB(1, -base);
+            
+              eval("var a = function(x)\r\n{\r\n  return( " + (sing < 0 ? "-" : "") + "Math.pow( " + base + ", x + 1 ) " + (sing < 0 ? "-" : "+") + " 1 );\r\n}, b = function(x)\r\n{\r\n return( -Math.pow( " + base + ", x + 1 ) );\r\n}");
+            }
+            else
+            {
+              eval("var a = function(x)\r\n{\r\n  return( " + (sing < 0 ? "-" : "") + "Math.pow( " + base + ", ((x+2)/3)&-1 ) " + (sing < 0 ? "+" : "-") + " 1 );\r\n}, b = function(x)\r\n{\r\n  return( Math.pow( " + base + ", ((x+2)/3)&-1 ) - 1 );\r\n};");
+            }
             
             Fracts.set(n);
             
-            eval("var a = function(x)\r\n{\r\n  return( " + (sing < 0 ? "-" : "") + "Math.pow( " + base + ", x + 1 ) " + (sing < 0 ? "-" : "+") + " 1 );\r\n}, b = function(x)\r\n{\r\n return( -Math.pow( " + base + ", x + 1 ) );\r\n}");
+            Trans.index = alg == -2 ? 2 : 1;
             
-            Trans.index = 2; Trans.setF(a,b);
+            Trans.setF(a,b);
           }
         }
       }
@@ -455,7 +459,9 @@
         }
         else
         {
-          n_ac = n_ac.primitive(); Fracts.set((alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
+          n_ac = n_ac.primitive();
+          
+          Fracts.set((alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
         }
       }
       else
