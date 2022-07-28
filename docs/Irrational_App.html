@@ -449,15 +449,13 @@
       
       if( !isNaN(n_ac) )
       {
-        n_ac = n_ac.primitive();
-        
         if( alg <= 0 )
         {
-          Fracts.set((input == 0 ? new Number(n_ac) : new Fract(n_ac.x, n_ac.y)).limit(CutOff).splitAll());
+          Fracts.set((input == 0 ? new Number(n_ac.primitive()) : new Fract(n_ac.x, n_ac.y)).limit(CutOff).splitAll());
         }
         else
         {
-          Fracts.set((alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
+          n_ac = n_ac.primitive(); Fracts.set((alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
         }
       }
       else
