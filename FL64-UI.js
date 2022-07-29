@@ -3,7 +3,6 @@ Basic embedded CSS for basic layout.
 ***********************************************************************/
 
 var mobile = !isNaN( window.orientation );
-var WPAMode = (window.navigator.standalone === true) || (window.matchMedia('(display-mode: standalone)').matches);
 
 document.body.innerHTML = "<style type='text/css'>\
 <!--\
@@ -41,15 +40,15 @@ This is a bar for modifying a number and viewing a number after manipulation ope
 Or when number is added to another number this will update as it is linked to the number in memory.
 ***********************************************************************/
 
-function FBar( el, Num )
+function FBar( el, w, h )
 {
   //Check if FL64 is loaded. This is a must.
 
-  Num = Num || NaN; if (!Number.prototype.bits) { throw new Error("FL64 is not loaded!"); }
+  var Num = NaN; if (!Number.prototype.bits) { throw new Error("FL64 is not loaded!"); }
 
   //Reference the memory location of the variable given to this bar.
 
-  this.n = SFBar.Ref.length; SFBar.Ref[this.n] = Num; SFBar.ID[this.n] = el; SFBar.Bars[this.n] = this;
+  this.n = SFBar.Ref.length; SFBar.Ref[this.n] = Num; SFBar.ID[this.n] = el; SFBar.width[this.n] = (w || 100) / 100; SFBar.height[this.n] = (h || 100) / 100; SFBar.Bars[this.n] = this;
 
   //The bars html. This can not be shared between bars as it is specific to bar reference.
 
@@ -97,6 +96,8 @@ SFBar = {
   ID: [],
   Ref: [],
   pos: [],
+  width: [],
+  height: [],
 
   /***********************************************************************
   The bars methods. For methods that have to invoke, for example the update method after a change.
@@ -345,19 +346,13 @@ FBar.prototype.onChange = function () { }
 Auto adjust for best layout on resize event.
 ***********************************************************************/
 
-FBar.prototype.auto = function (init)
+FBar.prototype.auto = function (w,h)
 {
-  //Vertical or horizontal best fits the screen,
-
-  var w = document.getElementById(SFBar.ID[this.n]).offsetWidth, h = document.getElementById(SFBar.ID[this.n]).offsetHeight;
-
   this.Vertical = h > w;
 
   //Number of rows best fit.
-  
-  //alert(init);
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 5); } else { this.setMax(Math.floor(w / 120 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 3); }
+  if (this.Vertical) { this.setMax(Math.floor(((h / 32) - 5) * SFBar.height[this.n])); } else { this.setMax(Math.floor(((w / 120) - 3) * SFBar.width[this.n])); }
 
   //If number is NaN. Then automatically split to number of rows, or cols on display.
 
@@ -561,15 +556,15 @@ FBar.prototype.update = function (force)
 The convergent bar.
 ***********************************************************************/
 
-function CBar(el, Num)
+function CBar(el, w, h)
 {
   //Check if FL64 is loaded. This is a must.
 
-  Num = Num || NaN; if (!Number.prototype.bits) { throw new Error("FL64 is not loaded!"); }
+  var Num = NaN; if (!Number.prototype.bits) { throw new Error("FL64 is not loaded!"); }
 
   //Reference the memory location of the variable given to this bar.
 
-  this.n = SCBar.Ref.length; SCBar.Ref[this.n] = Num; SCBar.ID[this.n] = el; SCBar.Bars[this.n] = this;
+  this.n = SCBar.Ref.length; SCBar.Ref[this.n] = Num; SCBar.ID[this.n] = el; SCBar.width[this.n] = (w || 100) / 100; SCBar.height[this.n] = (h || 100) / 100; SCBar.Bars[this.n] = this;
 
   //The bars html. This can not be shared between bars as it is specific to bar reference.
 
@@ -604,6 +599,8 @@ SCBar = {
   ID: [],
   Ref: [],
   pos: [],
+  width: [],
+  height: [],
 
   /***********************************************************************
   The bars methods. For methods that have to invoke, for example the update method after a change.
@@ -694,13 +691,13 @@ CBar.prototype.get = function (v) { return (SCBar.Ref[this.n]); }
 Auto adjust for best layout on resize event.
 ***********************************************************************/
 
-CBar.prototype.auto = function (init)
+CBar.prototype.auto = function (w,h)
 {
-  var w = document.getElementById(SCBar.ID[this.n]).offsetWidth, h = document.getElementById(SCBar.ID[this.n]).offsetHeight;
-
   this.Vertical = h > w;
+  
+  //Number of rows best fit.
 
-  if (this.Vertical) { this.setMax(Math.floor(h / 32 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 2); } else { this.setMax(Math.floor(w / 180 * (!mobile || WPAMode || (init == true) ? 1 : 2)) - 1); }
+  if (this.Vertical) { this.setMax(Math.floor(((h / 32) - 2) * SCBar.height[this.n])); } else { this.setMax(Math.floor(((w / 180) - 1) * SCBar.width[this.n])); }
 
   this.update();
 }

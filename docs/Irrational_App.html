@@ -104,12 +104,13 @@
     var hr = true;
     
     //Setup convergent bar.
+    //Note width=100%, height=61%.
 
-    var CVerg = new CBar("CVerg");
+    var CVerg = new CBar("CVerg",100,61);
 
     //Set up Control/Edit factor bar.
 
-    var Fracts = new FBar("Fracts");
+    var Fracts = new FBar("Fracts",100,61);
 
     //Setup factor transformation bar.
 
@@ -166,9 +167,29 @@
       var ng = document.getElementById("group");
       var w = window.innerWidth, h = window.innerHeight;
 
-      //If width is longer do regular row alignment.
+      //Vertical or horizontal best fits the screen.
+
+      var w = window.innerWidth, h = window.innerHeight;
+  
+      //On a mobile device we must find the screen dimensions and rotation as window width and height are broken.
+  
+      if( mobile )
+      {
+        if(Math.abs(window.orientation) == 90)
+        {
+          w = screen.height, h = screen.width;
+        }
+        else
+        {
+          w = screen.width, h = screen.height;
+        }
+    
+        //viewport setting.
+    
+        w *= 2; h *= 2;
+      }
       
-      hr = mobile ? Math.abs(window.orientation) != 90 : w < h;
+      hr = h > w;
 
       if (CVerg.Vertical && !hr) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
 
@@ -176,9 +197,9 @@
 
       else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
 
-      //Update the page elements b1, and b2 to proper width and dimensions.
+      //Update the page elements to proper width and dimensions.
       
-      CVerg.auto(init); Fracts.auto(init);
+      CVerg.auto(w,h); Fracts.auto(w,h);
     
       //Replot the canvas.
 
