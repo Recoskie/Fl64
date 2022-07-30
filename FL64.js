@@ -248,15 +248,15 @@ Number.prototype.split = function (a, b)
 
   if (this.length === 0)
   {
-    var n = this.primitive();
+    var n = this.primitive(), s1 = n < 0 ? -1 : 1;
 
-    a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
+    a = isNaN(a) ? Math.floor(n * s1) * s1 : a; b = b || 1;
     
     if( !isNaN(n) && this.rA )
     {
-      var r = a/(1/(n-a)), s = r < 0 ? -1 : 1;
+      var r = a/(1/(n-a)), s2 = r < 0 ? -1 : 1;
     
-      r = Math.ceil( r * s ) * s;
+      r = Math.ceil( r * s2 ) * s2;
     
       //Allow the value for B to be adjusted higher than r.
     
@@ -299,11 +299,11 @@ Number.prototype.split = function (a, b)
 
   //Split value a by b. Or by default scale a=int, b=1.
 
-  var n = this.r[this.length];
+  var n = this.r[this.length], s1 = n < 0 ? -1 : 1;
 
   //Split value a by b. Default is a=int, b=1.
 
-  a = isNaN(a) ? Math.floor(n) : a; b = b || 1;
+  a = isNaN(a) ? Math.floor(n * s1) * s1 : a; b = b || 1;
   
   //If rA is active adjust the value for B so that the next value for A is as close to the previous value for A.
         
