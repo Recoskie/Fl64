@@ -80,7 +80,7 @@
     
     if( mobile )
     {
-      window.onorientationchange = update;
+      window.matchMedia("(orientation: portrait)").onchange = function(){ update(); }
     }
     else
     {
@@ -165,27 +165,14 @@
       }
       
       var ng = document.getElementById("group");
-      var w = window.innerWidth, h = window.innerHeight;
-
-      //Vertical or horizontal best fits the screen.
-
-      var w = window.innerWidth, h = window.innerHeight;
-  
-      //On a mobile device we must find the screen dimensions and rotation as window width and height are broken.
-  
+      var w = screen.width, h = screen.height;
+      
+      //Mobile view port is half.
+      
       if( mobile )
       {
-        if(Math.abs(window.orientation) == 90)
-        {
-          w = screen.height, h = screen.width;
-        }
-        else
-        {
-          w = screen.width, h = screen.height;
-        }
-    
-        //viewport setting.
-    
+        if(window.matchMedia("(orientation: landscape)").matches)
+        { var t = w; w = h; h = t; t = undefined; }
         w *= 2; h *= 2;
       }
       
