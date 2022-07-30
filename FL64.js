@@ -260,7 +260,7 @@ Number.prototype.split = function (a, b)
     
       //Allow the value for B to be adjusted higher than r.
     
-      if( b * s < r * s ) { b = r; }
+      if( b * s2 < r * s2 ) { b = r; }
     }
 
     this.tx = [0]; this.ty = [1];
