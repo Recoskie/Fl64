@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
-<body onload="update(true); Trans.update(); LoadExample();">
+<body onload="update(); Trans.update(); LoadExample();">
   <style type="text/css">
     <!--
     body
@@ -155,7 +155,7 @@
 
     //Switch div elements between cell and row alignment based on window dimensions.
 
-    function update(init)
+    function update()
     {
       if( mobile && eventVP )
       {
@@ -184,7 +184,7 @@
 
       else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
 
-      //Update the page elements to proper width and dimensions.
+      //Update the page elements to proper width and height and dimensions.
       
       CVerg.auto(w,h); Fracts.auto(w,h);
     
@@ -247,7 +247,7 @@
 <td><input type='button' value='&radic;"+ sq + "' onclick='LoadExample(4);' /><input type='button' value='-&radic;"+ sq + "' onclick='LoadExample(-4);' />\
 <input type='button' value='&#x2191;' onclick='sq++;LoadExample();' /><input type='button' value='&#x2193;' onclick='sq=Math.max(1,sq-1);LoadExample();' /></td></tr>\
 <tr><td><input type='button' value='Pattern " + pat + "' onclick='LoadExample(6);' /><input type='button' value='-Pattern " + pat + "' onclick='LoadExample(-6);' />\
-<input type='button' value='&#x2191;' onclick='pat++;LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
+<input type='button' value='&#x2191;' onclick='pat=Math.min(9,pat+1);LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
 <td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />\
 <input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
 <td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></tr></table>";
@@ -310,7 +310,7 @@
 
               Trans.index = 1; Trans.set([a * 2 * sing], [b]);
             }
-            else { Fracts.set(n); Trans.index = 1; Trans.set(); }
+            else { n.split(); Fracts.set(n); Trans.reset(); }
           }
 
           //Solve the hyperbolic function.
