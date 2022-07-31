@@ -303,14 +303,13 @@
 
             var a = Math.floor(n.primitive() * sing), b = sq - (a * a);
 
-            n.length = 0;
+            n.length = 0; n = n.split(a * sing, b); Fracts.set(n);
 
-            if ((n - a) !== 0) {
-              n = n.split(a * sing, b); Fracts.set(n);
-
+            if (n != 0)
+            {
               Trans.index = 1; Trans.set([a * 2 * sing], [b]);
             }
-            else { n.split(); Fracts.set(n); Trans.reset(); }
+            else { Trans.reset(); }
           }
 
           //Solve the hyperbolic function.
