@@ -696,7 +696,7 @@ Number.prototype.Trans = function (x, fa, fb)
 
   //Transform as many factors as possible. In range of each split.
 
-  if( this.abLim )
+  else if( this.abLim )
   {
     while (this.r[this.length] != 0 )
     {
