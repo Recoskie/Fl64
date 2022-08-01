@@ -691,14 +691,27 @@ Number.prototype.Trans = function (x, fa, fb)
 
   if (isNaN(this))
   {
-    while (x < 10000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
+    if(this.abLim)
+    {
+      while (x < 10000)
+      {
+        x += 1; i += 1; this.split(a, b);
+    
+        if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = Math.round(fa(i)); b = Math.round(fb(i)); }
+        else { x = 10000; this.length -= 1; break; }
+      }
+    }
+    else
+    {
+      while (x < 10000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
+    }
   }
 
   //Transform as many factors as possible. In range of each split.
 
   else if( this.abLim )
   {
-    while (this.r[this.length] != 0 )
+    while (this.r[this.length] != 0 && x <= 2000000 )
     {
       x += 1; i += 1; this.split(a, b);
     
@@ -708,8 +721,8 @@ Number.prototype.Trans = function (x, fa, fb)
   }
   else
   {
-    if( !sing ) { while (this.r[this.length] > 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
-    else { while (this.r[this.length] < 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    if( !sing ) { while (this.r[this.length] > 0  && x <= 2000000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    else { while (this.r[this.length] < 0  && x <= 2000000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
   }
 
   return (this);
