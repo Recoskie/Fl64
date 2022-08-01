@@ -165,12 +165,13 @@
       }
       
       var ng = document.getElementById("group");
-      var w = screen.width, h = screen.height;
+      var w = window.innerWidth, h = window.innerHeight;
       
       //Mobile view port is half.
       
       if( mobile )
       {
+        w = screen.width; h = screen.height;
         if(window.matchMedia("(orientation: landscape)").matches)
         { var t = w; w = h; h = t; t = undefined; }
         w *= 2; h *= 2;
