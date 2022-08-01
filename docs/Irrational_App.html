@@ -164,15 +164,21 @@
         document.addEventListener("touchstart", resetVP, eventVP = false);
       }
       
+      //On desktop window inner width and height work best.
+      
       var ng = document.getElementById("group");
       var w = window.innerWidth, h = window.innerHeight;
       
-      //Mobile view port is half.
+      /*Mobile view port is half. So we multiply width and height by 2.
+      Screen width and height do not change on iPhone when flipped to landscape mode, but changes on android.
+      The screen rotation value varies between device as well.
+      For consistency we have to compare if we are in landscape.
+      We then have to check if width and height have to be fliped to match landscape mode.*/
       
       if( mobile )
       {
         w = screen.width; h = screen.height;
-        if(window.matchMedia("(orientation: landscape)").matches)
+        if(window.matchMedia("(orientation: landscape)").matches && h > w )
         { var t = w; w = h; h = t; t = undefined; }
         w *= 2; h *= 2;
       }
