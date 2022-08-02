@@ -177,8 +177,10 @@
       
       if( mobile )
       {
+        w = screen.width; h = screen.height;
         if(window.matchMedia("(orientation: landscape)").matches && h > w )
         { var t = w; w = h; h = t; t = undefined; }
+        w *= 2; h *= 2;
       }
       
       hr = h > w;
