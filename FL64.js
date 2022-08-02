@@ -711,7 +711,7 @@ Number.prototype.Trans = function (x, fa, fb)
 
   else if( this.abLim )
   {
-    while (this.r[this.length] != 0 && x <= 2000000 )
+    while (this.r[this.length] != 0 )
     {
       x += 1; i += 1; this.split(a, b);
     
@@ -721,8 +721,8 @@ Number.prototype.Trans = function (x, fa, fb)
   }
   else
   {
-    if( !sing ) { while (this.r[this.length] > 0  && x <= 2000000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
-    else { while (this.r[this.length] < 0  && x <= 2000000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    if( !sing ) { while (this.r[this.length] > 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    else { while (this.r[this.length] < 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
   }
 
   return (this);

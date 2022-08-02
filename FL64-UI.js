@@ -183,7 +183,10 @@ SFBar = {
     {
       this.Ref[bar] = this.Ref[bar].split(1, 1);
     }
-    else { this.Ref[bar].split(); }
+    else 
+    {
+      try { this.Ref[bar].split(); } catch(e) { alert(e); }
+    }
 
     this.pos[bar] = this.Ref[bar].length - this.Bars[bar].max; this.Bars[bar].update();
 
@@ -997,7 +1000,10 @@ STBar = {
 
     var n = this.Ref[bar]; //The FBar reference.
 
-    SFBar.Ref[n.n] = SFBar.Ref[n.n].Trans(this.Bars[bar].index, A, B);
+    try { SFBar.Ref[n.n] = SFBar.Ref[n.n].Trans(this.Bars[bar].index, A, B); } catch(e)
+    {
+      alert(e);
+    }
 
     SFBar.pos[n.n] = SFBar.Ref[n.n].length - n.max;
 
