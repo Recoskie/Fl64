@@ -111,7 +111,17 @@ SFBar = {
 
   adjA: function (bar,el,v)
   {
-    this.Ref[bar].setA(this.pos[bar] + el, this.Ref[bar].a[this.pos[bar] + el] + v);
+    try
+    {
+      this.Ref[bar].setA(this.pos[bar] + el, this.Ref[bar].a[this.pos[bar] + el] + v);
+    }
+    catch(e)
+    {
+      alert(e);
+      if(e == "RangeError: Out of memory")
+        { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
+      this.Bars[bar].update(); return;
+    }
 
     //Depending on the number type the preceding factors may change if one factor changes.
 
@@ -134,7 +144,17 @@ SFBar = {
 
   adjB: function (bar, el,v)
   {
-    this.Ref[bar].setB(this.pos[bar] + el, this.Ref[bar].b[this.pos[bar] + el] + v);
+    try
+    {
+      this.Ref[bar].setB(this.pos[bar] + el, this.Ref[bar].b[this.pos[bar] + el] + v);
+    }
+    catch(e)
+    {
+      alert(e);
+      if(e == "RangeError: Out of memory")
+        { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
+      this.Bars[bar].update(); return;
+    }
 
     //Depending on the number type the preceding factors may change if one factor changes.
 
@@ -185,7 +205,12 @@ SFBar = {
     }
     else 
     {
-      try { this.Ref[bar].split(); } catch(e) { alert(e); }
+      try { this.Ref[bar].split(); } catch(e)
+      {
+        if(e == "RangeError: Out of memory")
+        { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
+        alert(e);
+      }
     }
 
     this.pos[bar] = this.Ref[bar].length - this.Bars[bar].max; this.Bars[bar].update();
@@ -212,7 +237,17 @@ SFBar = {
     {
       if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
       
-      this.Ref[bar].setA(this.pos[bar] + el, v);
+      try
+      {
+        this.Ref[bar].setA(this.pos[bar] + el, v);
+      }
+      catch(e)
+      {
+        alert(e);
+        if(e == "RangeError: Out of memory")
+        { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
+        this.Bars[bar].update(); return;
+      }
 
       //Depending on the number type the preceding factors may change if one factor changes.
 
@@ -235,8 +270,18 @@ SFBar = {
     if( v = prompt("Enter the Value you want to set B.") )
     {
       if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
-    
-      this.Ref[bar].setB(this.pos[bar] + el, v);
+      
+      try
+      {
+        this.Ref[bar].setB(this.pos[bar] + el, v);
+      }
+      catch(e)
+      {
+        alert(e);
+        if(e == "RangeError: Out of memory")
+        { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
+        this.Bars[bar].update(); return;
+      }
 
       //Depending on the number type the preceding factors may change if one factor changes.
 
@@ -1002,6 +1047,8 @@ STBar = {
 
     try { SFBar.Ref[n.n] = SFBar.Ref[n.n].Trans(this.Bars[bar].index, A, B); } catch(e)
     {
+      if(e == "RangeError: Out of memory")
+      { SFBar.Ref[n.n] = SFBar.Ref[n.n].remove(SFBar.Ref[n.n].length-1); }
       alert(e);
     }
 
