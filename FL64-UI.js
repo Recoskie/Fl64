@@ -117,7 +117,7 @@ SFBar = {
     }
     catch(e)
     {
-      alert(e);
+      alert(e+"\r\n"+e.line+"");
       if(e == "RangeError: Out of memory")
         { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
       this.Bars[bar].update(); return;
@@ -150,7 +150,7 @@ SFBar = {
     }
     catch(e)
     {
-      alert(e);
+      alert(e+"\r\n"+e.line+"");
       if(e == "RangeError: Out of memory")
         { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
       this.Bars[bar].update(); return;
@@ -207,9 +207,9 @@ SFBar = {
     {
       try { this.Ref[bar].split(); } catch(e)
       {
+        alert(e+"\r\n"+e.line+"");
         if(e == "RangeError: Out of memory")
         { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
-        alert(e);
       }
     }
 
@@ -243,7 +243,7 @@ SFBar = {
       }
       catch(e)
       {
-        alert(e);
+        alert(e+"\r\n"+e.line+"");
         if(e == "RangeError: Out of memory")
         { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
         this.Bars[bar].update(); return;
@@ -277,7 +277,7 @@ SFBar = {
       }
       catch(e)
       {
-        alert(e);
+        alert(e+"\r\n"+e.line+"");
         if(e == "RangeError: Out of memory")
         { this.Ref[bar] = this.Ref[bar].remove(this.Ref[bar].length-1); }
         this.Bars[bar].update(); return;
@@ -1047,9 +1047,9 @@ STBar = {
 
     try { SFBar.Ref[n.n] = SFBar.Ref[n.n].Trans(this.Bars[bar].index, A, B); } catch(e)
     {
+      alert(e+"\r\n"+e.line+"");
       if(e == "RangeError: Out of memory")
       { SFBar.Ref[n.n] = SFBar.Ref[n.n].remove(SFBar.Ref[n.n].length-1); }
-      alert(e);
     }
 
     SFBar.pos[n.n] = SFBar.Ref[n.n].length - n.max;
