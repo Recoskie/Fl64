@@ -67,7 +67,7 @@
   <script type="text/javascript">
     //Body onresize dose not always get called on ios.
     
-    var eventVP = true;
+    var mobile = !isNaN( window.orientation ), eventVP = true;
     
     function resetVP()
     {

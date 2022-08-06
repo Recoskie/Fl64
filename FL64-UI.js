@@ -2,8 +2,6 @@
 Basic embedded CSS for basic layout.
 ***********************************************************************/
 
-var mobile = !isNaN( window.orientation );
-
 document.body.innerHTML = "<style type='text/css'>\
 <!--\
 .FBarV {\
