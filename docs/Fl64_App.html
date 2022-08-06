@@ -13,6 +13,7 @@
       <!--
         body
         {
+          background-color: #000000;
           background-image:url(bg/bg.jpg);
           background-repeat:no-repeat;
           background-size:cover;
@@ -432,23 +433,26 @@ function update(re)
 
   var inputs = [], o_ac = '';
 
-  if (Mode == 2 || Mode == 3) {
+  if (Mode == 2 || Mode == 3)
+  {
     o_ac = (document.getElementById('ac') || { value: 'Most Accurate Value = 3.141592653589793115997963468544185161590576171875' }).value;
   }
 
-  if (re) {
+  if (re)
+  {
     inputs = [(document.getElementById("f1") || { value: undefined }).value, (document.getElementById("f2") || { value: undefined }).value];
     if (document.getElementById("o")) { Result = document.getElementById("o").contentWindow.document.body.innerHTML; up = true; }
   }
 
   //Page vertical and horzontal layout.
 
-  if (!v) {
-    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + h + "px;max-height:'>\
+  if (!v)
+  {
+    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + (h-32) + "px;'>\
         <tr valign='top'>\
           <td>\
             <center>\
-              <div id='c' style='height:"+ h + "px;'>\
+              <div id='c' style='height:"+ (h-32) + "px;'>\
               </div>\
             </center>\
           </td>\
@@ -458,18 +462,19 @@ function update(re)
         </tr>\
       </table>";
   }
-  else {
-    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + h + "px;max-height:" + h + "px;'>\
+  else
+  {
+    document.getElementById("page").innerHTML = "<table border='2' style='width:100%;height:" + h + "px;max-height:" + (h/0.3) + "px;'>\
         <tr valign='top'>\
           <td>\
             <center>\
-              <div id='c' style='height:"+ (h / 2) + "px;max-height:" + (h / 2) + "px;'>\
+              <div id='c' style='height:"+ (h / 2.3) + "px;max-height:" + (h / 2.3) + "px;'>\
               </div>\
             </center>\
           </td>\
         </tr>\
         <tr>\
-          <td style='overflow:hidden;vertical-align:top;height:"+ (h / 2) + "px;max-height:" + (h / 2) + "px;' id='OutSize'>\
+          <td style='overflow:hidden;vertical-align:top;height:"+ (h / 2.3) + "px;max-height:" + (h / 2.3) + "px;' id='OutSize'>\
             <div id='out'> </div>\
           </td>\
         </tr>\
@@ -482,7 +487,8 @@ function update(re)
   //Analyze binary fractions. Controls, and inputs.
   //**********************************************************************************
 
-  if (Mode === 0) {
+  if (Mode === 0)
+  {
     o += '<table style="width:100%;height:100%;">';
     o += '<tr>';
     o += '<td style="width:50%;"><input id="f1" style="width:100%;text-align:center;font-size:' + (v ? 7 : 7 / 2) + 'vw;" onclick="this.select();" type="text" value="' + (inputs[0] || 1) + '">';
@@ -496,7 +502,7 @@ function update(re)
     o += '<tr>';
     o += '<td colspan="3">';
     o += '<center>';
-    o += '<input onclick="AnalyzeFract();" style="width:100%;height:' + (v ? ( h / 2 ) - ( w / 9 ) : h - ( w / 11 )) + 'px;font-size:' + (v ? 5.2 : 5.2 / 2) + 'vw;" type="button" value="Analyze Fraction">';
+    o += '<input onclick="AnalyzeFract();" style="width:100%;height:' + (v ? ( h / 3 ) : (h-64) - ( w / 11 )) + 'px;font-size:' + (v ? 5.2 : 5.2 / 2) + 'vw;" type="button" value="Analyze Fraction">';
     o += '</center>';
     o += '</td>';
     o += '</tr>';
@@ -507,7 +513,8 @@ function update(re)
   //Analyze bit patterns into fractions. Controls, and inputs.
   //**********************************************************************************
 
-  if (Mode === 1) {
+  if (Mode === 1)
+  {
     inputs[0] = inputs[0] || '00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E';
 
     o += '<table style="width:100%;height:100%;">';
@@ -532,7 +539,8 @@ function update(re)
   //Base convert. Controls, and inputs.
   //**********************************************************************************
 
-  if (Mode === 2) {
+  if (Mode === 2)
+  {
     inputs[0] = inputs[0] || 3.141592653589793;
     inputs[1] = inputs[1] || '0100000000001001001000011111101101010100010001000010110100011000';
 
@@ -567,7 +575,8 @@ function update(re)
   //Auto base Convert. Controls, and inputs.
   //**********************************************************************************
 
-  if (Mode === 3) {
+  if (Mode === 3)
+  {
     inputs[0] = inputs[0] || 3.141592653589793;
     inputs[1] = inputs[1] || '0100000000001001001000011111101101010100010001000010110100011000';
 
@@ -598,7 +607,8 @@ function update(re)
   //Binary float number to fractions. Controls, and inputs.
   //**********************************************************************************
 
-  if (Mode === 4) {
+  if (Mode === 4)
+  {
     o += '<table style="width:100%;height:100%;">';
     o += '<tr>';
     o += '<td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"></td>';
