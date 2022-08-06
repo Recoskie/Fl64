@@ -686,6 +686,10 @@ Number.prototype.Trans = function (x, fa, fb)
   else { while (this.length < x) { this.split(); }; }
 
   this.length = x;
+  
+  //Get time. This is set for if the calculation takes longer than 7 seconds.
+
+  var t = new Date().getTime();
 
   //If we are transforming a number that is NaN.
 
@@ -698,7 +702,7 @@ Number.prototype.Trans = function (x, fa, fb)
         x += 1; i += 1; this.split(a, b);
     
         if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = Math.round(fa(i)); b = Math.round(fb(i)); }
-        else { x = 10000; this.length -= 1; break; }
+        else { this.length -= 1; break; }
       }
     }
     else
@@ -709,7 +713,7 @@ Number.prototype.Trans = function (x, fa, fb)
 
   //Transform as many factors as possible. In range of each split.
 
-  else if( this.abLim )
+  else if( this.abLim && (new Date().getTime() - t) < 7000 )
   {
     while (this.r[this.length] != 0 )
     {
@@ -721,9 +725,11 @@ Number.prototype.Trans = function (x, fa, fb)
   }
   else
   {
-    if( !sing ) { while (this.r[this.length] > 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
-    else { while (this.r[this.length] < 0) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    if( !sing ) { while (this.r[this.length] > 0 && (new Date().getTime() - t) < 7000 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    else { while (this.r[this.length] < 0 && (new Date().getTime() - t) < 7000 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
   }
+  
+  if ((new Date().getTime() - t) > 7000) { throw(new RangeError("Time out")); }
 
   return (this);
 };
@@ -1613,7 +1619,7 @@ var parseNumber = function (str, base)
 for (var i = 0, a = ["divP", "reduce", "valueOf", "getFract", "avgFract", "bits", "bitAnd", "bitOr", "bitXor", "bitNot", "bitRsh", "bitLsh", "toPattern", "err"], c = ""; i < a.length; i++)
 {
   c += "Array.prototype." + a[i] + " = function( a ) { for( var i1 = 0, i2 = 0, l = this.length, o = []; i1 < l; i1++ ) { ";
-  c += "if( this[i1] ) { if( this[i1]." + a[i] + " ) { o[i2++] = this[i1]." + a[i] + "( a ); } else if( ( this[i1] + 0 )." + a[i] + " ) { o[i2++] = ( this[i1] + 0 )." + a[i] + "( a ); } }";
+  c += "if( this[i1] != null ) { if( this[i1]." + a[i] + " ) { o[i2++] = this[i1]." + a[i] + "( a ); } else if( ( this[i1] + 0 )." + a[i] + " ) { o[i2++] = ( this[i1] + 0 )." + a[i] + "( a ); } }";
   c += " } return( o ); }\r\n";
 }
 
