@@ -59,9 +59,9 @@ function re(m)
   update(m);
 }
 
-//**********************************************************************************
-//Analyze Fractions, and compare Float 64 binary patterns.
-//**********************************************************************************
+/***********************************************************************************
+Analyze Fractions, and compare Float 64 binary patterns.
+***********************************************************************************/
 
 function AnalyzeFract()
 {
@@ -71,11 +71,12 @@ function AnalyzeFract()
 
   //Find the Division pattern.
 
-  var pat = fract.divP(force), pat_f = new Fract();
+  try
+  {
+    var pat = fract.divP(force), pat_f = new Fract();
 
-  //Show the bit pattern.
+    //Show the bit pattern.
 
-  if (!pat.data) {
     Output("Binary Divide Pattern:", (pat + " Repeats to Infinity."));
 
     //Convert the bit pattern into divide.
@@ -86,11 +87,14 @@ function AnalyzeFract()
 
     pat_f = pat.toFract(fract); Output("Calc (Float&divide;Pat)Exp:", pat_f.toString() + " = " + pat_f + "");
   }
-  else { Err("Simulated Divide to Bit Pattern:", pat.data); }
+  catch( e )
+  {
+    Err("Simulated Divide to Bit Pattern:", e.data);
+  }
 
-  //**********************************************************************************
-  //Divide the fraction for real, and decode the real mantissa.
-  //**********************************************************************************
+  /***********************************************************************************
+  Divide the fraction for real, and decode the real mantissa.
+  ***********************************************************************************/
 
   var Float = fract.valueOf().bits().toString(2);
 
@@ -108,15 +112,16 @@ function AnalyzeFract()
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Convert an given set of digits to division bit pattern.
-//**********************************************************************************
+/***********************************************************************************
+Convert an given set of digits to division bit pattern.
+***********************************************************************************/
 
 function PatToDiv()
 {
   var base = parseInt(document.getElementById("b1").value), Data = new Pattern(document.getElementById("f1").value, base);
 
-  if (Data != "") {
+  if (Data != "")
+  {
     Output("Translation.");
     Output("Divide Pattern:", Data);
 
@@ -135,7 +140,8 @@ function PatToDiv()
     if (Data === "") { Data.pop(); Err("Divide to Pattern:", Data); Data = [null]; }
     else { Output("Divide to Pattern:", Data); }
   }
-  else {
+  else
+  {
     Output("Your Input contains characters outside of base" + base + " range.");
     Output('Only numbers "0 to ' + (Math.min(10, base) - 1) + (base > 10 ? (base === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + base)) : "") + '" are Acceptable.');
   }
@@ -143,9 +149,9 @@ function PatToDiv()
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Convert Float To, and from binary.
-//**********************************************************************************
+/***********************************************************************************
+Convert Float To, and from binary.
+***********************************************************************************/
 
 var b1 = "", b2 = "";
 
@@ -153,32 +159,39 @@ function Convert(Mode, fr)
 {
   var FloatBase = new Number(document.getElementById("b1").value), DecodeBase = new Number(document.getElementById("b2").value);
 
-  if (Mode === 0) {
+  if (Mode === 0)
+  {
     var f = parseFloat(document.getElementById("f1").value, FloatBase);
 
-    if (isNaN(f)) {
+    if (isNaN(f))
+    {
       Output('Only numbers "0 to ' + (Math.min(10, FloatBase) - 1) + (FloatBase > 10 ? (FloatBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + FloatBase)) : "") + '" are Acceptable.');
       UpdateOutput(); return;
     }
 
-    else if (b1 != document.getElementById("f1").value || fr) {
+    else if (b1 != document.getElementById("f1").value || fr)
+    {
       b1 = document.getElementById("f1").value;
       document.getElementById("ac").value = "Most Accurate Value = " + f.toString(FloatBase, true);
       document.getElementById("f2").value = b2 = f.bits().toString(DecodeBase);
     }
   }
 
-  if (Mode === 1) {
-    if (b2 != document.getElementById("f2").value || fr) {
+  if (Mode === 1)
+  {
+    if (b2 != document.getElementById("f2").value || fr)
+    {
       b2 = document.getElementById("f2").value;
 
       var f = parseNumber(b2 = document.getElementById("f2").value, DecodeBase);
 
-      if (f === undefined) {
+      if (f === undefined)
+      {
         Output('Only numbers "0 to ' + (Math.min(10, DecodeBase) - 1) + (DecodeBase > 10 ? (DecodeBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + DecodeBase)) : "") + '" are Acceptable.');
         UpdateOutput(); return;
       }
-      else {
+      else
+      {
         document.getElementById("f2").value = f.toString(DecodeBase);
         document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(FloatBase, true);
         document.getElementById("f1").value = b1 = f.valueOf().toString(FloatBase);
@@ -188,9 +201,9 @@ function Convert(Mode, fr)
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Convert Float from binary to fraction.
-//**********************************************************************************
+/***********************************************************************************
+Convert Float from binary to fraction.
+***********************************************************************************/
 
 function BinToPatToFract()
 {
@@ -220,23 +233,24 @@ function BinToPatToFract()
 
   Output("Closest Average division pattern:", f.toString() + "");
 
-  pat = f.divP();
+  try
+  {
+    pat = f.divP();
 
-  if (!pat.data) {
     Output("Division Pattern:", pat + " Repeats to Infinity.");
 
     f = pat.toFract(val);
 
     Output("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
   }
-  else { temp.pop(); Err("Divided to Pattern timed out:", temp); temp = [null]; }
+  catch(e) { Err("Divided to Pattern timed out:", e.data); }
 
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Divide float to find it's divide pattern then convert to fraction.
-//**********************************************************************************
+/***********************************************************************************
+Divide float to find it's divide pattern then convert to fraction.
+***********************************************************************************/
 
 function DivToFract()
 {
@@ -258,9 +272,10 @@ function DivToFract()
 
   Output("Division to Float:", f.toString() + "");
 
-  var pat = f.divP();
+  try
+  {
+    var pat = f.divP();
 
-  if (!pat.data) {
     Output("Binary Divide Pattern:", pat + " Repeats to Infinity.");
 
     f = pat.getFract();
@@ -271,14 +286,14 @@ function DivToFract()
 
     Output("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
   }
-  else { Err("Divided to Pattern timed out:", pat.data); }
+  catch(e) { Err("Divided to Pattern timed out:", e.data); }
 
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Convert Float to fraction An iteration at an time.
-//**********************************************************************************
+/***********************************************************************************
+Convert Float to fraction An iteration at an time.
+***********************************************************************************/
 
 function SumToFract()
 {
@@ -294,7 +309,8 @@ function SumToFract()
 
   //Find best matching whole fraction an iteration at an time.
 
-  for (var i = 1; Math.abs(n - (Math.floor(n * i) / i)) > Number.EPSILON; i++) {
+  for (var i = 1; Math.abs(n - (Math.floor(n * i) / i)) > Number.EPSILON; i++)
+  {
     if ((new Date().getTime() - t) > 7000) { Err("Closest sum-able fraction timed out:"); UpdateOutput(); return; }
   }
 
@@ -309,9 +325,9 @@ function SumToFract()
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Convert Float to fraction using fractions.
-//**********************************************************************************
+/***********************************************************************************
+Convert Float to fraction using fractions.
+***********************************************************************************/
 
 function CalcFract()
 {
@@ -332,9 +348,9 @@ function CalcFract()
   UpdateOutput();
 }
 
-//**********************************************************************************
-//Get input, and check for proper input formats.
-//**********************************************************************************
+/***********************************************************************************
+Get input, and check for proper input formats.
+***********************************************************************************/
 
 function GetInput(F1, F2, Int_Float)
 {
@@ -351,9 +367,9 @@ function GetInput(F1, F2, Int_Float)
   if (isNaN(num[0])) { num[0] = 0; } if (isNaN(num[1])) { num[1] = 0; } return (num);
 }
 
-//**********************************************************************************
-//Generate an sequence, for the pattern to fraction testing code.
-//**********************************************************************************
+/***********************************************************************************
+Generate an sequence, for the pattern to fraction testing code.
+***********************************************************************************/
 
 function CreateSeq()
 {
@@ -362,9 +378,9 @@ function CreateSeq()
   document.getElementById("f1").value = v.divP(base);
 }
 
-//**********************************************************************************
-//Update Controls, and input.
-//**********************************************************************************
+/***********************************************************************************
+Update Controls, and input.
+***********************************************************************************/
 
 function update(re)
 {
@@ -587,7 +603,8 @@ function Output(MSG, Data)
 
 function UpdateOutput()
 {
-  if (up) {
+  if (up)
+  {
     document.getElementById("OutSize").style.width = v ? w : (w / 2); document.getElementById("OutSize").style.height = v ? (h / 2) : h;
 
     document.getElementById("out").innerHTML = '<iframe frameborder="0" style="height:' + (v ? (h / 2) + 'px;' : h + 'px;') + ';width:' + (v ? w + 'px;' : (w / 2) + 'px;') + '" id = "o"></iframe>';

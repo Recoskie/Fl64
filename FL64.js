@@ -867,7 +867,7 @@ var Pattern = function (str, base)
 
   //Check if invalid base setting.
 
-  if (base < 2 || base > 36) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  if (base < 2 || base > 36) { throw new RangeError("radix must be an integer at least 2 and no greater than 36"); }
 
   //Parse the pattern. Return undefined if improper format.
 
@@ -917,7 +917,7 @@ Fract.prototype.divP = function (base)
 
   while (El === -1)
   {
-    if ((new Date().getTime() - t) > 7000) { pat.pat = [Infinity]; return (pat); }
+    if ((new Date().getTime() - t) > 7000) { var err = new RangeError("Time out"); err.data = pat.data; throw(err); }
 
     for (var Exp = pat.data[pat.data.length - 1], i = 0; (Exp - n2) < 0; Exp *= pat.base, i++)
     {
@@ -1228,7 +1228,7 @@ Number.prototype.toString = function (base, MostAcurate)
 
   //Else Check if invalid base setting.
 
-  base = (base & -1) || (this.bm ? 2 : 10); if (base < 2 || base > 36) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  base = (base & -1) || (this.bm ? 2 : 10); if (base < 2 || base > 36) { throw new RangeError("radix must be an integer at least 2 and no greater than 36"); }
 
   //The string representing the character output of the number value.
 
@@ -1491,7 +1491,7 @@ function parseFloat(str, base)
 {
   //Check if invalid base setting.
 
-  base = (base & -1) || 10; if (base < 2 || base > 36) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  base = (base & -1) || 10; if (base < 2 || base > 36) { throw new RangeError("radix must be an integer at least 2 and no greater than 36"); }
 
   //The decoded value.
 
@@ -1584,7 +1584,7 @@ var parseNumber = function (str, base)
 
   var e = str.length; base = base || 2; base &= -1; base.isNum();
 
-  if (base < 2 || base > 36) { throw new Error("RangeError: radix must be an integer at least 2 and no greater than 36"); }
+  if (base < 2 || base > 36) { throw new RangeError("radix must be an integer at least 2 and no greater than 36"); }
 
   //Contains the decoded bit's of the Float64 value.
 
@@ -1613,7 +1613,7 @@ var parseNumber = function (str, base)
 for (var i = 0, a = ["divP", "reduce", "valueOf", "getFract", "avgFract", "bits", "bitAnd", "bitOr", "bitXor", "bitNot", "bitRsh", "bitLsh", "toPattern", "err"], c = ""; i < a.length; i++)
 {
   c += "Array.prototype." + a[i] + " = function( a ) { for( var i1 = 0, i2 = 0, l = this.length, o = []; i1 < l; i1++ ) { ";
-  c += "if( this[i1]." + a[i] + " ) { o[i2++] = this[i1]." + a[i] + "( a ); } else if( ( this[i1] + 0 )." + a[i] + " ) { o[i2++] = ( this[i1] + 0 )." + a[i] + "( a ); }";
+  c += "if( this[i1] ) { if( this[i1]." + a[i] + " ) { o[i2++] = this[i1]." + a[i] + "( a ); } else if( ( this[i1] + 0 )." + a[i] + " ) { o[i2++] = ( this[i1] + 0 )." + a[i] + "( a ); } }";
   c += " } return( o ); }\r\n";
 }
 
