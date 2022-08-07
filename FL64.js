@@ -687,7 +687,7 @@ Number.prototype.Trans = function (x, fa, fb)
 
   this.length = x;
   
-  //Get time. This is set for if the calculation takes longer than 7 seconds.
+  //Get time. This is set for if the calculation takes longer than 1.5 seconds.
 
   var t = new Date().getTime();
 
@@ -713,9 +713,9 @@ Number.prototype.Trans = function (x, fa, fb)
 
   //Transform as many factors as possible. In range of each split.
 
-  else if( this.abLim && (new Date().getTime() - t) < 7000 )
+  else if( this.abLim )
   {
-    while (this.r[this.length] != 0 )
+    while (this.r[this.length] != 0 && (new Date().getTime() - t) < 1500 )
     {
       x += 1; i += 1; this.split(a, b);
     
@@ -725,11 +725,11 @@ Number.prototype.Trans = function (x, fa, fb)
   }
   else
   {
-    if( !sing ) { while (this.r[this.length] > 0 && (new Date().getTime() - t) < 7000 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
-    else { while (this.r[this.length] < 0 && (new Date().getTime() - t) < 7000 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    if( !sing ) { while (this.r[this.length] > 0 && (new Date().getTime() - t) < 1500 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    else { while (this.r[this.length] < 0 && (new Date().getTime() - t) < 1500 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
   }
   
-  if ((new Date().getTime() - t) > 7000) { throw(new RangeError("Time out")); }
+  if ((new Date().getTime() - t) >= 1500) { throw(new RangeError("Time out")); }
 
   return (this);
 };
