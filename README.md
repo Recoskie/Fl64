@@ -16,7 +16,7 @@ Javascript Float64 Library.
 
 ## What is FL64.
 
-FL64 is an library allowing javascript to.<br />
+FL64 is an library that is designed to push the limits of calculating numbers and pushes the limits of arithmetic. It also extends the double precision floating point number format allowing javascript to.<br />
 
 * Split numbers into parts, or find the pattern to any number.<br />
 
