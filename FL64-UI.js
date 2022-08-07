@@ -1039,7 +1039,7 @@ STBar = {
 
     var A = this.Bars[bar].Fa, B = this.Bars[bar].Fb;
 
-    document.getElementById("t"+bar+"r").innerHTML = "<table border='1'><tr><td><center>A</center></td><td><center>B</center></td></tr><tr><td>" + A.toString().html() + "</td><td>" + B.toString().html() + "</td></tr></table>";
+    document.getElementById("t"+bar+"r").innerHTML = "<table border='1'><tr><td><center>A<sub>x</sub></center></td><td><center>B<sub>x</sub></center></td></tr><tr><td>" + A.toString().html() + "</td><td>" + B.toString().html() + "</td></tr></table>";
 
     var n = this.Ref[bar]; //The FBar reference.
 
