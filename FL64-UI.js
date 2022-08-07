@@ -63,7 +63,7 @@ SFBar = {
   Shared between FBar to save memory. This may eventually be string only when decided on best format and layout.
   ***********************************************************************/
 
-  X: ["<td>X<sup><div style='display: inline;' id='f", "#", "x", "*", "'></div></sup></td>"
+  X: ["<td>X<sub><div style='display: inline;' id='f", "#", "x", "*", "'></div></sub></td>"
   ],
   A: ["<td>\
   <input type='button' style='float:left;' value='&#x2191;' onclick='SFBar.adjA(","#",",","*",",1);' />\
@@ -631,7 +631,7 @@ SCBar = {
   Shared between FBar to save memory. This may eventually be string only when decided on best format and layout.
   ***********************************************************************/
 
-  X: ["<td>X<sup><div style='display: inline;' id='c", "#", "x", "*", "'></div></sup></td>"
+  X: ["<td>X<sub><div style='display: inline;' id='c", "#", "x", "*", "'></div></sub></td>"
   ],
   F: ["<td>\
   <div style='display: inline;' id='c", "#", "f", "*", "'></div>\
@@ -929,7 +929,7 @@ STBar = {
   <input type='button' style='float:right;' value = '&#x2193;' onclick='STBar.setB(" , "#", ",", "*", ",-1);' />\
   </td>"
   ],
-  S: ["<option value='", "*", "'>X<sup>", "*", "</sup></option>"],
+  S: ["<option value='", "*", "'>X<sub>", "*", "</sub></option>"],
 
   /***********************************************************************
   Shared properties in order for each bar to work properly on page.
@@ -1230,7 +1230,7 @@ TBar.prototype.update = function (force)
 
     //by Col.
 
-    html += "<td>Dim</td>"; for (var i = 0; i < this.max; i++) { html += "<td>D<sup>" + i + "</sup></td>"; }
+    html += "<td>Dim</td>"; for (var i = 0; i < this.max; i++) { html += "<td>D<sub>" + i + "</sub></td>"; }
 
     //Transform function output.
 
