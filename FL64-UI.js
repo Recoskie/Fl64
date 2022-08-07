@@ -446,7 +446,7 @@ FBar.prototype.update = function (force)
     {
       //Columns X, A, B.
 
-      html += "<tr><td>X</td><td>A</td><td>B</td>";
+      html += "<tr><td>X</td><td>A<sub>x</sub></td><td>B<sub>x</sub></td>";
       
       //Set A, or B to a value.
       
@@ -502,11 +502,11 @@ FBar.prototype.update = function (force)
 
       //Create row "A=".
 
-      html += "<tr><td>A=</td>"; i = 0; for (; i < this.max; i++) { html += this.A[i]; }
+      html += "<tr><td>A<sub>x</sub>=</td>"; i = 0; for (; i < this.max; i++) { html += this.A[i]; }
 
       //Create row "B=".
 
-      html += "</tr><tr><td>B=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
+      html += "</tr><tr><td>B<sub>x</sub>=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
       
       //Create row "AB".
 
@@ -1240,11 +1240,11 @@ TBar.prototype.update = function (force)
 
     //Create row "A=".
 
-    html += "<tr><td>A=</td>"; i = 0; for (; i < this.max; i++) { html += this.A[i]; }
+    html += "<tr><td>A<sub>x</sub>=</td>"; i = 0; for (; i < this.max; i++) { html += this.A[i]; }
 
     //Create row "B=".
 
-    html += "</tr><tr><td>B=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
+    html += "</tr><tr><td>B<sub>x</sub>=</td>"; i = 0; for (; i < this.max; i++) { html += this.B[i]; }
 
     //Seq current factors.
 
