@@ -351,11 +351,14 @@ Number.prototype.split = function (a, b)
   //Only re-factor FX, FY, TX, TY when values get to the end of the exponent.
   //For the time being we will just move the exponent.
   //Note to self. Max is 2^1023, so 2^(1023-51)=3.99168061906944e+292. Thus 2^(1023-51*2)=1.7726622920963562e+277
+  //Working close to the edge of a number still produces errors so we will use half of 512 instead of 1023 giving us 5.954262829429612e+138, and 2.6442238751609944e+123.
 
-  if (this.fx[this.length] > 3.99168061906944e+292 || this.fy[this.length] > 3.99168061906944e+292)
+
+
+  if (this.fx[this.length] > 5.954262829429612e+138 || this.fy[this.length] > 5.954262829429612e+138)
   {
-    this.fx[this.length] /= 1.7726622920963562e+277; this.fy[this.length] /= 1.7726622920963562e+277;
-    this.tx[this.length] /= 1.7726622920963562e+277; this.ty[this.length] /= 1.7726622920963562e+277;
+    this.fx[this.length] /= 2.6442238751609944e+123; this.fy[this.length] /= 2.6442238751609944e+123;
+    this.tx[this.length] /= 2.6442238751609944e+123; this.ty[this.length] /= 2.6442238751609944e+123;
   }
 
   //Val is automatically 0 at cut off range.
@@ -697,7 +700,7 @@ Number.prototype.Trans = function (x, fa, fb)
   {
     if(this.abLim)
     {
-      while (x < 10000)
+      while (x < 20000)
       {
         x += 1; i += 1; this.split(a, b);
     
@@ -707,7 +710,7 @@ Number.prototype.Trans = function (x, fa, fb)
     }
     else
     {
-      while (x < 10000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
+      while (x < 20000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
     }
   }
 
