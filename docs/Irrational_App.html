@@ -257,7 +257,7 @@
 <input type='button' value='&#x2191;' onclick='pat=Math.min(9,pat+1);LoadExample();' /><input type='button' value='&#x2193;' onclick='pat=Math.max(1,pat-1);LoadExample();' /></td>\
 <td><input type='button' value='tanh(1 &div; "+ tanh + " )' onclick='LoadExample(5);' /><input type='button' value='-tanh(1 &div; "+ tanh + " )' onclick='LoadExample(-5);' />\
 <input type='button' value='&#x2191;' onclick='tanh++;LoadExample();' /><input type='button' value='&#x2193;' onclick='tanh=Math.max(1,tanh-1);LoadExample();' /></td>\
-<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></tr><tr><td colspan='3'><input type='button' value='Random' onclick='LoadExample(911);' style='width:100%;' /></td></tr></table>";
+<td><input type='button' value='PI' onclick='LoadExample(3);' /><input type='button' value='-PI' onclick='LoadExample(-3);' /></td></tr><tr><td colspan='3'><input type='button' value='Math.random() = Solve Random Value' onclick='LoadExample(911);' style='width:100%;' /></td></tr></table>";
         }
         else
         {
@@ -379,7 +379,7 @@
           {
             ac = 80; setAC();
             
-            n = rand(); var ta = n[1], tb = n[2], n = n[0];
+            n = rand(); var ta = n[2], tb = n[3], sc = n[1], n = n[0];
             
             n=n.limit(CutOff); if (input == 1) { n = n.getFract(); }
 
@@ -388,6 +388,8 @@
             CVerg.set(n.splitAll());
            
             Fracts.set(n);
+            
+            n.setB(0,sc); n.setA(0,0);
 
             Trans.index = 1; Trans.set(ta,tb);
           }
@@ -685,6 +687,7 @@
       {
         var s = e.slice();
         
+        if( s.length > 4 ) { s[4] = s[4] / 24; s[3] -= s[4] * 60; s[2] -= s[4] * 50; s[1] -= s[4] * 15; s[0] -= s[4]; }
         if( s.length > 3 ) { s[3] = s[3] / 6; s[2] -= s[3] * 12; s[1] -= s[3] * 7; s[0] -= s[3]; }
         if( s.length > 2 ) { s[2] = s[2] / 2; s[1] -= s[2] * 3; s[0] -= s[2]; }
         if( s.length > 1 ) { s[0] -= s[1]; }
@@ -706,7 +709,9 @@
       
       var n = ((NaN).split(0,1).Trans(alg <= 0 ? 1 : 0,ta.getFunc(),tb.getFunc())).calc();
       
-      return([n,m1,m2]);
+      var sc = (Math.random()*((1/n)&-1)+1) & -1; n*=sc;
+      
+      return([n,sc,m1,m2]);
     }
   </script>
   <center>
