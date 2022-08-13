@@ -707,11 +707,13 @@
         
       ta = aling(m1); tb = aling(m2);
       
-      var n = ((NaN).split(0,1).Trans(alg <= 0 ? 1 : 0,ta.getFunc(),tb.getFunc())).calc();
+      var n = ((NaN).split(0,1).Trans(1,ta.getFunc(),tb.getFunc())), sc = n.b[1]; n = n.calc();
       
-      var sc = (Math.random()*((1/n)&-1)+1) & -1; n*=sc;
+      sc = (alg == 0 ? Math.min(sc,1/n) : 1/n) & -1;
       
-      return([n,sc,m1,m2]);
+      var sc = (Math.random()*sc+1) & -1;
+      
+      return([n*sc,sc,m1,m2]);
     }
   </script>
   <center>
