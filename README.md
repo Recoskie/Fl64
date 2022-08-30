@@ -58,6 +58,12 @@ Irrational_App is an sample web application using this library which allows you.
 ------------------------------------------------------------------------------
 
 Code_App allows you to run and test custom code using the library.
+
+------------------------------------------------------------------------------
+
+If you are only interested in writing algorithms that solve the A to B ratio of random numbers into how to calculate them and their geometric relationships then you may be better off with a smaller version of this code see <a href="https://gist.github.com/Recoskie/3475a124f095c90bb090bc096bcf0e0c">CF tool gist</a>.
+
+Thus you can write custom functions like sine or cosine that compute really complex things at high performance.
   
 ------------------------------------------------------------------------------
 1. ### Adds the following to double precision numbers:
