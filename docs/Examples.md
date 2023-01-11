@@ -1017,11 +1017,17 @@ image:
 
   <br /><br />
 
-  <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
+<img style="width:600px;height:303px;" src="https://cs.astronomy.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-00-51-JCP_5F00_blog/3835.Whirlpool-Golden-ratio.jpg" />
 
-  <br /><br />
-  
-  The golden ratio is the most irrational number as each part across the number per smaller part is exactly 1 away per A=1, and B=1.
+<br /><br />
+
+The golden ratio is the most irrational number as each part across the number per smaller part is exactly 1 away per A=1, and B=1.
+
+<br /><br />
+
+You may also find the following article fun as it describes different numbers and their relationship to reality.
+
+<a href="https://cs.astronomy.com/asy/b/astronomy/archive/2018/03/12/go-figure-nature-39-s-numbers-are-the-keys-to-the-cosmos.aspx" target="_blank">Nature numbers are the keys to the cosmos</a>.
 
   <h2>Rational Vs Irrational.</h2>
 
