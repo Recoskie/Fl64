@@ -1009,15 +1009,15 @@ image:
 
   <br /><br />
 
-  <img style="width:30%;height:30%;" src="https://blogs.unimelb.edu.au/sciencecommunication/files/2018/09/fibonacci-spiral-galaxy-1pbbryd.jpg" />
+  <img src="https://cs.astronomy.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-00-51-JCP_5F00_blog/3835.Whirlpool-Golden-ratio.jpg" />
 
   <br /><br />
 
   You can also calculate the golden ratio as the pentagram.
 
   <br /><br />
-
-<img style="width:600px;height:303px;" src="https://cs.astronomy.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-00-51-JCP_5F00_blog/3835.Whirlpool-Golden-ratio.jpg" />
+  
+  <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
 
 <br /><br />
 
