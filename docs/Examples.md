@@ -831,10 +831,6 @@ image:
 
   <br /><br />
 
-  There also is more than one way to line up per A(part) to B(scale) part. As "B" is the scale going to each "A" part. You should always line up the closest A to B and never expand B and make A smaller.
-
-  <br /><br />
-
   There is a method in which you square the remaining part to find the best A to B part.
 
   <br /><br />
@@ -949,7 +945,7 @@ image:
   
   <br /><br />
   
-  We divide the remainder 3 by the value we wish to use for B. In this example we will chose not to scale the remainder smaller going into next part so we will keep B=1.
+  We divide the remainder 3 by the value we wish to use for B. In this example we will choose not to scale the remainder smaller going into next part so we will keep B=1.
   
   <br /><br />
   
@@ -957,7 +953,7 @@ image:
   
   <br /><br />
 
-  All fractions and numbers can be split into parts, and then added back to their smallest fraction this way. As the number of times A-part goes into numerator will always match even if the fraction is larger than it should be. As 30 by 20 is still the same as 3 by 2 if you split it.
+  All fractions and numbers can be split into parts, and then added back to their smallest fraction this way. As the number of times A-part goes into numerator will always match even if the fraction is larger than it should be. As 30 by 20 is still the same as 3 by 2 as it divides the same number of times till 0 even if both numbers are larger. Taking the number of times the vales divided evenly till zero and adding them back into a numerator, and denominator forums the smallest fraction 3 by 2 even if we used 30 by 20.
 
   <br /><br />
   
@@ -973,11 +969,11 @@ image:
   
   <br /><br />
   
-  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction split.
+  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero.
   
   <br /><br />
 
-  The Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by a bigger value than 1. The golden ratio is a direct 1:1 relation to the whole. As it runs through the center.
+  The Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by a bigger value than A=1. The golden ratio is a direct 1:1 relation to the whole. As it runs through the center.
 
   <br /><br />
 
@@ -989,7 +985,7 @@ image:
 
   <br /><br />
 
-  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio per part as well per sqaure. The bigger the rectangle the more accurate the number is.
+  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio per part as well per square. The bigger the rectangle the more accurate the number is.
 
   <br /><br />
 
@@ -1019,15 +1015,17 @@ image:
   
   <img style="width:600px;height:303px;" src="https://1.bp.blogspot.com/-Od04RSUVFrc/XTxqy0DtOpI/AAAAAAAAcUA/P4DsYx381x4AEAEIDQ5BoSYDT_14fDNyACLcBGAs/s1600/EAfbbb6UwAAjwby.jpeg" />
 
-<br /><br />
+  <br /><br />
 
-The golden ratio is the most irrational number as each part across the number per smaller part is exactly 1 away per A=1, and B=1.
+  The golden ratio is the most irrational number as each part across the number per smaller part is exactly 1 away per A=1, and B=1.
 
-<br /><br />
+  <br /><br />
 
-You may also find the following article fun as it describes different numbers and their relationship to reality.
+  You may also find the following article fun as it describes different numbers and their relationship to reality.
 
-<a href="https://cs.astronomy.com/asy/b/astronomy/archive/2018/03/12/go-figure-nature-39-s-numbers-are-the-keys-to-the-cosmos.aspx" target="_blank">Nature numbers are the keys to the cosmos</a>.
+  <a href="https://cs.astronomy.com/asy/b/astronomy/archive/2018/03/12/go-figure-nature-39-s-numbers-are-the-keys-to-the-cosmos.aspx" target="_blank">Nature numbers are the keys to the cosmos</a>.
+
+  <br /><br />
 
   <h2>Rational Vs Irrational.</h2>
 
