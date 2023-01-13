@@ -1059,7 +1059,7 @@ image:
 
   <a id="dpat" class="cmd"></a><h1>Periodic number patterns.</h1>
 
-  Periodic number patterns happen when you divide a number that does not divide evenly out of the number of digits you are using per place value.
+  Periodic number patterns happen when you divide a number that does not divide evenly out of the number of digits you are using to count before you carry to the next column.
 
   <br /><br />
 
@@ -1067,7 +1067,7 @@ image:
 
   <br /><br />
 
-  The next place value is 10, so we subtract one making it 10-1=9. When we divide any number by 9, it will create a remainder that is the same going in, and out across the number forever.
+  The next place value is 10 after 9. When we divide any number by 9, it will create a remainder that is the same across the number forever.
 
   <br /><br />
 
@@ -1088,15 +1088,11 @@ image:
 
   <br /><br />
 
-  What is happening is that we have ten possible digits per place value. We have 0,1,2,3,4,5,6,7,8,9.
+  Anything divided by the last digit creates a indivisible remainder that is the same across the number forever.
 
   <br /><br />
 
-  Thus anything divided by the last digit creates a indivisible remainder that is the same across the number forever.
-
-  <br /><br />
-
-  The next place value is 10*10=100, so 100-1=99. Any two digits divided by 99 will repeat forever across the number as it is indivisible.
+  The next place value is 100, so 100-1=99. Any two digits divided by 99 will repeat forever across the number as it is indivisible.
 
   <br /><br />
 
@@ -1128,11 +1124,11 @@ image:
   
   <br /><br />
   
-  The pattern does not have to start right away as we can offset the pattern by adding a starting value. Say we want to do a pattern of 73. We need 73&divide;99. Adding an zero to 99 will offset the pattern by one place value 73&divide;990 = 0.073737373. Adding another zero will offset it by another place value 73&divide;9900 = 0.0073737373 and so on. Useing 9900 we can set two place values after the decimal point to whatever we like. Using the calculation (73+r*9900)&divide;9900 in which r is our chosen digits. We multiply 9900 by 97.16 as our chosen digits 9900x97.16=961884 we then add our patten 73 making 961884 + 73 = 961957. Lastly 961957&divide;9900 = 97.16737373737373.
+  The pattern does not have to start right away as we can offset the pattern by adding a starting value. Say we want to do a pattern of 73. We need 73&divide;99. Adding an zero to 99 will offset the pattern by one place value 73&divide;990 = 0.073737373. Adding another zero will offset it by another place value 73&divide;9900 = 0.0073737373 and so on. Using 9900 we can set two place values after the decimal point to whatever we like. Using the calculation (73+r*9900)&divide;9900 in which r is our chosen digits. We multiply 9900 by 97.16 as our chosen digits 9900x97.16=961884 we then add our patten 73 making 961884 + 73 = 961957. Lastly 961957&divide;9900 = 97.16737373737373.
 
   <br /><br />
 
-  Periodic number patterns relate to the number of digits you are using to display your value in per divisible place value.
+  Periodic number patterns relate to the number of digits you are using to display your value in divisible place values.
 
   <br /><br />
 
@@ -1156,11 +1152,7 @@ image:
 
   <br /><br />
 
-  Changing the number of digits we use in a number system changes what is divisible between the number of digits.
-
-  <br /><br />
-
-  However, even base three has the following indivisible values.
+  Changing the number of digits we use in a number system changes what is divisible between the number of digits. In base three we count till 2 and carry to 10 which is 3 in value. This means the last value before the next place value is 2 and anything divided by 2 will not divide. Also anything divided by 22, or 222 in base three will not divide and will repeat across the number forever.
 
   <br /><br />
 
@@ -1168,7 +1160,7 @@ image:
 
   <br /><br />
 
-  Use the left and right arrows to change the number base. Use the up and down arrows to navigate through all number patterns combinations. You might have to zoom in if you are on a small display, or cell phone to use it.
+  Use the left and right arrows to change the number base. Use the up and down arrows to navigate through all number pattern combinations. You might have to zoom in if you are on a small display, or cell phone to use it.
 
   <br /><br />
 
@@ -1199,7 +1191,7 @@ image:
 
   <br /><br />
 
-  So Division has some useful characteristics.
+  Using this knowledge we can use division characteristics to achieve some interesting algorithms.
 
   <br /><br />
 
