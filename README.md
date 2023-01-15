@@ -8,10 +8,10 @@ Javascript Float64 Library.
 ## Documentation, and tools.
 
 <table>
+  <tr><td>Documentation, and how it works:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
   <tr><td>Irrational number Analyzer tool:</td><td><a href="https://recoskie.github.io/Fl64/docs/Irrational_App.html">Link</a></td></tr>
   <tr><td>FL64 Basic functions tool:</td><td><a href="https://recoskie.github.io/Fl64/docs/Fl64_App.html">Link</a></td></tr>
   <tr><td>Test And execute custom code:</td><td><a href="https://recoskie.github.io/Fl64/docs/Code_App.html">Link</a></td></tr>
-  <tr><td>Documentation with Examples:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
 </table>
 
 ## What is FL64.
