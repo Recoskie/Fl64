@@ -915,7 +915,7 @@ image:
 
   <br /><br />
 
-  <h2>At the smallest scale.</h2>
+  <h2>At the smallest scale (how it works).</h2>
 
   The Golden ratio is the smallest distance possible per part across a number. It can be added together by adding previous number to the next number creating a set called the Fibonacci sequence.
 
@@ -936,12 +936,12 @@ image:
   If you pick 8 and do 8&divide;5=1.6. You will find 1.6 splits in a=1, and b=1 the same number of times as it took to add to the Fibonacci number 8.
 
   <br /><br />
-
-  By adding previous number to next number starting with 0, 1, and multiplying by each A-part creates the numerator. Doing the same thing starting with 1, 0 with B creates the denominator. Which forums the fraction.
+  
+  This is because each prior value divides one time evenly, and as we add the previous value to the next value, we end up with a remainder that divides evenly one time again that includes the previous remainder. If we start with 0, 1 and multiply by 2 as we add the next value, we would end up with a value that divides evenly twice per part.
   
   <br /><br />
   
-  If we wish to split the fraction 8&divide;5. The value for A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3.
+  If we wish to split the fraction 8&divide;5 going backwards. The value for A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3 going backwards.
   
   <br /><br />
   
@@ -949,11 +949,7 @@ image:
   
   <br /><br />
   
-  We take our remainder and divide it by the number we previously divided by which was 5. We go 5&divide;3. We end up with it dividing once, making A=1 with a remainder of 2. We can do this same process two more times before we have 0 remaining.
-  
-  <br /><br />
-
-  All fractions and numbers can be split into parts, and then added back to their smallest fraction this way. As the number of times A-part goes into numerator will always match even if the fraction is larger than it should be. As 30 by 20 is still the same as 3 by 2 as it divides the same number of times till 0 even if both numbers are larger. Taking the number of times the vales divided evenly till zero and adding them back into a numerator, and denominator forums the smallest fraction 3 by 2 even if we used 30 by 20.
+  We take our remainder and divide it by the number we previously divided by which was 5. We go 5&divide;3. We end up with it dividing once, making A=1 with a remainder of 2. We can do this same process two more times going backwards before we have 0 remaining.
 
   <br /><br />
   
@@ -961,7 +957,7 @@ image:
   
   <br /><br />
   
-  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 as well (no Scaling).
+  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 (no Scaling).
   
   <br /><br />
   
@@ -969,7 +965,15 @@ image:
   
   <br /><br />
   
-  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero.
+  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero going backwards. This gives us a way to add the value back into a fraction.
+
+<br /><br />
+
+By adding the previous number to the next number, starting with 0, 1, and multiplying by each A-part creates the numerator. Doing the same thing, starting with 1, 0 with B creates the denominator. Which adds to the fraction. We can get the information for each A=? part by dividing the number into 1 to find the next evenly dividable value per part. We only include B when sizing up the parts into a calculation to calculate a number.
+
+  <br /><br />
+
+  All fractions and numbers can be split into parts, and then added back to their smallest fraction this way. As the number of times A-part goes into numerator will always match even if the fraction is larger than it should be. As 30 by 20 is still the same as 3 by 2 as it divides the same number of times till 0 even if both numbers are larger. Taking the number of times the value divided evenly till zero and adding them back into a numerator, and denominator forums the smallest fraction 3 by 2 even if we used 30 by 20.
   
   <br /><br />
 
@@ -981,15 +985,19 @@ image:
 
   <br /><br />
 
-  You can also create the golden rectangle with the Fibonacci sequence by using squares of each length of each Fibonacci number.
+  You can also create the golden rectangle with the Fibonacci sequence by using square tiles of each length of each Fibonacci number and placing them in front of each other as in the diagram.
 
   <br /><br />
 
-  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio per part as well per square. The bigger the rectangle the more accurate the number is.
+  By measuring the bottom, and measuring the right side. Then dividing the two lengths. You get the golden ratio per part as well per square tile you added. The bigger the rectangle the more accurate the number is.
 
   <br /><br />
 
-  The Fibonacci sequence, and golden ratio is a spiral in nature.
+  The same rule applies to a circle outside distance divided by its distance across, which is why the number PI is a construction of parts that go on forever per bigger circle and is the very nature of what irrational numbers are. The golden ratio is the only number in which each part is exactly as small as can be per part as all A=1, B=1.
+
+  <br /><br />
+
+  The Fibonacci sequence and golden ratio is a spiral in nature when you connect the values together in the placement of its shape per square tile part, as seen in the diagram.
 
   <br /><br />
 
