@@ -733,7 +733,7 @@ image:
 
   <br /><br />
 
-  <a id="squre" class="cmd"></a><h2>Square roots.</h2>
+  <a id="square" class="cmd"></a><h2>Square roots.</h2>
 
   Every square root is related to the golden ratio. Here is a table of every square root.
 
