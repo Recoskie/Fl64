@@ -121,13 +121,13 @@ image:
   <h1>Indexed contents.</h1>
 
 <table border="1">
-    <tr><td>Number in Parts: <a href="#parts">Link</a></td><td rowspan="4">Basics.</td></tr>
+    <tr><td>Number in Parts: <a href="#parts">Link</a></td><td rowspan="4">Basic functions.</td></tr>
     <tr><td>Adding parts back together: <a href="#calc">Link</a></td></tr>
     <tr><td>Manipulating parts: <a href="#mparts">Link</a></td></tr>
     <tr><td>Creating a number in Parts: <a href="#cparts">Link</a></td></tr>
-    <tr><td>Irrational numbers: <a href="#irrational">Link</a></td><td rowspan="3">Analyzing Numbers.</td></tr>
-    <tr><td>Periodic Recurring/number patterns: <a href="#dpat">Link</a></td></tr>
-    <tr><td>The secrete to all numbers (No such thing as random numbers): <a href="#s">Link</a></td></tr>
+    <tr><td>Irrational numbers: <a href="#irrational">Link</a></td><td rowspan="3">Analyzing Numbers, and how it works.</td></tr>
+    <tr><td>The secrete structure to all numbers (No such thing as random numbers): <a href="#s">Link</a></tr>
+    <tr><td>Periodic Recurring/number patterns: <a href="#dpat">Link</a></td></td></tr>
     <tr><td>Fraction Data type: <a href="#fract">Link</a></td><td rowspan="2">Error correction.</td></tr>
     <tr><td>Error Correction: <a href="#er">Link</a></td></tr>
     <tr><td>Binary translation operations: <a href="#bits">Link</a></td><td rowspan="3">Binary, and bitwise operations.</td></tr>
@@ -733,7 +733,7 @@ image:
 
   <br /><br />
 
-  <h2>Square roots.</h2>
+  <a id="squre" class="cmd"></a><h2>Square roots.</h2>
 
   Every square root is related to the golden ratio. Here is a table of every square root.
 
@@ -945,7 +945,7 @@ image:
   
   <br /><br />
   
-  We divide the remainder 3 by the value we wish to use for B. In this example we will choose not to scale the remainder smaller going into next part so we will keep B=1.
+  We divide the remainder 3 by the value we wish to use for B-part. In this example we will choose not to scale the remainder smaller going into next part so we will keep B=1.
   
   <br /><br />
   
@@ -967,9 +967,13 @@ image:
   
   Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero going backwards. This gives us a way to add the value back into a fraction.
 
-<br /><br />
+  <br /><br />
 
-By adding the previous number to the next number, starting with 0, 1, and multiplying by each A-part creates the numerator. Doing the same thing, starting with 1, 0 with B creates the denominator. Which adds to the fraction. We can get the information for each A=? part by dividing the number into 1 to find the next evenly dividable value per part. We only include B when sizing up the parts into a calculation to calculate a number.
+  By adding the previous number to the next number, starting with 0, 1, and multiplying by each A-part creates the numerator. Doing the same thing, starting with 1, 0 with B-part creates the denominator. Which adds to the fraction. We can get the information for each A=? part by dividing the number into 1 to find the next evenly dividable value per part.
+
+  <br /><br />
+
+  We only include B-part when sizing up the parts into a calculation to calculate a number per part. To learn how to use the B-part to line up numbers, see the previous section on the square calculation: <a href="#square">Link</a>.
 
   <br /><br />
 
