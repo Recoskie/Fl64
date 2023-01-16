@@ -126,7 +126,7 @@ image:
     <tr><td>Manipulating parts: <a href="#mparts">Link</a></td></tr>
     <tr><td>Creating a number in Parts: <a href="#cparts">Link</a></td></tr>
     <tr><td>Irrational numbers: <a href="#irrational">Link</a></td><td rowspan="3">Analyzing Numbers, and how it works.</td></tr>
-    <tr><td>The secrete structure to all numbers (No such thing as random numbers): <a href="#s">Link</a></td></tr>
+    <tr><td>The secret structure to all numbers (No such thing as random numbers): <a href="#s">Link</a></td></tr>
     <tr><td>Periodic Recurring/number patterns: <a href="#dpat">Link</a></td></tr>
     <tr><td>Fraction Data type: <a href="#fract">Link</a></td><td rowspan="2">Error correction.</td></tr>
     <tr><td>Error Correction: <a href="#er">Link</a></td></tr>
