@@ -941,7 +941,7 @@ image:
   
   <br /><br />
   
-  If we wish to split the fraction 8&divide;5 going backwards. The value for each A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3 going backwards.
+  If we wish to split the fraction 8&divide;5 going backwards. The value for each A-part is how many times 5 divides into 8. It divides once, so the value for A-part is 1. We are left with 8-5=3 going backwards.
   
   <br /><br />
   
@@ -953,7 +953,7 @@ image:
 
   <br /><br />
   
-  Splitting an number into parts is the same process. The number before the decimal point is each A-part. The value 1.6 is A=1 so we take the part away leaving 0.6 remainder.
+  Splitting a number into parts is the same process. The number before the decimal point is each A-part. The value 1.6 is A=1 so we take the part away leaving 0.6 remainder.
   
   <br /><br />
   
@@ -965,7 +965,7 @@ image:
   
   <br /><br />
   
-  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero going backwards. This gives us a way to add the value back into a fraction.
+  Both ways end up with the same results. When we divide the number into 1 we are basically asking how many times does the value go evenly the same as we did with the fraction till zero going backwards. This gives us an way to add the value back into a fraction.
 
   <br /><br />
 
