@@ -933,7 +933,7 @@ image:
 
   <br /><br />
 
-  If you pick 8 and do 8&divide;5=1.6. You will find 1.6 splits in a=1, and b=1 the same number of times as it took to add to the Fibonacci number 8.
+  If you pick 8 and do 8&divide;5=1.6. You will find 1.6 splits in A=1, and B=1 the same number of times as it took to add to the Fibonacci number 8.
 
   <br /><br />
   
@@ -941,7 +941,7 @@ image:
   
   <br /><br />
   
-  If we wish to split the fraction 8&divide;5 going backwards. The value for A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3 going backwards.
+  If we wish to split the fraction 8&divide;5 going backwards. The value for each A-part is how many times 5 divides into 8. It divides once, so the value for A is 1. We are left with 8-5=3 going backwards.
   
   <br /><br />
   
@@ -953,11 +953,11 @@ image:
 
   <br /><br />
   
-  Splitting a number into parts is almost the same process. The number before the decimal point is each A-part. The value 1.6 is A=1 so we take the part away leaving 0.6 remainder.
+  Splitting an number into parts is the same process. The number before the decimal point is each A-part. The value 1.6 is A=1 so we take the part away leaving 0.6 remainder.
   
   <br /><br />
   
-  We divide the remaining value 0.6 by B scale. In this example we will leave B=1 (no Scaling).
+  We divide the remaining value 0.6 by B-part scale. In this example we will leave B=1 (no Scaling).
   
   <br /><br />
   
@@ -973,7 +973,7 @@ image:
 
   <br /><br />
 
-  We only include B-part when sizing up the parts into a calculation to calculate a number per part. To learn how to use the B-part to line up numbers, see the previous section on the square calculation: <a href="#square">Link</a>.
+  We only include B-part when sizing up the parts into a calculation to calculate an number per part. To learn how to use the B-part to line up numbers, see the previous section on the square calculation: <a href="#square">Link</a>.
 
   <br /><br />
 
@@ -981,7 +981,7 @@ image:
   
   <br /><br />
 
-  The Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by a bigger value than A=1. The golden ratio is a direct 1:1 relation to the whole. As it runs through the center.
+  The Fibonacci sequence relates to adding per smaller part at the smallest scale without multiplying by an bigger value than A=1. The golden ratio is a direct 1:1 relation to the whole structure.
 
   <br /><br />
 
@@ -997,7 +997,7 @@ image:
 
   <br /><br />
 
-  The same rule applies to a circle outside distance divided by its distance across, which is why the number PI is a construction of parts that go on forever per bigger circle and is the very nature of what irrational numbers are. The golden ratio is the only number in which each part is exactly as small as can be per part as all A=1, B=1.
+  The same rule applies to a circles outside distance divided by its distance across, which is why the number PI is a construction of parts that go on forever per bigger circle and is the very nature of what irrational numbers are. The golden ratio is the only number in which each part is exactly as small as can be per part as all A=1, B=1.
 
   <br /><br />
 
