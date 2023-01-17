@@ -893,7 +893,7 @@ image:
 
   <br /><br />
 
-  <a id="s" class="cmd"></a><strong>Each number relates to each other. Think of this as the golden ratio to the square, and then to natural log, and PI as a spiral stir case squared.</strong>
+  <strong>Each number relates to each other. Think of this as the golden ratio to the square, and then to natural log, and PI as a spiral stir case squared.</strong>
 
   <br /><br />
 
@@ -915,7 +915,7 @@ image:
 
   <br /><br />
 
-  <h2>At the smallest scale (how it works).</h2>
+  <a id="s" class="cmd"></a><h2>At the smallest scale (how it works).</h2>
 
   The Golden ratio is the smallest distance possible per part across a number. It can be added together by adding previous number to the next number creating a set called the Fibonacci sequence.
 
