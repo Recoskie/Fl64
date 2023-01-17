@@ -1036,6 +1036,10 @@ image:
   You may also find the following article fun as it describes different numbers and their relationship to reality.
 
   <a href="https://cs.astronomy.com/asy/b/astronomy/archive/2018/03/12/go-figure-nature-39-s-numbers-are-the-keys-to-the-cosmos.aspx" target="_blank">Nature numbers are the keys to the cosmos</a>.
+  
+  <br /><br />
+  
+  You may also like <a href="[https://cs.astronomy.com/asy/b/astronomy/archive/2018/03/12/go-figure-nature-39-s-numbers-are-the-keys-to-the-cosmos.aspx](http://www.fibonaccilifechart.com/blog/the-purpose-of-life-and-golden-ratio-explained)" target="_blank">The purpose of life and golden ratio explained</a>.
 
   <br /><br />
 
