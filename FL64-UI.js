@@ -233,7 +233,7 @@ SFBar = {
   {
     if( v = prompt("Enter the Value you want to set A.") )
     {
-      if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
+      if( isNaN( v = parseFloat(v) ) ) { alert("Please enter an valid Number!"); return; }
       
       try
       {
@@ -267,7 +267,7 @@ SFBar = {
   {
     if( v = prompt("Enter the Value you want to set B.") )
     {
-      if( isNaN( v = parseInt(v, 10) ) ) { alert("Please enter an valid Number!"); return; }
+      if( isNaN( v = parseFloat(v) ) ) { alert("Please enter an valid Number!"); return; }
       
       try
       {

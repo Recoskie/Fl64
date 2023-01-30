@@ -256,11 +256,9 @@ Number.prototype.split = function (a, b)
     {
       var r = a/(1/(n-a)), s2 = r < 0 ? -1 : 1;
     
-      r = Math.ceil( r * s2 ) * s2;
-    
       //Allow the value for B to be adjusted higher than r.
     
-      if( b * s2 < r * s2 ) { b = r; }
+      if( b * s2 < r * s2 ) { b = Math.ceil( r * s2 ) * s2; }
     }
 
     this.tx = [0]; this.ty = [1];
@@ -311,11 +309,9 @@ Number.prototype.split = function (a, b)
   {
     var r = a/(1/(n-a)), s = r < 0 ? -1 : 1;
     
-    r = Math.ceil( r * s ) * s;
-    
     //Allow the value for B to be adjusted higher than r.
     
-    if( b * s < r * s ) { b = r; }
+    if( b * s < r * s ) { b = r = Math.ceil( r * s ) * s; }
   }
   
   //Force b >= b.
@@ -326,7 +322,7 @@ Number.prototype.split = function (a, b)
     
     if( b * s < this.b[this.length-1] * s )
     {
-      b = this.b[this.length-1];
+      b = this.b[this.length-1] + (b < 0 ? b-(-Math.floor(-b)) : b-Math.floor(b));
     }
   }
   
