@@ -244,7 +244,7 @@ function cfAdj( A, B )
   Number.prototype.abLim = Number.prototype.reFact = A || B;
 }
 
-function intAdj(int) { Number.prototype.int = parseInt(int) == 1; if( Number.prototype.int ){ alert("integer mode"); } else { alert("floating point mode"); } }
+function intAdj(int) { Number.prototype.int = parseInt(int) == 1; }
 
 Number.prototype.split = function (a, b)
 {
