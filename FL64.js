@@ -226,6 +226,12 @@ Number.prototype.init_ac = false;
 Number.prototype.reFact = false;
 
 //*****************************************************************************************************
+//Allows us to use integer, or floating point numbers when splitting an number apart.
+//*****************************************************************************************************
+
+Number.prototype.int = true;
+
+//*****************************************************************************************************
 //Split a number, or Fraction and return the object.
 //*****************************************************************************************************
 
@@ -237,6 +243,8 @@ function cfAdj( A, B )
   Number.prototype.rB = B;
   Number.prototype.abLim = Number.prototype.reFact = A || B;
 }
+
+function intAdj(int) { Number.prototype.int = parseInt(int) == 1; if( Number.prototype.int ){ alert("integer mode"); } else { alert("floating point mode"); } }
 
 Number.prototype.split = function (a, b)
 {
@@ -256,9 +264,11 @@ Number.prototype.split = function (a, b)
     {
       var r = a/(1/(n-a)), s2 = r < 0 ? -1 : 1;
     
+      r = Math.ceil( r * s2 ) * s2;
+    
       //Allow the value for B to be adjusted higher than r.
     
-      if( b * s2 < r * s2 ) { b = Math.ceil( r * s2 ) * s2; }
+      if( b * s2 < r * s2 ) { b = r; }
     }
 
     this.tx = [0]; this.ty = [1];
@@ -309,9 +319,11 @@ Number.prototype.split = function (a, b)
   {
     var r = a/(1/(n-a)), s = r < 0 ? -1 : 1;
     
+    r = Math.ceil( r * s ) * s;
+    
     //Allow the value for B to be adjusted higher than r.
     
-    if( b * s < r * s ) { b = r = Math.ceil( r * s ) * s; }
+    if( b * s < r * s ) { b = r; }
   }
   
   //Force b >= b.
@@ -322,7 +334,7 @@ Number.prototype.split = function (a, b)
     
     if( b * s < this.b[this.length-1] * s )
     {
-      b = this.b[this.length-1] + (b < 0 ? b-(-Math.floor(-b)) : b-Math.floor(b));
+      b = this.b[this.length-1];
     }
   }
   
@@ -520,6 +532,8 @@ Number.prototype.remove = function (el)
 
 Number.prototype.setA = function (el, v)
 {
+  if(this.int){ v = Math.round(v); }
+  
   var n = this, End = n.length, ba = n.a, bb = n.b; n.length = el;
 
   n = n.split(v, bb[el]); while (el < End) { el += 1; n = n.split(ba[el], bb[el]); }
@@ -531,6 +545,8 @@ Number.prototype.setA = function (el, v)
 
 Number.prototype.setB = function (el, v)
 {
+  if(this.int){ v = Math.round(v); }
+  
   //The value cant be set 0 so it is set -1 or +1 based on direction.
   
   if (v === 0) { v = this.b[el] > v ? -1 : 1; }
@@ -678,7 +694,7 @@ Number.prototype.Trans = function (x, fa, fb)
 {
   if (isNaN(fa(1)) || isNaN(fb(1))) { return (this); }
 
-  var sing = ( this.primitive() || 0 ) < 0, a = Math.round(fa(1)), b = Math.round(fb(1)), i = 1;
+  var sing = ( this.primitive() || 0 ) < 0, a = fa(1), b = fb(1), i = 1;
 
   if (isNaN(this)) { while (this.length < x) { this.split(1,1); }; }
 
@@ -698,15 +714,24 @@ Number.prototype.Trans = function (x, fa, fb)
     {
       while (x < 20000)
       {
+        if(this.int) { a = Math.round(a); b = Math.round(b); }
+        
         x += 1; i += 1; this.split(a, b);
     
-        if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = Math.round(fa(i)); b = Math.round(fb(i)); }
+        if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = fa(i); b = fb(i); }
         else { this.length -= 1; break; }
       }
     }
     else
     {
-      while (x < 20000) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); }
+      while (x < 20000)
+      {
+        if(this.int) { a = Math.round(a); b = Math.round(b); }
+        
+        x += 1; i += 1; this.split(a, b);
+        
+        a = fa(i); b = fb(i);
+      }
     }
   }
 
@@ -716,16 +741,38 @@ Number.prototype.Trans = function (x, fa, fb)
   {
     while (this.r[this.length] != 0 && (new Date().getTime() - t) < 1500 )
     {
+      if(this.int) { a = Math.round(a); b = Math.round(b); }
+      
       x += 1; i += 1; this.split(a, b);
     
-      if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = Math.round(fa(i)); b = Math.round(fb(i)); }
+      if( a == this.a[this.length-1] && b == Math.abs( this.b[this.length-1] ) ) { a = fa(i); b = fb(i); }
       else { this.length -= 1; break; }
     }
   }
   else
   {
-    if( !sing ) { while (this.r[this.length] > 0 && (new Date().getTime() - t) < 1500 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
-    else { while (this.r[this.length] < 0 && (new Date().getTime() - t) < 1500 ) { x += 1; i += 1; this.split(a, b); a = Math.round(fa(i)); b = Math.round(fb(i)); } }
+    if( !sing )
+    {
+      while (this.r[this.length] > 0 && (new Date().getTime() - t) < 1500 )
+      {
+        if(this.int) { a = Math.round(a); b = Math.round(b); }
+        
+        x += 1; i += 1; this.split(a, b);
+        
+        a = fa(i); b = fb(i);
+      }
+    }
+    else
+    {
+      while (this.r[this.length] < 0 && (new Date().getTime() - t) < 1500 )
+      {
+        if(this.int) { a = Math.round(a); b = Math.round(b); }
+        
+        x += 1; i += 1; this.split(a, b);
+        
+        a = fa(i); b = fb(i);
+      }
+    }
   }
   
   if ((new Date().getTime() - t) >= 1500) { throw(new RangeError("Time out")); }

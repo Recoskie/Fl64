@@ -91,7 +91,7 @@
     
     var alg = -2;
 
-    //Graphics area used for adjusting width and height and visabilty.
+    //Graphics area used for adjusting width and height and visibility.
 
     var gar = document.getElementById("gr");
     
@@ -99,7 +99,7 @@
     
     var g2d = gar.getContext("2d");
     
-    //If vertical or horzontal.
+    //If vertical or horizontal.
     
     var hr = true;
     
@@ -743,13 +743,23 @@
       </tr>
       <tr>
         <td>
-          <select onchange="changeAlg(this.value);" style="width:100%;">
-            <option value="0">Cf</option>
-            <option value="1">Cf(A=A)</option>
-            <option value="2">Cf(A=A,B>=B)</option>
-            <option value="3">Tf</option>
-            <option value="4">Tf(-\+)</option>
-          </select>
+          <!--
+            Display flex grow and shrink does not work on safari with the select/option element.
+            Forced to use table for compatibility here.
+          -->
+          <table style="width:100%;"><tr><td style="width:100%;">
+            <select onchange="changeAlg(this.value);" style="width:100%;">
+              <option value="0">Cf</option>
+              <option value="1">Cf(A=A)</option>
+              <option value="2">Cf(A=A,B>=B)</option>
+              <option value="3">Tf</option>
+              <option value="4">Tf(-\+)</option>
+            </select></td>
+            <td><select onchange="intAdj(this.value);">
+              <option value="1">Int</option>
+              <option value="0">Float</option>
+            </select>
+          </td></tr></table>
         </td>
         <td>
           <select onchange="UpdateI(this.value);" style="width:100%;">
