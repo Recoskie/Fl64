@@ -24,7 +24,7 @@ FL64 is an library that is designed to push the limits of calculating numbers an
 <table>
   <tr><td>Main application page:</td><td><a href="https://recoskie.github.io/Fl64/">Link</a></td></tr>
   <tr><td>Documentation with live examples, and how it works:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
-  <tr><td>FL64 function reference:</td><td><a href="https://github.com/Recoskie/Fl64/wiki/Reference.">Link</a></td></tr>
+  <tr><td>FL64 function reference:</td><td><a href="https://github.com/Recoskie/Fl64/wiki/Reference">Link</a></td></tr>
 </table>
 
 The FL64 web application allows you to. <br />
