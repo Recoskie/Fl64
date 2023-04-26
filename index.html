@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
-<body onload="page=document.getElementById('page');re();setTool(0);">
+<body onload="page=document.getElementById('page');re();setTool();">
   <style type="text/css">
     <!--
     body
@@ -788,11 +788,11 @@
 
     var toolType = ["Number analyzer","Division pattern analyzer","Fraction analyzer","Float64 binary converter","Float64 binary converter","Float to fraction","Run code","Help"]
 
-    function setTool( type )
+    function setTool()
     {
-      tool = type != null ? type : tool; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
+      tool = parseInt(window.location.hash.replace("#","")) || 0; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
 
-      if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); }
+      if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); update(); }
       if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
       if(tool == 2) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
       if(tool == 3 || tool == 4)
@@ -1350,7 +1350,7 @@
         <tr>\
           <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Decode Float." onclick="convert(0)"></td>\
           <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Float Value." onclick="convert(1)"></td>\
-          <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Auto Update Inputs" onclick="setTool(4);"></td>\
+          <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Auto Update Inputs" onclick="window.location.hash = "4";setTool();"></td>\
         </tr>\
       </table><div id="console"></div></div>',
       /***********************************************************************************
@@ -1369,7 +1369,7 @@
           <td><select id="b2" onchange="convert(0,true)" style="width:100%;height:100%;font-size:2vw;">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'">Bit/Base'+i+'</option>',i++);return(o);})() + '</select></td>\
         </tr>\
         <tr>\
-          <td colspan="2"><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Disable Auto Update" onclick="setTool(3);"></td>\
+          <td colspan="2"><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Disable Auto Update" onclick="window.location.hash = "3";setTool();"></td>\
         </tr>\
       </table><div id="console"></div></div>',
       /***********************************************************************************
@@ -1426,23 +1426,23 @@ console.log(pi.toString());</textarea>\
   </script>
   <center>
     <!--Tool bar-->
-    <table style="width:100%;">
+    <table style="width:100%;background-color:rgba(255,255,255,0.75);">
       <tr>
         <td>
           <div class="toolBar">
             <button id="toolBar" class="toolBtn">Open tool menu</button>
             <div class="toolBarI">
-              <a onclick="setTool(0);">Number analyzer</a>
-              <a onclick="setTool(1);">Division pattern analyzer</a>
-              <a onclick="setTool(2);">Fraction analyzer</a>
-              <a onclick="setTool(3);">Float64 binary converter</a>
-              <a onclick="setTool(5);">Float to fraction</a>
-              <a onclick="setTool(6);">Run code</a>
-              <a onclick="setTool(7);">Help</a>
+              <a onclick="window.location.hash = '0';setTool();">Number analyzer</a>
+              <a onclick="window.location.hash = '1';setTool();">Division pattern analyzer</a>
+              <a onclick="window.location.hash = '2';setTool();">Fraction analyzer</a>
+              <a onclick="window.location.hash = '3';setTool();">Float64 binary converter</a>
+              <a onclick="window.location.hash = '5';setTool();">Float to fraction</a>
+              <a onclick="window.location.hash = '6';setTool();">Run code</a>
+              <a onclick="window.location.hash = '7';setTool();">Help</a>
             </div>
           </div>
         </td>
-        <td id="setTool" style="width:100%;background-color:rgba(255,255,255,0.75);"></td>
+        <td id="setTool" style="width:100%;"></td>
       </tr>
     </table>
     <!--Page control-->
