@@ -101,7 +101,7 @@
       .analFr2 { font-size:2.6vw; }
       .bin { font-size:1.75vw; }
       .rt { width:100%; height:100%; }
-      #console { width:29%; height:100%; }
+      #console { position: relative; top: 4px; width:29%; height:calc(100% - 4px); }
     }
     @media (orientation: portrait)
     {
@@ -1410,7 +1410,7 @@ pi = pi.splitAll();\r\n\r\n\
 console.log(pi.toString());</textarea>\
         </div>\
         <div class="c2">\
-          <div id="console" style="width:100%;height:93%;"></div>\
+          <div id="console" style="width:100%;height: calc(93% - 4px);"></div>\
         </div>\
       </div>\
       <input type="button" value="Run Code." onclick="runCode()" style="width:70%;min-height:64px;height:6%;" />\
