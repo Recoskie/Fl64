@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
 </head>
-<body onload="update(); Trans.update(); LoadExample();">
+<body onload="page=document.getElementById('page');re();setTool(0);">
   <style type="text/css">
     <!--
     body
@@ -20,22 +20,18 @@
       -moz-background-size: cover;
       -webkit-background-size: cover;
     }
-
     table
     {
       background-color: rgba(200,200,200,0.50);
     }
-
     input[type=button]
     {
       background-color: rgba(0, 200, 255, 0.50);
     }
-
     input[type=text]
     {
       background-color: rgba(255, 255, 255, 0.50);
     }
-    
     .cc
     {
       position: fixed;
@@ -46,7 +42,6 @@
       z-index: 1;
       background: rgba(40, 40, 40, 0.80);
     }
-
    .cg
    {
      position: absolute;
@@ -55,6 +50,69 @@
      left: 0px;
      top: 0px;
      z-index: 1;
+    }
+    .textAreaColumn
+    {
+      width: 100%;
+    }
+    .c1
+    {
+      float: left;
+      width: 70%;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+    .c2
+    {
+      float: left;
+      width: 30%;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+    .textAreaColumn div textarea
+    {
+      box-sizing: border-box;
+      width: 100%;
+      border: 0px;
+      min-height: 150px;
+    }
+    textarea
+    {
+      resize: none;
+    }
+    .bitPat1 { width:100%; height:100%; text-align:center; background-color:rgba(255,255,255,0.5); }
+    .bitPat2 { width:100%; height:100%; }
+    .bitPat3 { width:100%; height:100%; }
+    .analFr1 { width:100%; text-align:center; }
+    .analFr2 { width:100%; }
+    .bin { width:100%; height:100%; }
+    #console
+    {
+      text-align: left;
+      background-color:rgba(255,255,255,0.75);
+      overflow:auto;
+    }
+    @media (orientation: landscape)
+    {
+      .bitPat1 { font-size:3vw; }
+      .bitPat2 { font-size:2vw; }
+      .bitPat3 { font-size:1.3vw; }
+      .analFr1 { font-size:3.5vw; }
+      .analFr2 { font-size:2.6vw; }
+      .bin { font-size:1.75vw; }
+      .rt { width:71%; height:100%; }
+      #console { width:29%; height:100%; }
+    }
+    @media (orientation: portrait)
+    {
+      .bitPat1 { font-size:6vw; }
+      .bitPat2 { font-size:4vw; }
+      .bitPat3 { font-size:2.6vw; }
+      .analFr1 { font-size:7vw; }
+      .analFr2 { font-size:5.2vw; }
+      .bin { font-size:3.5vw; }
+      .rt { width:100%; height:71%; }
+      #console { width:100%; height:29%; }
     }
     -->
   </style>
@@ -65,29 +123,19 @@
   <script src="../FL64-UI.js" type="text/javascript"></script>
   <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
   <script type="text/javascript">
-    //Body onresize dose not always get called on ios.
+    //The new all in one page lets us switch between tool types.
+
+    var tool = -1;
+
+    //Width and height, orientation are important for displaying the page properly.
+
+    var w = 0, h = 0, portrait = false;
+
+    //The main page.
+
+    var page = null;
     
-    var mobile = !isNaN( window.orientation ), eventVP = true;
-    
-    function resetVP()
-    {
-      document.getElementById("vp").content = "initial-scale=0.5, user-scalable=yes";
-      
-      document.removeEventListener("touchstart", resetVP);
-      
-      eventVP = true;
-    }
-    
-    if( mobile )
-    {
-      window.matchMedia("(orientation: portrait)").onchange = function(){ update(); }
-    }
-    else
-    {
-      window.onresize = update;
-    }
-    
-    //Cf is default Algorithm.
+    //Cf is default number analyzer Algorithm.
     
     var alg = -2;
 
@@ -99,12 +147,7 @@
     
     var g2d = gar.getContext("2d");
     
-    //If vertical or horizontal.
-    
-    var hr = true;
-    
-    //Setup convergent bar.
-    //Note width=100%, height=61%.
+    //Setup convergent bar. Note width=100%, height=61%.
 
     var CVerg = new CBar("CVerg",100,61);
 
@@ -116,8 +159,10 @@
 
     var Trans = new TBar("Trans", Fracts);
 
-    /*A floating point number is incomplete at it's last digit of accuracy.
-    Thus this creates factors that are partially incomplete*/
+    /***********************************************************************************
+    A floating point number is incomplete at it's last digit of accuracy.
+    Thus this creates factors that are partially incomplete
+    ***********************************************************************************/
 
     var ac = 100; //Percentage as an adjustable value.
     var CutOff = 1 / Math.pow(2, (52 * (ac / 100))); //The actual cut off range across the binary number.
@@ -126,78 +171,90 @@
 
     var n_ac = NaN;
 
-    //User input.
+    /***********************************************************************************
+    Get input, and check for proper input formats.
+    Note that it would be wise to combine this.
+    Originally this was two different get methods that existed between two HTML files.
+    ***********************************************************************************/
 
-    function GetInput()
+    function getInput(F1, F2, Int_Float)
     {
-      var n = NaN;
+      //Number analyzer input.
 
-      if (input == 1)
+      if(F1 == undefined)
       {
-        n = new Fract(document.getElementById("f1").value, document.getElementById("f2").value);
-      }
-      else
-      {
-        n = new Number(document.getElementById("num").value);
+        var n = NaN;
+
+        if (input == 1)
+        {
+          n = new Fract(document.getElementById("f1").value, document.getElementById("f2").value);
+        }
+        else
+        {
+          n = new Number(document.getElementById("num").value);
+        }
+
+        if (isNaN(n) || Math.abs(n) == Infinity) { alert("Please enter a Number value, or Fraction to split."); }
+
+        else
+        {
+          n_ac = n;
+  
+          CVerg.set(n.primitive().splitAll());
+  
+          Fracts.set((alg <= 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
+        }
+
+        return;
       }
 
-      if (isNaN(n) || Math.abs(n) == Infinity) { alert("Please enter a Number value, or Fraction to split."); }
+      //All other input types from other other tools.
 
-      else
-      {
-        n_ac = n;
-        
-        CVerg.set(n.primitive().splitAll());
-        
-        Fracts.set((alg <= 0 ? n_ac : alg == 1 ? new FNumber(n_ac) : new TNumber(n_ac)).limit(CutOff).splitAll());
-      }
+      var num = [null, null];
+
+      if (F1 && isNaN(document.getElementById("f1").value + "0")) { console.log(document.getElementById("f1").value + " = Is not an number."); }
+
+      else if (F1) { num[0] = Int_Float ? parseInt(document.getElementById("f1").value, 10) : parseFloat(document.getElementById("f1").value, 10); }
+
+      if (F2 && isNaN("0" + document.getElementById("f2").value + "0")) { console.log(document.getElementById("f2").value + " = Is not an number."); }
+
+      else if (F2) { num[1] = Int_Float ? parseInt(document.getElementById("f2").value, 10) : parseFloat(document.getElementById("f2").value, 10); }
+
+      if (isNaN(num[0])) { num[0] = 0; } if (isNaN(num[1])) { num[1] = 0; } return (num);
     }
 
-    //Switch div elements between cell and row alignment based on window dimensions.
+    //The update method gets called every time the window is resized or orientation changes.
 
     function update()
     {
-      if( mobile && eventVP )
+      //First page is the number analyzer.
+
+      if(tool == 0)
       {
-        document.getElementById("vp").content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
-        
-        document.addEventListener("touchstart", resetVP, eventVP = false);
-      }
-      
-      //On desktop window inner width and height work best.
-      
-      var ng = document.getElementById("group");
-      var w = window.innerWidth, h = window.innerHeight;
-      
-      /*Mobile view port is half. So we multiply width and height by 2.
-      Screen width and height do not change on iPhone when flipped to landscape mode, but changes on android.
-      The screen rotation value varies between device as well.
-      For consistency we have to compare if we are in landscape.
-      We then have to check if width and height have to be fliped to match landscape mode.*/
-      
-      if( mobile )
-      {
-        w = screen.width; h = screen.height;
-        if(window.matchMedia("(orientation: landscape)").matches && h > w )
-        { var t = w; w = h; h = t; t = undefined; }
-        w *= 2; h *= 2;
-      }
-      
-      hr = h > w;
+        var ng = document.getElementById("group"); 
 
-      if (CVerg.Vertical && !hr) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
+        if (CVerg.Vertical && !portrait) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
 
-      //Else lay the bars out side by side in cells.
+        //Else lay the bars out side by side in cells.
 
-      else if (!CVerg.Vertical && hr) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
+        else if (!CVerg.Vertical && portrait) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
 
-      //Update the page elements to proper width and height and dimensions.
+        //Update the page elements to proper width and height and dimensions.
       
-      CVerg.auto(w,h); Fracts.auto(w,h);
+        CVerg.auto(w,h); Fracts.auto(w,h);
     
-      //Replot the canvas.
+        //Replot the canvas.
 
-      if( document.getElementById('g').hidden == false ) { plot(); }
+        if( document.getElementById('g').hidden == false ) { plot(); }; return;
+      }
+
+      //Use flex in landscape mode and set div to remaining height. Note code page does not allow flex, and help/documentation uses colored div.
+
+      document.getElementById("r").style="width:100%;height:"+(h-(document.getElementById("rm").offsetHeight+32))+"px;" + ((!portrait && tool < 6) ? "display:flex;" : "") + "" + (tool==7 ? "background-color:rgba(255,255,255,0.75);" : "");
+
+      //We have to manually set the height for the button properly.
+        
+      if( tool == 2 ) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
     }
 
     //Update the convergent bar on creating a new number in FBar.
@@ -216,7 +273,7 @@
 
       //Change to number type only.
 
-      UpdateI();
+      updateI();
     }
 
     //Update output and accuracy comparison.
@@ -467,7 +524,7 @@
 
       //Update input type.
 
-      UpdateI();
+      updateI();
     }
 
     //Adjust the cut off range and accuracy.
@@ -509,9 +566,7 @@
 
     //Change the input method.
 
-    var input = 0;
-
-    function UpdateI(i)
+    var input = 0; function updateI(i)
     {
       input = i || input;
       var x = "Number Value", y = "Number Value";
@@ -567,7 +622,7 @@
       g2d.font = "40px Arial";
       g2d.lineWidth = 3;
       
-      if( hr )
+      if( portrait )
       {
         //Draw rects.
         
@@ -679,11 +734,11 @@
       ac = Math.min(Math.max(v,1),100); setAC();
     }
     
-    //Create and aling random numbers.
+    //Create and align random numbers.
     
     function rand()
     {
-      function aling(e)
+      function align(e)
       {
         var s = e.slice();
         
@@ -705,7 +760,7 @@
         m2[i] = ((Math.random()*r1)+r2) & -1;
       }
         
-      ta = aling(m1); tb = aling(m2);
+      ta = align(m1); tb = align(m2);
       
       var n = ((NaN).split(0,1).Trans(1,ta.getFunc(),tb.getFunc())), sc = n.b[1]; n = n.calc();
       
@@ -715,81 +770,676 @@
       
       return([n*sc,sc,m1,m2]);
     }
+
+    /***********************************************************************************
+    Change the tool in use on the page.
+    ***********************************************************************************/
+
+    function setTool( type )
+    {
+      tool = type != null ? type : tool; page.innerHTML = subPage[tool];
+
+      if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); }
+      if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
+      if(tool == 2) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
+      if(tool == 3 || tool == 4)
+      {
+        document.getElementById("f1").value = "3.141592653589793";
+        document.getElementById("ac").value = "Most Accurate Value = 3.141592653589793115997963468544185161590576171875";
+        document.getElementById("f2").value = "0100000000001001001000011111101101010100010001000010110100011000";
+      }
+
+      if(c = document.getElementById("console")) { if(c.value){c.value = output;} else {c.innerHTML = output;} }
+
+      update();
+    }
+
+    /***********************************************************************************
+    Analyze Fractions, and compare Float 64 binary patterns.
+    ***********************************************************************************/
+
+    function analyzeFract()
+    {
+      console.clear(); var num = getInput(true, true, true), fract = new Fract(num[0], num[1]);
+
+      dataOut("Smallest fraction by pattern."); dataOut("Fraction:", fract.toString());
+
+      //Find the Division pattern.
+
+      try
+      {
+        var pat = fract.divP(force), pat_f = new Fract();
+
+        //Show the bit pattern.
+
+        dataOut("Binary Divide Pattern:", (pat + " Repeats to Infinity."));
+
+        //Convert the bit pattern into divide.
+
+        pat_f = pat.getFract(); dataOut("Pattern to Fraction:", pat_f.toString());
+
+        //Convert Float value, and division pattern to smallest fraction.
+
+        pat_f = pat.toFract(fract); dataOut("Calc (Float&divide;Pat)Exp:", pat_f.toString() + " = " + pat_f + "");
+      }
+      catch( e )
+      {
+        dataErr("Simulated Divide to Bit Pattern:", e.data);
+      }
+
+      /***********************************************************************************
+      Divide the fraction for real, and decode the real mantissa.
+      ***********************************************************************************/
+
+      var float = fract.valueOf().bits().toString(2);
+
+      dataOut("Binary comparison to Binary divide pattern.");
+      dataOut("Normal divide:", (fract.toString() + "=" + fract));
+      dataOut("Float64 in Binary:", float);
+      dataOut("Float64 Sing Section:", float.charAt(0));
+      dataOut("Exponent Section:", float.substring(1, 12));
+      dataOut("Mantissa Section:", float.substring(12, 64));
+
+      dataOut("Compare fraction value in different number bases.");
+
+      for (var i = 2; i < 37; dataOut("Base " + i, fract.valueOf().toString(i++)));
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Convert an given set of digits to division bit pattern.
+    ***********************************************************************************/
+
+    function patToDiv()
+    {
+      console.clear(); var base = parseInt(document.getElementById("b1").value), data = new Pattern(document.getElementById("f1").value, base);
+
+      if (data != "")
+      {
+        dataOut("Translation.");
+        dataOut("Divide Pattern:", data);
+
+        var n = data.getFract();
+
+        dataOut("Decode pattern back to ?/? = pat:", n.toString());
+        dataOut("Test divide pattern.");
+        dataOut("Division:", n.toString());
+
+        //Find the Division pattern.
+
+        var data = n.divP(base);
+
+        //Show the bit pattern.
+
+        if (data === "") { data.pop(); dataErr("Divide to Pattern:", data); data = [null]; }
+        else { dataOut("Divide to Pattern:", data); }
+      }
+      else
+      {
+        dataOut("Your Input contains characters outside of base" + base + " range.");
+        dataOut('Only numbers "0 to ' + (Math.min(10, base) - 1) + (base > 10 ? (base === 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + base)) : "") + '" are Acceptable.');
+      }
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Convert Float To, and from binary.
+    ***********************************************************************************/
+
+    function convert(mode, fr)
+    {
+      console.clear(); var b1 = "", b2 = "", floatBase = new Number(document.getElementById("b1").value), decodeBase = new Number(document.getElementById("b2").value);
+
+      if (mode === 0)
+      {
+        var f = parseFloat(document.getElementById("f1").value, floatBase);
+
+        if (isNaN(f))
+        {
+          dataOut('Only numbers "0 to ' + (Math.min(10, floatBase) - 1) + (floatBase > 10 ? (floatBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + floatBase)) : "") + '" are Acceptable.');
+          updateData(); return;
+        }
+
+        else if (b1 != document.getElementById("f1").value || fr)
+        {
+          b1 = document.getElementById("f1").value;
+          document.getElementById("ac").value = "Most Accurate Value = " + f.toString(floatBase, true);
+          document.getElementById("f2").value = b2 = f.bits().toString(decodeBase);
+        }
+      }
+
+      if (mode === 1)
+      {
+        if (b2 != document.getElementById("f2").value || fr)
+        {
+          b2 = document.getElementById("f2").value;
+
+          var f = parseNumber(b2 = document.getElementById("f2").value, decodeBase);
+
+          if (f === undefined)
+          {
+            dataOut('Only numbers "0 to ' + (Math.min(10, decodeBase) - 1) + (decodeBase > 10 ? (decodeBase == 11 ? ' and "A' : '" and alphabet "A to ' + String.fromCharCode(0x36 + decodeBase)) : "") + '" are Acceptable.');
+            updateData(); return;
+          }
+          else
+          {
+            document.getElementById("f2").value = f.toString(decodeBase);
+            document.getElementById("ac").value = "Most Accurate Value = " + f.valueOf().toString(floatBase, true);
+            document.getElementById("f1").value = b1 = f.valueOf().toString(floatBase);
+          }
+        }
+      }
+    }
+
+    /***********************************************************************************
+    Convert Float from binary to fraction.
+    ***********************************************************************************/
+
+    function binToPatToFract()
+    {
+      console.clear(); var f = new Fract(), pat = new Pattern(), val = 0;
+
+      //Float to binary.
+
+      if ((val = getInput(true, false, false)[0]) !== null) { val = val.bits(); }
+
+      //The sections of the float number.
+
+      dataOut("Float to Binary.");
+
+      var s = val.toString(2);
+
+      dataOut("Float64 in Binary:", s);
+      dataOut("Float64 Sing Section:", s.charAt(0));
+      dataOut("Exponent Section:", s.substring(1, 12));
+      dataOut("Mantissa Section:", s.substring(12, 64));
+
+      //Conversion result.
+
+      dataOut("Convert float value.");
+      dataOut("Mantissa Bit pattern count:", (pat = val.toPattern(2)) + "");
+
+      f = pat.avgFract();
+
+      dataOut("Closest Average division pattern:", f.toString() + "");
+
+      try
+      {
+        pat = f.divP();
+
+        dataOut("Division Pattern:", pat + " Repeats to Infinity.");
+
+        f = pat.toFract(val);
+
+        dataOut("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
+      }
+      catch(e) { dataErr("Divided to Pattern timed out:", e.data); }
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Divide float to find it's divide pattern then convert to fraction.
+    ***********************************************************************************/
+
+    function divToFract()
+    {
+      console.clear(); var f = new Fract(), pat = new Pattern(), val = 0;
+
+      //Float to binary.
+
+      if ((val = getInput(true, false, false)[0]) === null) { return; }
+
+      //The sections of the float number.
+
+      dataOut("Convert float value."); dataOut("Float Value:", val + "");
+
+      //Conversion result.
+
+      var f1 = ((val + "").indexOf(".") > 0) ? (val + "").split(".")[1] : "", f2 = Math.pow(10, f1.length); f1 = parseInt(f1 || 1, 10);
+
+      var f = new Fract(f1, f2);
+
+      dataOut("Division to Float:", f.toString() + "");
+
+      try
+      {
+        var pat = f.divP();
+
+        dataOut("Binary Divide Pattern:", pat + " Repeats to Infinity.");
+
+        f = pat.getFract();
+
+        dataOut("Decode bit pattern back to ?/? = pat:", f.toString() + "");
+
+        f = pat.toFract(val);
+
+        dataOut("Calc (Float&divide;Pat)Exp:", f.toString() + " = " + f + "");
+      }
+      catch(e) { dataErr("Divided to Pattern timed out:", e.data); }
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Convert Float to fraction An iteration at an time.
+    ***********************************************************************************/
+
+    function sumToFract()
+    {
+      console.clear(); var t = new Date().getTime();
+
+      //Float to binary.
+
+      if ((n = getInput(true, false, false)[0]) === null) { return; }
+
+      //Begin Conversion.
+
+      dataOut("Convert float value.");
+
+      //Find best matching whole fraction an iteration at an time.
+
+      for (var i = 1; Math.abs(n - (Math.floor(n * i) / i)) > Number.EPSILON; i++)
+      {
+        if ((new Date().getTime() - t) > 7000) { dataErr("Closest sum-able fraction timed out:"); updateData(); return; }
+      }
+
+      var f = new Fract(n * i, i);
+
+      //Result.
+
+      dataOut("Closest sum-able fraction:", f.toString() + " = " + f + "");
+
+      //Update output.
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Convert Float to fraction using fractions.
+    ***********************************************************************************/
+
+    function calcFract()
+    {
+      console.clear();
+
+      //Float to binary.
+
+      if ((val = getInput(true, false, false)[0]) === null) { return; }
+
+      //Begin Conversion.
+
+      dataOut("Convert float value.");
+
+      var f = val.getFract();
+
+      dataOut("Closest fraction:", f.toString() + " = " + f + "");
+
+      //Update output.
+
+      updateData();
+    }
+
+    /***********************************************************************************
+    Generate an sequence, for the pattern to fraction testing code.
+    ***********************************************************************************/
+
+    function createSeq()
+    {
+      var base = parseInt(document.getElementById("b1").value);
+      var v = new Fract(Math.random() * Math.pow(2, 12), Math.random() * Math.pow(2, 12));
+      document.getElementById("f1").value = v.divP(base);
+    }
+
+    /***********************************************************************************
+    Allow user to run custom code and to use console to log to external output on page.
+    ***********************************************************************************/
+
+    var output = "Console output.", l1 = console.log, l2 = console.clear; console.log = function (msg) { l1(msg); output += msg + "\r\n"; }; console.clear = function() { l2(); output = ""; }
+
+    function runCode() { console.clear(); try { eval(document.getElementById("code").value); } catch (e) { console.log(e + ""); } updateData(true); }
+
+    /***********************************************************************************
+    Updates console on page.
+    ***********************************************************************************/
+
+    function updateData(pre) { if(pre) { output = "<pre>" + output + "</pre>"; } document.getElementById("console").innerHTML = output; }
+
+    /***********************************************************************************
+    Simplify displaying output as HTML table data/section messages.
+    ***********************************************************************************/
+
+    var sw = false; function dataOut(MSG, data)
+    {
+      var out = "";
+
+      //If only an message end any table, and setup the message as an header.
+
+      if (arguments.length <= 1) { if (sw) { out = "</table>"; sw = false; } out += "<p style=\"font-size:4h;\">" + MSG + "</p>"; }
+
+      //If message followed by data. First cell is message second cell is data in the table row.
+
+      else if (!sw) { out += "<table style=\"font-size:4h;width:100%;\" border=\"1\">"; sw = true; }
+      if (sw) { out += "<tr><td style=\"white-space:nowrap\">" + MSG + "</td><td class=\"wrap\">" + data + "</td></tr>"; }
+
+      console.log(out);
+    }
+
+    /***********************************************************************************
+    If the calculation timed out.
+    ***********************************************************************************/
+
+    function dataErr(MSG, data)
+    {
+      var out = "Calculation Stopped because it is slow."; up = true;
+
+      if (arguments.length > 1) { out += "<input type='button' value='Show data.' onclick='preview(\"" + data + "\");' />"; }
+
+      dataOut(MSG, out);
+    }
+
+    /***********************************************************************************
+    Preview Data of an timed out function.
+    ***********************************************************************************/
+
+    function preview(data) { (window.open("", "_blank", "")).document.write("<textarea style='width:100%;height:100%;'>" + data + "<\/textarea>"); }
+
+    /***********************************************************************************
+    Get all information about the window and if we are in landscape or portrait mode.
+    ***********************************************************************************/
+    
+    var mobile = !isNaN( window.orientation ), eventVP = true;
+        
+    function resetVP()
+    {
+      document.getElementById("vp").content = "initial-scale=0.5, user-scalable=yes";
+          
+      document.removeEventListener("touchstart", resetVP);
+          
+      eventVP = true;
+    }
+        
+    if( mobile )
+    {
+      window.matchMedia("(orientation: portrait)").onchange = function(){ re(); }
+    }
+    else
+    {
+      window.onresize = re;
+    }
+
+    //Get page sizing information, and update the page.
+
+    function re()
+    {
+      if( mobile && eventVP )
+      {
+        document.getElementById("vp").content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
+        
+        document.addEventListener("touchstart", resetVP, eventVP = false);
+      }
+      
+      //On desktop window inner width and height work best.
+      
+      w = window.innerWidth, h = window.innerHeight;
+      
+      /*Mobile view port is half. So we multiply width and height by 2.
+      Screen width and height do not change on iPhone when flipped to landscape mode, but changes on android.
+      The screen rotation value varies between device as well.
+      For consistency we have to compare if we are in landscape.
+      We then have to check if width and height have to be fliped to match landscape mode.*/
+      
+      if( mobile )
+      {
+        w = screen.width; h = screen.height;
+        if(window.matchMedia("(orientation: landscape)").matches && h > w )
+        { var t = w; w = h; h = t; t = undefined; }
+        w *= 2; h *= 2;
+      }
+
+      //landscape mode check.
+      
+      portrait = h > w;
+
+      //Call the update method for the pages.
+      
+      if(tool >= 0) { update(); }
+    }
+
+    /***********************************************************************************
+    All in one web application.
+    ***********************************************************************************/
+
+    var subPage = [
+      /***********************************************************************************
+      Number analyzer.
+      ***********************************************************************************/
+      '<table style="width:100%;" border="1">\
+        <tr>\
+          <td>\
+            <center>Algorithm</center>\
+          </td>\
+          <td>\
+            <center>Input Type</center>\
+          </td>\
+          <td>\
+            <input type="button" value="X" style="width:25%;" onclick="reset();" /><div style="display:inline;" id="in"><input type="text" style="width:75%;" id="num" value="Number Value" onclick="this.select();"></div>\
+          </td>\
+          <td>\
+            <center>Cut Off Range</center>\
+          </td>\
+          <td>\
+            <center>Output</center>\
+          </td>\
+          <td>\
+            <center>Accuracy</center>\
+          </td>\
+          <td rowspan="2">\
+            <center><input type="button" onclick="plot();" value="Plot" /></center>\
+          </td>\
+        </tr>\
+        <tr>\
+          <td>\
+            <!--\
+              Display flex grow and shrink does not work on safari with the select/option element.\
+              Forced to use table for compatibility here.\
+            -->\
+            <table style="width:100%;"><tr><td style="width:100%;">\
+              <select onchange="changeAlg(this.value);" style="width:100%;">\
+                <option value="0">Cf</option>\
+                <option value="1">Cf(A=A)</option>\
+                <option value="2">Cf(A=A,B>=B)</option>\
+                <option value="3">Tf</option>\
+                <option value="4">Tf(-\+)</option>\
+              </select></td>\
+              <td><select onchange="intAdj(this.value);">\
+                <option value="1">Int</option>\
+                <option value="0">Float</option>\
+              </select>\
+            </td></tr></table>\
+          </td>\
+          <td>\
+            <select onchange="updateI(this.value);" style="width:100%;">\
+              <option value="0">Value</option>\
+              <option value="1">Fraction</option>\
+            </select>\
+          </td>\
+          <td>\
+            <input type="button" style="width:100%;" value="Split Value." onclick="getInput();">\
+          </td>\
+          <td>\
+            <center><div style="display:inline;" id="ac">100</div>%<input type="button" value="Set %" onclick="adjAC();" /></center>\
+          </td>\
+          <td>\
+            <center><div id="r">?</div></center>\
+          </td>\
+          <td>\
+            <center><div style="display:inline;" id="r-ac">?</div>%</center>\
+          </td>\
+        </tr>\
+      </table>\
+      <div id="group">\
+        <div id="CVerg" style="overflow:hidden;"></div>\
+        <hr />\
+        <div id="Fracts" style="overflow:hidden;"></div>\
+      </div>\
+      <hr />\
+      <div id="Trans" style="max-height:30%;"></div>\
+      <br />\
+      <div id="Exp"></div>',
+      /***********************************************************************************
+      Analyze bit patterns into fractions.
+      ***********************************************************************************/
+      '<div id="r"><table class="rt">\
+        <tr>\
+          <td colspan="2"><textarea onclick="this.select();" class="bitPat1" id="f1">' + /*input +*/ '</textarea></td>\
+        </tr>\
+        <tr>\
+          <td rowspan="2"><input onclick="patToDiv();" class="bitPat2" type="button" value="Convert To Fraction."></td>\
+          <td><select id="b1" onchange="createSeq()" class="bitPat3">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'">Base'+i+'</option>',i++);return(o);})() + '</select></td>\
+        </tr>\
+        <tr><td><input onclick="createSeq()" class="bitPat3" type="button" value="Generate Sequence." /></td></tr>\
+      </table><div id="console"></div></div>',
+      /***********************************************************************************
+      Analyze binary fractions.
+      ***********************************************************************************/
+      '<div id="r"><table class="rt">\
+        <tr>\
+          <td style="width:50%;"><input id="f1" class="analFr1" onclick="this.select();" type="text" value="1"></td>\
+          <td><p style="font-size:7vw">&divide;</p></td>\
+          <td style="width:50%;"><input id="f2" class="analFr1" onclick="this.select();" type="text" value="7"></td>\
+        </tr>\
+        <tr>\
+          <td colspan="3">\
+            <center>\
+              <input onclick="analyzeFract();" class="analFr2" type="button" value="Analyze Fraction">\
+            </center>\
+          </td>\
+        </tr>\
+      </table><div id="console"></div></div>',
+      /***********************************************************************************
+      Base convert.
+      ***********************************************************************************/
+      '<div id="r"><table class="rt">\
+        <tr>\
+          <td colspan="2"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:2.8125vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text"></td></td>\
+          <td style="width:16%;" rowspan="2"><select id="b1" onchange="convert(1,true)" style="width:100%;height:100%;font-size:2vw;">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'"'+(i===10?' selected="selected"':'')+'>Value/Base'+i+'</option>',i++);return(o);})() + '</select></td>\
+        </tr>\
+        <tr>\
+          <td colspan="2"><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1.25625vw;background-color:rgba(255,255,255,0.5);" type="text" readonly="true"></td>\
+        </tr>\
+        <tr>\
+          <td colspan="2"><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" type="text"></td>\
+          <td><select id="b2" onchange="convert(0,true)" style="width:100%;height:100%;font-size:2vw;">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'">Bits/Base'+i+'</option>',i++);return(o);})() + '</select></td>\
+        </tr>\
+        <tr>\
+          <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Decode Float." onclick="convert(0)"></td>\
+          <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Float Value." onclick="convert(1)"></td>\
+          <td><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Auto Update Inputs" onclick="setTool(4);"></td>\
+        </tr>\
+      </table><div id="console"></div></div>',
+      /***********************************************************************************
+      Auto base Convert.
+      ***********************************************************************************/
+      '<div id="r"><table class="rt">\
+        <tr>\
+          <td><input id="f1" style="width:100%;height:100%;text-align:center;font-size:2.8125vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" onkeypress="convert(0)" onkeyup="convert(0)" type="text"></td>\
+          <td style="width:16%;" rowspan="2"><select id="b1" onchange="convert(1,true)" style="width:100%;height:100%;font-size:2vw;">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'"'+(i===10?' selected="selected"':'')+'>Value/Base'+i+'</option>',i++);return(o);})() + '</select></td>\
+        </tr>\
+        <tr>\
+          <td><input id="ac" style="width:100%;height:100%;text-align:center;font-size:1.25625vw;background-color:rgba(255,255,255,0.5);" type="text" readonly="true"></td>\
+        </tr>\
+        <tr>\
+          <td><input id="f2" style="width:100%;height:100%;text-align:center;font-size:1.40625vw;background-color:rgba(255,255,255,0.5);" onkeypress="convert(1)" onkeyup="convert(1)" type="text"></td>\
+          <td><select id="b2" onchange="convert(0,true)" style="width:100%;height:100%;font-size:2vw;">' + (function(){for(var i=2,o="";i<37;o+='<option value="'+i+'">Bit/Base'+i+'</option>',i++);return(o);})() + '</select></td>\
+        </tr>\
+        <tr>\
+          <td colspan="2"><input type="button" style="width:100%;height:100%;font-size:2vw;" value="Disable Auto Update" onclick="setTool(3);"></td>\
+        </tr>\
+      </table><div id="console"></div></div>',
+      /***********************************************************************************
+      Binary float number to fractions.
+      ***********************************************************************************/
+      '<div id="r"><table class="rt">\
+        <tr>\
+          <td colspan="4"><input id="f1" style="width:100%;height:100%;text-align:center;font-size:4.347826vw;background-color:rgba(255,255,255,0.5);" onclick="this.select();" type="text" value="3.1415"></td>\
+        </tr>\
+        <tr>\
+          <!--<td><input type="button" class="bin" value="Bin to Pat to Fract" onclick="binToPatToFract()"></td>-->\
+          <td><input type="button" class="bin" value="Div to Pat to Fract" onclick="divToFract()"></td>\
+          <td><input type="button" class="bin" value="Sum to Fract" onclick="sumToFract()"></td>\
+          <td><input type="button" class="bin" value="1/R to Fract" onclick="calcFract()"></td>\
+        </tr>\
+      </table><div id="console"></div></div>',
+      /***********************************************************************************
+      Run custom code.
+      ***********************************************************************************/
+      '<div id="r"><div class="textAreaColumn">\
+        <div class="c1">\
+          <textarea id="code" style="width:100%;height:93%;background-color:rgba(255,255,255,0.5);">\
+var pi = Math.PI;\r\n\r\n\
+pi = pi.splitAll();\r\n\r\n\
+console.log(pi.toString());\r\n\r\n\
+//Set the limit.\r\n\r\n\
+pi.limit( 1 / Math.pow(2, 26 ) );\r\n\r\n\
+console.log(pi.toString());\r\n\r\n\
+//Set limit back to normal.\r\n\r\n\
+pi.limit( 1 / Math.pow(2, 52 ) );\r\n\r\n\
+//Split to all parts again.\r\n\r\n\
+pi = pi.splitAll();\r\n\r\n\
+console.log(pi.toString());</textarea>\
+        </div>\
+        <div class="c2">\
+          <div id="console" style="width:100%;height:93%;"></div>\
+        </div>\
+      </div>\
+      <input type="button" value="Run Code." onclick="runCode()" style="width:70%;min-height:64px;height:6%;" />\
+      <select style="width:29%;min-height:64px;height:6%;">\
+        <option>Exp1</option>\
+        <option>Exp2</option>\
+        <option>Exp3</option>\
+        <option>Exp4</option>\
+        <option>Exp5</option>\
+      </select></div>',
+      /***********************************************************************************
+      Help and documentation page.
+      ***********************************************************************************/
+      '<div id="r"><br /><h1>Help and documentation.</h1><br/>FL64 is an library that is designed to push the limits of calculating numbers and pushes the limits of arithmetic. It also extends the double precision floating point number format.<br /><br />\
+      Documentation with live code examples, and how it works: <a href="https://recoskie.github.io/Fl64/docs/Examples.html" target="_blank">Link</a>.<br /><br />\
+      Additionally FL64 number analyzer uses a powerful artificial intelligence matrix that breaks any data apart into what it is to solve random numbers: <a href="https://github.com/Recoskie/AI-Matrix" target="_blank">Link</a>.</div>'
+    ];
   </script>
   <center>
-    <table style="width:100%;" border="1">
+    <!--Mode selection-->
+    <table id="rm" border="1" style="width:100%; text-align: center; background-color:rgba(156,156,156,0.4);">
       <tr>
         <td>
-          <center>Algorithm</center>
+          Number analyzer: <input checked name="c" onclick="setTool(0);" type="radio">
         </td>
         <td>
-          <center>Input Type</center>
+          Division pattern analyzer: <input name="c" onclick="setTool(1);" type="radio">
         </td>
         <td>
-          <input type="button" value="X" style="width:25%;" onclick="reset();" /><div style="display:inline;" id="in"><input type="text" style="width:75%;" id="num" value="Number Value" onclick="this.select();"></div>
+          Fraction analyzer: <input name="c" onclick="setTool(2);" type="radio">
         </td>
         <td>
-          <center>Cut Off Range</center>
+          Float64 binary converter: <input name="c" onclick="setTool(3);" type="radio">
         </td>
         <td>
-          <center>Output</center>
+          Float to fraction: <input name="c" onclick="setTool(5);" type="radio">
         </td>
         <td>
-          <center>Accuracy</center>
-        </td>
-        <td rowspan="2">
-          <center><input type="button" onclick="plot();" value="Plot" /></center>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <!--
-            Display flex grow and shrink does not work on safari with the select/option element.
-            Forced to use table for compatibility here.
-          -->
-          <table style="width:100%;"><tr><td style="width:100%;">
-            <select onchange="changeAlg(this.value);" style="width:100%;">
-              <option value="0">Cf</option>
-              <option value="1">Cf(A=A)</option>
-              <option value="2">Cf(A=A,B>=B)</option>
-              <option value="3">Tf</option>
-              <option value="4">Tf(-\+)</option>
-            </select></td>
-            <td><select onchange="intAdj(this.value);">
-              <option value="1">Int</option>
-              <option value="0">Float</option>
-            </select>
-          </td></tr></table>
+          Run code: <input name="c" onclick="setTool(6);" type="radio">
         </td>
         <td>
-          <select onchange="UpdateI(this.value);" style="width:100%;">
-            <option value="0">Value</option>
-            <option value="1">Fraction</option>
-          </select>
-        </td>
-        <td>
-          <input type="button" style="width:100%;" value="Split Value." onclick="GetInput();">
-        </td>
-        <td>
-          <center><div style="display:inline;" id="ac">100</div>%<input type="button" value="Set %" onclick="adjAC();" /></center>
-        </td>
-        <td>
-          <center><div id="r">?</div></center>
-        </td>
-        <td>
-          <center><div style="display:inline;" id="r-ac">?</div>%</center>
+          Help: <input name="c" onclick="setTool(7);" type="radio">
         </td>
       </tr>
     </table>
-    <div id="group">
-      <div id="CVerg" style="overflow:hidden;"></div>
-      <hr />
-      <div id="Fracts" style="overflow:hidden;"></div>
-    </div>
-    <hr />
-    <div id="Trans" style="max-height:30%;"></div>
-    <br />
-    <div id="Exp"></div>
+    <!--Page control-->
+    <div id="page"></div>
   </center>
 </body>
 </html>
