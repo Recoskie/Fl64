@@ -250,7 +250,7 @@
 
       //Use flex in landscape mode and set div to remaining height. Note code page does not allow flex, and help/documentation uses colored div.
 
-      document.getElementById("r").style="width:100%;height:"+(h-(document.getElementById("rm").offsetHeight+32))+"px;" + ((!portrait && tool < 6) ? "display:flex;" : "") + "" + (tool==7 ? "background-color:rgba(255,255,255,0.75);" : "");
+      document.getElementById("r").style="width:100%;height:"+(h-(document.getElementById("toolBar").offsetHeight+32))+"px;" + ((!portrait && tool < 6) ? "display:flex;" : "") + "" + (tool==7 ? "background-color:rgba(255,255,255,0.75);" : "");
 
       //We have to manually set the height for the button properly.
         
@@ -777,7 +777,7 @@
 
     function setTool( type )
     {
-      tool = type != null ? type : tool; page.innerHTML = subPage[tool];
+      tool = type != null ? type : tool; page.innerHTML = subTool[tool];
 
       if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); }
       if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
@@ -1212,7 +1212,7 @@
     All in one web application.
     ***********************************************************************************/
 
-    var subPage = [
+    var subTool = [
       /***********************************************************************************
       Number analyzer.
       ***********************************************************************************/
@@ -1413,7 +1413,7 @@ console.log(pi.toString());</textarea>\
   </script>
   <center>
     <!--Mode selection-->
-    <table id="rm" border="1" style="width:100%; text-align: center; background-color:rgba(156,156,156,0.4);">
+    <table id="toolBar" border="1" style="width:100%; text-align: center; background-color:rgba(156,156,156,0.4);">
       <tr>
         <td>
           Number analyzer: <input checked name="c" onclick="setTool(0);" type="radio">
