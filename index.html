@@ -115,6 +115,16 @@
       #console { width:100%; height:29%; }
     }
     .wrap{ white-space: -moz-pre-wrap !important; white-space: -webkit-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; white-space: normal; }
+    /***********************************************************************************
+    Create a menubar for navigation
+    ***********************************************************************************/
+    .ToolBtn { white-space: nowrap; padding: 8px; border: none; cursor: pointer; }
+    .toolBar { position: relative; display: inline-block; }
+    .toolBarI { display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
+    .toolBarI a { color: black; padding: 12px 16px; text-decoration: none; display: block; cursor: pointer; }
+    .toolBarI a:hover {background-color: #f1f1f1}
+    .toolBar:hover .toolBarI { display: block; }
+    .toolBar:hover .toolBtn { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); }
     -->
   </style>
   <div id="g" class="cc" onclick="this.hidden = true;" hidden="true">
@@ -776,9 +786,11 @@
     Change the tool in use on the page.
     ***********************************************************************************/
 
+    var toolType = ["Number analyzer","Division pattern analyzer","Fraction analyzer","Float64 binary converter","Float64 binary converter","Float to fraction","Run code","Help"]
+
     function setTool( type )
     {
-      tool = type != null ? type : tool; page.innerHTML = subTool[tool];
+      tool = type != null ? type : tool; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
 
       if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); }
       if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
@@ -1413,30 +1425,24 @@ console.log(pi.toString());</textarea>\
     ];
   </script>
   <center>
-    <!--Mode selection-->
-    <table id="toolBar" border="1" style="width:100%; text-align: center; background-color:rgba(156,156,156,0.4);">
+    <!--Tool bar-->
+    <table style="width:100%;">
       <tr>
         <td>
-          Number analyzer: <input checked name="c" onclick="setTool(0);" type="radio">
+          <div class="toolBar">
+            <button id="toolBar" class="toolBtn">Open tool menu</button>
+            <div class="toolBarI">
+              <a onclick="setTool(0);">Number analyzer</a>
+              <a onclick="setTool(1);">Division pattern analyzer</a>
+              <a onclick="setTool(2);">Fraction analyzer</a>
+              <a onclick="setTool(3);">Float64 binary converter</a>
+              <a onclick="setTool(5);">Float to fraction</a>
+              <a onclick="setTool(6);">Run code</a>
+              <a onclick="setTool(7);">Help</a>
+            </div>
+          </div>
         </td>
-        <td>
-          Division pattern analyzer: <input name="c" onclick="setTool(1);" type="radio">
-        </td>
-        <td>
-          Fraction analyzer: <input name="c" onclick="setTool(2);" type="radio">
-        </td>
-        <td>
-          Float64 binary converter: <input name="c" onclick="setTool(3);" type="radio">
-        </td>
-        <td>
-          Float to fraction: <input name="c" onclick="setTool(5);" type="radio">
-        </td>
-        <td>
-          Run code: <input name="c" onclick="setTool(6);" type="radio">
-        </td>
-        <td>
-          Help: <input name="c" onclick="setTool(7);" type="radio">
-        </td>
+        <td id="setTool" style="width:100%;background-color:rgba(255,255,255,0.75);"></td>
       </tr>
     </table>
     <!--Page control-->
