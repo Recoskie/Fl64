@@ -125,6 +125,11 @@
     .toolBarI a:hover {background-color: #f1f1f1}
     .toolBar:hover .toolBarI { display: block; }
     .toolBar:hover .toolBtn { box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); }
+    /***********************************************************************************
+    Safari select drop down list height fix.
+    ***********************************************************************************/
+    @media screen and (-webkit-min-device-pixel-ratio:0) { select { -webkit-appearance: menulist-button !important; line-height:24px !important; }
+}
     -->
   </style>
   <div id="g" class="cc" onclick="this.hidden = true;" hidden="true">
