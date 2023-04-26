@@ -1,12 +1,6 @@
 Javascript Float64 Library.
 =============================
 
-<table>
-  <tr><td>Main application page:</td><td><a href="https://recoskie.github.io/Fl64/">Link</a></td></tr>
-  <tr><td>Documentation with live examples, and how it works:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
-  <tr><td>FL64 function refrence:</td><td><a href="https://github.com/Recoskie/Fl64/wiki/Reference.">Link</a></td></tr>
-</table>
-
 FL64 is an library that is designed to push the limits of calculating numbers and pushes the limits of arithmetic. It also extends the double precision floating point number format allowing javascript to.<br />
 
 * Split numbers into parts, or find the pattern to any number.<br />
@@ -27,6 +21,12 @@ FL64 is an library that is designed to push the limits of calculating numbers an
 
 ------------------------------------------------------------------------------
 
+<table>
+  <tr><td>Main application page:</td><td><a href="https://recoskie.github.io/Fl64/">Link</a></td></tr>
+  <tr><td>Documentation with live examples, and how it works:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
+  <tr><td>FL64 function reference:</td><td><a href="https://github.com/Recoskie/Fl64/wiki/Reference.">Link</a></td></tr>
+</table>
+
 The FL64 web application allows you to. <br />
 
 * To analyze Irrational numbers. <br />
@@ -43,6 +43,10 @@ The FL64 web application allows you to. <br />
   Base36 pat: 0SNENI0UC2T49D277JC14G3QTOHEXM1S1HXGZRKN7WTEDDZWMNORIYJR75UNVI7L0PA2C9JSVU0A40XPF4CQEIG0DHD8XW5SZ7CLCHZ5NX6VQMXSSGNYVJW96BIL2DY7YI2J08FCS36LMM03DCB8H1G8SU5C4HSEZAPXNQG745ZPVZ2AKVN9LHJZMIMR23U7∞ <br /> Converts to fraction 17÷769, and the division pattern of 17÷769 produces the pattern sequence in base36.
 
 * allows you to run and test custom code using the library.
+
+The FL64 reference page shows all callable functions, but does not give you live examples and in depth explanation. <br />
+
+If the reference is not enough then the documentation with live examples is better.
 
 ------------------------------------------------------------------------------
 
