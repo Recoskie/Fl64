@@ -5,10 +5,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-mobile-web-app-title" content="FL64">
   <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no" id="vp" />
-  <link rel="apple-touch-icon" href="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff">
+  <link rel="apple-touch-icon" href="/docs/bg/icon.png">
   <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
+  <link rel="canonical" href="https://recoskie.github.io/Fl64/" />
+  <link rel="manifest" href="manifest.json">
 </head>
-<body onload="page=document.getElementById('page');re();setTool();">
+<body onload="page=document.getElementById('page');output='Console output.';re();setTool();">
   <style type="text/css">
     <!--
     body
@@ -1115,7 +1117,7 @@
     Allow user to run custom code and to use console to log to external output on page.
     ***********************************************************************************/
 
-    var output = "Console output.", l1 = console.log, l2 = console.clear; console.log = function (msg) { l1(msg); output += msg + "\r\n"; }; console.clear = function() { l2(); output = ""; }
+    var output = "", l1 = console.log, l2 = console.clear; console.log = function (msg) { l1(msg); output += msg + "\r\n"; }; console.clear = function() { l2(); output = ""; }
 
     function runCode() { console.clear(); try { eval(document.getElementById("code").value); } catch (e) { console.log(e + ""); } updateData(true); }
 
@@ -1428,6 +1430,10 @@ console.log(pi.toString());</textarea>\
       Documentation with live code examples, and how it works: <a href="https://recoskie.github.io/Fl64/docs/Examples.html" target="_blank">Link</a>.<br /><br />\
       Additionally FL64 number analyzer uses a powerful artificial intelligence matrix that breaks any data apart into what it is to solve random numbers: <a href="https://github.com/Recoskie/AI-Matrix" target="_blank">Link</a>.</div>'
     ];
+
+    //Add the web application service worker. Keep service worker disabled for now while doing lots of changes and updates.
+
+    if(navigator.serviceWorker) { navigator.serviceWorker.register('/Fl64/sw.js', {scope: '/Fl64/'} ) }
   </script>
   <center>
     <!--Tool bar-->
