@@ -130,8 +130,7 @@
     /***********************************************************************************
     Safari select drop down list height fix.
     ***********************************************************************************/
-    @media screen and (-webkit-min-device-pixel-ratio:0) { select { -webkit-appearance: menulist-button !important; line-height:24px !important; }
-}
+    @media screen and (-webkit-min-device-pixel-ratio:0) { select { -webkit-appearance: menulist-button !important; line-height:24px !important; } }
     -->
   </style>
   <div id="g" class="cc" onclick="this.hidden = true;" hidden="true">
@@ -249,7 +248,7 @@
 
       if(tool == 0)
       {
-        var ng = document.getElementById("group"); 
+        var ng = document.getElementById("group");
 
         if (CVerg.Vertical && !portrait) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
 
@@ -736,7 +735,7 @@
       
       n_ac = n.primitive();
       
-      update(true);
+      update();
     }
     
     function adjAC()
@@ -799,7 +798,24 @@
     {
       tool = parseInt(window.location.hash.replace("#","")) || 0; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
 
-      if(tool == 0){ CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample(); update(); }
+      //We have to manually write back the tool bars for the fraction analyzer.
+
+      if(tool == 0)
+      {
+        var ng = document.getElementById("group"); 
+
+        if (!CVerg.Vertical) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
+
+        //Else lay the bars out side by side in cells.
+
+        else if (CVerg.Vertical) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
+
+        CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample();
+
+        //The current value, and accuracy have to added back.
+
+        Fracts.onChange(Fracts.get().calc());
+      }
       if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
       if(tool == 2) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
       if(tool == 3 || tool == 4)
