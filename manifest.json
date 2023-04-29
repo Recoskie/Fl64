@@ -2,7 +2,7 @@
   "background_color": "#000000",
   "description": "Number analytics application.",
   "dir": "auto",
-  "display": "standalone",
+  "display": "fullscreen",
   "name": "Float64",
   "orientation": "any",
   "scope": "/Fl64/",
