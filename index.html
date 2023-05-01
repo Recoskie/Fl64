@@ -120,7 +120,7 @@
     /***********************************************************************************
     Create a menubar for navigation
     ***********************************************************************************/
-    .ToolBtn { white-space: nowrap; padding: 8px; border: none; cursor: pointer; }
+    .toolBtn { white-space: nowrap; padding: 8px; border: none; cursor: pointer; }
     .toolBar { position: relative; display: inline-block; }
     .toolBarI { display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
     .toolBarI a { color: black; padding: 12px 16px; text-decoration: none; display: block; cursor: pointer; }
@@ -789,48 +789,6 @@
     }
 
     /***********************************************************************************
-    Change the tool in use on the page.
-    ***********************************************************************************/
-
-    var toolType = ["Number analyzer","Division pattern analyzer","Fraction analyzer","Float64 binary converter","Float64 binary converter","Float to fraction","Run code","Help"]
-
-    function setTool()
-    {
-      tool = parseInt(window.location.hash.replace("#","")) || 0; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
-
-      //We have to manually write back the tool bars for the fraction analyzer.
-
-      if(tool == 0)
-      {
-        var ng = document.getElementById("group"); 
-
-        if (!CVerg.Vertical) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
-
-        //Else lay the bars out side by side in cells.
-
-        else if (CVerg.Vertical) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
-
-        CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample();
-
-        //The current value, and accuracy have to added back.
-
-        Fracts.onChange(Fracts.get().calc());
-      }
-      if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
-      if(tool == 2) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
-      if(tool == 3 || tool == 4)
-      {
-        document.getElementById("f1").value = "3.141592653589793";
-        document.getElementById("ac").value = "Most Accurate Value = 3.141592653589793115997963468544185161590576171875";
-        document.getElementById("f2").value = "0100000000001001001000011111101101010100010001000010110100011000";
-      }
-
-      if(c = document.getElementById("console")) { if(c.value){c.value = output;} else {c.innerHTML = output;} }
-
-      update();
-    }
-
-    /***********************************************************************************
     Analyze Fractions, and compare Float 64 binary patterns.
     ***********************************************************************************/
 
@@ -1245,6 +1203,48 @@
     }
 
     /***********************************************************************************
+    Change the tool in use on the page.
+    ***********************************************************************************/
+
+    var toolType = ["Number analyzer","Division pattern analyzer","Fraction analyzer","Float64 binary converter","Float64 binary converter","Float to fraction","Run custom code","Help"]
+
+    function setTool()
+    {
+      tool = parseInt(window.location.hash.replace("#","")) || 0; page.innerHTML = subTool[tool]; document.getElementById("setTool").innerHTML = toolType[tool];
+
+      //We have to manually write back the tool bars for the fraction analyzer.
+
+      if(tool == 0)
+      {
+        var ng = document.getElementById("group"); 
+
+        if (!CVerg.Vertical) { ng.innerHTML = "<div id=\"CVerg\" style=\"width:100%;overflow:hidden;\"></div><hr /><div id=\"Fracts\" style=\"width:100%;overflow:hidden;\"></div>"; gar.width=1294; gar.height=800; }
+
+        //Else lay the bars out side by side in cells.
+
+        else if (CVerg.Vertical) { ng.innerHTML = "<table style='height:61%;'><tr><td style='height:100%;'><div id=\"CVerg\" style=\"height:100%;overflow:hidden;\"></div></td><td style='height:100%;'><div id=\"Fracts\" style=\"height:100%;overflow:hidden;\"></div></td></tr></table>"; gar.height=1294; gar.width=800; }
+
+        CVerg.update(true); Fracts.update(true); Trans.update(true); LoadExample();
+
+        //The current value, and accuracy have to added back.
+
+        Fracts.onChange(Fracts.get().calc());
+      }
+      if(tool == 1){ document.getElementById("f1").value = "00000010000111011001111010101101011111001101001110010001111110111100010011000010101001010000011001011000110111\u221E"; }
+      if(tool == 2) { document.getElementsByClassName("analFr2")[0].style="height:" + ((portrait ? ( h / 3 ) : (h-64) - ( w / 11 ))&-1) + "px;"; }
+      if(tool == 3 || tool == 4)
+      {
+        document.getElementById("f1").value = "3.141592653589793";
+        document.getElementById("ac").value = "Most Accurate Value = 3.141592653589793115997963468544185161590576171875";
+        document.getElementById("f2").value = "0100000000001001001000011111101101010100010001000010110100011000";
+      }
+
+      if(c = document.getElementById("console")) { if(c.value){c.value = output;} else {c.innerHTML = output;} }
+
+      update();
+    }
+
+    /***********************************************************************************
     All in one web application.
     ***********************************************************************************/
 
@@ -1464,7 +1464,7 @@ console.log(pi.toString());</textarea>\
               <a onclick="window.location.hash = '2';setTool();">Fraction analyzer</a>
               <a onclick="window.location.hash = '3';setTool();">Float64 binary converter</a>
               <a onclick="window.location.hash = '5';setTool();">Float to fraction</a>
-              <a onclick="window.location.hash = '6';setTool();">Run code</a>
+              <a onclick="window.location.hash = '6';setTool();">Run custom code</a>
               <a onclick="window.location.hash = '7';setTool();">Help</a>
             </div>
           </div>
