@@ -1,7 +1,7 @@
 var GHPATH = '/Fl64';
 var AI_MATRIX = '/AI-Matrix';
 var APP_PREFIX = 'Fl_';
-var VERSION = 'version_2';
+var VERSION = 'version_3';
 var URLS = [
   `${AI_MATRIX}/AI-Mat.js`,
   `${GHPATH}/docs/bg/bg.jpg`,
