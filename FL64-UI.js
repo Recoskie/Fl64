@@ -2,7 +2,7 @@
 Basic embedded CSS for basic layout.
 ***********************************************************************/
 
-document.body.innerHTML = "<style type='text/css'>\
+document.head.innerHTML = "<style type='text/css'>\
 <!--\
 .FBarV {\
   text-align: center;\
@@ -31,7 +31,7 @@ document.body.innerHTML = "<style type='text/css'>\
   touch-action: manipulation;\
 }\
 -->\
-</style>" + document.body.innerHTML;
+</style>" + document.head.innerHTML;
 
 /***********************************************************************
 This is a bar for modifying a number and viewing a number after manipulation operations.
