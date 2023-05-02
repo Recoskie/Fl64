@@ -19,13 +19,7 @@ FL64 is an library that is designed to push the limits of calculating numbers an
 
 * Nicely format double precision numbers as proper fractions, or as script code.<br />
 
-------------------------------------------------------------------------------
-
-<table>
-  <tr><td>Main application page:</td><td><a href="https://recoskie.github.io/Fl64/">Link</a></td></tr>
-  <tr><td>Documentation with live examples, and how it works:</td><td><a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a></td></tr>
-  <tr><td>FL64 function reference:</td><td><a href="https://github.com/Recoskie/Fl64/wiki/Reference">Link</a></td></tr>
-</table>
+# Web application: </td><td><a href="https://recoskie.github.io/Fl64/">Link</a>
 
 The FL64 web application allows you to. <br />
 
@@ -44,9 +38,15 @@ The FL64 web application allows you to. <br />
 
 * allows you to run and test custom code using the library.
 
-The FL64 reference page shows all callable functions, but does not give you live examples and in depth explanation. <br />
+# Reference: <a href="https://github.com/Recoskie/Fl64/wiki/Reference">Link</a>
 
-If the reference is not enough then the documentation with live examples is better.
+The FL64 reference page shows all callable functions but does not give you live examples and in-depth explanations.
+
+# Documentation and live Examples: <a href="https://recoskie.github.io/Fl64/docs/Examples.html">Link</a>
+
+If the reference is not enough, then the documentation with live examples is better.
+
+It also explains how it works.
 
 ------------------------------------------------------------------------------
 
