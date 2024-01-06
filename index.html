@@ -1188,16 +1188,12 @@
           document.addEventListener("touchstart", resetVP, eventVP = false);
         }
         
-        /*Mobile view port is half. So we multiply width and height by 2.
-        Screen width and height do not change on iPhone when flipped to portrait mode, but changes on android.
-        The screen rotation value varies between device as well.
-        For consistency we have to compare if we are in landscape.
+        /*For consistency between devices we have to compare if we are in portrait.
         We then have to check if width and height have to be flipped to match portrait mode.*/
         
         if( mobile )
         {
           if(window.matchMedia("(orientation: portrait)").matches && h < w) { var t = w; w = h; h = t; }
-          if(vPort){ w*=2;h*=2; }
         }
       
         //Portrait mode check.
