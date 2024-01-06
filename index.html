@@ -1193,7 +1193,7 @@
         
         if( mobile )
         {
-          if( vPort ){ w = screen.width; h = screen.height; }
+          if( vPort ){ w = screen.width * 2; h = screen.height * 2; }
           if(window.matchMedia("(orientation: landscape)").matches && h > w) { var t = w; w = h; h = t; }
         }
       
