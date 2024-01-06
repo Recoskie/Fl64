@@ -4,7 +4,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="FL64">
-    <meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no" id="vp" />
+    <meta name="viewport"  id="vp" content="" />
     <link rel="apple-touch-icon" href="/docs/bg/icon.png">
     <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
     <link rel="canonical" href="https://recoskie.github.io/Fl64/" />
@@ -1157,11 +1157,11 @@
       Get all information about the window and if we are in landscape or portrait mode.
       ***********************************************************************************/
       
-      var mobile = !isNaN( window.orientation ), eventVP = true;
+      var mobile = !isNaN( window.orientation ), eventVP = false, vPort = (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) ? (document.getElementById ("vp") || false) : false;
           
       function resetVP()
       {
-        document.getElementById("vp").content = "initial-scale=0.5, user-scalable=yes";
+        vPort.content = "initial-scale=0.5, user-scalable=yes";
             
         document.removeEventListener("touchstart", resetVP);
             
@@ -1177,36 +1177,30 @@
         window.onresize = re;
       }
       
-      //Get page sizing information, and update the page.
-      
       function re()
       {
-        if( mobile && eventVP )
+        w = window.innerWidth, h = window.innerHeight;
+        
+        if( mobile && eventVP && vPort )
         {
-          document.getElementById("vp").content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
+          vPort.content="width=device-width, minimum-scale=0.5, maximum-scale=0.5, initial-scale=0.5, user-scalable=no";
           
           document.addEventListener("touchstart", resetVP, eventVP = false);
         }
         
-        //On desktop window inner width and height work best.
-        
-        w = window.innerWidth, h = window.innerHeight;
-        
         /*Mobile view port is half. So we multiply width and height by 2.
-        Screen width and height do not change on iPhone when flipped to landscape mode, but changes on android.
+        Screen width and height do not change on iPhone when flipped to portrait mode, but changes on android.
         The screen rotation value varies between device as well.
         For consistency we have to compare if we are in landscape.
-        We then have to check if width and height have to be fliped to match landscape mode.*/
+        We then have to check if width and height have to be flipped to match portrait mode.*/
         
         if( mobile )
         {
-          w = screen.width; h = screen.height;
-          if(window.matchMedia("(orientation: landscape)").matches && h > w )
-          { var t = w; w = h; h = t; t = undefined; }
-          w *= 2; h *= 2;
+          if(window.matchMedia("(orientation: portrait)").matches && h < w) { var t = w; w = h; h = t; }
+          if(vPort){ w*=2;h*=2; }
         }
       
-        //landscape mode check.
+        //Portrait mode check.
         
         portrait = h > w;
       
