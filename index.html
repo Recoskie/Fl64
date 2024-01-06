@@ -1193,6 +1193,7 @@
         
         if( mobile )
         {
+          if( vPort ){ w = screen.width * 2; h = screen.height * 2; }
           if(window.matchMedia("(orientation: portrait)").matches && h < w) { var t = w; w = h; h = t; }
         }
       
