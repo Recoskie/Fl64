@@ -1156,8 +1156,8 @@
       /***********************************************************************************
       Get all information about the window and if we are in landscape or portrait mode.
       ***********************************************************************************/
-      
-      var mobile = !isNaN( window.orientation ), eventVP = false, vPort = (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) ? (document.getElementById ("vp") || false) : false;
+    
+      var mobile = navigator.userAgent.indexOf("Mobile") >= 0, eventVP = false, vPort = (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) ? (document.getElementById ("vp") || false) : false;
           
       function resetVP()
       {
@@ -1193,8 +1193,8 @@
         
         if( mobile )
         {
-          if( vPort ){ w = screen.width * 2; h = screen.height * 2; }
-          if(window.matchMedia("(orientation: portrait)").matches && h < w) { var t = w; w = h; h = t; }
+          if( vPort ){ w = screen.width; h = screen.height; }
+          if(window.matchMedia("(orientation: landscape)").matches && h > w) { var t = w; w = h; h = t; }
         }
       
         //Portrait mode check.
