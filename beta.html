@@ -1,0 +1,463 @@
+<html>
+  <head>
+    <title>IEEE-754 Float 64 library.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="FL64">
+    <link rel="apple-touch-icon" href="/docs/bg/icon.png">
+    <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
+    <link rel="canonical" href="https://recoskie.github.io/Fl64/" />
+    <link rel="manifest" href="manifest.json">
+    <style type="text/css">
+      <!--
+        body
+        {
+          background-color: #000000;
+          color:black;
+          background-image: url(docs/bg/bg.jpg);
+          background-repeat: no-repeat;
+          background-size: cover;
+          -moz-background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .col { display: flex; flex-direction: column; } .row { display: flex; }
+        table
+        {
+          background-color: rgba(200,200,200,0.50);
+        }
+        input[type=button]
+        {
+          background-color: rgba(0, 200, 255, 0.50);
+        }
+        input[type=text]
+        {
+          background-color: rgba(255, 255, 255, 0.50);
+        }
+      -->
+    </style>
+    <script src="FL64.js" type="text/javascript"></script>
+    <script src="https://recoskie.github.io/AI-Matrix/AI-Mat.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+      //Number of parts to compute vectors to, or split number to if possible.
+
+      var parts = 20;
+
+      /***********************************************************************************
+      Prototype vector additions to FL64.
+      ***********************************************************************************/
+    
+      vect.prototype.val = vect.prototype.pv = vect.prototype.px = vect.prototype.py = new Number(NaN);
+      vect.prototype.v = [];
+
+      function vect(v)
+      {
+        if(AI_Mat == undefined) { throw("AI Matrix library must be loaded to use Vector additions."); }
+        
+        //Create copy of the vector.
+        
+        if(v.v != undefined)
+        {
+          this.val = NaN; this.px = v.px; this.py = v.py; this.v = []; for(var i=0;i < v.v.length;this.v[i] = v.v[i], i++);
+          for(var i=0;i < v.val.length;this.val.split(v.val.a[i],1), i++);
+        }
+        
+        //Else create an new vector.
+        
+        else
+        {
+          if(arguments.length == 0){ throw("Expected vector input type!"); } v = Array.prototype.slice.call(arguments);
+          if(v.length == 1){ v = v.toString(); if(v.indexOf(",") > 0) { v = v.split(","); } else { throw("Vectors can not be one value in length."); } }
+        
+          //Init and construct vector data type.
+        
+          this.v = []; for(var i = 0;i < v.length;i++){ this.v[i] = parseInt(v[i]); if(isNaN(this.v[i])){ throw("Only Numbers are allowed in an vector."); } };
+          
+          //Sing value of all values in vector must not match.
+
+          for(var i = 0, c = this.v[0] < 0, ct = false; i < this.v.length && !ct; i++){ ct = ((c ? -this.v[i] : this.v[i]) < 0); } if(!ct){ this.v.push(-this.v.pop()) }
+
+          AI_Mat.adjustSMat(this.v.length-1); this.val = NaN;
+
+          //Vectors 2 in length can be approximated directly.
+
+          if(this.v.length == 2){ this.pv = (this.px = -this.v[1]) / (this.py = this.v[0]); this.px = -this.px; return(this); }
+
+          //Make an backup of this vectors initial values.
+
+          var vc = []; for(var i = 0; i < this.v.length; vc[i] = this.v[i++]);
+
+          //Approximate value of vector as an float number, and best fract.
+
+          this.pv = 0; this.split(2); while((this - this.pv) != 0){ this.pv = this+0; this.split(); }
+
+          this.px = this.val.fx[this.val.length-1]; this.py = this.val.fy[this.val.length-1];
+
+          //Reset vector.
+
+          this.v = vc; this.val = new Number(NaN);
+        }
+      }
+
+      /***********************************************************************************
+      Calculate int=A from summed vector combination.
+      Input n is number of parts. If n is undefined split to one part.
+      ***********************************************************************************/
+
+      vect.prototype.split = function(n)
+      {
+        if(this.v[0] == 0){ return(this); }
+
+        var r = [], a = -1, n = n || 1; var c = false, ct = true;
+  
+        for( var i = 0; i < n; i++ )
+        {
+          a = -1; r = this.v;
+          
+          while(ct && a < 1000)
+          {
+            ++a; this.v = r; r = []; for(var s=this.v.length-1,i1=s;i1>=0;i1--)
+            {
+              r[s-i1]=0; for(var i2=s;i2>=0;i2--) { r[s-i1]+=(AI_Mat.SMat[i2][i1]||0)*this.v[s-i2]; }
+            }
+
+            c = r[0] < 0; ct = false; for(var i2 = 0; i2 < r.length && !ct; i2++){ ct = ((c ? -r[i2] : r[i2]) <= 0); }
+          }
+
+          if(a >= 1000){ return(this); }
+
+          this.val = this.val.split(a,1); this.v = this.v.reverse();
+
+          console.log(this.val.a);
+
+          if(a == 0 && this.val.length > 1) { return(this); } ct = true;
+        }
+
+        return(this);
+      }
+
+      /***********************************************************************************
+      Show the complete work of the split operation.
+      ***********************************************************************************/      
+
+      function splitWork(vect,showWork,firstStep,curParts)
+      {
+        var t = []; for(var i = 0;i < vect.length;t[i] = vect[i++]); vect = t; if(vect[0] == 0){ return(this); }
+
+        var r = [], curParts = curParts || [], a = -1, n = n || 1; var c = false, ct = true;
+
+        var str = (curParts.length == 0 ? "<div style='background-color: rgb(68, 157, 43);'>" : ""); while(showWork > 0)
+        {
+          a = -1; r = vect; while(ct && a < 1000)
+          {
+            ++a; vect = r; r = []; for(var s=vect.length-1,i1=s;i1>=0;i1--)
+            {
+              r[s-i1]=0; for(var i2=s;i2>=0;i2--) { r[s-i1]+=(AI_Mat.SMat[i2][i1]||0)*vect[s-i2]; }
+            }
+
+            c = r[0] < 0; ct = false; for(var i2 = 0; i2 < r.length && !ct; i2++){ ct = ((c ? -r[i2] : r[i2]) <= 0); }
+
+            //Show the resulting vector values with a button that allows the user to see the calculation.
+
+            if(!firstStep) { str += "<div>Vect = " + vect + "<input type='button' value='Show steps' onclick='splitStepShow(this,["+ vect +"])'></div><br />"; }
+
+            //Else show the first step if firstStep is active.
+
+            else { str += splitStep(vect) + "This operation is repeated till all numbers are negative or positive in the vector.<br /><br />"; firstStep = false; }
+          }
+
+          str += "Vect = " + r + "<br />";
+
+          if(a == 1000) { str = ""; } if(vect[vect.length-1] == 0 || a == 1000 || (a == 0 && curParts.length > 1)) { str += "<br />Vector zero terminated."; }
+
+          else
+          {
+            curParts.push(a);
+          
+            str += "<br />All values in this vector are summed to all positive, or negative after "+ a +" times.<br /><br />";
+            str += "This makes the parts to our number ratio " + curParts + "...<br /><br />";
+            str += "We move back to the previous vector value " + vect + " and reverse it's order to find the next reciprocal part.<br /><br />";
+
+            vect = vect.reverse(); ct = true;
+            
+            if(showWork == 1) { str += "<div>Would you like to see the steps to find the next parts. <input type='button' value='Show steps next part' onclick='splitWorkStep(this,["+vect+"],["+curParts+"])'></div>"+ (curParts.length != 1 ? "" : "</div>"); }
+          }
+        
+          showWork -= 1;
+        }
+
+        return(str);
+      }
+
+      function splitWorkStep(e,vect,parts) { e.parentElement.outerHTML = splitWork(vect,1,false,parts); }
+
+      /***********************************************************************************
+      Show work to sum the next vector combination.
+      ***********************************************************************************/
+
+      function splitStep(state)
+      {
+        var r = state, mat = [];
+
+        var str = "Vect = " + state + "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To compute the next vector sums, we begin with the following matrix.<br /><br /><table border='1'>";
+
+        for(var s=state.length-1,i1=s;i1>=0;i1--)
+        {
+          str += "<tr><td>row "+mat.length+"</td>"
+
+          var t = []; for(var i2=s;i2>=0;i2--) { str+="<td>" + (AI_Mat.SMat[i2][i1]||0) + "</td>"; t.push((AI_Mat.SMat[i2][i1]||0)); } mat.push(t);
+
+          str += "</tr>";
+        }
+
+        str += "</table><br />"; sums = []; for(var i1 = 0;i1 < mat.length;i1++)
+        {
+          str += "We multiply row " + i1 + " = " + mat[i1] + " with vector values " + state + " and add them together.<br /><br />";
+
+          sums[i1] = 0; for(var i2=0;i2<mat[i1].length;i2++) { str += state[i2] + " * " + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? " + " : ""); sums[i1] += state[i2] * mat[i1][i2];}
+
+          str += " = " + sums[i1] + "<br /><br />";
+        }
+
+        return(str + "This makes our new vector " + sums + "</div><br />");
+      }
+
+      function splitStepShow(sect, state) { sect.parentElement.innerHTML = splitStep(state); }
+
+      /***********************************************************************************
+      Show how to add the parts back into an number.
+      ***********************************************************************************/
+
+      function addParts(v)
+      {
+        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />";
+          
+        for(var i = 1;i < v.val.a.length;i++) { t1 = t1 + "+1&div;"; str += t1 + v.val.a[i] + t2 + " = " + v.val.calc(0,i) + "<br /><br />"; t1 += "(" + v.val.a[i] + ""; t2 += ")"; }
+
+        return(str+"</div>");
+      }
+
+      /***********************************************************************************
+      Remove int=A from summed vector combination.
+      Input n is number of parts. If n is undefined removes one part.
+      ***********************************************************************************/
+
+      vect.prototype.remove = function(n)
+      {
+        var r = [], a = 0, n = Math.min(n || 1, this.val.length); for( var i = 0; i < n; i++ )
+        {
+          a = this.val.a[this.val.length-1]; this.v = this.v.reverse(); while(a > 0)
+          {
+            a--; r = []; for(var s=this.v.length-1,i1=s;i1>=0;i1--)
+            {
+              r[s-i1]=0; for(var i2=s;i2>=0;i2--) { r[s-i1]-=(AI_Mat.SMat[i2][i1]||0)*this.v[s-i2]; r[s-i1]=-r[s-i1]; }
+
+              if(i1%2 == 1){ r[s-i1]=-r[s-i1]; }
+            }
+            this.v = r;
+          }
+    
+          this.val=this.val.remove();
+        }
+        
+        return(this);
+      }
+
+      /***********************************************************************************
+      Vector to number of dimensions.
+      ***********************************************************************************/
+
+      vect.prototype.expand = function(dif) { dif = dif || 0; AI_Mat.adjustSMat(this.v.length); this.v.push(dif,(this.v.pop()-dif)*this.pv); return(this); }
+
+      vect.prototype.combine = function() { if(this.v.length > 2) { this.v.push((this.v.pop()+this.v.pop()*this.pv)/this.pv); } return(this); }
+
+      /***********************************************************************************
+      Change the vectors dimensions.
+      ***********************************************************************************/
+
+      vect.prototype.dif = function()
+      {
+        var t = [(arguments[0]||0)+""]; if(arguments.length > 1) { t = Array.prototype.slice.call(arguments); }
+        else if(t[0].toString().indexOf(",") > 0) { t = t[0].split(","); }
+        var v = [];for(var i = 0;i < this.v.length - 1; i++){if(isNaN(v[i] = parseInt(t[i]||0))){throw("Only numbers are allowed!");}}
+        v[0] = v[0] || 1; for(var i = 0;i < v.length;i++){ this.v[i+1] += this.pv * (this.v[i] - v[i]); this.v[i] = v[i]; } return(this);
+      }
+
+      /***********************************************************************************
+      Change the vectors dimensions. Show work version.
+      ***********************************************************************************/
+
+      vect.prototype.difWork = function()
+      {
+
+      }
+
+      /***********************************************************************************
+      Convert numbers or fraction to 1D vector.
+      ***********************************************************************************/
+
+      vect.prototype.toVect = function() { var f = this.val.calcF(); return(new vect(f.y,f.x)); }
+
+      Number.prototype.toVect = function() { var f = this.getFract(); return(new vect(f.y,f.x)); }
+
+      Fract.prototype.toVect = function() { var f = this.calcF(); return(new vect(f.y,f.x)); }
+
+      /***********************************************************************************
+      Basic functions for displaying a vector or adding vector to other float values when doing math.
+      ***********************************************************************************/
+
+      vect.prototype.valueOf = function() { return(this.val.calc()); }
+
+      vect.prototype.toString = function() { var o = "Vect="+this.v+"\r\n\r\n"; for(var i = 0;i < this.val.length;i++) { o+="x"+i+"=A:"+this.val.a[i]+", B:1\r\n"; } return(o+(this+0)); }
+
+      /***********************************************************************************
+      Body onload initialize page components.
+      ***********************************************************************************/
+
+      function init(){}
+      
+      function getInput()
+      {
+        n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
+      
+        var isVect = false, out = document.getElementById("out");
+
+        if(n.indexOf(",") > 0) { isVect = true; n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = Math.abs(parseInt(n[i1],10)); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
+        else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
+        parts = parseInt(parts, 10); if(isNaN(parts)) { alert("Enter a number value for the number of parts you wish to split the number or calculate the vector to!"); return; }
+        
+        out.innerHTML = "";
+
+        if(isVect)
+        {
+          //Check if vector is an root of a number.
+
+          out.innerHTML += "<h1>Vector pre-analysis</h1>";
+
+          var isRoot = true; for(var i = 1; i < n.length - 1 && isRoot; i++){ if(n[i]!=0){ isRoot = false; } }
+
+          //If the vector is the root of an number.
+
+          var type = Math.abs(n[n.length - 1]), isDiv = Math.abs(n[0]) != 1, calc = (Math.abs(n[n.length-1])/Math.abs(n[0]))**(1/(n.length-1));
+          
+          if(isDiv){ type = "(" + type + "&div;" + Math.abs(n[0]) + ")"; }
+
+          if(n.length == 3){ type = "&radic" + type; } else if(n.length == 4){ type = "&#8731;" + type; }
+          else if(n.length == 5){ type = "&#8732;" + type; } else if(n.length != 2){ type = type + " to the root of " + (n.length-1); }
+
+          out.innerHTML += "The vector " + n + " ratio is " + n.length + " numbers which is to the root of " + n.length + "-1=" + (n.length-1) + " at it's last column.<br /><br />";
+          if(n.length == 2){ out.innerHTML += "Since this vector ratio is to the root of 1 than it is the value of its last column " + Math.abs(n[n.length-1]) + ".<br /><br />"; }
+          else{ out.innerHTML += "This makes the vector ratio " + Math.abs(n[n.length-1]) + " to the root of " + (n.length-1) + ".<br /><br />"; }
+          if(Math.abs(n[0]) != 1)
+          {
+            out.innerHTML += "Since the first value in the vector is " + Math.abs(n[0]) + " this makes the summed sequence an " + Math.abs(n[0]) + "th of its size.<br /><br />";
+            out.innerHTML += "We compute this by dividing our vector last column to the root of value.<br /><br />";
+          }
+
+          if(isRoot)
+          {
+            out.innerHTML += "The vector " + n + " should be " + type + " = " + calc + " when summed.";
+          }
+          else
+          {
+            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed.<br /><br />";
+            out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio."
+          }
+
+          out.innerHTML += "<h1>Summing the vector ratio</h1>";
+
+          var v = new vect(n); out.innerHTML += splitWork(v.v,2,true); v = v.split(20);
+
+          out.innerHTML += "<br />The vector ratio computed to " + parts + " reciprocal parts is the following = " + v.val.a + "<br /><br />";
+          
+          out.innerHTML += "We can compute reciprocal parts back into an number by adding the parts together and dividing them into one.<br /><br />";
+
+          out.innerHTML += addParts(v); v = v.valueOf();
+
+          out.innerHTML += "<br />This gives us the number " + v + "";
+        }
+
+        out.innerHTML += "<h1>Computing number to vector ratio</h1>";
+
+        out.innerHTML += "We get the reciprocal parts of our number " + v + " by taking away the number before the decimal point and dividing into one.<br /><br />";
+
+        var curParts = []; for(var i = 0, c = 1/1000;i < parts;i++)
+        {
+          curParts.push(v & -1);
+          out.innerHTML += "The value before the decimal point is " + v + " = " + (v & -1) + " this makes our reciprocal parts " + curParts + "...<br />";
+          v -= v&-1;
+          out.innerHTML += "We take away the value before the decimal point leaving " + v + ".<br />";
+          if(v < c){ out.innerHTML += "The remaining value " + v.toFixed(5) + " can not be divided to any more parts.<br /><br />"; i = parts; }
+          else { out.innerHTML += "We divide the value into one to find the next reciprocal part 1&div;"+v+" = " + (v = 1/v).toFixed(5) + "<br /><br />"; }
+        }
+
+        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + curParts + "<br /><hr /><br />";
+
+        out.innerHTML +="Note that the reciprocal parts can be added together into reciprocal fractions.<br /><br />";
+
+        out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with as close to zero on the last column giving us our ratio for our irrational number.<br /><br />";
+
+        out.innerHTML += "The last two steps still have to be displayed in detail even though it can already be computed in code.";
+      }
+    </script>
+  </head>
+  <body onload="init();">
+    <table border="1" style="width:100%;height:100%;background-color:rgba(200,200,200,0.50);">
+      <tr>
+        <td>Input: <input type="text" value="1,0,0,88" id="iv" onclick="this.select();" /></td><td>Max parts: <input type="text" value="20" id="pt" onclick="this.select();" /></td><td><input type="button" value="calc" onclick="getInput();" /></td>
+      </tr>
+      <tr style="width:100%;height:100%;">
+        <td style="width:100%;height:100%;" colspan="3">
+          <div id="fx" style="width:100%;height:100%;">
+            <div style="overflow:scroll;" id="out">
+              <h1>Introduction</h1>
+
+              This new innovative algorithm enables pattern recognition in data comparable to quantum computing and is the first of its kind. It allows us to compute patterns in data and the natural world per value that were once impossible to do, with significant impacts on both science and math for what is computable.<br /><br />
+
+              This tool lets you solve numbers that grow and never repeat, such as 0.123456, which we know will only get larger and never repeat.<br /><br />
+
+              Some values have no visible pattern in their digits, but they grow in size the same way such as the number PI ratio 3.1415926535.<br /><br />
+
+              We call these complex number patterns irrational numbers. Unravelling such complex values is hard to break down and can break encryption or data in nature to new science and formulas (It was thought only quantum computing could solve such data). We could originally only, at best, look for equations that match the number ratio we are looking at through a lot of calculation and proofwork.<br /><br />
+
+              <h1>Using this tool</h1>
+
+              Enter a custom vector combination such as 1,8,99, then hit calc to see the steps for computing each part. It then shows how the parts are added into an irrational number.<br /><br />
+
+              The resulting irrational number is broken back into parts step by step.<br /><br />
+
+              It then shows how the parts are added back into a vector ratio, showing how to find the numbers ratio and pattern step by step, and also proves the algorithm operations and steps. All operations are simple as they are just basic divides, multiplies, additions, and subtractions.
+
+              <hr />
+
+              You also can use an irrational number like 1.414213562 and hit calc instead of entering a vector combination.<br /><br />
+
+              This tool will show you the steps to breaking the number into parts.<br /><br />
+
+              Once the value is broken into parts, it will show how to add the parts to a vector ratio.<br /><br />
+
+              All irrational numbers can be broken down this way and expressed as ratios.
+
+              <h1>Vector ratios</h1>
+
+              A vector looks like this: 1,0,77, which is the square root of 77 as a vector ratio.<br /><br />
+
+              An vector of 1,0,0,23 is the cube root of 23.<br /><br />
+
+              An vector such as 1,0,0,0,2 is 2 to the root of 4 which is 1.18920711500272. Multiplying the value 1.18920711500272 four times with itself is 2<br /><br />
+
+              Not all irrational number ratios can be computed as the root of a number.<br /><br />
+
+              A vector ratio of 1,8,99 is close to the square root of 99 but can not be calculated as the root of any number.<br /><br />
+
+              The last column of a vector is to the root of a number as long as the first column is one and the rest are zero, with the last value being the value of the root.<br /><br />
+
+              The vector computes each of the whole parts of a number ratio sequentially.
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
