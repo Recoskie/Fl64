@@ -343,7 +343,7 @@
           
           if(isDiv){ type = "(" + type + "&div;" + Math.abs(n[0]) + ")"; }
 
-          if(n.length == 3){ type = "&radic" + type; } else if(n.length == 4){ type = "&#8731;" + type; }
+          if(n.length == 3){ type = "&radic;" + type; } else if(n.length == 4){ type = "&#8731;" + type; }
           else if(n.length == 5){ type = "&#8732;" + type; } else if(n.length != 2){ type = type + " to the root of " + (n.length-1); }
 
           out.innerHTML += "The vector " + n + " ratio is " + n.length + " numbers which is to the root of " + n.length + "-1=" + (n.length-1) + " at it's last column.<br /><br />";
@@ -361,15 +361,21 @@
           }
           else
           {
-            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed.<br /><br />";
-            out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio."
+            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed, or could be very different.<br /><br />";
+            out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio.";
           }
 
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
 
-          var v = new vect(n); out.innerHTML += splitWork(v.v,2,true); v = v.split(20);
+          var v = new vect(n); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
 
           out.innerHTML += "<br />The vector ratio computed to " + parts + " reciprocal parts is the following = " + v.val.a + "<br /><br />";
+
+          if(v.val.length < parts)
+          {
+            out.innerHTML += "Note that this vector zero terminated before part " + parts + " meaning it is not an ratio.<br /><br />";
+            out.innerHTML += "It could be an even root such as &radic;9 = 3 or a fractional value 99&div;77, and is not an ratio.<br /><br />";
+          }
           
           out.innerHTML += "We can compute reciprocal parts back into an number by adding the parts together and dividing them into one.<br /><br />";
 
@@ -377,6 +383,7 @@
 
           out.innerHTML += "<br />This gives us the number " + v + "";
         }
+        else { v = n; }
 
         out.innerHTML += "<h1>Computing number to vector ratio</h1>";
 
@@ -392,7 +399,7 @@
           else { out.innerHTML += "We divide the value into one to find the next reciprocal part 1&div;"+v+" = " + (v = 1/v).toFixed(5) + "<br /><br />"; }
         }
 
-        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + curParts + "<br /><hr /><br />";
+        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + curParts + "<hr /><br />";
 
         out.innerHTML +="Note that the reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
@@ -419,7 +426,9 @@
 
               Some values have no visible pattern in their digits, but they grow the same way such as the number PI ratio 3.1415926535.<br /><br />
 
-              We call these complex number patterns irrational numbers. Unravelling complex values takes a lot of work. We could originally only, at best, look for equations that match the number ratio we are looking at through a lot of calculation and proof work.<br /><br />
+              We call these complex number patterns irrational numbers. Unravelling complex values takes a lot of work.<br /><br />
+              
+              Originally we would look for equations that match the number ratio we are looking at through a lot of calculation and proof work.<br />
 
               <h1>Using this tool</h1>
 
@@ -427,7 +436,9 @@
 
               The resulting irrational number is broken back into parts step by step.<br /><br />
 
-              It then shows how the parts are added back into a vector ratio, how to find the numbers ratio and pattern step by step, and proves the algorithm operations and steps. All operations are simple: basic divides, multiplies, additions, and subtractions.
+              It then shows how the parts are added back into a vector ratio, how to find the numbers ratio and pattern step by step, and proves the algorithm operations and steps.<br /><br />
+              
+              All operations are simple: basic divides, multiplies, additions, and subtractions.
 
               <hr />
 
@@ -445,7 +456,7 @@
 
               An vector of 1,0,0,23 is the cube root of 23.<br /><br />
 
-              A vector such as 1,0,0,0,2 is 2 to the root of 4, which is the value 18920711500272. Multiplying the value 1.18920711500272 four times with itself is 2<br /><br />
+              A vector such as 1,0,0,0,2 is 2 to the root of 4, which is the value 1.8920711500272. Multiplying the value 1.18920711500272 four times with itself is 2.<br /><br />
 
               Not all irrational number ratios can be computed as the root of a number.<br /><br />
 
