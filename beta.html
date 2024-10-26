@@ -132,8 +132,6 @@
 
           this.val = this.val.split(a,1); this.v = this.v.reverse();
 
-          console.log(this.val.a);
-
           if(a == 0 && this.val.length > 1) { return(this); } ct = true;
         }
 
@@ -184,7 +182,7 @@
 
             vect = vect.reverse(); ct = true;
             
-            if(showWork == 1) { str += "<div>Would you like to see the steps to find the next parts. <input type='button' value='Show steps next part' onclick='splitWorkStep(this,["+vect+"],["+curParts+"])'></div>"+ (curParts.length != 1 ? "" : "</div>"); }
+            if(showWork == 1) { str += "<div>Would you like to see the steps to find the next parts. <input type='button' value='Show next part steps' onclick='splitWorkStep(this,["+vect+"],["+curParts+"])'></div>"+ (curParts.length != 1 ? "" : "</div>"); }
           }
         
           showWork -= 1;
@@ -207,7 +205,7 @@
 
         for(var s=state.length-1,i1=s;i1>=0;i1--)
         {
-          str += "<tr><td>row "+mat.length+"</td>"
+          str += "<tr><td>row "+String.fromCharCode(0x41+mat.length)+"</td>"
 
           var t = []; for(var i2=s;i2>=0;i2--) { str+="<td>" + (AI_Mat.SMat[i2][i1]||0) + "</td>"; t.push((AI_Mat.SMat[i2][i1]||0)); } mat.push(t);
 
@@ -216,9 +214,9 @@
 
         str += "</table><br />"; sums = []; for(var i1 = 0;i1 < mat.length;i1++)
         {
-          str += "We multiply row " + i1 + " = " + mat[i1] + " with vector values " + state + " and add them together.<br /><br />";
+          str += "We multiply row " + String.fromCharCode(0x41+i1) + " = " + mat[i1] + " with our current vector values " + state + " and add them together.<br /><br />";
 
-          sums[i1] = 0; for(var i2=0;i2<mat[i1].length;i2++) { str += state[i2] + " * " + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? " + " : ""); sums[i1] += state[i2] * mat[i1][i2];}
+          sums[i1] = 0; for(var i2=0;i2<mat[i1].length;i2++) { str += state[i2] + "&times;" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? " + " : ""); sums[i1] += state[i2] * mat[i1][i2];}
 
           str += " = " + sums[i1] + "<br /><br />";
         }
@@ -232,13 +230,20 @@
       Show how to add the parts back into an number.
       ***********************************************************************************/
 
-      function addParts(v)
+      function addParts(v,n)
       {
-        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />";
-          
-        for(var i = 1;i < v.val.a.length;i++) { t1 = t1 + "+1&div;"; str += t1 + v.val.a[i] + t2 + " = " + v.val.calc(0,i) + "<br /><br />"; t1 += "(" + v.val.a[i] + ""; t2 += ")"; }
+        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />", n = n || v.val.a.length;
+        
+        for(var i = 1;i < n;i++) { t1 = t1 + "+1&div;"; str += t1 + v.val.a[i] + t2 + " = " + v.val.calc(0,i) + "<br />" + (i < (n-1) ? "<br />" : ""); t1 += "(" + v.val.a[i] + ""; t2 += ")"; }
 
-        return(str+"</div>");
+        return(str + (i < v.val.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this,"+(n+1)+",["+v.val.a+"]);' /></div>" : "") + "</div>");
+      }
+
+      function addNextPart(e,n,parts)
+      {
+        var t = new Number(NaN).split(t1 = parts[0]), o = "", t2 = ""; for(var i = 1;i < n;i++){ t = t.split(parts[i]); t1 = t1 + "+1&div;"; o = t1 + parts[i] + t2 + " = "; t1 += "(" + parts[i] + ""; t2 += ")"; }
+
+        e.parentElement.innerHTML = "<br />" + o + t.calc() + (i < parts.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this,"+(i+1)+",["+parts+"]);' /></div>" : "");
       }
 
       /***********************************************************************************
@@ -382,7 +387,7 @@
           
           out.innerHTML += "We can compute reciprocal parts back into an number by adding the parts together and dividing them into one.<br /><br />";
 
-          out.innerHTML += addParts(v); v = v.valueOf();
+          out.innerHTML += addParts(v,2); v = v.valueOf();
 
           out.innerHTML += "<br />This gives us the number " + v + "";
         }
