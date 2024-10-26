@@ -247,6 +247,35 @@
       }
 
       /***********************************************************************************
+      Show how we get the parts of an number.
+      ***********************************************************************************/
+      
+      function getParts(v,n)
+      {
+        var str = "";for(var i = 0, r = v.reValue();i < n;i++)
+        {
+          str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
+          r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
+          if(v == 0){ str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />"; i = n; }
+          else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
+        }
+
+        return(str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this,"+v.r[0]+",["+v.a+"])'></div>" : "") + "</div>");
+      }
+
+      function getNextPart(e,v,parts)
+      {
+        for(var i = 0;i < parts.length; v = v.split(), i++); var r = v.reValue();
+
+        var str = "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
+        r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
+        if(v == 0){ str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />"; i = n; }
+        else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
+
+        e.parentElement.innerHTML = str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this,"+v.r[0]+",["+v.a+"])'></div>" : "");
+      }
+
+      /***********************************************************************************
       Remove int=A from summed vector combination.
       Input n is number of parts. If n is undefined removes one part.
       ***********************************************************************************/
@@ -397,17 +426,9 @@
 
         out.innerHTML += "We get the reciprocal parts of our number " + v + " by taking away the number before the decimal point and dividing into one.<br /><br />";
 
-        var curParts = []; for(var i = 0, c = 1/1000;i < parts;i++)
-        {
-          curParts.push(v & -1);
-          out.innerHTML += "The value before the decimal point is " + v + " = " + (v & -1) + " this makes our reciprocal parts " + curParts + "...<br />";
-          v -= v&-1;
-          out.innerHTML += "We take away the value before the decimal point leaving " + v + ".<br />";
-          if(v < c){ out.innerHTML += "The remaining value " + v.toFixed(5) + " can not be divided to any more parts.<br /><br />"; i = parts; }
-          else { out.innerHTML += "We divide the value into one to find the next reciprocal part 1&div;"+v+" = " + (v = 1/v).toFixed(5) + "<br /><br />"; }
-        }
+        out.innerHTML += getParts(v,2); v = v.splitAll();
 
-        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + curParts + "<hr /><br />";
+        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + v.a + "<hr /><br />";
 
         out.innerHTML +="Note that the reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
