@@ -349,11 +349,13 @@
 
       function showFindVect(e,parts,dif,vect)
       {
-        var r1 = document.createElement("tr"), r2 = document.createElement("td"); r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
+        var r1 = document.createElement("tr"), r2 = document.createElement("td"), v = 0; r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
 
         e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
         
         e.innerHTML = "The vector " + vect + " computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
+
+        e.innerHTML += "The vector " + vect + " should sum to the value " + -vect[1] + "&div;" + vect[0] + " = " + (v=(-vect[1] / vect[0])) + " <br /><br />";
 
         e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply both sides by them selves to how many columns we want.<br /><br />";
 
@@ -365,7 +367,19 @@
 
         e.innerHTML += "This makes our new vector columns " + s1 + z + "," + s2 + "<br /><br />";
 
-        e.innerHTML += "This makes our vector " + vect + " computes to the following receptacle parts " + parts + " and terminates to all zero.<br /><br />";
+        e.innerHTML += "This makes our vector " + vect + " which also computes to the same value and terminates to all zero.<br /><br />";
+
+        e.innerHTML += "The final step is to change the vector columns to reduce the vector.<br /><br />";
+
+        var str = ""; for(var i = 0;i < dif.length;i++) { str += vect[i+1] + "+" + v + "&times" + "(" + vect[i] + " - " + dif[i] + ")"; vect[i+1] += v * (vect[i] - dif[i]); str += " = " + vect[i+1] + "<br />"; vect[i] = dif[i]; }
+
+        e.innerHTML += str + "<br />This gives us the following vector " + vect + " in which we round off the remaining value at the last column.<br /><br />";
+
+        e.innerHTML += "For now we know the vector begins with " + dif + ", and by applying these sums lines up the last column to " + vect[vect.length-1] + " automatically.<br /><br />";
+
+        e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
+        
+        e.innerHTML += "As for what the fastest reduction algorithm is to change the vector back from it's expanded forum to smallest ratio per column is not yet known.";
       }
 
       /***********************************************************************************
@@ -484,7 +498,7 @@
           str += "<tr"+(found > 0 ? " style='background-color:green;'" : " style='background-color:red;'")+"><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + dv.v + "</td><td><input type='button' value='show steps' onclick='showFindVect(this,[" + n.a.slice(0,i+1) + "],[" + vt + "],[" + fr.y + "," + -fr.x + "])' /></td></tr>";
         }
 
-        out.innerHTML += str + "</table><br />The above steps still have to be displayed in detail even though it can already be computed in code.<br /><br />";
+        out.innerHTML += str + "</table><br />";
 
         if(found > 0)
         {
