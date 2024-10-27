@@ -380,7 +380,7 @@
       {
         n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
       
-        var isVect = false, out = document.getElementById("out");
+        var isVect = false, bv = [], out = document.getElementById("out");
 
         if(n.indexOf(",") > 0) { isVect = true; n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = Math.abs(parseInt(n[i1],10)); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
@@ -392,7 +392,7 @@
         {
           //Check if vector is an root of a number.
 
-          out.innerHTML += "<h1>Vector pre-analysis</h1>";
+          bv = n.slice(0,n.length - 1); out.innerHTML += "<h1>Vector pre-analysis</h1>";
 
           var isRoot = true; for(var i = 1; i < n.length - 1 && isRoot; i++){ if(n[i]!=0){ isRoot = false; } }
 
@@ -438,25 +438,51 @@
           
           out.innerHTML += "We can compute reciprocal parts back into an number by adding the parts together and dividing them into one.<br /><br />";
 
-          out.innerHTML += addParts(v,2); v = v.valueOf();
+          out.innerHTML += addParts(v,2); n = v.valueOf();
 
-          out.innerHTML += "<br />This gives us the number " + v + "";
+          out.innerHTML += "<br />This gives us the number " + n + "";
         }
-        else { v = n; }
 
         out.innerHTML += "<h1>Computing number to vector ratio</h1>";
 
-        out.innerHTML += "We get the reciprocal parts of our number " + v + " by taking away the number before the decimal point and dividing into one.<br /><br />";
+        out.innerHTML += "We get the reciprocal parts of our number " + n + " by taking away the number before the decimal point and dividing into one.<br /><br />";
 
-        out.innerHTML += getParts(v,2); v = v.splitAll();
+        out.innerHTML += getParts(n,2); n = n.splitAll();
 
-        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + v.a + "<hr /><br />";
+        out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + n.a + "<hr /><br />";
 
         out.innerHTML +="Note that the reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
-        out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with as close to zero on the last column giving us our ratio for our irrational number.<br /><br />";
+        out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
 
-        out.innerHTML += "The last two steps still have to be displayed in detail even though it can already be computed in code.";
+        var vt = isVect ? bv : [0], c1 = 0, c2 = NaN, found = -1;
+
+        var str = "<table border='1'><tr><td>Added part</td><td>Vector</td><td>Vector ratio</td></tr>";
+
+        for(var i = 0;i < n.length; i++)
+        {
+          var fr = n.calcF(0,i); var dv = new vect(fr.y,fr.x); for(var i2 = 1; i2 < vt.length; dv = dv.expand(), i2++);
+
+          dv = dv.dif(vt); dv.v.push(c1 = Math.round(dv.v.pop())); if(c1 == c2 && found < 0){ found = i; } c2 = dv.v[dv.v.length-1];
+          
+          str += "<tr><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + dv.v + "</td></tr>";
+        }
+
+        out.innerHTML += str + "</table><br />The above steps still have to be displayed in detail even though it can already be computed in code.<br /><br />";
+
+        if(found > 0)
+        {
+          str = "<div style='background-color:rgba(128,128,128,80);'>As we can see the vector ratio repeats its self once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
+          str += "We only need " + n.a.slice(0,found+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
+          str += "The smallest fraction or value we can use to compute the value " + n.r[0] + " back into its ratio is " + n.calcF(0,found+1).toString() + " = " + n.calc(0,found+1) + "<br /><br />";
+          str += "Any smaller or fewer parts we would not be able to find this numbers ratio as we need the  next added part to come out to the previous vector at least once.</div>";
+        }
+        else
+        {
+          str += "The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.";
+        }
+
+        out.innerHTML += str;
       }
     </script>
   </head>
