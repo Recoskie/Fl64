@@ -256,7 +256,17 @@
         {
           str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
           r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
-          if(v == 0){ str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />"; i = n; }
+          if(v == 0)
+          {
+            if(r != 0)
+            {
+              str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br /><br />";
+            }
+            else
+            {
+              str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />";
+            }
+          }
           else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
         }
 
@@ -269,7 +279,19 @@
 
         var str = "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
         r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
-        if(v == 0){ str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />"; i = n; }
+        if(v == 0)
+        {
+          if(r != 0)
+          {
+            str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br /><br />";
+          }
+          else
+          {
+            str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />";
+          }
+          
+          i = n;
+        }
         else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
 
         e.parentElement.innerHTML = str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this,"+v.r[0]+",["+v.a+"])'></div>" : "");
