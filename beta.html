@@ -232,7 +232,7 @@
 
       function addParts(v,n)
       {
-        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />", n = n || v.val.a.length;
+        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />", n = Math.min(n || v.val.a.length, v.val.a.length);
         
         for(var i = 1;i < n;i++) { t1 = t1 + "+1&div;"; str += t1 + v.val.a[i] + t2 + " = " + v.val.calc(0,i) + "<br />" + (i < (n-1) ? "<br />" : ""); t1 += "(" + v.val.a[i] + ""; t2 += ")"; }
 
@@ -260,12 +260,14 @@
           {
             if(r != 0)
             {
-              str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br /><br />";
+              str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.";
             }
             else
             {
-              str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />";
+              str += "The remaining value " + r + " can not be divided to any more parts.";
             }
+
+            return(str + "</div>");
           }
           else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
         }
@@ -277,7 +279,7 @@
       {
         for(var i = 0;i < parts.length; v = v.split(), i++); var r = v.reValue();
 
-        var str = "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
+        var str = "The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
         r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
         if(v == 0)
         {
@@ -289,8 +291,6 @@
           {
             str += "The remaining value " + r + " can not be divided to any more parts.<br /><br />";
           }
-          
-          i = n;
         }
         else { str += "We divide the value into one to find the next reciprocal part 1&div;"+r+" = " + (r=1/r) + "<br /><br />"; }
 
