@@ -254,11 +254,11 @@
       {
         var str = "To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
 
-        str += "The values in the table are colored to see how we multiply the parts and move the values to the following line times the next added part, making Numerator÷Denominator = value per added part.<br /><br />";
+        str += "The values in the table are colored to show how we multiply the parts and move the values to the following line times the next added part, making Numerator÷Denominator = value per added part.<br /><br />";
 
         str += "<table border='1'><tr><td>Numerator</td><td>Denominator</td><td>Add part</td><td>Fraction</td></tr>";
 
-        n = n || parts.length; for(var i = 0, fx = 1, tx = 0, fy = 0, ty = 1, c = false;i<n;i++)
+        n = Math.min(n || parts.length, parts.length); for(var i = 0, fx = 1, tx = 0, fy = 0, ty = 1, c = false;i<n;i++)
         {
           str += "<tr><td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + tx + "</p>" : tx);
           str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fx + "</p>&times;" + parts[i] + "";
@@ -273,7 +273,28 @@
           if(c) { c = false; } else { c = true; }
         }
 
-        return(str + "</table>");
+        return(str + (n < parts.length ? "<tr><td colspan='4'><input type='button' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+i+","+c+"]);' /></td></tr>" : "") + "</table>");
+      }
+
+      function addNextPartFract(e,parts,state)
+      {
+        var fx = state[0], tx = state[1], fy = state[2], ty = state[3], i = state[4], c = state[5], btn = false;
+        
+        e = e.parentElement.parentElement; if( state[4] < (parts.length-1) ) { btn = e.parentElement.appendChild(document.createElement("tr")); }
+
+        var str = "<tr><td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + tx + "</p>" : tx);
+        str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fx + "</p>&times;" + parts[i] + "";
+        str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
+
+        str += "<td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + ty + "</p>" : ty);
+        str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fy + "</p>&times;" + parts[i] + "";
+        str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
+  
+        str += "<td>" + parts[i] + "</td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
+
+        if(c) { c = false; } else { c = true; }
+        
+        e.innerHTML = str; if(btn){ btn.innerHTML = "<tr><td colspan='4'><input type='button' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+(i+1)+","+c+"]);' /></td></tr>"; }
       }
 
       /***********************************************************************************
@@ -511,9 +532,9 @@
 
         out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + n.a + "<hr /><br />";
 
-        out.innerHTML +="Note that the reciprocal parts can be added together into reciprocal fractions.<br /><br />";
+        out.innerHTML +="The reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
-        out.innerHTML += addPartsFract(n.a);
+        out.innerHTML += addPartsFract(n.a,3) + "<br />";
 
         out.innerHTML += "In math we call these converging fractions and are very important for finding irrational number ratios for numbers.<br /><br />";
 
