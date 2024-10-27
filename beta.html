@@ -347,9 +347,25 @@
       Change the vectors dimensions. Show work version.
       ***********************************************************************************/
 
-      vect.prototype.difWork = function()
+      function showFindVect(e,parts,dif,vect)
       {
+        var r1 = document.createElement("tr"), r2 = document.createElement("td"); r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
 
+        e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
+        
+        e.innerHTML = "The vector " + vect + " computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
+
+        e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply both sides by them selves to how many columns we want.<br /><br />";
+
+        var s1 = vect[0] + "", z = "", s2 = vect[1] + "", t = vect.pop();
+
+        for(var i = 1;i < dif.length;i++){ vect.push(0); s1 += "&times" + vect[0]; z += ",0"; s2 += "&times" + t; }
+
+        vect[0]**=dif.length; vect.push(dif.length % 2 == 0 ? -(t**dif.length) : t**dif.length);
+
+        e.innerHTML += "This makes our new vector columns " + s1 + z + "," + s2 + "<br /><br />";
+
+        e.innerHTML += "This makes our vector " + vect + " computes to the following receptacle parts " + parts + " and terminates to all zero.<br /><br />";
       }
 
       /***********************************************************************************
@@ -457,7 +473,7 @@
 
         var vt = isVect ? bv : [0], c1 = 0, c2 = NaN, found = -1;
 
-        var str = "<table border='1'><tr><td>Added part</td><td>Vector</td><td>Vector ratio</td></tr>";
+        var str = "<table border='1'><tr><td>Added part</td><td>Vector</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
 
         for(var i = 0;i < n.length; i++)
         {
@@ -465,7 +481,7 @@
 
           dv = dv.dif(vt); dv.v.push(c1 = Math.round(dv.v.pop())); if(c1 == c2 && found < 0){ found = i; } c2 = dv.v[dv.v.length-1];
           
-          str += "<tr><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + dv.v + "</td></tr>";
+          str += "<tr"+(found > 0 ? " style='background-color:green;'" : " style='background-color:red;'")+"><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + dv.v + "</td><td><input type='button' value='show steps' onclick='showFindVect(this,[" + n.a.slice(0,i+1) + "],[" + vt + "],[" + fr.y + "," + -fr.x + "])' /></td></tr>";
         }
 
         out.innerHTML += str + "</table><br />The above steps still have to be displayed in detail even though it can already be computed in code.<br /><br />";
