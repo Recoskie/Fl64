@@ -410,8 +410,8 @@
 
       function findVect(n,bv)
       {
-        var vt = isVect ? bv : [0], match = true, matches = -1, mPos = -1, temp = null, oVect = [];
-        var str = "<table border='1'><tr><td>Added part</td><td>Vector</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
+        var vt = bv ? bv : [1,0,0], match = true, matches = -1, mPos = -1, temp = null, oVect = [];
+        var str = "<div id='result'><table border='1'><tr><td>Added part</td><td>Vector</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
 
         for(var i = 0;i < (n.length-1); i++)
         {
@@ -437,10 +437,30 @@
         }
         else
         {
-          str += "The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.";
+          str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions and reduce the vector.<br /><br />";
+          str += "We do this by expanding the fraction one column higher than what we want to reduce the first three columns to 1,2,-99.<br /><br />";
+          str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector<br /><br />";
+          str += "In theory it is possible to build an reduction algorithm that expand the converging fractions and finds the most reduced values for the columns to compute your number.<br /><br />";
+          str += "For the time being while this algorithm is in beta development, you can guess at what the first columns reduce into causing the last column to round to the proper value when reduced.<br /><br />";
+          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the values ratio.</div><br /><br />";
+          str += "Vector possibly begins with <input type='text' value='"+vt+"' id='dif' /><input type='button' value='use dif' onclick='findVectDif(["+n.a+"])' /></div></div>";
         }
 
         return(str);
+      }
+
+      /***********************************************************************************
+      Run find vect with new differences.
+      ***********************************************************************************/
+
+      function findVectDif(parts)
+      {
+        var dif = document.getElementById("dif").value.split(","); for(var i = 0;i<dif.length;i++){ dif[i] = parseInt(dif[i],10); if(isNaN(dif[i])){ alert("Bad vector input!"); return; } }
+
+        if(dif.length == 0){ alert("No differences given to use."); }
+
+        var n = new Number(NaN); for(var i=0;i<parts.length;n=n.split(parts[i++])); document.getElementById("result").innerHTML = findVect(n,dif);
       }
 
       /***********************************************************************************
@@ -504,11 +524,11 @@
       Analyze users input.
       ***********************************************************************************/
       
-      var isVect = false; function getInput()
+      function getInput()
       {
         n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
       
-        var bv = [], out = document.getElementById("out");
+        var bv = [], out = document.getElementById("out"), isVect = false;
 
         if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = Math.abs(parseInt(n[i1],10)); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
@@ -587,7 +607,7 @@
 
         out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
 
-        out.innerHTML += findVect(n,bv);
+        out.innerHTML += findVect(n,isVect ? bv : [1,0,0]);
       }
     </script>
   </head>
