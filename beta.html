@@ -441,7 +441,7 @@
           
           if(match){ matches++; if(mPos < 0 && matches >= 1){ mPos = i; } }else{ matches = -1; }
   
-          str += "<tr"+(match ? " style='background-color:green;'" : " style='background-color:red;'")+"><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + oVect + "</td><td><input type='button' value='show steps' onclick='showFindVect(this,[" + n.a.slice(0,i+1) + "],[" + vt + "],[" + fr.y + "," + -fr.x + "])' /></td></tr>";
+          str += "<tr"+(match ? " style='background-color:green;'" : " style='background-color:red;'")+"><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.y + "," + fr.x + "</td><td>" + oVect + "</td><td><input type='button' value='show steps' onclick='showFindVect(this,[" + n.a.slice(0,i+1) + "],[" + vt + "],[" + fr.y + "," + -fr.x + "],"+match+")' /></td></tr>";
         }
 
         str += "</table><br />";
@@ -485,15 +485,23 @@
       Change the vectors dimensions. Show work version.
       ***********************************************************************************/
 
-      function showFindVect(e,parts,dif,v)
+      function showFindVect(e,parts,dif,v, m)
       {
-        var r1 = document.createElement("tr"), r2 = document.createElement("td"), r = 0; r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
+        var r1 = document.createElement("tr"), r2 = document.createElement("td"); r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
 
         e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
-        
-        e.innerHTML = "The vector " + v + " computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
 
-        e.innerHTML += "The vector " + v + " should sum to the value " + -v[1] + "&div;" + v[0] + " = " + (r=(-v[1] / v[0])) + " <br /><br />";
+        var r = -v[1] / v[0], fr = -v[1] + "&div;" + v[0] + "";
+
+        e.innerHTML = "The converging fraction " + fr + " is the following added parts " + parts + ".<br /><br />";
+
+        e.innerHTML += "An vector consisting of 2 numbers in ratio is to the root of one in which 1," + -v[1] + " is value " + -v[1] + ".<br /><br />";
+
+        e.innerHTML += "Changing the first value of the vector 1 to " + v[0] + " is the same as dividing " + -v[1] + " by " + v[0] + " when summed.<br /><br />";
+        
+        e.innerHTML += "The vector " + v + " computes to the following receptacle parts " + parts + " when summed. The vector terminates to all zeros.<br /><br />";
+
+        e.innerHTML += "The vector " + v + " should sum to the value " + fr + " = " + r + ".<br /><br />";
 
         e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply both sides by them selves to how many columns we want.<br /><br />";
 
@@ -505,22 +513,32 @@
 
         e.innerHTML += "This makes our new vector columns " + s1 + z + "," + s2 + "<br /><br />";
 
-        e.innerHTML += "This makes our vector " + v + " which also computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
+        e.innerHTML += "This makes our vector " + v + " which also computes to the following receptacle parts " + parts + " when summed.<br /><br />";
 
         e.innerHTML += "The final step is to reduce the vector columns as small as possible with the last column as close to a whole value as possible.<br /><br />";
 
-        e.innerHTML += "Warning there are known issues with this sections output and may partially match the algorithm.<br /><br />";
+        e.innerHTML += "<hr />We do not know what the fastest reduction algorithm is to change the vector back from it's expanded forum to smallest ratio per column yet.<hr />";
 
-        var str = ""; for(var i = 0;i < dif.length;i++) { str += v[i+1] + "+" + r + "&times" + "(" + v[i] + " - " + dif[i] + ")"; v[i+1] += r * (v[i] - dif[i]); str += " = " + v[i+1] + "<br />"; v[i] = dif[i]; }
+        if(isVect) { e.innerHTML += "Our vector begins with parts <p class='b'>" + dif + "</p>, which will be used to show how to reduce the vector.<br /><br />"; }
+        else { e.innerHTML += "We don't know what our vector begins with so we will be using <p class='b'>" + dif + "</p>, to reduce the vector as an example.<br /><br />"; }
 
-        e.innerHTML += str + "<br />This gives us the following vector " + v + " which computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />"
+        e.innerHTML += "Cur vector = <p class='g'>" + v + "</p>.<br />";
+
+        var str = ""; for(var i = 0;i < dif.length;i++)
+        {
+          str += (v[i+1] != 0 ? "<p class='g'>" + v[i+1] + "</p>+" : "") + "(" + fr + ")&times" + "(" + (i == 0 ? "<p class='g'>" : "<p class='r'>") + v[i] + "</p> - <p class='b'>" + dif[i] + "</p>)"; v[i+1] += r * (v[i] - dif[i]); str += " = <p class='r'>" + v[i+1] + "</p><br />"; v[i] = dif[i];
+        }
+
+        e.innerHTML += str + "<br />This gives us the following vector <p class='b'>" + dif + "</p>,<p class='r'>" + v[v.length-1] + "</p> which computes to the following receptacle parts " + parts + " when summed.<br /><br />";
+        
         e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
           
         v.push(end = Math.round(v.pop())); var ve = new vect(v); ve = ve.split(parts.length+1);
           
-        e.innerHTML += "This makes the vector " + v + " which computes to parts " + ve.val.a + "<br /><br />";
+        e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + v[v.length-1] + "</p> which computes to parts " + ve.val.a + ".<br /><br />";
 
-        e.innerHTML += "For now we know the vector begins with " + dif + ", and by applying these sums lines up the last column to " + v[v.length-1] + " automatically.<br /><br />";
+        if(m){ e.innerHTML += "The vector successfully computes the next part to our number ratio. This means we have enough converging parts and that we did not round off too much from the last value in the vector after reducing it.<br /><br />"; }
+        else{ e.innerHTML += "This vector does not successfully compute the next part to our number ratio. This means we do not have enough converging parts or that we rounded off too much from the last value in the vector after reducing it.<br /><br />"; }
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
         
@@ -549,11 +567,11 @@
       Analyze users input.
       ***********************************************************************************/
       
-      function getInput()
+      var isVect = false; function getInput()
       {
         n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
       
-        var bv = [], out = document.getElementById("out"), isVect = false;
+        var bv = [], out = document.getElementById("out");
 
         if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = Math.abs(parseInt(n[i1],10)); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
