@@ -282,7 +282,7 @@
       {
         var str = "To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
 
-        str += "The values in the table are colored to show how we multiply the next receptacle part and move the values to the row times the next added part, making Numerator÷Denominator = value per added part.<br /><br />";
+        str += "The values in the table are colored to show how we multiply the next receptacle part and move the values to the next row, making Numerator÷Denominator = value per added part.<br /><br />";
 
         str += "<table border='1'><tr><td>Numerator</td><td>Denominator</td><td>Add part</td><td>Fraction</td></tr>";
 
@@ -331,9 +331,9 @@
       
       function getParts(v,n)
       {
-        var str = "";for(var i = 0, r = v.reValue();i < n;i++)
+        var str = "", t = [];for(var i = 0, r = v.reValue();i < n;i++)
         {
-          str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
+          t = (r + "").split("."); str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p>...<br />";v = v.split();
           r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
           if(v == 0)
           {
@@ -356,9 +356,9 @@
 
       function getNextPart(e,v,parts)
       {
-        for(var i = 0;i < parts.length; v = v.split(), i++); var r = v.reValue();
+        var str = "", t = []; for(var i = 0;i < parts.length; v = v.split(), i++); var r = v.reValue(); t = (r + "").split(".");
 
-        var str = "The value before the decimal point of " + r + " is " + (r & -1) + ", which makes our reciprocal parts " + (v.length != 0 ? v.a + "," : "") + (r&-1) + "...<br />";v = v.split();
+        var str = str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p>...<br />"; v = v.split();
         r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
         if(v == 0)
         {
@@ -456,10 +456,10 @@
         else
         {
           str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
-          str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions and reduce the vector.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions, expand and reduce to the vector ratio.<br /><br />";
           str += "We do this by expanding the fraction one column higher than what we want to reduce the first three columns to 1,2,-99.<br /><br />";
-          str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector<br /><br />";
-          str += "In theory it is possible to build an reduction algorithm that expand the converging fractions and finds the most reduced values for the columns to compute your number.<br /><br />";
+          str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
+          str += "In theory it is possible to build an reduction algorithm that expand the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
           str += "For the time being while this algorithm is in beta development, you can guess at what the first columns reduce into causing the last column to round to the proper value when reduced.<br /><br />";
           str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the values ratio.</div><br /><br />";
           str += "Vector possibly begins with <input type='text' value='"+vt+"' id='dif' /><input type='button' value='use dif' onclick='findVectDif(["+n.a+"])' /></div></div>";
@@ -509,16 +509,16 @@
 
         e.innerHTML += "The final step is to reduce the vector columns as small as possible with the last column as close to a whole value as possible.<br /><br />";
 
+        e.innerHTML += "Warning there are known issues with this sections output and may partially match the algorithm.<br /><br />";
+
         var str = ""; for(var i = 0;i < dif.length;i++) { str += v[i+1] + "+" + r + "&times" + "(" + v[i] + " - " + dif[i] + ")"; v[i+1] += r * (v[i] - dif[i]); str += " = " + v[i+1] + "<br />"; v[i] = dif[i]; }
 
         e.innerHTML += str + "<br />This gives us the following vector " + v + " which computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />"
-          e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
+        e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
           
-          v.push(end = Math.round(v.pop()));
+        v.push(end = Math.round(v.pop())); var ve = new vect(v); ve = ve.split(parts.length+1);
           
-          var ve = new vect(v); ve = ve.split(parts.length+1);
-          
-          e.innerHTML += "This makes the vector " + v + " which computes to parts " + ve.val.a + "<br /><br />";
+        e.innerHTML += "This makes the vector " + v + " which computes to parts " + ve.val.a + "<br /><br />";
 
         e.innerHTML += "For now we know the vector begins with " + dif + ", and by applying these sums lines up the last column to " + v[v.length-1] + " automatically.<br /><br />";
 
