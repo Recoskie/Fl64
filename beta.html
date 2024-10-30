@@ -537,12 +537,12 @@
           
         e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + v[v.length-1] + "</p> which computes to parts " + ve.val.a + ".<br /><br />";
 
-        if(m){ e.innerHTML += "The vector successfully computes the next part to our number ratio. This means we have enough converging parts and that we did not round off too much from the last value in the vector after reducing it.<br /><br />"; }
-        else{ e.innerHTML += "This vector does not successfully compute the next part to our number ratio. This means we do not have enough converging parts or that we rounded off too much from the last value in the vector after reducing it.<br /><br />"; }
+        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />This means we have enough converging parts and that we did not round off too much from the last value in the vector after reducing it.<hr /><br />"; }
+        else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector after reducing it.<hr /><br />"; }
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
         
-        e.innerHTML += "As for what the fastest reduction algorithm is to change the vector back from it's expanded forum to smallest ratio per column is not yet known.";
+        e.innerHTML += "As for what the fastest reduction algorithm is to change the vector back from it's expanded forums to smallest ratio per column is not yet known.";
       }
 
       /***********************************************************************************
@@ -646,9 +646,11 @@
 
         out.innerHTML += addPartsFract(n.a,3) + "<br />";
 
-        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. There is one exception. Numbers that are an ratio of parts grow forever with no end in which we call the added parts to a given number ratio converging fractions.<br /><br />";
+        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
+        
+        out.innerHTML += "Numbers that are an ratio of parts grow forever with no end in which we call the added parts to a given number ratio converging fractions.<br /><br />";
 
-        out.innerHTML += "The converging fractions of an given number ratio are very important for finding irrational number patterns.<br /><br />";
+        out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
 
         out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
 
