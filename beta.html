@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <title>IEEE-754 Float 64 library.</title>
@@ -503,15 +502,15 @@
 
         e.innerHTML += "The vector " + v + " should sum to the value " + fr + " = " + r + ".<br /><br />";
 
-        e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply both sides by them selves to how many columns we want.<br /><br />";
+        e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply the last column by the receptacle fraction " + -v[1] + "&div;" + v[0] + " to how many columns we want.<br /><br />";
 
-        var s1 = v[0] + "", z = "", s2 = v[1] + "", t = v.pop();
+        var z = v[0] + "", s = v[1] + "", t = v.pop();
 
-        for(var i = 1;i < dif.length;i++){ v.push(0); s1 += "&times" + v[0]; z += ",0"; s2 += "&times" + t; }
+        for(var i = 1;i < dif.length;i++){ v.push(0); z += ",0"; s += "&times(" + fr + ")"; t*=r; }
 
-        v[0]**=dif.length; v.push(dif.length % 2 == 0 ? -(t**dif.length) : t**dif.length);
+        v.push(Math.round(t));
 
-        e.innerHTML += "This makes our new vector columns " + s1 + z + "," + s2 + "<br /><br />";
+        e.innerHTML += "This makes our new vector columns " + z + "," + s + "<br /><br />";
 
         e.innerHTML += "This makes our vector " + v + " which also computes to the following receptacle parts " + parts + " when summed.<br /><br />";
 
