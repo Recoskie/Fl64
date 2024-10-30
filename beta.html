@@ -46,6 +46,18 @@
           width: 100%; height: 100vh; max-height: 100vh;
           overflow-y: scroll;
         }
+        .r
+        {
+          background-color: #FF0000; display: inline-block;
+        }
+        .g
+        {
+          background-color: #00FF00; display: inline-block;
+        }
+        .b
+        {
+          background-color: #0000FF; display: inline-block;
+        }
         @media (max-width: 600px) { h1 { font-size: 24px; } }
       -->
     </style>
@@ -224,14 +236,14 @@
 
         str += "</table><br />"; sums = []; for(var i1 = 0;i1 < mat.length;i1++)
         {
-          str += "We multiply row " + String.fromCharCode(0x41+i1) + " = " + mat[i1] + " with our current vector values " + state + " and add them together.<br /><br />";
+          str += "We multiply row " + String.fromCharCode(0x41+i1) + " = <p class='r'>" + mat[i1] + "</p> with our current vector values <p class='g'>" + state + "</p> and add them together.<br /><br />";
 
-          sums[i1] = 0; for(var i2=0;i2<mat[i1].length;i2++) { str += state[i2] + "&times;" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? " + " : ""); sums[i1] += state[i2] * mat[i1][i2];}
+          sums[i1] = 0; for(var i2=0;i2<mat[i1].length;i2++) { str += "<p class='g'>" + state[i2] + "</p>&times;<p class='r'>" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? "</p> + " : "</p>"); sums[i1] += state[i2] * mat[i1][i2];}
 
-          str += " = " + sums[i1] + "<br /><br />";
+          str += " = <p class='b'>" + sums[i1] + "</p><br /><br />";
         }
 
-        return(str + "This makes our new vector " + sums + "</div><br />");
+        return(str + "This makes our new vector <p class='b'>" + sums + "</p></div><br />");
       }
 
       function splitStepShow(sect, state) { sect.parentElement.innerHTML = splitStep(state); }
@@ -242,16 +254,22 @@
 
       function addParts(v,n)
       {
-        var t1 = v.val.a[0], t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>" + t1 + " = " + v.val.a[0] + "<br /><br />", n = Math.min(n || v.val.a.length, v.val.a.length);
+        var t1 = "<p class='g'>" + v.val.a[0] + "</p>", t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>Receptacle Parts = <p class='g'>" + v.val.a + "</p><br /><br />", n = Math.min(n || v.val.a.length, v.val.a.length);
         
-        for(var i = 1;i < n;i++) { t1 = t1 + "+1&div;"; str += t1 + v.val.a[i] + t2 + " = " + v.val.calc(0,i) + "<br />" + (i < (n-1) ? "<br />" : ""); t1 += "(" + v.val.a[i] + ""; t2 += ")"; }
+        str += t1 + " = " + v.val.a[0] + "<br /><br />";
+
+        for(var i = 1;i < n;i++)
+        {
+          t1 = t1 + "+1&div;"; str += t1 + "<p class='g'>" + v.val.a[i] + "</p>" + t2 + " = " + v.val.calc(0,i) + "<br />" + (i < (n-1) ? "<br />" : "");
+          t1 += "(<p class='g'>" + v.val.a[i] + "</p>"; t2 += ")";
+        }
 
         return(str + (i < v.val.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this,"+(n+1)+",["+v.val.a+"]);' /></div>" : "") + "</div>");
       }
 
       function addNextPart(e,n,parts)
       {
-        var t = new Number(NaN).split(t1 = parts[0]), o = "", t2 = ""; for(var i = 1;i < n;i++){ t = t.split(parts[i]); t1 = t1 + "+1&div;"; o = t1 + parts[i] + t2 + " = "; t1 += "(" + parts[i] + ""; t2 += ")"; }
+        var t = new Number(NaN).split(parts[0]), t1 = "<p class='g'>" + parts[0] + "</p>", o = "", t2 = ""; for(var i = 1;i < n;i++){ t = t.split(parts[i]); t1 = t1 + "+1&div;"; o = t1 + "<p class='g'>" + parts[i] + "</p>" + t2 + " = "; t1 += "(<p class='g'>" + parts[i] + "</p>"; t2 += ")"; }
 
         e.parentElement.innerHTML = "<br />" + o + t.calc() + (i < parts.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this,"+(i+1)+",["+parts+"]);' /></div>" : "");
       }
@@ -264,19 +282,19 @@
       {
         var str = "To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
 
-        str += "The values in the table are colored to show how we multiply the parts and move the values to the following line times the next added part, making Numerator÷Denominator = value per added part.<br /><br />";
+        str += "The values in the table are colored to show how we multiply the next receptacle part and move the values to the row times the next added part, making Numerator÷Denominator = value per added part.<br /><br />";
 
         str += "<table border='1'><tr><td>Numerator</td><td>Denominator</td><td>Add part</td><td>Fraction</td></tr>";
 
         n = Math.min(n || parts.length, parts.length); for(var i = 0, fx = 1, tx = 0, fy = 0, ty = 1, c = false;i<n;i++)
         {
-          str += "<tr><td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + tx + "</p>" : tx);
-          str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fx + "</p>&times;" + parts[i] + "";
-          str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
+          str += "<tr><td style='white-space: nowrap;''>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + tx + "</p>" : tx);
+          str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;" + parts[i] + "";
+          str += " = <p class='"+(c ? "g" : "r")+"'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
 
-          str += "<td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + ty + "</p>" : ty);
-          str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fy + "</p>&times;" + parts[i] + "";
-          str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
+          str += "<td style='white-space: nowrap;''>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + ty + "</p>" : ty);
+          str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;" + parts[i] + "";
+          str += " = <p class='"+(c ? "g" : "r")+"'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
   
           str += "<td>" + parts[i] + "</td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
 
@@ -292,13 +310,13 @@
         
         e = e.parentElement.parentElement; if( state[4] < (parts.length-1) ) { btn = e.parentElement.appendChild(document.createElement("tr")); }
 
-        var str = "<tr><td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + tx + "</p>" : tx);
-        str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fx + "</p>&times;" + parts[i] + "";
-        str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
+        var str = "<tr><td style='white-space: nowrap;'>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + tx + "</p>" : tx);
+        str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;" + parts[i] + "";
+        str += " = <p class='"+(c ? "g" : "r")+"'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
 
-        str += "<td>" + (i > 0 ? "<p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + ty + "</p>" : ty);
-        str += " + <p style='display:inline-block;background-color:"+(c ? "#FF0000" : "#00FF00")+";'>" + fy + "</p>&times;" + parts[i] + "";
-        str += " = <p style='display:inline-block;background-color:"+(c ? "#00FF00" : "#FF0000")+";'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
+        str += "<td style='white-space: nowrap;'>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + ty + "</p>" : ty);
+        str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;" + parts[i] + "";
+        str += " = <p class='"+(c ? "g" : "r")+"'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
   
         str += "<td>" + parts[i] + "</td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
 
@@ -467,35 +485,42 @@
       Change the vectors dimensions. Show work version.
       ***********************************************************************************/
 
-      function showFindVect(e,parts,dif,vect)
+      function showFindVect(e,parts,dif,v)
       {
-        var r1 = document.createElement("tr"), r2 = document.createElement("td"), v = 0; r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
+        var r1 = document.createElement("tr"), r2 = document.createElement("td"), r = 0; r2.setAttribute("colspan","4"); r2.style = "word-wrap:break-word;overflow-wrap:break-word;"; r1.appendChild(r2);
 
         e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
         
-        e.innerHTML = "The vector " + vect + " computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
+        e.innerHTML = "The vector " + v + " computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
 
-        e.innerHTML += "The vector " + vect + " should sum to the value " + -vect[1] + "&div;" + vect[0] + " = " + (v=(-vect[1] / vect[0])) + " <br /><br />";
+        e.innerHTML += "The vector " + v + " should sum to the value " + -v[1] + "&div;" + v[0] + " = " + (r=(-v[1] / v[0])) + " <br /><br />";
 
         e.innerHTML += "To expand this vector ratio to " + dif.length + " columns, we multiply both sides by them selves to how many columns we want.<br /><br />";
 
-        var s1 = vect[0] + "", z = "", s2 = vect[1] + "", t = vect.pop();
+        var s1 = v[0] + "", z = "", s2 = v[1] + "", t = v.pop();
 
-        for(var i = 1;i < dif.length;i++){ vect.push(0); s1 += "&times" + vect[0]; z += ",0"; s2 += "&times" + t; }
+        for(var i = 1;i < dif.length;i++){ v.push(0); s1 += "&times" + v[0]; z += ",0"; s2 += "&times" + t; }
 
-        vect[0]**=dif.length; vect.push(dif.length % 2 == 0 ? -(t**dif.length) : t**dif.length);
+        v[0]**=dif.length; v.push(dif.length % 2 == 0 ? -(t**dif.length) : t**dif.length);
 
         e.innerHTML += "This makes our new vector columns " + s1 + z + "," + s2 + "<br /><br />";
 
-        e.innerHTML += "This makes our vector " + vect + " which also computes to the same value and terminates to all zero.<br /><br />";
+        e.innerHTML += "This makes our vector " + v + " which also computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />";
 
-        e.innerHTML += "The final step is to change the vector columns to reduce the vector.<br /><br />";
+        e.innerHTML += "The final step is to reduce the vector columns as small as possible with the last column as close to a whole value as possible.<br /><br />";
 
-        var str = ""; for(var i = 0;i < dif.length;i++) { str += vect[i+1] + "+" + v + "&times" + "(" + vect[i] + " - " + dif[i] + ")"; vect[i+1] += v * (vect[i] - dif[i]); str += " = " + vect[i+1] + "<br />"; vect[i] = dif[i]; }
+        var str = ""; for(var i = 0;i < dif.length;i++) { str += v[i+1] + "+" + r + "&times" + "(" + v[i] + " - " + dif[i] + ")"; v[i+1] += r * (v[i] - dif[i]); str += " = " + v[i+1] + "<br />"; v[i] = dif[i]; }
 
-        e.innerHTML += str + "<br />This gives us the following vector " + vect + " in which we round off the remaining value at the last column.<br /><br />";
+        e.innerHTML += str + "<br />This gives us the following vector " + v + " which computes to the following receptacle parts " + parts + " when summed. It then terminates to all zeros.<br /><br />"
+          e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
+          
+          v.push(end = Math.round(v.pop()));
+          
+          var ve = new vect(v); ve = ve.split(parts.length+1);
+          
+          e.innerHTML += "This makes the vector " + v + " which computes to parts " + ve.val.a + "<br /><br />";
 
-        e.innerHTML += "For now we know the vector begins with " + dif + ", and by applying these sums lines up the last column to " + vect[vect.length-1] + " automatically.<br /><br />";
+        e.innerHTML += "For now we know the vector begins with " + dif + ", and by applying these sums lines up the last column to " + v[v.length-1] + " automatically.<br /><br />";
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
         
