@@ -494,27 +494,17 @@
 
         e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
 
-        var r = -x/y, fr = "<p class='gr'>" + -(tx=x) + "</p>&div;<p class='gr'>" + (ty=y) + "</p>";
+        var r = -x/y, fr = "<p class='gr'>" + -x + "</p>&div;<p class='gr'>" + y + "</p>";
 
         e.innerHTML = "The converging fraction " + fr + " is the added parts " + parts + ".<br />";
 
         e.innerHTML += "To expand " + fr + " into an vector ratio that begins with <p class='b'>" + dif + "</p> columns, we multiply the fraction as follows.<br /><br />";
         
-        x=-x;
-        
-        var s = "", str = ""; for(var i = 0;i < dif.length;i++)
+        x=-x; var s = "", str = "", tx = 0; ty = 1; for(var i = 0;i < dif.length;i++)
         {
-          if(i < 1)
-          {
-            s="(<p class='r'>0</p>-<p class='gr'>" + x + "</p>&times;<p class='b'>" + dif[i] + "</p>)&div;(<p class='gr'>" + y + "</p>)=";
-          }
-          else
-          {
-            s="(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=";
-            tx=x*(tx-(ty*dif[i])); ty=y*ty;
-          }
+          tx=x*(tx-(ty*dif[i])); ty=y*ty;
             
-          str += s + "<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
+          str += "(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
         }
           
         e.innerHTML += str;
