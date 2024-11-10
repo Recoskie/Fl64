@@ -510,8 +510,8 @@
           }
           else
           {
-            s="(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='gr'>" + y + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=";
-            tx=x*(tx-y*dif[i]); ty=y*ty;
+            s="(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=";
+            tx=x*(tx-(ty*dif[i])); ty=y*ty;
           }
             
           str += s + "<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
@@ -521,7 +521,7 @@
           
         e.innerHTML += "This makes our final column <p class='r'>"+ tx + "&div;" + ty + "=" + (r=tx/ty) + "</p>.<br />";
 
-        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed. This vector does not compute any additional parts as it ends with all zero.<br /><br />";
+        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed. This vector does not compute any additional parts as it sums to zero at the last part.<br /><br />";
         
         e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
           
@@ -529,12 +529,12 @@
           
         e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to parts " + ve.val.a + ".<br /><br />";
 
-        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />This means we have enough converging parts and that we did not round off too much from the last value in the vector after reducing it.<hr /><br />"; }
-        else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector after reducing it.<hr /><br />"; }
+        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
+        else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
         
-        e.innerHTML += "As for what the fastest reduction algorithm is to change converging fractions to the smallest vector ratio per column is not yet known.";
+        e.innerHTML += "As for what the fastest reduction algorithm is to change converging fractions to the smallest vector ratio per column is not yet known. We can build an O(n) time algorithm, but the aim is a fast constant time algorithm.";
       }
 
       /***********************************************************************************
