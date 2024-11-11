@@ -502,9 +502,11 @@
         
         x=-x; var s = "", str = "", tx = 0; ty = 1; for(var i = 0;i < dif.length;i++)
         {
+          str += "(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + x + "</p>-<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=";
+          
           tx=x*(tx-(ty*dif[i])); ty=y*ty;
-            
-          str += "(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
+          
+          str += "<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
         }
           
         e.innerHTML += str;
