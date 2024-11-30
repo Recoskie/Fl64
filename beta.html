@@ -47,19 +47,19 @@
         }
         .r
         {
-          background-color: #FF0000; display: inline-block;
+          background-color: #FF0000; display: inline-block; margin-top: 6; margin-bottom: 6;
         }
         .g
         {
-          background-color: #00FF00; display: inline-block;
+          background-color: #00FF00; display: inline-block; margin-top: 6; margin-bottom: 6;
         }
         .b
         {
-          background-color: #0000FF; display: inline-block;
+          background-color: #0000FF; display: inline-block; margin-top: 6; margin-bottom: 6;
         }
         .gr
         {
-          background-color: #777777; display: inline-block;
+          background-color: #777777; display: inline-block; margin-top: 6; margin-bottom: 6;
         }
         @media (max-width: 600px) { h1 { font-size: 24px; } }
       -->
@@ -494,26 +494,31 @@
 
         e.parentElement.parentElement.parentNode.insertBefore(r1, e.parentElement.parentElement.nextSibling); e.parentElement.innerHTML = "Expanded"; e = r2;
 
-        var r = -x/y, fr = "<p class='gr'>" + -x + "</p>&div;<p class='gr'>" + y + "</p>";
+        var col = 1, pr = dif.length, fr = (fx="<p class='g'>" + -x + "</p>") + "&div;" + (fy="<p class='r'>" + y + "</p>");
 
         e.innerHTML = "The converging fraction " + fr + " is the added parts " + parts + ".<br />";
 
-        e.innerHTML += "To expand " + fr + " into an vector ratio that begins with <p class='b'>" + dif + "</p> columns, we begin with<br /><p class='r'>0</p>&div;<p class='r'>1</p>=0<br />Then multiply our fraction " + fr + " with <p class='b'>" + dif + "</p> as follows.<br /><br />";
+        e.innerHTML += "To expand " + fr + " into an vector ratio that begins with <p class='b'>" + dif + "</p> columns, we multiply the converging fraction to " + pr + " places as follows.<br />";
         
-        x=-x; var s = "", str = "", tx = 0; ty = 1; for(var i = 0;i < dif.length;i++)
+        x=-x; var eq = [], t = [], str = "", col = 1, r = 0; for(var i1 = 0, i2 = pr;i1 <= pr;i1++,i2--)
         {
-          str += "(<p class='gr'>" + x + "</p>&times;(<p class='r'>" + tx + "</p>-<p class='r'>" + ty + "</p>&times;<p class='b'>" + dif[i] + "</p>))&div;(<p class='gr'>" + y + "</p>&times;<p class='r'>" + ty + "</p>)=";
+          for(var i = 0; i < i2;t.push(fx), col *= x, i++);
+          for(var i = 0; i < i1;t.push(fy), col *= y, i++);
+            
+          str += t.join("&times;") + " = <p class='gr'>" + col + "</p><br />"; 
+            
+          if(i1 < pr){ r += dif[i1] * col; eq.push("<p class='gr'>" + col + "</p>&times;<p class='b'>" + dif[i1] + "</p>"); col = 1; }
           
-          tx=x*(tx-(ty*dif[i])); ty=y*ty;
-          
-          str += "<p class='r'>" + tx + "</p>&div;<p class='r'>" + ty + "</p><br />";
+          t = [];
         }
           
-        e.innerHTML += str;
-          
-        e.innerHTML += "This makes our final column <p class='r'>"+ tx + "&div;" + ty + "=" + (r=tx/ty) + "</p>.<br />";
+        r = -r; e.innerHTML += str + "<div class='r'>(-" + eq.join("-") + ")</div>&div;<p class='gr'>" + col + "</p> = <p class='r'>" + r + "</p>&div;<p class='gr'>" + col + "</p><br />";
+        
+        e.innerHTML += "This makes our final column <p class='r'>"+ r + "&div;" + col + "=" + (r=r/col) + "</p>.<br />";
 
-        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed. This vector does not compute any additional parts as it sums to zero at the last part.<br /><br />";
+        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed.<br />";
+          
+        e.innerHTML += "The vector does not compute any additional parts as it sums to all zero.<br /><br />";
         
         e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
           
