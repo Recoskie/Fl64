@@ -195,7 +195,7 @@
 
           str += "Vect = " + r + "<br />";
 
-          if(a == 1000) { str = ""; } if(vect[vect.length-1] == 0 || a == 1000 || (a == 0 && curParts.length > 1)) { str += "<br />Vector zero terminated."; }
+          if(a == 1000) { str = ""; } if(vect[vect.length-1] == 0 || a == 1000 || (a == 0 && curParts.length > 1)) { str += "<br />Vector zero terminated."; showWork = -1; }
 
           else
           {
@@ -502,14 +502,11 @@
         
         x=-x; var eq = [], t = [], str = "", col = 1, r = 0; for(var i1 = 0, i2 = pr;i1 <= pr;i1++,i2--)
         {
-          for(var i = 0; i < i2;t.push(fx), col *= x, i++);
-          for(var i = 0; i < i1;t.push(fy), col *= y, i++);
+          for(var i = 0; i < i2;t.push(fx), col *= x, i++); for(var i = 0; i < i1;t.push(fy), col *= y, i++);
             
-          str += t.join("&times;") + " = <p class='gr'>" + col + "</p><br />"; 
+          str += t.join("&times;") + " = <p class='gr'>" + col + "</p><br />"; t = [];
             
           if(i1 < pr){ r += dif[i1] * col; eq.push("<p class='gr'>" + col + "</p>&times;<p class='b'>" + dif[i1] + "</p>"); col = 1; }
-          
-          t = [];
         }
           
         r = -r; e.innerHTML += str + "<div class='r'>(-" + eq.join("-") + ")</div>&div;<p class='gr'>" + col + "</p> = <p class='r'>" + r + "</p>&div;<p class='gr'>" + col + "</p><br />";
@@ -524,7 +521,7 @@
           
         dif.push(r=Math.round(r)); var ve = new vect(dif); ve = ve.split(parts.length+1); dif.pop();
           
-        e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to parts " + ve.val.a + ".<br /><br />";
+        e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to parts " + ve.val.a + "...<br /><br />";
 
         if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
         else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
@@ -640,10 +637,17 @@
         out.innerHTML += "Numbers that are an ratio of parts grow forever with no end in which we call the added parts to a given number ratio converging fractions.<br /><br />";
 
         out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
+        
+        if(v.v[0] != 0)
+        {
+          out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
 
-        out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
-
-        out.innerHTML += findVect(n,isVect ? bv : [1,0,0]);
+          out.innerHTML += findVect(n,isVect ? bv : [1,0,0]);
+        }
+        else
+        {
+          out.innerHTML += "The vector you combination you used terminates and can be expressed as a whole number or fraction. It is not an ratio.";
+        }
       }
     </script>
   </head>
