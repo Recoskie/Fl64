@@ -451,20 +451,20 @@
 
         if(mPos > 0)
         {
-          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see the vector ratio repeats its self once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
           str += "We only need " + n.a.slice(0,mPos+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
           str += "The smallest fraction or value we can use to compute the value " + n.r[0] + " back into its ratio is " + n.calcF(0,mPos+1).toString() + " = " + n.calc(0,mPos+1) + "<br /><br />";
-          str += "Any smaller or fewer parts we would not be able to find this numbers ratio as we need the  next added part to come out to the previous vector at least once.</div>";
+          str += "Any smaller or fewer parts we would not be able to find the ratio of this number as we need the next added part to come out to the previous vector at least once.</div>";
         }
         else
         {
           str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
-          str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions, expand and reduce to the vector ratio.<br /><br />";
-          str += "We do this by expanding the fraction one column higher than what we want to reduce the first three columns to 1,2,-99.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions and expand and reduce the vector ratio.<br /><br />";
+          str += "We do this by expanding the fraction one column higher than we want to reduce the first three columns to 1,2,-99.<br /><br />";
           str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
-          str += "In theory it is possible to build an reduction algorithm that expand the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
-          str += "For the time being while this algorithm is in beta development, you can guess at what the first columns reduce into causing the last column to round to the proper value when reduced.<br /><br />";
-          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the values ratio.</div><br /><br />";
+          str += "In theory, it is possible to build a reduction algorithm that expands the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
+          str += "For the time being, while this algorithm is in beta development, you can guess what the first columns reduce into, causing the last column to round to the proper value when reduced.<br /><br />";
+          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div><br /><br />";
           str += "Vector possibly begins with <input type='text' value='"+vt+"' id='dif' /><input type='button' value='use dif' onclick='findVectDif(["+n.a+"])' /></div></div>";
         }
 
@@ -640,7 +640,7 @@
         
         if(!isVect || v.v[0] != 0)
         {
-          out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns till we end with the same vector twice per added part giving us our ratio for our irrational number.<br /><br />";
+          out.innerHTML += "The reciprocal fraction of the parts can be expanded to vector columns until we end with the same vector twice, which also computes the next part for our irrational number.<br /><br />";
 
           out.innerHTML += findVect(n,isVect ? bv : [1,0,0]);
         }
@@ -660,15 +660,15 @@
       <div id="out">
         <h1>Introduction</h1>
 
-        The new vector ratio data type is an new addition to FL64.<br /><br />
+        The new vector ratio data type is a new addition to FL64.<br /><br />
 
-        This tool helps you solve numbers that grow and never repeat, such as 0.123456, which we know will only get larger and never repeat.<br /><br />
+        This tool helps you solve complex numbers that sequentially grow and never repeat, such as 0.123456, which we know will only get larger as the next digit extends to a new digit, causing the chance of a repeat to never happen and for the value to be impossible to be expressed as a finite value or fraction.<br /><br />
 
-        Some values have no visible pattern in their digits, but they grow the same way such as the number PI ratio 3.1415926535.<br /><br />
+        Some values have no visible pattern in their digits, but they grow the same way, progressing with a slight change that can not be found by looking at the digits down the decimal point, such as the ratio 3.1415926535, which we call PI.<br /><br />
 
-        We call these complex number patterns irrational numbers. Unravelling complex values takes a lot of work.<br /><br />
+        We call these complex number patterns irrational numbers. Unravelling complex values takes a lot of work when the ratio down the decimal point is invisible.<br /><br />
 
-        Originally we would look for equations that match the number ratio we are looking at through a lot of calculation and proof work.<br />
+        Originally, we would look for equations that match the number ratio we are looking at through a lot of calculation and proof work, such as comparing a circle with triangles to find the expansion ratio for the outside distance of a circle called PI.<br />
 
         <h1>Using this tool</h1>
 
@@ -686,7 +686,7 @@
 
         This tool will show you the steps to breaking the number into parts.<br /><br />
 
-        Once the value is broken into parts, it will show how to add the parts to a vector ratio.<br /><br />
+        Once the value is broken into parts, it will show how to add the parts to a vector ratio per column, and possibly solve your numbers ratio.<br /><br />
 
         <h1>Vector ratios</h1>
 
