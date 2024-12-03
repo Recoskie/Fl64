@@ -434,11 +434,11 @@
         var vt = bv ? bv : [1,0,0], match = true, matches = -1, mPos = -1, temp = null, oVect = [];
         var str = "<div id='result'><table border='1'><tr><td>Added parts</td><td>Fraction</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
 
-        var st = 0; for(var i = 0;i < (n.length-1); i++)
+        for(var i = 0;i < (n.length-1); i++)
         {
           var fr = n.calcF(0,i); var dv = new vect(fr.y,fr.x); for(var i2 = 1; i2 < vt.length; dv = dv.expand(), i2++);
 
-          dv = dv.dif(vt); dv.v.push(Math.round(st=dv.v.pop())); for(var i2 = 0;i2 < dv.v.length;oVect[i2] = dv.v[i2++]);
+          dv = dv.dif(vt); dv.v.push(Math.round(dv.v.pop())); for(var i2 = 0;i2 < dv.v.length;oVect[i2] = dv.v[i2++]);
           
           dv = dv.split(i+2); match = true; for(var i2 = 0; i2 < (i+2) && match; i2++) { match = n.a[i2] == dv.val.a[i2]; }
           
@@ -449,7 +449,7 @@
 
         str += "</table><br />";
 
-        if(false /*mPos > 0*/)
+        if(mPos > 0)
         {
           str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
           str += "We only need " + n.a.slice(0,mPos+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
@@ -458,14 +458,13 @@
         }
         else
         {
-          /*str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
+          str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
           str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions and expand and reduce the vector ratio.<br /><br />";
           str += "We do this by expanding the fraction one column higher than we want to reduce the first three columns to 1,2,-99.<br /><br />";
           str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
           str += "In theory, it is possible to build a reduction algorithm that expands the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
           str += "For the time being, while this algorithm is in beta development, you can guess what the first columns reduce into, causing the last column to round to the proper value when reduced.<br /><br />";
-          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div><br /><br />";*/
-          str += "re = " + st + "<br /><br />";
+          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div><br /><br />";
           str += "Vector possibly begins with <input type='text' value='"+vt+"' id='dif' /><input type='button' value='use dif' onclick='findVectDif(["+n.a+"])' /></div></div>";
         }
 
