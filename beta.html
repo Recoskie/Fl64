@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="FL64">
     <link rel="apple-touch-icon" href="/docs/bg/icon.png">
-    <meta property="og:image" content="https://opengraph.githubassets.com" />
+    <meta property="og:image" content="https://repository-images.githubusercontent.com/81086272/73a9ee80-65f9-11ea-9cd9-3c14b7503cff" />
     <meta property="og:url" content="https://recoskie.github.io/Fl64/beta.html" />
     <meta property="og:title" content="FL64: Vector number ratios (Beta tool)" />
     <meta property="og:description" content="FL64 is a math tool for analyzing or creating numbers. FL64 is also a library of functions that can be called from other webpages for use in your own projects." />
@@ -434,11 +434,11 @@
         var vt = bv ? bv : [1,0,0], match = true, matches = -1, mPos = -1, temp = null, oVect = [];
         var str = "<div id='result'><table border='1'><tr><td>Added parts</td><td>Fraction</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
 
-        for(var i = 0;i < (n.length-1); i++)
+        var st = 0; for(var i = 0;i < (n.length-1); i++)
         {
           var fr = n.calcF(0,i); var dv = new vect(fr.y,fr.x); for(var i2 = 1; i2 < vt.length; dv = dv.expand(), i2++);
 
-          dv = dv.dif(vt); dv.v.push(Math.round(dv.v.pop())); for(var i2 = 0;i2 < dv.v.length;oVect[i2] = dv.v[i2++]);
+          dv = dv.dif(vt); dv.v.push(Math.round(st=dv.v.pop())); for(var i2 = 0;i2 < dv.v.length;oVect[i2] = dv.v[i2++]);
           
           dv = dv.split(i+2); match = true; for(var i2 = 0; i2 < (i+2) && match; i2++) { match = n.a[i2] == dv.val.a[i2]; }
           
@@ -454,7 +454,7 @@
           str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
           str += "We only need " + n.a.slice(0,mPos+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
           str += "The smallest fraction or value we can use to compute the value " + n.r[0] + " back into its ratio is " + n.calcF(0,mPos+1).toString() + " = " + n.calc(0,mPos+1) + "<br /><br />";
-          str += "Any smaller or fewer parts we would not be able to find the ratio of this number as we need the next added part to come out to the previous vector at least once.</div>";
+          str += "Any smaller or fewer parts we would not be able to find the ratio of this number as we need the next added part to come out to the previous vector at least once.";
         }
         else
         {
@@ -464,22 +464,87 @@
           str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
           str += "In theory, it is possible to build a reduction algorithm that expands the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
           str += "For the time being, while this algorithm is in beta development, you can guess what the first columns reduce into, causing the last column to round to the proper value when reduced.<br /><br />";
-          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div><br /><br />";
-          str += "Vector possibly begins with <input type='text' value='"+vt+"' id='dif' /><input type='button' value='use dif' onclick='findVectDif(["+n.a+"])' /></div></div>";
+          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div>";
         }
+          
+        str += "</div><br />You can use the tool below to try different vector combination alignments to see how they align with your number.<br /><br />All columns can be adjusted except the last column.";
+        str += "The closer you are to the alignment of your number, the closer the last column is to a whole number.<br /><br />You can add or remove vector columns using the dim(+1/-1) buttons.";
+        str += "The align buttons align a single column to get the last column as close to a whole value as possible.<br /><br />At the moment, there is no known method to align all columns at the same time. ";
+        str += "Use the \"use alignment\" button to see how it aligns with your value.<br /><br />";
+        
+        str += "<div style='display:table;'><div id='dims'>"; for(var i = 0; i < vt.length; i++)
+        {
+          str += "<input type='text' value='" + vt[i] + "' onblur='adjVectDif("+fr.x+","+fr.y+");' onkeypress='if(event.keyCode==13){adjVectDif("+fr.x+","+fr.y+");}' /><input type='button' value='align' onclick='algInt("+fr.x+","+fr.y+","+i+");' /><br />";
+        }
+
+        str += "</div><input type='text' value='"+st+"' id='re' readonly/><input type='button' value='align' disabled/><br />";
+        str += "<input type='button' value='dim(-1)' style='width:50%;' onclick='adjDim("+fr.x+","+fr.y+",true);' /><input type='button' value='dim(+1)' style='width:50%;' onclick='adjDim("+fr.x+","+fr.y+",false);' /></td>";
+        str += "<input type='button' style='display:inline-block;width:100%;' value='use alignment' onclick='findVectDif(["+n.a+"])' /></div><br /><hr />";
 
         return(str);
       }
-
+    
       /***********************************************************************************
-      Run find vect with new differences.
+      Interactive vector alignment tool.
       ***********************************************************************************/
+
+      function getVT()
+      {
+        var v=document.getElementById("dims").getElementsByTagName("input");
+        
+        for(var i=0,t=0,vt=[];i<v.length;i++){if(v[i].type=="text"){t = parseInt(v[i].value);if(!isFinite(t)||isNaN(t)){t=0;};vt.push(t);}}
+        
+        return(vt);
+      }
+    
+      function adjVectDif(x,y)
+      {
+        var vt = getVT(), dv = new vect(y,x); for(var i = 1; i < vt.length; dv = dv.expand(), i++); dv.dif(vt);
+    
+        document.getElementById("re").value = dv.v.pop();
+      }
+    
+      function adjDim(x,y,inc)
+      {
+        var el = document.getElementById("dims");
+        
+        if(inc){if(el.childElementCount > 3){el.removeChild(el.lastChild);el.removeChild(el.lastChild);el.removeChild(el.lastChild);}}
+        else{ el.innerHTML += "<input type='text' value='0' onblur='adjVectDif("+x+","+y+");' /><input type='button' value='align' onclick='algInt("+x+","+y+","+(el.childElementCount/3)+");' /><br />"; }
+        
+        adjVectDif(x,y);
+      }
+
+      function algInt(x,y,i)
+      {
+        var vt = getVT(), r = [], sum = 0, rSum = 0;
+        
+        //Find alignment factors.
+        
+        for(var i1=0,i2=vt.length;i1<=vt.length;i1++,i2--){r[i2]=(x**i1)*(y**i2);} rSum = r[r.length-1];
+
+        //Calc.
+
+        var t1=0,t2=1,found=false;for(var c=0;c<12&&!found;c++)
+        {
+          t1=t2;sum=0;for(var i1=0;i1<vt.length;i1++){sum+=r[i1]*vt[i1];}
+          t2=sum/rSum;t2-=t2&-1;t2=1/t2;if(!(found=!(t1<t2))){vt[i]+=1;}
+        }
+
+        vt[i]-=1;
+
+        //Update dims.
+
+        var d = document.getElementById("dims"); d.innerHTML = "<div style='display:table;'><div id='dims'>"; for(var i = 0; i < vt.length; i++)
+        {
+          d.innerHTML += "<input type='text' value='" + vt[i] + "' onblur='adjVectDif("+x+","+y+");' onkeypress='if(event.keyCode==13){adjVectDif("+x+","+y+");}' /><input type='button' value='align' onclick='algInt("+x+","+y+","+i+");' /><br />";
+        }
+
+        adjVectDif(x,y);
+      }
 
       function findVectDif(parts)
       {
-        var dif = document.getElementById("dif").value.split(","); for(var i = 0;i<dif.length;i++){ dif[i] = parseInt(dif[i],10); if(isNaN(dif[i])){ alert("Bad vector input!"); return; } }
-
-        if(dif.length == 0){ alert("No differences given to use."); }
+        var dif = getVT(); for(var i = 0;i<dif.length;i++){ dif[i] = parseInt(dif[i],10); if(isNaN(dif[i])){ alert("Bad vector input!"); return; } }
 
         var n = new Number(NaN); for(var i=0;i<parts.length;n=n.split(parts[i++])); document.getElementById("result").innerHTML = findVect(n,dif);
       }
