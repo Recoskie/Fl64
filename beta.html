@@ -520,17 +520,20 @@
         
         //Find alignment factors.
         
-        for(var i1=0,i2=vt.length;i1<=vt.length;i1++,i2--){r[i2]=(x**i1)*(y**i2);} rSum = r[r.length-1];
+        for(var i1=0,i2=vt.length;i1<=vt.length;i1++,i2--){r[i2]=(x**i1)*(y**i2);}rSum=r[r.length-1];
 
         //Calc.
 
-        var t1=0,t2=1,found=false;for(var c=0;c<12&&!found;c++)
+        var rn=0, n=vt[i], t=0, e=2**24, found=false;for(var c=0;c<1000&&!found;c++)
         {
-          t1=t2;sum=0;for(var i1=0;i1<vt.length;i1++){sum+=r[i1]*vt[i1];}
-          t2=sum/rSum;t2-=t2&-1;t2=1/t2;if(!(found=!(t1<t2))){vt[i]+=1;}
+          sum=0;for(var i1=0;i1<vt.length;i1++){sum+=r[i1]*vt[i1];}
+          
+          t=sum/rSum;t-=t&-1;t=1/t;
+
+          if(t>rn){rn=t;n=vt[i];} if(rn>e){found=true;} if(!found){vt[i]+=1;}
         }
 
-        vt[i]-=1;
+        vt[i]=n;
 
         //Update dims.
 
