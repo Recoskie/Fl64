@@ -526,7 +526,7 @@
 
         var rn=0, n=vt[i], t=0, e=2**24, found=false;
         
-        for(var c=0;c<1000&&!found;c++){t=f1+f2*c;t-=t&-1;t=1/t;if(t>rn){rn=t;n=vt[i];}if(!(found=rn>e)){vt[i]+=1;}}
+        for(var c=0;c<1000&&!found;c++){t=f1+f2*c;t-=t&-1;if(t>0.5){t=1-t}t=1/t;if(t>rn){rn=t;n=vt[i];}if(!(found=rn>e)){vt[i]+=1;}}
 
         vt[i]=n;
 
