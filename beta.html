@@ -516,22 +516,17 @@
 
       function algInt(x,y,i)
       {
-        var vt = getVT(), r = [], sum = 0, rSum = 0;
+        var vt = getVT(), r = 0, f1 = 0, f2 = 0;
         
-        //Find alignment factors.
+        //Find alignment factors f1, f2.
         
-        for(var i1=0,i2=vt.length;i1<=vt.length;i1++,i2--){r[i2]=(x**i1)*(y**i2);}rSum=r[r.length-1];
+        for(var i1=0,i2=vt.length,t=0;i1<vt.length;i1++,i2--){t=(y**i1)*(x**i2);if(i==i1){r=t;}f1+=t*vt[i1];}f2=y**vt.length;f1/=f2;f2=r/f2;
 
-        //Calc.
+        //Calc alignment f1+f2*sum=whole.
 
-        var rn=0, n=vt[i], t=0, e=2**24, found=false;for(var c=0;c<1000&&!found;c++)
-        {
-          sum=0;for(var i1=0;i1<vt.length;i1++){sum+=r[i1]*vt[i1];}
-          
-          t=sum/rSum;t-=t&-1;t=1/t;
-
-          if(t>rn){rn=t;n=vt[i];} if(rn>e){found=true;} if(!found){vt[i]+=1;}
-        }
+        var rn=0, n=vt[i], t=0, e=2**24, found=false;
+        
+        for(var c=0;c<1000&&!found;c++){t=f1+f2*c;t-=t&-1;t=1/t;if(t>rn){rn=t;n=vt[i];}if(rn>e){found=true;}if(!found){vt[i]+=1;}}
 
         vt[i]=n;
 
