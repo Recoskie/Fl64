@@ -449,16 +449,16 @@
 
         str += "</table><br />";
 
-        if(mPos > 0)
+        if(mPos > 0 && ((n.length-mPos-1)-matches) < 2)
         {
-          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself at least twice till the end once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
           str += "We only need " + n.a.slice(0,mPos+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
-          str += "The smallest fraction or value we can use to compute the value " + n.r[0] + " back into its ratio is " + n.calcF(0,mPos+1).toString() + " = " + n.calc(0,mPos+1) + "<br /><br />";
+          str += "The smallest fraction or value we can use to compute the value " + n.calc() + " back into its ratio is " + n.calcF(0,mPos+1).toString() + " = " + n.calc(0,mPos+1) + "<br /><br />";
           str += "Any smaller or fewer parts we would not be able to find the ratio of this number as we need the next added part to come out to the previous vector at least once.";
         }
         else
         {
-          str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice meaning it can not be solved.<br /><br />";
+          str += "<div style='background-color:rgba(255,128,128,80);'>The resulting computed vector ratio from added parts does not match at least twice till the end meaning it can not be solved.<br /><br />";
           str += "<div style='background-color:rgba(128,128,128,80);'>An vector of 1,2,-99,180 creates value 1.708792264021897. We can convert the value to converging factions and expand and reduce the vector ratio.<br /><br />";
           str += "We do this by expanding the fraction one column higher than we want to reduce the first three columns to 1,2,-99.<br /><br />";
           str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
@@ -582,11 +582,23 @@
         
         e.innerHTML += "We round off the remaining value at the last column.<br /><br />";
           
-        dif.push(r=Math.round(r)); var ve = new vect(dif); ve = ve.split(parts.length+1); dif.pop();
-          
+        dif.push(r=Math.round(ol=r)); var ve = new vect(dif); ve = ve.split(parts.length+1); dif.pop();
+
+        r = Math.abs(r); ol = Math.abs(ol);
+
+        e.innerHTML += "The original value is " + ol + ", the rounded value is " + r + ".<br />We subtract the original value from our rounded value " + r + "-" + ol + " = " + (ol=Math.abs(r-ol)) + ".<br />";
+
+        ol = 1/ol; e.innerHTML += "The rounded value " + r + " is ";
+
+        if(!isFinite(ol)) { e.innerHTML += "the same meaning no information gained or lost. "; }
+        else if( r < ol ) { e.innerHTML += "smaller than 1&div;" + (1/ol) + "=" +ol + " meaning the rounded value is closer. "; }
+        else { e.innerHTML += "larger than 1&div;" + (1/ol) + "=" +ol + "  meaning it removes more than is gained. "; }
+        
         e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to parts " + ve.val.a + "...<br /><br />";
 
-        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
+        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />" +
+        ((r > ol) ? "Even though we rounded off more information than gained. <br /><br />" : "") +
+        "This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
         else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
