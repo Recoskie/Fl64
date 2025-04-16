@@ -487,8 +487,8 @@
         str += "Last column <p class='r'>"+st+"</p>, rounded value <p class='g'>"+r+"</p><br/>";
         str += "1&div;(<p class='r'>"+st+"</p>-<p class='g'>"+r+"</p>)=<p class='gr'>"+o+"</p><br />";
         if(!isFinite(o)) { str += "Perfect match."; }
-        else if(r < o){ str += "<p class='gr'>"+o+"</p> is larger than the last column of the vector meaning it is a good match."; }
-        else{ str += "<p class='gr'>"+o+"</p> is smaller than the last column of the vector meaning it likely is not a good match."; }
+        else if(r < o){ str += "<p class='gr'>"+o+"</p> is larger than the last column of the vector <p class='g'>"+r+"</p> meaning it is a good match."; }
+        else{ str += "<p class='gr'>"+o+"</p> is smaller than the last column of the vector <p class='g'>"+r+"</p> meaning it likely is not a good match."; }
         str += "</div><hr /><br />";
 
         return(str);
@@ -518,8 +518,8 @@
         var str = "Last column <p class='r'>"+st+"</p>, rounded value <p class='g'>"+r+"</p><br/>";
         str += "1&div;(<p class='r'>"+st+"</p>-<p class='g'>"+r+"</p>)=<p class='gr'>"+o+"</p><br />";
         if(!isFinite(o)) { str += "Perfect match."; }
-        else if(r < o){ str += "<p class='gr'>"+o+"</p> is larger than the last column of the vector meaning it is a good match."; }
-        else{ str += "<p class='gr'>"+o+"</p> is smaller than the last column of the vector meaning it likely is not a good match."; }
+        else if(r < o){ str += "<p class='gr'>"+o+"</p> is larger than the last column of the vector <p class='g'>"+r+"</p> meaning it is a good match."; }
+        else{ str += "<p class='gr'>"+o+"</p> is smaller than the last column of the vector <p class='g'>"+r+"</p> meaning it likely is not a good match."; }
         
         document.getElementById("relV").innerHTML = str;
       }
@@ -603,21 +603,21 @@
         dif.push(r=Math.round(ol=r)); var ve = new vect(dif); ve = ve.split(parts.length+1); dif.pop();
 
         r = Math.abs(r); ol = Math.abs(ol);
+
+        e.innerHTML += "The closer the last column is to a whole number in the vector the better the match.<br /><br />";
+
+        var re=1/Math.abs(r-ol);
+
+        e.innerHTML += "Last column <p class='r'>"+ol+"</p>, rounded value <p class='g'>"+r+"</p><br/>";
+        e.innerHTML += "1&div;(<p class='r'>"+ol+"</p>-<p class='g'>"+r+"</p>)=<p class='gr'>"+re+"</p><br />";
+        if(!isFinite(re)) { e.innerHTML += "Perfect match."; }
+        else if(r < re){ e.innerHTML += "<p class='gr'>"+re+"</p> is larger than the last column of the vector <p class='g'>"+r+"</p> meaning it is a good match."; }
+        else{ e.innerHTML += "<p class='gr'>"+re+"</p> is smaller than the last column of the vector <p class='g'>"+r+"</p> meaning it likely is not a good match."; }
         
-        e.innerHTML += "We round off the remaining value at the last column <p class='r'>" + ol + "</p> making <p class='g'>" + r + "</p>.<br /><br />";
-
-        e.innerHTML += "We subtract the original value from our rounded value <p class='g'>" + r + "</p>-<p class='r'>" + ol + "</p> = <p class='gr'>" + (ol=Math.abs(r-ol)) + "</p>.<br />";
-
-        ol = 1/ol; e.innerHTML += "The rounded value <p class='g'>" + r + "</p> is ";
-
-        if(!isFinite(ol)) { e.innerHTML += "the same meaning no information gained or lost. "; }
-        else if( r < ol ) { e.innerHTML += "smaller than 1&div;<p class='gr'>" + (1/ol) + "</p>=<p class='g'>" + ol + "</p> meaning the rounded value is closer. "; }
-        else { e.innerHTML += "larger than 1&div;<p class='gr'>" + (1/ol) + "</p>=<p class='g'>" + ol + "</p>  meaning it removes more than is gained. "; }
-        
-        e.innerHTML += "This makes the vector <p class='b'>" + dif + "</p>,<p class='g'>" + r + "</p> which computes to parts " + ve.val.a + "...<br /><br />";
+        e.innerHTML += "The vector <p class='b'>" + dif + "</p>,<p class='g'>" + r + "</p> computes to parts " + ve.val.a + "...<br /><br />";
 
         if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />" +
-        ((r > ol) ? "Even though we rounded off more information than gained. <br /><br />" : "") +
+        ((r > re) ? "Even though we rounded off more information than gained. <br /><br />" : "") +
         "This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
         else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
 
