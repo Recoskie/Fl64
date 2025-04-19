@@ -442,16 +442,16 @@
           
           dv = dv.split(i+2); match = true; for(var i2 = 0; i2 < (i+2) && match; i2++) { match = n.a[i2] == dv.val.a[i2]; }
           
-          if(match){ matches++; if(mPos < 0 && matches >= 1){ mPos = i; } }else{ matches = -1; }
+          if(match){ matches++; if(mPos < 0 && matches >= 1){ mPos = i; } }
   
           str += "<tr"+(match ? " style='background-color:green;'" : " style='background-color:red;'")+"><td>" + n.a.slice(0,i+1) + "</td><td>" + fr.x + "&div;" + fr.y + "</td><td>" + oVect + "</td><td><input type='button' value='show steps' onclick='showFindVect(this,[" + n.a.slice(0,i+1) + "],[" + vt + "]," + -fr.x + "," + fr.y + ","+match+")' /></td></tr>";
         }
 
         str += "</table><br />";
 
-        if(mPos > 0 && ((n.length-mPos-1)-matches) < 2)
+        if(mPos > 0 && ((n.length-mPos-1)-matches) < 3)
         {
-          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself at least twice till the end once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
+          str += "<div style='background-color:rgba(128,128,128,80);'>As we can see, the vector ratio repeats itself at least twice till near the end once we have added enough receptacle parts in order to compute the ratio.<br /><br />";
           str += "We only need " + n.a.slice(0,mPos+1) + " parts to find where the vector ratio matches for our value.<br /><br />";
           str += "The smallest fraction or value we can use to compute the value " + n.calc() + " back into its ratio is " + n.calcF(0,mPos+1).toString() + " = " + n.calc(0,mPos+1) + "<br /><br />";
           str += "Any smaller or fewer parts we would not be able to find the ratio of this number as we need the next added part to come out to the previous vector at least once.";
