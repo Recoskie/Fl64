@@ -104,7 +104,7 @@
           
           //Sing value of all values in vector must not match.
 
-          for(var i = 0, c = this.v[0] < 0, ct = false; i < this.v.length && !ct; i++){ ct = ((c ? -this.v[i] : this.v[i]) < 0); } if(!ct){ this.v.push(-this.v.pop()) }
+          for(var i = 0, c = this.v[0] < 0, ct = false; i < this.v.length && !ct; i++){ ct = ((c ? -this.v[i] : this.v[i]) < 0); } if(!ct){ this.v.unshift(-this.v.shift()) }
 
           AI_Mat.adjustSMat(this.v.length-1); this.val = NaN;
 
@@ -698,7 +698,7 @@
 
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
 
-          var v = new vect(n); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
+          var v = new vect(n); for(var i = 0; i < v.v.length-1;bv[i]=v.v[i++]); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
 
           out.innerHTML += "<br />The vector ratio computed to " + parts + " reciprocal parts is the following = " + v.val.a + "<br /><br />";
 
