@@ -544,9 +544,11 @@
 
         //Calc alignment f1+f2*sum=whole.
 
-        var rn=0, n=vt[i], t=0, e=2**24, found=false;
+        var rn=0, n=vt[i], t=0, e=2**24, found=false, inc = 1;
+
+        if(f1 < 0) { f1 = -f1; f2 = -f2; } if(vt[i] < 0) { f2 = -f2; inc = -1; } //Allow signified direction.
         
-        for(var c=0;c<1000&&!found;c++){t=f1+f2*c;t-=t&-1;if(t>0.5){t=1-t}t=1/t;if(t>rn){rn=t;n=vt[i];}if(!(found=rn>e)){vt[i]+=1;}}
+        for(var c=0;c<1000&&!found;c++){t=f1+f2*c;t-=t&-1;if(t>0.5){t=1-t}t=1/t;if(t>rn){rn=t;n=vt[i];}if(!(found=rn>e)){vt[i]+=inc;}}
 
         vt[i]=n;
 
@@ -654,7 +656,7 @@
       
         var bv = [], out = document.getElementById("out");
 
-        if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = Math.abs(parseInt(n[i1],10)); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
+        if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = parseInt(n[i1],10); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
         parts = parseInt(parts, 10); if(isNaN(parts)) { alert("Enter a number value for the number of parts you wish to split the number or calculate the vector to!"); return; }
         
