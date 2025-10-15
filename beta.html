@@ -470,7 +470,7 @@
         str += "</div><br />You can use the tool below to try different vector combination alignments to see how they align with your number.<br /><br />All columns can be adjusted except the last column.";
         str += "The closer you are to the alignment of your number, the closer the last column is to a whole number.<br /><br />You can add or remove vector columns using the dim(+1/-1) buttons.";
         str += "The align buttons align a single column to get the last column as close to a whole value as possible.<br /><br />At the moment, there is no known method to align all columns at the same time. ";
-        str += "Use the \"use alignment\" button to see how it aligns with your value.<br /><br />";
+        str += "Use the \"test alignment\" button to see how it aligns with your value.<br /><br />";
         
         str += "<div style='display:table;'><div id='dims'>"; for(var i = 0; i < vt.length; i++)
         {
@@ -479,7 +479,7 @@
 
         str += "</div><input type='text' value='"+st+"' id='re' readonly/><input type='button' value='align' disabled/><br />";
         str += "<input type='button' value='dim(-1)' style='width:50%;' onclick='adjDim("+fr.x+","+fr.y+",true);' /><input type='button' value='dim(+1)' style='width:50%;' onclick='adjDim("+fr.x+","+fr.y+",false);' /></td>";
-        str += "<input type='button' style='display:inline-block;width:100%;' value='use alignment' onclick='findVectDif(["+n.a+"])' /></div><br /><hr />";
+        str += "<input type='button' style='display:inline-block;width:100%;' value='test alignment' onclick='findVectDif(["+n.a+"])' /></div><br /><hr />";
         str += "<div id='relV'>";
 
         var st = Math.abs(st), r = Math.round(st), o = Math.abs(1/(r-st));
