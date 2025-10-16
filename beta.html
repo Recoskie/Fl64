@@ -755,17 +755,18 @@
         <tr><td><input type="text" value="1,0,0,88" id="iv" onclick="this.select();" /></td><td><input type="text" value="20" id="pt" onclick="this.select();" style="width:100px;" /></td></tr>
       </table>
       <div id="out">
+        
         <h1>Introduction</h1>
 
         The new vector ratio data type is a new addition to FL64.<br /><br />
 
         This tool helps you solve complex numbers that sequentially grow and never repeat, such as 0.123456, which we know will only get larger as the next digit is added by one, extending to a new digit, causing the chance of a repeat never to happen and for the value to be impossible to be expressed as a finite value or by a single divide betwean two numbers (fraction).<br /><br />
 
-                A division produces a fixed number value, and a recurring pattern occurs when we end up with the same remainder while dividing, which repeats; for example, 11 ÷ 8 = 0.727272. The following page provides a detailed explanation of why this happens: <a href="https://recoskie.github.io/Fl64/docs/Examples.html#dpat">Periodic number patterns</a>. To express values that grow per place value, we can do 123 ÷ 100 = 0.123, then say it continues as follows: 1234 ÷ 1000 = 0.1234. The two numbers we divide by would have to both expand on both sides as we move further down the decimal place to add the growing ratio sequentially. Otherwise, a single divide is just a fixed value that terminates or has recurring digits.<br /><br />
+        A division produces a fixed number value, and a recurring pattern occurs when we end up with the same remainder while dividing, which repeats; for example, 11 ÷ 8 = 0.727272. The following page provides a detailed explanation of why this happens: <a href="https://recoskie.github.io/Fl64/docs/Examples.html#dpat" target="_blank">Periodic number patterns</a>. To express values that grow per place value, we do the following: 123 ÷ 100 = 0.123, then say it continues as follows: 1234 ÷ 1000 = 0.1234. The two numbers we divide by expand on both sides as we move further down the decimal place, adding the growing changing sequence that does not repeat or recur. A single divide is just a fixed value that terminates or has recurring digits.<br /><br />
 
-        Some values have no visible pattern in their digits, but they grow the same way, progressing with a slight expanding change that can not be found by looking at the numbers down the decimal point, such as the ratio 3.1415926535, which we call PI.<br /><br />
+        Some values have no visible pattern in their digits, but they grow sequentially the same way, progressing with a slight expanding change that can not be found by looking at the numbers down the decimal point, such as the ratio 3.1415926535, which we call PI.<br /><br />
 
-        We refer to these complex number patterns as irrational numbers. Unravelling complex values takes a lot of work when the expanding ratio down the decimal point is invisible.<br /><br />
+        We refer to these complex number pattern expansions as irrational numbers. Unravelling complex values takes a lot of work when the expanding ratio down the decimal point is invisible.<br /><br />
 
         Originally, we would look for equations that match the number ratio we are looking at through a lot of calculation and proof work, such as comparing a circle with triangles to find the expansion ratio for the outside distance of a circle called PI <br />
 
