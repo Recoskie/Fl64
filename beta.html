@@ -698,7 +698,7 @@
             out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio.";
           }
 
-          out.innerHTML += "<h1>Summing the vector ratio</h1><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' />";
+          out.innerHTML += "<h1>Summing the vector ratio</h1><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' width='100%' />";
 
           var v = new vect(n); for(var i = 0; i < v.v.length-1;bv[i]=v.v[i++]); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
 
@@ -751,7 +751,7 @@
   <body>
     <div class="page" style="overflow: scroll-y;">
       <table border="1" style="width:100%;">
-        <tr><td><center>Input</center></td><td><center>Max parts</center></td><td rowspan="2" style="width:100%;"><input style="width:3em;height:3em;" type="button" value="calc" onclick="getInput();" /></td></tr>
+        <tr><td><center>Input</center></td><td><center>Max parts</center></td><td rowspan="2" style="width:100%;"><input style="width:100%;height:3em;" type="button" value="calc" onclick="getInput();" /></td></tr>
         <tr><td><input type="text" value="1,0,0,88" id="iv" onclick="this.select();" /></td><td><input type="text" value="20" id="pt" onclick="this.select();" style="width:100px;" /></td></tr>
       </table>
       <div id="out">
