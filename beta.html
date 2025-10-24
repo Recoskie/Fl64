@@ -190,7 +190,7 @@
 
             //Else show the first step if firstStep is active.
 
-            else { str += splitStep(vect) + "This operation is repeated till all numbers are negative or positive in the vector.<br /><br />"; firstStep = false; }
+            else { str += splitStep(vect, true) + "This operation is repeated till all numbers are negative or positive in the vector.<br /><br />"; firstStep = false; }
           }
 
           str += "Vect = " + r + "<br />";
@@ -222,11 +222,11 @@
       Show work to sum the next vector combination.
       ***********************************************************************************/
 
-      function splitStep(state)
+      function splitStep(state, firstStep)
       {
         var r = state, mat = [];
 
-        var str = "Vect = " + state + "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To compute the next vector sums, we begin with the following matrix.<br /><br /><table border='1'>";
+        var str = "Vect = " + state + "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To compute the next vector sums, we begin with the following matrix." + (firstStep ? "<br /><br /><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' width='100%' />" : "") + "<br /><br /><table border='1'>";
 
         for(var s=state.length-1,i1=s;i1>=0;i1--)
         {
@@ -698,7 +698,7 @@
             out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio.";
           }
 
-          out.innerHTML += "<h1>Summing the vector ratio</h1><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' width='100%' />";
+          out.innerHTML += "<h1>Summing the vector ratio</h1>";
 
           var v = new vect(n); for(var i = 0; i < v.v.length-1;bv[i]=v.v[i++]); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
 
