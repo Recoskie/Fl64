@@ -226,7 +226,7 @@
       {
         var r = state, mat = [];
 
-        var str = "Vect = " + state + "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To compute the next vector sums, we begin with the following matrix." + (firstStep ? "<br /><br /><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' width='100%' />" : "") + "<br /><br /><table border='1'>";
+        var str = "Vect = " + state + "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To compute the next vector sums, we begin with the following matrix." + (firstStep ? "<br /><br /><img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' style='width:100%;max-width:2139px;' />" : "") + "<br /><br /><table border='1'>";
 
         for(var s=state.length-1,i1=s;i1>=0;i1--)
         {
@@ -292,19 +292,19 @@
         n = Math.min(n || parts.length, parts.length); for(var i = 0, fx = 1, tx = 0, fy = 0, ty = 1, c = false;i<n;i++)
         {
           str += "<tr><td style='white-space: nowrap;''>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + tx + "</p>" : tx);
-          str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;" + parts[i] + "";
+          str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;<p class='b'>" + parts[i] + "</p>";
           str += " = <p class='"+(c ? "g" : "r")+"'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
 
           str += "<td style='white-space: nowrap;''>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + ty + "</p>" : ty);
-          str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;" + parts[i] + "";
+          str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;<p class='b'>" + parts[i] + "</p>";
           str += " = <p class='"+(c ? "g" : "r")+"'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
   
-          str += "<td>" + parts[i] + "</td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
+          str += "<td><p class='b'>" + parts[i] + "</p></td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
 
           if(c) { c = false; } else { c = true; }
         }
 
-        return(str + (n < parts.length ? "<tr><td colspan='4'><input type='button' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+i+","+c+"]);' /></td></tr>" : "") + "</table>");
+        return(str + (n < parts.length ? "<tr><td colspan='4'><input type='button' style='width:100%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+i+","+c+"]);' /></td></tr>" : "") + "</table>");
       }
 
       function addNextPartFract(e,parts,state)
@@ -325,7 +325,7 @@
 
         if(c) { c = false; } else { c = true; }
         
-        e.innerHTML = str; if(btn){ btn.innerHTML = "<tr><td colspan='4'><input type='button' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+(i+1)+","+c+"]);' /></td></tr>"; }
+        e.innerHTML = str; if(btn){ btn.innerHTML = "<tr><td colspan='4'><input type='button' style='width:100%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+(i+1)+","+c+"]);' /></td></tr>"; }
       }
 
       /***********************************************************************************
@@ -361,7 +361,7 @@
       {
         var str = "", t = []; for(var i = 0;i < parts.length; v = v.split(), i++); var r = v.reValue(); t = (r + "").split(".");
 
-        var str = str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p>...<br />"; v = v.split();
+        var str = str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + "</div> is <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />"; v = v.split();
         r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
         if(v == 0)
         {
@@ -463,8 +463,7 @@
           str += "We do this by expanding the fraction one column higher than we want to reduce the first three columns to 1,2,-99.<br /><br />";
           str += "The last value is rounded off making 180 when enough parts are added into a converging fraction as a vector.<br /><br />";
           str += "In theory, it is possible to build a reduction algorithm that expands the converging fractions and finds 1,2,-99 to get the most reduced values for the columns to compute your number.<br /><br />";
-          str += "For the time being, while this algorithm is in beta development, you can guess what the first columns reduce into, causing the last column to round to the proper value when reduced.<br /><br />";
-          str += "In the case of the vector of 1,2,-99,180 creates value 1.708792264021897 you would enter the values 1,2,-99 then hit use dif. The last column should automatically round to 180 and match the ratio of the value.</div>";
+          str += "For the time being, while this algorithm is in beta development, you can guess what the first columns reduce into, causing the last column to round to the proper value when reduced.<input type='button' value='Explain more...' onclick='showInfo(this);' /></div>";
         }
           
         str += "</div><br />You can use the tool below to try different vector combination alignments to see how they align with your number.<br /><br />All columns can be adjusted except the last column.";
@@ -623,9 +622,9 @@
         "This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
         else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
 
-        e.innerHTML += "Currently we know it is possible to compute number ratios back using the layed out methods, and transformations.<br /><br />";
+        e.innerHTML += "Currently we know it is possible to compute number ratios back using the methods, and transformations.<br /><br />";
         
-        e.innerHTML += "As for what the fastest reduction algorithm is to change converging fractions to the smallest vector ratio per column is not yet known. We can build an O(n) time algorithm, but the aim is a fast constant time algorithm.";
+        e.innerHTML += "As for what the fastest reduction algorithm is to change converging fractions to the smallest vector ratio per column is not yet known. We can build an O(n) time algorithm, but the aim is a fast constant time algorithm. <input type='button' value='Explain more...' onclick='showInfo(this);' /> ";
       }
 
       /***********************************************************************************
@@ -731,13 +730,13 @@
 
         out.innerHTML += "Using the above method, if all receptacle parts have a value of 1, we end up with the sum of the Fibonacci sequence, as the two prior numbers are added the same way times the receptacle parts. The Fibonacci sequence forms a perfect spiral and calculates the golden ratio, as well as a golden rectangle.<br /><br />";
 
-        out.innerHTML += "<img src='docs/bg/fig1.jpg' width='100%' /><br /><br />";
+        out.innerHTML += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
 
-        out.innerHTML += "The pentagram also calculates the golden ratio and is also found in Penrose tiling. The golden ratio is the most integrated and centred value, while all other ratios are less irrational and integrated per part.<br /><br />";
+        out.innerHTML += "The pentagram also calculates the golden ratio and is also found in Penrose tiling. The golden ratio is the most integrated and centred value, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
 
         out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
         
-        out.innerHTML += "Numbers that are an ratio of parts grow forever with no end in which we call the added parts to a given number ratio converging fractions.<br /><br />";
+        out.innerHTML += "Numbers that are an ratio of parts grow forever with no end like the golden ratio in which we call the added parts to a given number ratio converging fractions.<br /><br />";
 
         out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
         
@@ -751,6 +750,15 @@
         {
           out.innerHTML += "The vector combination you used terminates and can be expressed as a whole number or fraction.";
         }
+      }
+
+      /***********************************************************************************
+      Additional detailed explanation.
+      ***********************************************************************************/
+
+      function showInfo(e)
+      {
+        e.outerHTML = "<br /><br />We can divide one of the columns and calculate the optimal alignment to a whole number for the last column, but we are uncertain whether there exists a method to align the number of columns per dimension to achieve the best match. As an O(n) time algorithm, we recognize that comparing all columns against all possible values and mapping the one that aligns best is feasible. However, this approach is extremely slow, requiring the examination of millions of combinations, due to its O(n) time complexity. What we seek is not a probabilistic approach, but rather a solution that enables us to divide the quantum of columns, iteratively refining our estimate to compute the optimal whole number alignment for all columns, thereby facilitating the sequencing of all irrational number expansions.";
       }
     </script>
   </head>
@@ -766,7 +774,7 @@
 
         The new vector ratio data type is a new addition to FL64.<br /><br />
 
-        This tool helps you solve complex numbers that sequentially grow and never repeat, such as 0.123456, which we know will only get larger as the next digit is added by one, extending to a new digit, causing the chance of a repeat never to happen and for the value to be impossible to be expressed as a finite value or by a single divide betwean two numbers (fraction).<br /><br />
+        This tool helps you solve complex numbers that sequentially grow and never repeat, such as 0.123456, which we know will only get larger as the next digit is added by one, extending to a new digit, causing the chance of a repeat never to happen and for the value to be impossible to be expressed as a finite value or by a single divide between two numbers (fraction).<br /><br />
 
         A division produces a fixed number value, and a recurring pattern occurs when we end up with the same remainder while dividing, which repeats; for example, 11 ÷ 8 = 0.727272. The following page provides a detailed explanation of why this happens: <a href="https://recoskie.github.io/Fl64/docs/Examples.html#dpat" target="_blank">Periodic number patterns</a>. To express values that grow per place value, we do the following: 123 ÷ 1000 = 0.123, then say it continues as follows: 1234 ÷ 10000 = 0.1234. The two numbers we divide by expand on both sides as we move further down the decimal place, adding the growing changing sequence that does not repeat or recur. A single divide is just a fixed value that terminates or has recurring digits.<br /><br />
 
@@ -816,7 +824,7 @@
 
         A Vector of 1,1,1,1 is the Tribonacci constant.<br /><br />
 
-        A vector of 1,1,1,1,1 is raised to the fourth term and is the quatronacci constant.<br /><br />
+        A vector of 1,1,1,1,1 is raised to the fourth term and is the Quatronacci constant.<br /><br />
 
         This can go as high as you want in higher and higher dimensions.
       </div>
