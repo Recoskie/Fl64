@@ -314,14 +314,14 @@
         e = e.parentElement.parentElement; if( state[4] < (parts.length-1) ) { btn = e.parentElement.appendChild(document.createElement("tr")); }
 
         var str = "<tr><td style='white-space: nowrap;'>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + tx + "</p>" : tx);
-        str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;" + parts[i] + "";
+        str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;<p class='b'>" + parts[i] + "</p>";
         str += " = <p class='"+(c ? "g" : "r")+"'>" + (fx = tx + (tx = fx) * parts[i]) + "</p></td>";
 
         str += "<td style='white-space: nowrap;'>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + ty + "</p>" : ty);
-        str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;" + parts[i] + "";
+        str += " + <p class='"+(c ? "r" : "g")+"'>" + fy + "</p>&times;<p class='b'>" + parts[i] + "</p>";
         str += " = <p class='"+(c ? "g" : "r")+"'>" + (fy = ty + (ty = fy) * parts[i]) + "</p></td>";
   
-        str += "<td>" + parts[i] + "</td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
+        str += "<td><p class='b'>" + parts[i] + "</p></td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
 
         if(c) { c = false; } else { c = true; }
         
