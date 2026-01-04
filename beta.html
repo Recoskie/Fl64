@@ -336,7 +336,7 @@
       {
         var str = "", t = [];for(var i = 0, r = v.reValue();i < n;i++)
         {
-          t = (r + "").split("."); str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p>...<br />";v = v.split();
+          t = (r + "").split("."); str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";v = v.split();
           r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
           if(v == 0)
           {
@@ -693,13 +693,15 @@
           }
           else
           {
-            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed, or could be very different.<br /><br />";
+            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed, or could be very different.<br />";
             out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio.";
           }
 
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
 
           var v = new vect(n); for(var i = 0; i < v.v.length-1;bv[i]=v.v[i++]); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
+
+          out.innerHTML += "<p class='r'>Note we do not include the first vector combination and the last before reverting to the combination before.</p>";
 
           out.innerHTML += "<br />The vector ratio computed to " + parts + " reciprocal parts is the following = " + v.val.a + "<br /><br />";
 
@@ -718,7 +720,7 @@
 
         out.innerHTML += "<h1>Computing number to vector ratio</h1>";
 
-        out.innerHTML += "We get the reciprocal parts of our number " + n + " by taking away the number before the decimal point and dividing into one.<br /><br />";
+        out.innerHTML += "We get the reciprocal parts of our number " + n + " by taking away the number before the decimal point and dividing into one. This is also the reverse of how we added to a number.<br /><br />";
 
         out.innerHTML += getParts(n,2); n = n.splitAll();
 
@@ -732,9 +734,9 @@
 
         out.innerHTML += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
 
-        out.innerHTML += "The pentagram also calculates the golden ratio and is also found in Penrose tiling. The golden ratio is the most integrated and centred value, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
+        out.innerHTML += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
 
-        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
+        out.innerHTML += "Additionally all numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
         
         out.innerHTML += "Numbers that are an ratio of parts grow forever with no end like the golden ratio in which we call the added parts to a given number ratio converging fractions.<br /><br />";
 
