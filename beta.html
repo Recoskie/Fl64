@@ -628,6 +628,21 @@
       }
 
       /***********************************************************************************
+      .
+      ***********************************************************************************/
+
+      function spPat(target,reset)
+      {
+        if(reset){ target.innerHTML = ""; }
+
+        target.innerHTML += "Using the above method, if all receptacle parts have a value of 1, we end up with the sum of the Fibonacci sequence, as the two prior numbers are added the same way times the parts. The Fibonacci sequence forms a perfect spiral and calculates the golden ratio, as well as a golden rectangle.<br /><br />";
+
+        target.innerHTML += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
+
+        target.innerHTML += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
+      }
+
+      /***********************************************************************************
       Convert numbers or fraction to 1D vector.
       ***********************************************************************************/
 
@@ -653,7 +668,7 @@
       {
         n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
       
-        var bv = [], out = document.getElementById("out");
+        var bv = [], out = document.getElementById("out"), isPhi = true;
 
         if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = parseInt(n[i1],10); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
@@ -720,9 +735,11 @@
 
         out.innerHTML += "<h1>Computing number to vector ratio</h1>";
 
-        out.innerHTML += "We get the reciprocal parts of our number " + n + " by taking away the number before the decimal point and dividing into one. This is also the reverse of how we added to a number.<br /><br />";
+        out.innerHTML += "We get the reciprocal parts of our number " + n + " by taking away the number before the decimal point and dividing into one." + (isVect ? "This is also the reverse of how we added to a number." : "") + "<br /><br />";
 
         out.innerHTML += getParts(n,2); n = n.splitAll();
+
+        for(var i = 0, e = Math.min(9,n.length); i < e && isPhi; isPhi = (Math.abs(n.a[i++]) == 1));
 
         out.innerHTML += "<hr />Using these 2 steps we have found the reciprocal parts to our number to be " + n.a + ".<hr /><br />";
 
@@ -730,15 +747,11 @@
 
         out.innerHTML += addPartsFract(n.a,3) + "<br />";
 
-        out.innerHTML += "Using the above method, if all receptacle parts have a value of 1, we end up with the sum of the Fibonacci sequence, as the two prior numbers are added the same way times the receptacle parts. The Fibonacci sequence forms a perfect spiral and calculates the golden ratio, as well as a golden rectangle.<br /><br />";
-
-        out.innerHTML += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
-
-        out.innerHTML += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
+        if(isPhi) { spPat(out,false); } else { out.innerHTML += "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement,true);' /><br /><br /></div>"; }
 
         out.innerHTML += "Additionally all numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
         
-        out.innerHTML += "Numbers that are an ratio of parts grow forever with no end like the golden ratio in which we call the added parts to a given number ratio converging fractions.<br /><br />";
+        out.innerHTML += "Numbers that are an expanding pattern of parts grow forever with no end" + (isPhi ? " like The golden ratio in which we call the added parts to a given number ratio converging fractions" : "") + ".<br /><br />";
 
         out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
         
