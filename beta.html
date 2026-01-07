@@ -57,6 +57,10 @@
         {
           background-color: #0000FF; display: inline-block; margin-top: 6; margin-bottom: 6;
         }
+        .yu
+        {
+          background-color: #DDD618; display: inline-block; margin-top: 6; margin-bottom: 6;
+        }
         .gr
         {
           background-color: #777777; display: inline-block; margin-top: 6; margin-bottom: 6;
@@ -582,24 +586,26 @@
 
         e.innerHTML = "The converging fraction " + fr + " is the added parts " + parts + ".<br />";
 
-        e.innerHTML += "To expand " + fr + " into an vector ratio that begins with <p class='b'>" + dif + "</p> columns, we multiply the converging fraction to " + pr + " places as follows.<br />";
+        e.innerHTML += "To expand " + fr + " into an vector ratio that begins with <p class='b'>" + dif + "</p> columns, we multiply the converging fraction to " + pr + " places as follows.<hr />";
         
         x=-x; var eq = [], t = [], str = "", col = 1, r = 0; for(var i1 = 0, i2 = pr;i1 <= pr;i1++,i2--)
         {
           for(var i = 0; i < i2;t.push(fx), col *= x, i++); for(var i = 0; i < i1;t.push(fy), col *= y, i++);
             
-          str += t.join("&times;") + " = <p class='gr'>" + col + "</p><br />"; t = [];
+          str += t.join("&times;") + " = " + (i2 > 0 ? "<p class='gr'>" : "<p class='yu'>") + col + "</p><br />"; t = [];
             
           if(i1 < pr){ r += dif[i1] * col; eq.push("<p class='gr'>" + col + "</p>&times;<p class='b'>" + dif[i1] + "</p>"); col = 1; }
         }
-          
-        r = -r; e.innerHTML += str + "<div class='r'>(-" + eq.join("-") + ")</div>&div;<p class='gr'>" + col + "</p> = <p class='r'>" + r + "</p>&div;<p class='gr'>" + col + "</p><br />";
-        
-        e.innerHTML += "This makes our final column <p class='r'>"+ r + "&div;" + col + "=" + (r=r/col) + "</p>.<br />";
 
-        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed.<br /><br />";
+        e.innerHTML += str + "<hr />We then plug in our constants from our fraction as follows.<hr />";
           
-        e.innerHTML += "The vector terminates and does not compute any more parts.<br /><br /><hr />";
+        r = -r; e.innerHTML += "<div class='r'>(-" + eq.join("-") + ")</div>&div;<p class='yu'>" + col + "</p> = <p class='r'>" + r + "</p>&div;<p class='yu'>" + col + "</p><br />";
+        
+        e.innerHTML += "This makes our final column <p class='r'>"+ r + "</p>&div;<p class='yu'>" + col + "</p>=<p class='r'>" + (r=r/col) + "</p>.<hr />";
+
+        e.innerHTML += "This makes our vector <p class='b'>" + dif + "</p>,<p class='r'>" + r + "</p> which computes to the following receptacle parts " + parts + " when summed.<br />";
+          
+        e.innerHTML += "The vector terminates and does not compute any more parts.<hr />";
 
         dif.push(r=Math.round(ol=r)); var ve = new vect(dif); ve = ve.split(parts.length+1); dif.pop();
 
@@ -615,12 +621,12 @@
         else if(r < re){ e.innerHTML += "<p class='gr'>"+re+"</p> is larger than the last column of the vector <p class='g'>"+r+"</p> meaning it is a good match."; }
         else{ e.innerHTML += "<p class='gr'>"+re+"</p> is smaller than the last column of the vector <p class='g'>"+r+"</p> meaning it likely is not a good match."; }
         
-        e.innerHTML += "The vector <p class='b'>" + dif + "</p>,<p class='g'>" + r + "</p> computes to parts " + ve.val.a + "...<br /><br />";
+        e.innerHTML += "The vector <p class='b'>" + dif + "</p>,<p class='g'>" + r + "</p> computes to parts " + ve.val.a + "...<hr />";
 
-        if(m){ e.innerHTML += "<hr />The vector successfully computes the next part to our number ratio.<br /><br />" +
+        if(m){ e.innerHTML += "The vector successfully computes the next part to our number ratio.<br /><br />" +
         ((r > re) ? "Even though we rounded off more information than gained. <br /><br />" : "") +
         "This means we have enough converging parts and that we did not round off too much from the last value in the vector.<hr /><br />"; }
-        else{ e.innerHTML += "<hr />This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
+        else{ e.innerHTML += "This vector does not successfully compute the next part to our number ratio.<br /><br />This means we do not have enough converging parts or that we rounded off too much from the last value in the vector.<hr /><br />"; }
 
         e.innerHTML += "Currently we know it is possible to compute number ratios back using the methods, and transformations.<br /><br />";
         
