@@ -3,6 +3,12 @@ Javascript Float64 Library.
 
 FL64 is an library that is designed to push the limits of calculating numbers and pushes the limits of arithmetic. It also extends the double precision floating point number format allowing javascript to.<br />
 
+<hr />
+
+Note that the beta vector ratio tool lets you sum number ratios directly and reverse them: <a href="https://recoskie.github.io/Fl64/beta.html">Link</a>.
+
+<hr />
+
 * Split numbers into parts, or find the pattern to any number.<br />
 
 * Create numbers in any number of dimensions, and ratios, or solve them.<br />
