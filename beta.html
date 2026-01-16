@@ -74,7 +74,7 @@
 
       //Number of parts to compute vectors to, or split number to if possible.
 
-      var parts = 20;
+      var parts = 20, splitWorkData = "";
 
       /***********************************************************************************
       Prototype vector additions to FL64.
@@ -177,7 +177,7 @@
 
         var r = [], curParts = curParts || [], a = -1, n = n || 1; var c = false, ct = true;
 
-        var str = (curParts.length == 0 ? "<div style='background-color: rgb(68, 157, 43);'>" : ""); while(showWork > 0)
+        var str = (curParts.length == 0 ? "<div id='rev' style='background-color: rgb(68, 157, 43);'>" : ""); while(showWork > 0)
         {
           a = -1; r = vect; while(ct && a < 1000)
           {
@@ -211,7 +211,7 @@
 
             vect = vect.reverse(); ct = true;
             
-            if(showWork == 1) { str += "<div>Would you like to see the steps to find the next parts. <input type='button' value='Show next part steps' onclick='splitWorkStep(this,["+vect+"],["+curParts+"])'></div>"+ (curParts.length != 1 ? "" : "</div>"); }
+            if(showWork == 1) { str += "<div><hr /><p class='r'>Note we do not include the first vector combination and the last before reverting to the combination before.</p><br />You should also take note that vector combinations are reversible.<input type='button' value='Show how to reverse vector' onclick='rSplitWork([" + vect + "],[" + curParts + "]);'><hr /><br />Would you like to see the steps to find the next part. <input type='button' value='Show next part steps' onclick='splitWorkStep(this,["+vect+"],["+curParts+"])'></div>"+ (curParts.length != 1 ? "" : "</div>"); }
           }
         
           showWork -= 1;
@@ -221,6 +221,72 @@
       }
 
       function splitWorkStep(e,vect,parts) { e.parentElement.outerHTML = splitWork(vect,1,false,parts); }
+
+      /***********************************************************************************
+      Show the complete work of the split operation in reverse.
+      ***********************************************************************************/
+
+      function bSplitWork() { var o = document.getElementById("rev"); o.innerHTML = splitWorkData; var n = o.children; n[n.length-4].scrollIntoView(); }
+      function rSplitWork(vect,ab)
+      {
+        var o = document.getElementById("rev"); splitWorkData = o.innerHTML;
+
+        var str = "", r = [], a = 0, n = ab.length; while(ab.length > 0)
+        {
+          a = ab.pop(); vect = vect.reverse();
+          
+          str += "Vector parts = " + ab + (ab.length > 0 ? "," : "") + "<div class='b'>" + a + "</div> reverse vector <div class='b'>" + a + "</div> times.<br /><br />";
+          
+          while(a > 0)
+          {
+            str += "Vect = " + vect + "<input type ='button' value = 'Show steps' onclick='rSplitStepShow(this,["+ vect +"])' ></div ><br /><br />";
+
+            a--; r = []; for(var s = vect.length - 1, i1 = s; i1 >= 0; i1--)
+            {
+              r[s - i1] = 0; for(var i2 = s; i2 >= 0; i2--)
+              {
+                r[s - i1] -= (AI_Mat.SMat[i2][i1] || 0) * vect[s - i2]; r[s - i1] = -r[s - i1];
+              }
+
+              if(i1 % 2 == 1){ r[s - i1] = -r[s - i1]; }
+            }
+
+            vect = r;
+          }
+
+          str += ab.length == 0 ? "Original vector = " + vect + "<input type='button' onclick='bSplitWork();' value='Back to summing vector.' />" : "Vect = " + vect + "<br /><br />";
+        }
+
+        o.innerHTML = str; o.scrollIntoView();
+      }
+      function rSplitStepShow(el,state)
+      {
+        var r = state, mat = [];
+
+        var str = "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To reverse the vector sums, we begin with the following matrix.<br /><br /><table border='1'>";
+
+        for(var s = state.length - 1, i1 = s; i1 >= 0; i1--)
+        {
+          str += "<tr><td>row " + String.fromCharCode(0x41 + mat.length) + "</td>"
+
+          var t = []; for(var i2 = s; i2 >= 0; i2--){ str += "<td>" + (AI_Mat.SMat[i2][i1] || 0) + "</td>"; t.push((AI_Mat.SMat[i2][i1] || 0)); } mat.push(t);
+
+          str += "</tr>";
+        }
+
+        str += "</table><br />"; sums = []; for(var i1 = 0; i1 < mat.length; i1++)
+        {
+          str += "We multiply row " + String.fromCharCode(0x41 + i1) + " = <p class='r'>" + mat[i1] + "</p> with our current vector values <p class='g'>" + state + "</p> and sum the difference together.<br /><br />";
+
+          sums[i1] = 0; str += i1 % 2 == 1 ? "-(" : ""; for(var i2 = 0; i2 < mat[i1].length; i2++) { str += "<p class='g'>" + state[i2] + "</p>&times;<p class='r'>" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? "</p> " + (i2%2 == 1 ? "+" : "-") + " " : "</p>"); sums[i1] -= state[i2] * mat[i1][i2]; sums[i1] = -sums[i1]; }
+
+          if(i1 % 2 == state.length % 2){ sums[i1] = -sums[i1]; } str += i1 % 2 == 1 ? ")" : "";
+
+          str += " = <p class='b'>" + sums[i1] + "</p><br /><br />";
+        }
+
+        el.outerHTML = str + "This makes our new vector <p class='b'>" + sums + "</p></div><br />";
+      }
 
       /***********************************************************************************
       Show work to sum the next vector combination.
@@ -721,8 +787,6 @@
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
 
           var v = new vect(n); for(var i = 0; i < v.v.length-1;bv[i]=v.v[i++]); out.innerHTML += splitWork(v.v,2,true); v = v.split(parts);
-
-          out.innerHTML += "<p class='r'>Note we do not include the first vector combination and the last before reverting to the combination before.</p>";
 
           out.innerHTML += "<br />The vector ratio computed to " + parts + " reciprocal parts is the following = " + v.val.a + "<br /><br />";
 
