@@ -74,7 +74,7 @@
 
       //Number of parts to compute vectors to, or split number to if possible.
 
-      var parts = 20, splitWorkData = "";
+      var parts = 20, splitWorkData = "", fractWork = "";
 
       /***********************************************************************************
       Prototype vector additions to FL64.
@@ -259,34 +259,6 @@
 
         o.innerHTML = str; o.scrollIntoView();
       }
-      function rSplitStepShow(el,state)
-      {
-        var r = state, mat = [];
-
-        var str = "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To reverse the vector sums, we begin with the following matrix.<br /><br /><table border='1'>";
-
-        for(var s = state.length - 1, i1 = s; i1 >= 0; i1--)
-        {
-          str += "<tr><td>row " + String.fromCharCode(0x41 + mat.length) + "</td>"
-
-          var t = []; for(var i2 = s; i2 >= 0; i2--){ str += "<td>" + (AI_Mat.SMat[i2][i1] || 0) + "</td>"; t.push((AI_Mat.SMat[i2][i1] || 0)); } mat.push(t);
-
-          str += "</tr>";
-        }
-
-        str += "</table><br />"; sums = []; for(var i1 = 0; i1 < mat.length; i1++)
-        {
-          str += "We multiply row " + String.fromCharCode(0x41 + i1) + " = <p class='r'>" + mat[i1] + "</p> with our current vector values <p class='g'>" + state + "</p> and sum the difference together.<br /><br />";
-
-          sums[i1] = 0; str += i1 % 2 == 1 ? "-(" : ""; for(var i2 = 0; i2 < mat[i1].length; i2++) { str += "<p class='g'>" + state[i2] + "</p>&times;<p class='r'>" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? "</p> " + (i2%2 == 1 ? "+" : "-") + " " : "</p>"); sums[i1] -= state[i2] * mat[i1][i2]; sums[i1] = -sums[i1]; }
-
-          if(i1 % 2 == state.length % 2){ sums[i1] = -sums[i1]; } str += i1 % 2 == 1 ? ")" : "";
-
-          str += " = <p class='b'>" + sums[i1] + "</p><br /><br />";
-        }
-
-        el.outerHTML = str + "This makes our new vector <p class='b'>" + sums + "</p></div><br />";
-      }
 
       /***********************************************************************************
       Show work to sum the next vector combination.
@@ -321,6 +293,35 @@
 
       function splitStepShow(sect, state) { sect.parentElement.innerHTML = splitStep(state); }
 
+      function rSplitStepShow(el,state)
+      {
+        var r = state, mat = [];
+
+        var str = "<br /><br /><div style='background-color: rgb(68, 43, 157);'>To reverse the vector sums, we begin with the following matrix.<br /><br /><table border='1'>";
+
+        for(var s=state.length-1,i1 = s;i1>=0;i1--)
+        {
+          str += "<tr><td>row " + String.fromCharCode(0x41 + mat.length) + "</td>"
+
+          var t = []; for(var i2=s;i2>=0;i2--){ str+="<td>" + (AI_Mat.SMat[i2][i1] || 0) + "</td>"; t.push((AI_Mat.SMat[i2][i1] || 0)); } mat.push(t);
+
+          str += "</tr>";
+        }
+
+        str += "</table><br />"; sums = []; for(var i1 = 0; i1 < mat.length; i1++)
+        {
+          str += "We multiply row " + String.fromCharCode(0x41 + i1) + " = <p class='r'>" + mat[i1] + "</p> with our current vector values <p class='g'>" + state + "</p> and sum the difference together.<br /><br />";
+
+          sums[i1] = 0; str += i1 % 2 == 1 ? "-(" : ""; for(var i2=0;i2<mat[i1].length;i2++) { str += "<p class='g'>" + state[i2] + "</p>&times;<p class='r'>" + mat[i1][i2] + (i2 < (mat[i1].length - 1) ? "</p> " + (i2%2 == 1 ? "+" : "-") + " " : "</p>"); sums[i1] -= state[i2] * mat[i1][i2]; sums[i1] = -sums[i1];}
+
+          if(i1 % 2 == state.length % 2){ sums[i1] = -sums[i1]; } str += i1 % 2 == 1 ? ")" : "";
+
+          str += " = <p class='b'>" + sums[i1] + "</p><br /><br />";
+        }
+
+        el.outerHTML = str + "This makes our new vector <p class='b'>" + sums + "</p></div><br />";
+      }
+
       /***********************************************************************************
       Show how to add the parts back into an number.
       ***********************************************************************************/
@@ -351,9 +352,9 @@
       Demonstrate how reciprocal parts are added back into converging fractions.
       ***********************************************************************************/
 
-      function addPartsFract(parts,n)
+      var curFx = 0, curFy = 0; function addPartsFract(parts,n)
       {
-        var str = "To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
+        var str = "<div id='fRev'>To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
 
         str += "The values in the table are colored to show how we multiply the next receptacle part and move the values to the next row, making Numerator÷Denominator = value per added part.<br /><br />";
 
@@ -374,14 +375,14 @@
           if(c) { c = false; } else { c = true; }
         }
 
-        return(str + (n < parts.length ? "<tr><td colspan='4'><input type='button' style='width:100%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+i+","+c+"]);' /></td></tr>" : "") + "</table>");
+        curFx = fx; curFy = fy;
+
+        return(str + "<tr><td colspan='4'>" + (n < parts.length ? "<input type='button' style='width:50%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+i+","+c+"]);' /><input type='button' style='width:50%;' onclick='getPartsFract()' value='Show in reverse' />" : "<input type='button' style='width:100%;' onclick='getPartsFract()' value='Show in reverse' />") + "</td></tr></table>");
       }
 
       function addNextPartFract(e,parts,state)
       {
-        var fx = state[0], tx = state[1], fy = state[2], ty = state[3], i = state[4], c = state[5], btn = false;
-        
-        e = e.parentElement.parentElement; if( state[4] < (parts.length-1) ) { btn = e.parentElement.appendChild(document.createElement("tr")); }
+        var fx = state[0], tx = state[1], fy = state[2], ty = state[3], i = state[4], c = state[5], e = e.parentElement.parentElement, btn = e.parentElement.appendChild(document.createElement("tr"));
 
         var str = "<tr><td style='white-space: nowrap;'>" + (i > 0 ? "<p class='"+(c ? "g" : "r")+"'>" + tx + "</p>" : tx);
         str += " + <p class='"+(c ? "r" : "g")+"'>" + fx + "</p>&times;<p class='b'>" + parts[i] + "</p>";
@@ -394,9 +395,50 @@
         str += "<td><p class='b'>" + parts[i] + "</p></td><td>" + fx + "&div;" + fy + " = " + fx/fy + "</td></tr>";
 
         if(c) { c = false; } else { c = true; }
+
+        curFx = fx; curFy = fy;
         
-        e.innerHTML = str; if(btn){ btn.innerHTML = "<tr><td colspan='4'><input type='button' style='width:100%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+(i+1)+","+c+"]);' /></td></tr>"; }
+        e.innerHTML = str; if(state[4] < (parts.length - 1)){ btn.innerHTML = "<tr><td colspan='4'><input type='button' style='width:50%;' value='Add next part' onclick='addNextPartFract(this,["+parts+"],["+fx+","+tx+","+fy+","+ty+","+(i+1)+","+c+"]);' /><input type='button' style='width:50%;' onclick='getPartsFract()' value='Show in reverse' /></td></tr>"; }
+        else { btn.innerHTML = "<tr><td colspan='4'><input type='button' style='width:100%;' onclick='getPartsFract()' value='Show in reverse' /></td></tr>"; }
       }
+
+        /***********************************************************************************
+        Demonstrate how the process works in reverse..
+        ***********************************************************************************/
+
+        function getPartsFract(dif)
+        {
+          var dif = 1 | dif, o = document.getElementById("fRev"), curParts = [], t = [0, 0], fx = new Number(curFx) * dif, fy = new Number(curFy) * dif, r = 0, sw = true; if(dif == 1) { fractWork = o.innerHTML };
+          
+          var str = "<div style='background-color: rgb(68, 43, 157);'>To reverse the fraction <div class='r'>" + fx + "</div>&div;<div class='g'>" + fy + "</div> we just simply divide it and look at how many times it divides.";
+
+          while(t.length > 1)
+          {
+            t = ((fx / fy)+"").split("."); curParts.push(t[0]);
+
+            str += "<br /><br /><div class='" + (sw ? "r" : "g") + "'>" + fx + "</div>&div;<div class='" + (sw ? "g" : "r") + "'>" + fy + "</div> = <div class='b'>" + t[0] + "</div>" + (t.length > 1 ? "." + t[1] : "") + " the number of times it divides evenly is " + "<div class='b'>" + t[0] + "</div>, which makes our reciprocal parts <div class='b'>" + curParts + "</div>...<br />";
+
+            str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<div class='" + (sw ? "r" : "g") + "'>" + fx + "</div> - <div class='" + (sw ? "g" : "r") + "'>" + fy + "</div> &times; <div class='b'>" + curParts[curParts.length-1] + "</div> = <div class='" + (sw ? "r" : "g") + "'>" + (r=(fx - fy * curParts[curParts.length - 1])) + "</div><br />";
+
+            fx = fy; fy = r; 
+
+            str += "The remaining amount goes into the value we divided by to find the next reciprocal part <div class='" + (sw ? "g" : "r") + "'> " + fx + "</div>&div;<div class='" + (sw ? "r" : "g") + "'>" + fy + "</div>"; sw = !sw;
+          }
+
+          r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
+
+          str += "<br /><br /><div class='r'>The resulting fraction divides to zero and there are no more parts.</div><br /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <div class='b'>" + r + "</div>.<br /><br />";
+          
+          str +=  "<div class='r'>" + curFx + "</div>&times<div class='b'>" + r + "</div>&div;<div class='g'>" + curFy + "</div>&times<div class='b'>" + r + "</div> is <div class='r'>" + fx + "</div>&div;<div class='g'>" + fy + "</div> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
+
+          str += "Even though we made both sides of the fraction larger it will break down into the same parts. <input type='button' value='Reverse fraction " + fx + "&div;" + fy + "' onclick='getPartsFract("+r+");' /><br /><br />";
+
+          str += "The parts then add back to the smallest possible fraction. <input type='button' value='Go back to adding parts to fraction' onclick='bAddPartsFract()' />";
+
+          o.innerHTML = str + "</div><br />";
+        }
+
+        function bAddPartsFract(){ var o = document.getElementById("fRev"); o.innerHTML = fractWork; }
 
       /***********************************************************************************
       Show how we get the parts of an number.
@@ -819,7 +861,7 @@
 
         if(isPhi) { spPat(out,false); } else { out.innerHTML += "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement,true);' /><br /><br /></div>"; }
 
-        out.innerHTML += "Additionally all numbers can be taken apart this way and added to their smallest fraction this way. There is one exception.<br /><br />";
+        out.innerHTML += "Additionally all numbers can be taken apart this way and added to their smallest fraction this way. It does not matter if we go by value or by fraction. There is one exception.<br /><br />";
         
         out.innerHTML += "Numbers that are an expanding pattern of parts grow forever with no end" + (isPhi ? " like The golden ratio in which we call the added parts to a given number ratio converging fractions" : "") + ".<br /><br />";
 
