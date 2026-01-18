@@ -354,7 +354,7 @@
 
       var curFx = 0, curFy = 0; function addPartsFract(parts,n)
       {
-        var str = "<div id='fRev'>To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
+        var str = "To add parts into fractions, the Numerator = 0 + 1 &times; part, and the Denominator = 1 + 0 &times; part.<br /><br />"
 
         str += "The values in the table are colored to show how we multiply the next receptacle part and move the values to the next row, making Numerator÷Denominator = value per added part.<br /><br />";
 
@@ -408,37 +408,37 @@
 
         function getPartsFract(dif)
         {
-          var dif = 1 | dif, o = document.getElementById("fRev"), curParts = [], t = [0, 0], fx = new Number(curFx) * dif, fy = new Number(curFy) * dif, r = 0, sw = true; if(dif == 1) { fractWork = o.innerHTML };
+          var dif = dif || 1, o = document.getElementById("fRev"), curParts = [], t = [0, 0], fx = new Number(curFx) * dif, fy = new Number(curFy) * dif, r = 0, sw = true; if(dif == 1) { fractWork = o.innerHTML }
           
-          var str = "<div style='background-color: rgb(68, 43, 157);'>To reverse the fraction <div class='r'>" + fx + "</div>&div;<div class='g'>" + fy + "</div> we just simply divide it and look at how many times it divides.";
+          var str = "<div style='background-color: rgb(68, 43, 157);'>To reverse the fraction <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> we just simply divide it and look at how many times it divides.";
 
           while(t.length > 1)
           {
             t = ((fx / fy)+"").split("."); curParts.push(t[0]);
 
-            str += "<br /><br /><div class='" + (sw ? "r" : "g") + "'>" + fx + "</div>&div;<div class='" + (sw ? "g" : "r") + "'>" + fy + "</div> = <div class='b'>" + t[0] + "</div>" + (t.length > 1 ? "." + t[1] : "") + " the number of times it divides evenly is " + "<div class='b'>" + t[0] + "</div>, which makes our reciprocal parts <div class='b'>" + curParts + "</div>...<br />";
+            str += "<br /><br /><p class='" + (sw ? "r" : "g") + "'>" + fx + "</p>&div;<p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> = <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "</div> the number of times it divides evenly is " + "<p class='b'>" + t[0] + "</p>, which makes our reciprocal parts <p class='b'>" + curParts + "</p>...<br />";
 
-            str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<div class='" + (sw ? "r" : "g") + "'>" + fx + "</div> - <div class='" + (sw ? "g" : "r") + "'>" + fy + "</div> &times; <div class='b'>" + curParts[curParts.length-1] + "</div> = <div class='" + (sw ? "r" : "g") + "'>" + (r=(fx - fy * curParts[curParts.length - 1])) + "</div><br />";
+            str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<p class='" + (sw ? "r" : "g") + "'>" + fx + "</p> - <p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> &times; <p class='b'>" + curParts[curParts.length-1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (r=(fx - fy * curParts[curParts.length - 1])) + "</p><br />";
 
             fx = fy; fy = r; 
 
-            str += "The remaining amount goes into the value we divided by to find the next reciprocal part <div class='" + (sw ? "g" : "r") + "'> " + fx + "</div>&div;<div class='" + (sw ? "r" : "g") + "'>" + fy + "</div>"; sw = !sw;
+            str += "The remaining amount goes into the value we divided by to find the next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>"; sw = !sw;
           }
 
           r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
 
-          str += "<br /><br /><div class='r'>The resulting fraction divides to zero and there are no more parts.</div><br /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <div class='b'>" + r + "</div>.<br /><br />";
+          str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p><br /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
           
-          str +=  "<div class='r'>" + curFx + "</div>&times<div class='b'>" + r + "</div>&div;<div class='g'>" + curFy + "</div>&times<div class='b'>" + r + "</div> is <div class='r'>" + fx + "</div>&div;<div class='g'>" + fy + "</div> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
+          str +=  "<p class='r'>" + curFx + "</p>&times<p class='b'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='b'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
 
           str += "Even though we made both sides of the fraction larger it will break down into the same parts. <input type='button' value='Reverse fraction " + fx + "&div;" + fy + "' onclick='getPartsFract("+r+");' /><br /><br />";
 
           str += "The parts then add back to the smallest possible fraction. <input type='button' value='Go back to adding parts to fraction' onclick='bAddPartsFract()' />";
 
-          o.innerHTML = str + "</div><br />";
+          o.innerHTML = str + "</div><br />"; o.scrollIntoView();
         }
 
-        function bAddPartsFract(){ var o = document.getElementById("fRev"); o.innerHTML = fractWork; }
+        function bAddPartsFract(){ var o = document.getElementById("fRev"); o.innerHTML = fractWork; o.scrollIntoView(); }
 
       /***********************************************************************************
       Show how we get the parts of an number.
@@ -745,15 +745,15 @@
       .
       ***********************************************************************************/
 
-      function spPat(target,reset)
+      function spPat(target)
       {
-        if(reset){ target.innerHTML = ""; }
+        var str = "Using the above method, if all receptacle parts have a value of 1, we end up with the sum of the Fibonacci sequence, as the two prior numbers are added the same way times the parts. The Fibonacci sequence forms a perfect spiral and calculates the golden ratio, as well as a golden rectangle.<br /><br />";
 
-        target.innerHTML += "Using the above method, if all receptacle parts have a value of 1, we end up with the sum of the Fibonacci sequence, as the two prior numbers are added the same way times the parts. The Fibonacci sequence forms a perfect spiral and calculates the golden ratio, as well as a golden rectangle.<br /><br />";
+        str += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
 
-        target.innerHTML += "<img src='docs/bg/fig1.jpg' style='width:100%;max-width:1964px;' /><br /><br />";
+        str += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
 
-        target.innerHTML += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
+        if (arguments.length == 0) { return(str); } target.innerHTML = str;
       }
 
       /***********************************************************************************
@@ -822,8 +822,7 @@
           }
           else
           {
-            out.innerHTML += "The vector " + n + " may be close to " + type + " = " + calc + " when summed, or could be very different.<br />";
-            out.innerHTML += "An vector like " + n + " is similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of roots, or as a vector ratio.";
+            out.innerHTML += "The vector " + n + " can not be determined. Some combinations are similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of square roots in ratio and sequence which can be expressed as a vector ratio.";
           }
 
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
@@ -857,12 +856,10 @@
 
         out.innerHTML +="The reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
-        out.innerHTML += addPartsFract(n.a,3) + "<br />";
+        out.innerHTML += "<div id='fRev'>" + addPartsFract(n.a,3) + "<br />" + (isPhi ? spPat() : "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement);' /><br /><br /></div>") + "</div>";
 
-        if(isPhi) { spPat(out,false); } else { out.innerHTML += "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement,true);' /><br /><br /></div>"; }
+        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. It does not matter if we go by value or by fraction. There is one exception.<br /><br >";
 
-        out.innerHTML += "Additionally all numbers can be taken apart this way and added to their smallest fraction this way. It does not matter if we go by value or by fraction. There is one exception.<br /><br />";
-        
         out.innerHTML += "Numbers that are an expanding pattern of parts grow forever with no end" + (isPhi ? " like The golden ratio in which we call the added parts to a given number ratio converging fractions" : "") + ".<br /><br />";
 
         out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
