@@ -425,9 +425,11 @@
             str += "The remaining amount goes into the value we divided by to find the next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>"; sw = !sw;
           }
 
-          r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
+          str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>When we take away the value before the decimal point and divide the value into one we are also asking how many times the value divides evenly to the next part without the fraction.<br /><br />";
 
-          str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p><br /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
+          r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
+          
+          str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
           
           str +=  "<p class='r'>" + curFx + "</p>&times<p class='b'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='b'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
 
@@ -858,9 +860,9 @@
 
         out.innerHTML += "<div id='fRev'>" + addPartsFract(n.a,3) + "<br />" + (isPhi ? spPat() : "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement);' /><br /><br /></div>") + "</div>";
 
-        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction this way. It does not matter if we go by value or by fraction. There is one exception.<br /><br >";
+        out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction. It does not matter if we go by value or by fraction; the show in reverse option shows this in detail.<br /><br >";
 
-        out.innerHTML += "Numbers that are an expanding pattern of parts grow forever with no end" + (isPhi ? " like The golden ratio in which we call the added parts to a given number ratio converging fractions" : "") + ".<br /><br />";
+        out.innerHTML += "There is one exception. Numbers that are an expanding pattern of parts grow forever with no end" + (isPhi ? " like The golden ratio in which we call the added parts to a given number ratio converging fractions" : "") + ".<br /><br />";
 
         out.innerHTML += "The converging fractions of a given number ratio are very important for finding irrational number patterns.<br /><br />";
         
