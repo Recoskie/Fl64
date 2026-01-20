@@ -402,45 +402,45 @@
         else { btn.innerHTML = "<tr><td colspan='4'><input type='button' style='width:100%;' onclick='getPartsFract()' value='Show in reverse' /></td></tr>"; }
       }
 
-        /***********************************************************************************
-        Demonstrate how the process works in reverse..
-        ***********************************************************************************/
+      /***********************************************************************************
+      Demonstrate how the process works in reverse..
+      ***********************************************************************************/
 
-        function getPartsFract(dif)
+      function getPartsFract(dif)
+      {
+        var dif = dif || 1, o = document.getElementById("fRev"), curParts = [], t = [0, 0], fx = new Number(curFx) * dif, fy = new Number(curFy) * dif, r = 0, sw = true; if(dif == 1) { fractWork = o.innerHTML }
+          
+        var str = "<div style='background-color: rgb(68, 43, 157);'>To reverse the fraction <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> we just simply divide it and look at how many times it divides.";
+
+        while(t.length > 1)
         {
-          var dif = dif || 1, o = document.getElementById("fRev"), curParts = [], t = [0, 0], fx = new Number(curFx) * dif, fy = new Number(curFy) * dif, r = 0, sw = true; if(dif == 1) { fractWork = o.innerHTML }
-          
-          var str = "<div style='background-color: rgb(68, 43, 157);'>To reverse the fraction <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> we just simply divide it and look at how many times it divides.";
+          t = ((fx / fy)+"").split("."); curParts.push(t[0]);
 
-          while(t.length > 1)
-          {
-            t = ((fx / fy)+"").split("."); curParts.push(t[0]);
+          str += "<br /><br /><p class='" + (sw ? "r" : "g") + "'>" + fx + "</p>&div;<p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> = <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "</div> the number of times it divides evenly is " + "<p class='b'>" + t[0] + "</p>, which makes our reciprocal parts <p class='b'>" + curParts + "</p>...<br />";
 
-            str += "<br /><br /><p class='" + (sw ? "r" : "g") + "'>" + fx + "</p>&div;<p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> = <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "</div> the number of times it divides evenly is " + "<p class='b'>" + t[0] + "</p>, which makes our reciprocal parts <p class='b'>" + curParts + "</p>...<br />";
+          str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<p class='" + (sw ? "r" : "g") + "'>" + fx + "</p> - <p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> &times; <p class='b'>" + curParts[curParts.length-1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (r=(fx - fy * curParts[curParts.length - 1])) + "</p><br />";
 
-            str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<p class='" + (sw ? "r" : "g") + "'>" + fx + "</p> - <p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> &times; <p class='b'>" + curParts[curParts.length-1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (r=(fx - fy * curParts[curParts.length - 1])) + "</p><br />";
+          fx = fy; fy = r;
 
-            fx = fy; fy = r; 
-
-            str += "The remaining amount goes into the value we divided by to find the next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>"; sw = !sw;
-          }
-
-          str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>When we take away the value before the decimal point and divide the value into one we are also asking how many times the value divides evenly to the next part without the fraction.<br /><br />";
-
-          r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
-          
-          str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
-          
-          str +=  "<p class='r'>" + curFx + "</p>&times<p class='b'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='b'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
-
-          str += "Even though we made both sides of the fraction larger it will break down into the same parts. <input type='button' value='Reverse fraction " + fx + "&div;" + fy + "' onclick='getPartsFract("+r+");' /><br /><br />";
-
-          str += "The parts then add back to the smallest possible fraction. <input type='button' value='Go back to adding parts to fraction' onclick='bAddPartsFract()' />";
-
-          o.innerHTML = str + "</div><br />"; o.scrollIntoView();
+          str += "The remaining amount goes into the value we divided by to find the next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>"; sw = !sw;
         }
 
-        function bAddPartsFract(){ var o = document.getElementById("fRev"); o.innerHTML = fractWork; o.scrollIntoView(); }
+        str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>When we take away the value before the decimal point and divide the value into one we are also asking how many times the value divides evenly to the next part without the fraction.<br /><br />";
+
+        r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
+          
+        str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
+          
+        str +=  "<p class='r'>" + curFx + "</p>&times<p class='b'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='b'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx/fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
+
+        str += "Even though we made both sides of the fraction larger it will break down into the same parts. <input type='button' value='Reverse fraction " + fx + "&div;" + fy + "' onclick='getPartsFract("+r+");' /><br /><br />";
+
+        str += "The parts then add back to the smallest possible fraction. <input type='button' value='Go back to adding parts to fraction' onclick='bAddPartsFract()' />";
+
+        o.innerHTML = str + "</div><br />"; o.scrollIntoView();
+      }
+
+      function bAddPartsFract(){ var o = document.getElementById("fRev"); o.innerHTML = fractWork; o.scrollIntoView(); }
 
       /***********************************************************************************
       Show how we get the parts of an number.
@@ -744,7 +744,7 @@
       }
 
       /***********************************************************************************
-      .
+      This function shows the structure of number ratios.
       ***********************************************************************************/
 
       function spPat(target)
@@ -755,8 +755,11 @@
 
         str += "The pentagram also calculates the golden ratio and is also found in penrose tiling. The golden ratio is the most irreducible value with each part as close together as possible, while all other ratios are less irrational and have receptacle parts grater than 1 per part.<br /><br />";
 
+        if(!isPhi) { str += "Would you like to switch to the golden ratio to see this in detail <input type='button' onclick='showPHI();' value='Calc the Golden Ratio' /><br /><br />"; }
+
         if (arguments.length == 0) { return(str); } target.innerHTML = str;
       }
+      function showPHI(){document.getElementById("iv").value="1,1,1"; getInput(); document.getElementById("iv").scrollIntoView(); }
 
       /***********************************************************************************
       Convert numbers or fraction to 1D vector.
@@ -780,11 +783,11 @@
       Analyze users input.
       ***********************************************************************************/
       
-      var isVect = false, getInput = function()
+      var isVect = false, isPhi = false, getInput = function()
       {
         n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
       
-        var bv = [], out = document.getElementById("out"), isPhi = true;
+        var bv = [], out = document.getElementById("out"); isPhi = true;
 
         if(isVect = n.indexOf(",") > 0) { n = n.split(","); for(var i1=0;i1<n.length;i1++) { n[i1] = parseInt(n[i1],10); if(isNaN(n[i1])){ alert("Bad vector input!"); return; } } }
         else { n = parseFloat(n); if(isNaN(n)) { alert("Bad number input!"); return; } }
@@ -810,12 +813,12 @@
           else if(n.length == 5){ type = "&#8732;" + type; } else if(n.length != 2){ type = type + " to the root of " + (n.length-1); }
 
           out.innerHTML += "The vector " + n + " ratio is " + n.length + " numbers which is to the root of " + n.length + "-1=" + (n.length-1) + " at it's last column.<br /><br />";
+          out.innerHTML += "This makes the vector combination a " + (n.length-1) + " dimensional ratio. " + ((n.length == 2) ? "All 1 dimensional vectors are fractions that create finite values. " : "");
           if(n.length == 2){ out.innerHTML += "Since this vector ratio is to the root of 1 than it is the value of its last column " + Math.abs(n[n.length-1]) + ".<br /><br />"; }
           else{ out.innerHTML += "This makes the vector ratio " + Math.abs(n[n.length-1]) + " to the root of " + (n.length-1) + ".<br /><br />"; }
           if(Math.abs(n[0]) != 1)
           {
             out.innerHTML += "Since the first value in the vector is " + Math.abs(n[0]) + " this makes the summed sequence an " + Math.abs(n[0]) + "th of its size.<br /><br />";
-            out.innerHTML += "We compute this by dividing our vector last column to the root of value.<br /><br />";
           }
 
           if(isRoot)
@@ -824,7 +827,8 @@
           }
           else
           {
-            out.innerHTML += "The vector " + n + " can not be determined. Some combinations are similar to what the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of square roots in ratio and sequence which can be expressed as a vector ratio.";
+            out.innerHTML += "The best guess we can make for " + n + " is " + type + " = " + calc + ".<br /><br />However the guess can be close or very wrong. The vector " + n + " can not be determined.<br /><br />";
+            out.innerHTML += "Combinations like this are similar to the ratio of PI is 3.1415926535 which is not the root of any number, but can be computed as a series of square roots which can be expressed as a vector ratio.";
           }
 
           out.innerHTML += "<h1>Summing the vector ratio</h1>";
