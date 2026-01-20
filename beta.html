@@ -427,6 +427,8 @@
 
         str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>When we take away the value before the decimal point and divide the value into one we are also asking how many times the value divides evenly to the next part without the fraction.<br /><br />";
 
+        if(dif > 1) { str += "The value we are left with before dividing into zero is <p class='b'>" + dif + "</p>. Dividing our enlarged fraction by <p class='b'>" + dif + "</p> results in the smallest fraction (<p class='r'>" + (curFx*dif) + "</p>&div;<p class='b'>" + dif + "</p>)&div;(<p class='g'>" + (curFy*dif) + "</p>&div;<p class='b'>" + dif + "</p>) is <p class='r'>" + curFx + "</p>&div;<p class='g'>" + curFy + "</p>"; }
+
         r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
           
         str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
