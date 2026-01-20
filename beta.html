@@ -450,7 +450,7 @@
       {
         var str = "", t = [];for(var i = 0, r = v.reValue();i < n;i++)
         {
-          t = (r + "").split("."); str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";v = v.split();
+          t = (r + "").split("."); str += "<div style='background-color: rgb(68, 43, 157);'>The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";v = v.split();
           r -= r&-1; str += "We take away the value before the decimal point, leaving " + r + ".<br />";
           if(v == 0)
           {
@@ -545,12 +545,14 @@
 
       function findVect(n,bv)
       {
+        if(n.length <= 1){ return("The number you used has no parts to rationalize."); }
+
         var vt = bv ? bv : [1,0,0], match = true, matches = -1, mPos = -1, temp = null, oVect = [];
         var str = "<div id='result'><table border='1'><tr><td>Added parts</td><td>Fraction</td><td>Vector ratio</td><td>Detailed steps</td></tr>";
 
-        var st = 0; for(var i = 0;i < (n.length-1); i++)
+        var st = 0, fr = null; for(var i = 0;i < (n.length-1); i++)
         {
-          var fr = n.calcF(0,i); var dv = new vect(fr.y,fr.x); for(var i2 = 1; i2 < vt.length; dv = dv.expand(), i2++);
+          fr = n.calcF(0,i); var dv = new vect(fr.y,fr.x); for(var i2 = 1; i2 < vt.length; dv = dv.expand(), i2++);
 
           dv = dv.dif(vt); dv.v.push(Math.round(st=dv.v.pop())); for(var i2 = 0;i2 < dv.v.length;oVect[i2] = dv.v[i2++]);
           
