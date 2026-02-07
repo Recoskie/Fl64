@@ -962,7 +962,7 @@
         out.innerHTML += "The vector combination you used terminates and can be expressed as a whole number or fraction.";
       }
 
-      out.innerHTML += "Note that a generalized forum allows us to express complex ratios as simple added regular parts to a number. Would you like to learn about the generalized expansion forum? <input type='button' value='Show info' onclick='genExpansion(" + n.calc() + ",[2, 3, 4],true);' />.<br /><br /><hr />";
+      out.innerHTML += "Note that a generalized forum allows us to express complex ratios as simple sums of regular parts that don't jump chaotically. Would you like to learn about the generalized expansion forum? <input type='button' value='Show info' onclick='genExpansion(" + n.calc() + ",[2, 3, 4],true);' />.<br /><br /><hr />";
     }
 
     /***********************************************************************************
@@ -1009,11 +1009,11 @@
         "<tr><td><center>Value</center></td><td rowspan='2' style='width:100%;''><input style='width:100%;height:3em;' type='button' value='calc' onclick='genInput();' /></td></tr>" +
         "<tr><td><input type='text' value='" + val + "' id='iv' onclick='this.select();' /></td></tr></table>" +
         "<h1>Generalized forum.</h1>" +
-        "In generalized expansion forum we stop dividing our value into one to find the next part. We pick the values we wish to divide by. <br /><br />" +
-        "For example dividing into 2 per part instead of 1 makes all parts twice in size, and dividing into 3 instead of 1 makes all parts three times in size.<br /><br />" +
-        "Although simple this allows us to express chaotic sequences as regular sequential expansions by which we could had only expressed them as vector summed expansion ratios.<br /><br />" +
-        "If we know the vector ratio combination of an number we can show it in an regular generalized sequential expansion.<br /><br />" +
-        "The tool bellow lets you pick what you want to divide by.<br /><br />" +
+        "In the generalized expansion forum, we stop dividing our value into one to find the next part. We pick the values we wish to divide by.<br /><br />" +
+        "For example, dividing into 2 parts instead of 1 makes all parts twice as large, and dividing into 3 parts instead of 1 makes all parts three times as large.<br /><br />" +
+        "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratios.<br /><br />" +
+        "If we know the vector ratio combination of a number, we can show it in a regular generalized sequential expansion.<br /><br />" +
+        "The tool below lets you pick what you want to divide by.<br /><br />" +
         "<table border='1' style='width:100%;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
         "<input style='width:50%;height:3em;' type='button' value='Use input' onclick='genInput();' /><input style='width:50%;height:3em;' type='button' value='Random Input' onclick='genInput(true);' /></td></tr>" +
         "<tr><td><input type='text' value='" + b + "' id='bD' /></td></tr></table><br /><div id='out'></div>";
@@ -1031,35 +1031,35 @@
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + n.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + n.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
-      out.innerHTML += "The standard name for what we divide into is called parts \"B\" = <p class='yu'>" + n.b + "</p>. Normally all \"B\" is one in value so we never show both A, and B this way.<br /><br />"; n.val = n;
+      out.innerHTML += "The standard name for what we divide into is called parts \"B\" = <p class='yu'>" + n.b + "</p>. Normally, all \"B\" are one in value, so we never show both A and B this way.<br /><br />"; n.val = n;
 
       out.innerHTML += "We can add back to a number by adding the parts up and dividing by B.<br /><br />" + addParts(n, 3) + "<br />";
 
       out.innerHTML += "<div id='fRev'>" + addPartsFract(n.a, n.b, 3) + "</div><br />";
 
-      out.innerHTML += "If both the added parts A, and parts B (Scale) are patterns per part then the fractions are also patterns and can be expressed as factorials and power series or as two added whole numbers that change in ratio then are divided together to forum the number ratio at higher and higher accuracy.<br /><br />";
+      out.innerHTML += "If both the added parts A and B (Scale) are patterns per part, then the fractions are also patterns and can be expressed as factorials and power series, or as two added whole numbers that change in ratio, which are then divided together to form the number ratio at higher and higher accuracy.<br /><br />";
 
-      out.innerHTML += "Additionally all forums of computing numbers should all have generalized expansion patterns even if they are hard to find. Even all vector summed ratios have generalized forms.<br />";
+      out.innerHTML += "Additionally, all numbers should have generalized expansion patterns, even if they are hard to find. Even all vector summed ratios have generalized forms.<br />";
 
       out.innerHTML += "<h1>2D ratios</h1>";
 
-      out.innerHTML += "Every square root and 2D vector summed ratio has a point at which the added parts repeat without using B (scale). These ratios all reduce to all added parts A, and B (Scale) are the same.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true);' /><input type='button' value='Solve random 2D vector' onclick='solve2D(false);' />";
+      out.innerHTML += "Every square root and every 2D vector-summed ratio has a point at which the added parts repeat. These ratios all reduce to the same value for all added parts A and B.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true);' /><input type='button' value='Solve random 2D vector' onclick='solve2D(false);' />";
 
       out.innerHTML += "<div id='seq'></div>";
 
       out.innerHTML += "<h2>The rational part</h2>";
 
-      out.innerHTML += "The very first part in A and B do not need to match. To demonstrate why we will use a simple 2D ratio 0.414213562.<br /><br />";
+      out.innerHTML += "The very first part in both A and B does not need to match. To demonstrate why, we will use a simple 2D ratio of 0.414213562.<br /><br />";
 
       var a = [0, 2, 2, 2, 2, 2, 2, 2], b = [1, 1, 1, 1, 1, 1, 1, 1];
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
       
-      out.innerHTML += "A square has four sides and if we divided by one side we end up with four.<br /><br />";
+      out.innerHTML += "A square has four sides, and if we divide by one side, we get four.<br /><br />";
       
-      out.innerHTML += "If we make the sides a little longer by adding the value 4+0.414213562=4.414213562. It is no longer a square but a new kind of shape.<br /><br />";
+      out.innerHTML += "If we make one side a little longer by adding the value 4 + 0.414213562 = 4.414213562.<br /><br />";
 
-      out.innerHTML += "This new shape is real and has a 2D ratio.<br /><br />";
+      out.innerHTML += "It is no longer a square but a new kind of shape.<br /><br />";
 
       var a = [4, 2, 2, 2, 2, 2, 2, 2], b = [1, 1, 1, 1, 1, 1, 1, 1];
 
@@ -1069,7 +1069,7 @@
       
       out.innerHTML += "So the first part in A, and B is often called the rational part before we go into the remainder and ratio.<br /><br />";
 
-      out.innerHTML += "We use the colon to mark the rational part before the remainder into ratio.<br /><br />";
+      out.innerHTML += "We use the colon to mark the rational part before the remainder in a ratio.<br /><br />";
 
       out.innerHTML += "A=4:2,2,2,2,2,2,2<br />B=1:1,1,1,1,1,1,1<br /><br />";
 
@@ -1079,15 +1079,15 @@
 
       out.innerHTML += "<img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' style='width:100%;max-width:2139px;' /><br /><br />";
 
-      out.innerHTML += "All 2D number ratios have a center point at which all A and B are the same per part after the rational part which is an scale of the ones column. In which the ones are multiplied by a selected value.<br />";
+      out.innerHTML += "All 2D number ratios have a center point at which all A and B are the same per part after the rational part, which is a scale of the ones column. In which the ones are multiplied by a selected value.<br />";
 
       out.innerHTML += "<h2>The natural logarithm</h2>";
 
-      out.innerHTML += "The base of the natural logarithm base E = 2.71828182845904 has the generalized expansion<br />";
+      out.innerHTML += "The base of the natural logarithm, e = 2.71828182845904, has the generalized expansion<br />";
       
-      out.innerHTML += "A = 2:<p style='color:#956C03;display:inline-block;'>1,2,3,4,5,6,7</p><br />B = 1:<p style='color:#956C03;display:inline-block;'>1,2,3,4,5,6,7</p><br />is the counting numbers multiplied by 1 in after the rational part<br />A = 2:<p style='color:#956C03;display:inline-block;'>counting</p><br />B = 1:<p style='color:#956C03;display:inline-block;'>counting</p><br />";
+      out.innerHTML += "A = 2:<p style='color:#956C03;display:inline-block;'>1,2,3,4,5,6,7</p><br />B = 1:<p style='color:#956C03;display:inline-block;'>1,2,3,4,5,6,7</p><br />is the counting numbers multiplied by 1 after the rational part<br />A = 2:<p style='color:#956C03;display:inline-block;'>counting</p><br />B = 1:<p style='color:#956C03;display:inline-block;'>counting</p><br />";
       
-      out.innerHTML += "Also counting numbers are also called our natural numbers. The natural log is a 3D vector combination as counting numbers are one dim higher than 2D vector ratios.<br /><br />";
+      out.innerHTML += "Also, counting numbers are also called our natural numbers. The natural log is a 3D vector combination, as counting numbers are one dimension higher than 2D vector ratios.<br /><br />";
 
       var a = [2, 1, 2, 3, 4, 5, 6, 7], b = [1, 1, 2, 3, 4, 5, 6, 7];
 
@@ -1108,11 +1108,11 @@
         "<tr><td>1&times;6</td><td><p style='color:#956C03;display:inline-block;'>4</p>&times;0</td><td><p style='color:#DD2C74;display:inline-block;'>6</p>&times;0</td><td>1&times;9</td><td><p style='color:#956C03;display:inline-block;'>4</p>&times;16</td><td><p style='color:#DD2C74;display:inline-block;'>6</p>&times;8</td></tr>" +
       "</table>";
 
-      out.innerHTML += "If you add up the sums for B at the last column you end up with 1&times;9 + <p style='color:#956C03;display:inline-block;'>4</p>&times;16 + <p style='color:#DD2C74;display:inline-block;'>6</p>&times;8 = 121<br /><br />";
+      out.innerHTML += "If you add up the sums for B in the last column, you end up with 1&times;9 + <p style='color:#956C03;display:inline-block;'>4</p>&times;16 + <p style='color:#DD2C74;display:inline-block;'>6</p>&times;8 = 121<br /><br />";
 
       out.innerHTML += "For PI A = 3:6,6,6,6,6... and B = 1:9,25,49,81,121... The number PI is a 4D vector combination.<br />";
 
-      out.innerHTML += "All sequences and forums of counting is in this pyramid structure and all possible number ratios. Also all vector combinations have generalized expansion forums.<br /><br />";
+      out.innerHTML += "All sequences and counting forums are in this pyramid structure, along with all possible number ratios. Also, all vector combinations have generalized expansion forums.<br /><br />";
 
       a = [3, 6, 6, 6, 6, 6]; b = [1, 9, 25, 49, 81, 121];
 
@@ -1122,15 +1122,15 @@
 
       out.innerHTML += "<h1>Transcendental numbers</h1>";
 
-      out.innerHTML += "The number PI is also a Transcendental number. Not all numbers can be expressed as a transcendental expansion.<br /><br />";
+      out.innerHTML += "The number π is also a Transcendental number. Not all numbers can be expressed as a transcendental expansion.<br /><br />";
 
       out.innerHTML += "4&div;1-4&div;3+4&div;5-4&div;7+4&div;9-4&div;11... = 3.1415926535.<br /><br />";
 
       out.innerHTML += "We start with 4&div;<p class='yu'>1</p> and go <p class='yu'>1+2=3</p>, <p class='yu'>3+2=5</p>, <p class='yu'>5+2=7</p>...<br /><br />";
 
-      out.innerHTML += "All divided into 4 and we also switch between adding and subtracting the next which makes it a transcendental expansion.<br /><br />";
+      out.innerHTML += "All is divided into 4, and we also switch between adding and subtracting the next, which makes it a transcendental expansion.<br /><br />";
 
-      out.innerHTML += "All transcendental numbers can be converted into factorial and power series forums. In order to translate back to factorial expansion we pair together all subtractions.<br /><br />";
+      out.innerHTML += "All transcendental numbers can be expressed as factorial and power series. To translate back to a factorial expansion, we pair each subtraction with its corresponding factor.<br /><br />";
 
       out.innerHTML += "<p class='r'>4&div;1-4&div;3</p>+<p class='g'>4&div;5-4&div;7</p>+<p class='r'>4&div;9-4&div;11</p>... = 3.1415926535<br /><br />";
 
@@ -1148,23 +1148,23 @@
       out.innerHTML += "3+16&times;<p class='yu'>2</p>+16&times;16&times;<p class='yu'>2</p> = 99<br />";
       out.innerHTML += "3+16&times;<p class='yu'>3</p>+16&times;16&times;<p class='yu'>3</p> = 195<br /><br />";
 
-      out.innerHTML += "The worlds fastest way of calculating PI is found by adding as many fractions as possible and reducing to the smallest fraction and finding a way to add to another larger combined fraction. By doing this we can compute PI in larger chunks in what papers call the k nth terms.<br /><br />";
+      out.innerHTML += "The world's fastest way of calculating PI is found by adding as many fractions as possible, reducing to the smallest fraction, and finding a way to add to another larger combined fraction. By doing this, we can compute PI in larger chunks, as papers call them, the kth terms.<br /><br />";
 
-      out.innerHTML += "All transcendental expansions have factorial expansions that compute the number at twice the speed and all factorial expansions have generalized expansions and generalize expansions have vector ratio combinations.<br /><br />";
+      out.innerHTML += "All transcendental expansions have factorial expansions that compute the number at twice the speed, and all factorial expansions have generalized expansions, and generalized expansions have vector ratio combinations.<br /><br />";
 
-      out.innerHTML += "However not all factorial expansions and generalized expansions can be changed into two fractions that subtract together and add the next two that subtract together as a transcendental expansion.<br /><br />";
+      out.innerHTML += "However, not all factorial expansions and generalized expansions can be changed into two fractions that subtract together and add the next two that subtract together as a transcendental expansion.<br /><br />";
 
-      out.innerHTML += "The set of transcendental numbers is smaller, however gives us ways of summing numbers in smaller simpler sequences.<br /><br />";
+      out.innerHTML += "The set of transcendental numbers is smaller; however, it still allows us to sum numbers using simpler, smaller sequences.<br /><br />";
 
-      out.innerHTML += "It should be pointed out that generalized expansion is all encompassing and can be translated to all other forums of adding to numbers.<br /><br />";
+      out.innerHTML += "It should be noted that generalized expansion is all-encompassing and can be changed to all other forms of adding to numbers.<br /><br />";
 
-      out.innerHTML += "All angles of sine and cosine even have generalized expansion forums. Even the taylor series that computes the angles of sine and cosine has a generalized expansion forum.<br /><br />";
+      out.innerHTML += "The sine and cosine functions have general expansions for all angles. Even the Taylor series that computes the angles of sine and cosine has a generalized expansion form.<br /><br />";
 
       out.innerHTML += "The following <a target='_blank' href='https://recoskie.github.io/Fl64/'>tool</a> lets you play around with generalized number expansions and transformations. It has many more examples.<br /><br />";
 
-      out.innerHTML += "However if we solve the numbers vector combination we also know its generalized expansion. Which allows for a much faster algorithm that can find the solution to all number patterns and ratios.";
+      out.innerHTML += "However, if we solve the vector combination of numbers, we also obtain its generalized expansion. This enables a much faster algorithm that can find solutions to all number patterns and ratios.";
 
-      out.innerHTML += "<br /><br /><hr />Go back to vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
+      out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
 
       document.getElementsByTagName("table")[0].scrollIntoView();
     }
