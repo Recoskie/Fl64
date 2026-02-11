@@ -388,11 +388,11 @@
       n = Math.min(n || parts.length, parts.length); for (var i = 0, bn = 0, nb = 0, fx = 1, tx = 0, fy = 0, ty = 1, c = false; i < n; i++)
       {
         bn = sc ? (i > 0 ? b[i - 1] : 1) : 1; nb = sc ? b[i] : 1;
-        str += "<tr><td style='white-space: nowrap;''>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (tx / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : tx);
+        str += "<tr><td style='white-space: nowrap;'>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (tx / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : tx);
         str += " + <p class='" + (c ? "r" : "g") + "'>" + fx + "</p>&times;<p class='b'>" + parts[i] + "</p>";
         str += " = <p class='" + (c ? "g" : "r") + "'>" + (fx = tx + (tx = fx * nb) * parts[i] / nb) + "</p></td>";
 
-        str += "<td style='white-space: nowrap;''>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (ty / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : ty);
+        str += "<td style='white-space: nowrap;'>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (ty / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : ty);
         str += " + <p class='" + (c ? "r" : "g") + "'>" + fy + "</p>&times;<p class='b'>" + parts[i] + "</p>";
         str += " = <p class='" + (c ? "g" : "r") + "'>" + (fy = ty + (ty = fy * nb) * parts[i] / nb) + "</p></td>";
 
@@ -414,11 +414,11 @@
 
       var bn = sc ? (i > 0 ? b[i - 1] : 1) : 1, nb = sc ? b[i] : 1;
 
-      var str = "<tr><td style='white-space: nowrap;''>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (tx / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : tx);
+      var str = "<tr><td style='white-space: nowrap;'>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (tx / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : tx);
       str += " + <p class='" + (c ? "r" : "g") + "'>" + fx + "</p>&times;<p class='b'>" + parts[i] + "</p>";
       str += " = <p class='" + (c ? "g" : "r") + "'>" + (fx = tx + (tx = fx * nb) * parts[i] / nb) + "</p></td>";
 
-      str += "<td style='white-space: nowrap;''>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (ty / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : ty);
+      str += "<td style='white-space: nowrap;'>" + (i > 0 ? "<p class='" + (c ? "g" : "r") + "'>" + (ty / bn) + "</p>" + (sc ? "&times;<p class='yu'>" + bn + "</p>" : "") : ty);
       str += " + <p class='" + (c ? "r" : "g") + "'>" + fy + "</p>&times;<p class='b'>" + parts[i] + "</p>";
       str += " = <p class='" + (c ? "g" : "r") + "'>" + (fy = ty + (ty = fy * nb) * parts[i] / nb) + "</p></td>";
 
@@ -1027,7 +1027,9 @@
 
       var n = new Number(val); while (n != 0) { n = n.split(n.reValue() & -1, b[Math.min(n.length, b.length - 1)]); }
 
-      out.innerHTML = getParts(val, 2, b) + "<br />This makes our receptacle parts <p class='g'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
+      out.innerHTML = "Solve for B algorithm <input type='button' value='Find B' onclick='findB(this,"+n.calc()+",2);' /><br /><br />";
+
+      out.innerHTML += getParts(val, 2, b) + "<br />This makes our receptacle parts <p class='g'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + n.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + n.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
@@ -1167,6 +1169,68 @@
       out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
 
       document.getElementsByTagName("table")[0].scrollIntoView();
+    }
+
+    /***********************************************************************************
+    Show the find B theorem.
+    ***********************************************************************************/
+
+    var curB = 1, sbEnd = -1; function findB(el,val,n,c)
+    {
+      var str = "", init = !c;
+      
+      if(init)
+      {
+        curB = 1;
+        str = "<div style='background-color: rgb(68, 43, 157);'>";
+        str += "<hr />We can adjust B (scale) to make all parts the same in value. We use one more rule where B (scale) must be the same or larger.<hr />";
+        str += "To find the value for B we divide the value into its next part.<br /><br />";
+      }
+
+      for(var i = 0, b=0; i < n && val > 0;i++)
+      {
+        sbEnd -= 1; if(c) { str += "To find the value for next B we divide the value into its next part.<br /><br />"; }
+
+        val = val.split();
+
+        str += "<p class='yu'>1</p>&div;(<p class='r'>" + val.r[i].toFixed(5) + "</p>-<p class='g'>" + Math.floor(val.r[i]) + "</p>)=<p class='b'>"+val.r[i+1].toFixed(5)+"</p><br />";
+
+        str += "Now we ask what we need to divide by to make the next part the same in size.<br />";
+
+        str += "<p class='g'>" + Math.floor(val.r[i]) + "</p>&div;<p class='b'>"+val.r[i+1].toFixed(5)+"</p> = <p class='yu'>" + (b = Math.floor(val.r[i]) / val.r[i+1]).toFixed(5) + "</p>";
+
+        str += " to next closest whole number <p class='yu'>" + (b=Math.ceil(b)) + "</p>.<br />";
+
+        if(b < curB)
+        {
+          str += "Our previous value for B is <p class='yu'>" + (b=curB) + "</p> is larger so we use the larger value.<br />";
+        }
+        else
+        {
+          str += "Our new value for B is <p class='yu'>" + (curB=b) + "</p>.<br />";
+        }
+
+        str += "We now calculate the next part dividing into our new value for B.<br />"; val = val.setB(i,b);
+
+        str += "<p class='yu'>" + b + "</p>&div;(<p class='r'>" + val.r[i].toFixed(5) + "</p>-<p class='g'>" + Math.floor(val.r[i]) + "</p>)=<p class='b'>"+val.r[i+1].toFixed(5)+"</p><hr />"; c = true;
+      }
+
+      if(sbEnd > 0 || init) { str += "<div><input type='button' value='Find next part' onclick='findB(this," + val.reValue() + ", 1, true)' /></div>"; }
+
+      if(init)
+      {
+        sbEnd = 0; while(val > 0) { sbEnd += 1; val = val.split(); val = val.setB(i,Math.max(Math.ceil((val.r[i]&-1) / val.r[i+1]),val.b[i-1])); i++; }
+
+        val.b[i-1] = isFinite(val.b[i-1]) ? val.b[i-1] : val.b[i-2];
+
+        str += "<hr /><table border='1px'><tr><td>A</td><td><p class='g'>" + val.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + val.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+        
+        str += "<input type='button' value='Use scale factors for value' onclick='genExpansion(" + val.primitive() + ",[" + val.b + "]);' />";
+
+        str += "<hr />This expansion has A and B as close together as possible while growing in size, but requires adjustments due to partial part combinations. Values may need to be decreased or increased and split into more A/B parts. This method provides a close approximation when dealing with partial sums, but alternative solutions exist.<hr /></div>";
+      }
+
+      el.outerHTML = str;
     }
 
     /***********************************************************************************
