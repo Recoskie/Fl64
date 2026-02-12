@@ -1051,7 +1051,17 @@
 
       out.innerHTML += "<h2>The rational part</h2>";
 
-      out.innerHTML += "The very first part in both A and B does not need to match. To demonstrate why, we will use a simple 2D ratio of 0.414213562.<br /><br />";
+      out.innerHTML += "The first part in A and the first part in B do not have to match. This first part is called the rational part.<br /><br />";
+      
+      out.innerHTML += "The first two numbers in the 2D vector ratio determine the rational part.<br /><br />";
+      
+      out.innerHTML += "The difference between the last two numbers in the 2D vector ratio determines the A/B parts that remain the same through the number.<br /><br />";
+
+      out.innerHTML += "Knowing the vector ratio also reveals the vector's generalized expansion.<br /><br />";
+      
+      out.innerHTML += "The rational part of a square root is always half in size of the matching A/B parts.<br /><br />";
+      
+      out.innerHTML += "The rational part is also similar to having a simple 2D ratio of 0.414213562.<br /><br />";
 
       var a = [0, 2, 2, 2, 2, 2, 2, 2], b = [1, 1, 1, 1, 1, 1, 1, 1];
 
@@ -1069,9 +1079,9 @@
 
       out.innerHTML += "This same logic applies to shapes of any number of sides plus our ratio. The remainder after the first part is what actually carries the ratio.<br /><br />";
       
-      out.innerHTML += "So the first part in A, and B is often called the rational part before we go into the remainder and ratio.<br /><br />";
+      out.innerHTML += "So the first part in A, and B is often called the rational part before we go into the remainder carrying the sequential ratio.<br /><br />";
 
-      out.innerHTML += "We use the colon to mark the rational part before the remainder in a ratio.<br /><br />";
+      out.innerHTML += "We use the colon to mark the rational part before the remainder into a ratio.<br /><br />";
 
       out.innerHTML += "A=4:2,2,2,2,2,2,2<br />B=1:1,1,1,1,1,1,1<br /><br />";
 
@@ -1110,7 +1120,7 @@
         "<tr><td>1&times;6</td><td><p style='color:#956C03;display:inline-block;'>4</p>&times;0</td><td><p style='color:#DD2C74;display:inline-block;'>6</p>&times;0</td><td>1&times;9</td><td><p style='color:#956C03;display:inline-block;'>4</p>&times;16</td><td><p style='color:#DD2C74;display:inline-block;'>6</p>&times;8</td></tr>" +
       "</table>";
 
-      out.innerHTML += "If you add up the sums for B in the last column, you end up with 1&times;9 + <p style='color:#956C03;display:inline-block;'>4</p>&times;16 + <p style='color:#DD2C74;display:inline-block;'>6</p>&times;8 = 121<br /><br />";
+      out.innerHTML += "If you add up the sums for B in the last column, you end up with <div style='white-space:nowrap;display:inline-block;'>1&times;9 + <p style='color:#956C03;display:inline-block;'>4</p>&times;16 + <p style='color:#DD2C74;display:inline-block;'>6</p>&times;8 = 121</div><br /><br />";
 
       out.innerHTML += "For PI A = 3:6,6,6,6,6... and B = 1:9,25,49,81,121... The number PI is a 4D vector combination.<br />";
 
@@ -1121,6 +1131,14 @@
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       out.innerHTML += "The values for B can be calculated quickly as <p class='yu'>1&times1=1</p>, 1+2=3, <p class='yu'>3&times;3=9</p>, 3+2=5, <p class='yu'>5&times;5=25</p>, 5+2=7, <p class='yu'>7&times;7=49</p>, 7+2=9, <p class='yu'>9&times;9=81</p>, 9+2=11...";
+
+      out.innerHTML += "<h1>Partial sums 3D and higher</h1>";
+
+      out.innerHTML += "All 2D vector ratios can be solved 100%. However, when we move beyond 2D, we get partial sums that combine into larger sums when we divide the number into parts.<br /><br />";
+
+      out.innerHTML += "If we know the vector ratio (how a number is represented as a set of scaled directional components) of the number, we also know its generalized expansion form (the expression of a number as a sum of these components). As far as we know, it is not impossible to solve them.<br /><br />";
+
+      out.innerHTML += "The vector expansion tool shows how to convert back into a vector ratio. However, if we divide the number into A/B parts (proportionally), the best we can do is adjust the A and B parts until the result is smoothed to its generalized expansion.";
 
       out.innerHTML += "<h1>Transcendental numbers</h1>";
 
