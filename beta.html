@@ -487,17 +487,39 @@
     Show how we get the parts of an number.
     ***********************************************************************************/
 
-    function getParts(v, n, b)
+    function getParts(v, n, b, PI)
     {
-      var str = "<div style='background-color: rgb(68, 43, 157);'>", exp = v + "", sc = b != undefined, bn = 1, t = []; for (var i = 0, r = v.reValue(); i < n; i++)
+      var str = "<div style='background-color: rgb(68, 43, 157);'>", exp = v + "", sc = b != undefined, bn = 1, t = [];
+        
+      if(PI){ str += "When we divide PI into parts we end up with partial sums that are too big in size. Instead of taking the full part away we only take <p class='g'>6</p> away after the first rational part.<br /><br />"; }  
+        
+      for (var i = 0, r = v.reValue(); i < n; i++)
       {
-        t = (r + "").split("."); str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+        t = (r + "").split(".");
 
-        bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
+        str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, ";
+        
+        if(!PI || r < 4)
+        {
+          str += "which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+          
+          bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
 
-        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+          str += "We take away the value before the decimal point, leaving " + r + ".<br />";
 
-        str += "We take away the value before the decimal point, leaving " + r + ".<br />";
+          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+        }
+        else
+        {
+          str += "Instead we only take <p class='g'>6</p> away which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
+          
+          bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(6, bn); r -= 6;
+
+          str += "We take away <p class='g'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
+
+          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>6</p>)";
+        }
+        
         if (v == 0)
         {
           if (r != 0)
@@ -525,22 +547,38 @@
         str += "<hr />" + exp + " = " + v.reValue() + "<hr /><br />";
       }
 
-      return (str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\")'></div>" : "") + "</div>");
+      return (str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\"," + PI + ")'></div>" : "") + "</div>");
     }
 
-    function getNextPart(e, v, parts, b, exp)
+    function getNextPart(e, v, parts, b, exp, PI)
     {
       exp = exp.replace(/"/g, "'");
 
       var str = "", sc = b != undefined, t = []; for (var i = 0; i < parts.length; v = v.split(parts[i], sc ? b[Math.min(b.length - 1, i)] : 1), i++); var r = v.reValue(); t = (r + "").split(".");
 
-      str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + "</div> is <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>, which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+      str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + "</div> is <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>, ";
 
-      bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
+      if(!PI || r < 4)
+      {
+        str += "which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+          
+        bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
 
-      exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+        str += "We take away the value before the decimal point, leaving " + r + ".<br />";
 
-      str += "We take away the value before the decimal point, leaving " + r + ".<br />";
+        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+      }
+      else
+      {
+        str += "Instead we only take <p class='g'>6</p> away which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
+          
+        bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(6, bn); r -= 6;
+
+        str += "We take away <p class='g'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
+
+        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>6</p>)";
+      }
+
       if (v == 0)
       {
         if (r != 0)
@@ -562,7 +600,7 @@
 
       str += "<hr />" + exp + " = " + v.reValue() + "<hr /><br />";
 
-      e.parentElement.innerHTML = str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\")'></div>" : "");
+      e.parentElement.innerHTML = str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\"," + PI + ")'></div>" : "");
     }
 
     /***********************************************************************************
@@ -1000,7 +1038,7 @@
       genExpansion(val,b); document.getElementsByTagName("table")[1].scrollIntoView();
     }
 
-    function genExpansion(val, b, bd)
+    function genExpansion(val, b, bd, isPI)
     {
       if (bd)
       {
@@ -1011,7 +1049,7 @@
         "<h1>Generalized forum.</h1>" +
         "In the generalized expansion forum, we stop dividing our value into one to find the next part. We pick the values we wish to divide by.<br /><br />" +
         "For example, dividing into 2 instead of 1 makes all parts twice as large, and dividing into 3 instead of 1 makes all parts three times as large.<br /><br />" +
-        "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratios.<br /><br />" +
+        "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratio.<br /><br />" +
         "If we know the vector ratio combination of a number, we can show it in a regular generalized sequential expansion.<br /><br />" +
         "The tool below lets you pick what you want to divide by.<br /><br />" +
         "<table border='1' style='width:100%;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
@@ -1025,11 +1063,11 @@
 
       out = document.getElementById("out");
 
-      var n = new Number(val); while (n != 0) { n = n.split(n.reValue() & -1, b[Math.min(n.length, b.length - 1)]); }
+      var n = new Number(val); while (n != 0) { n = n.split((!isPI || n.length == 0) ? n.reValue() & -1 : 6, b[Math.min(n.length, b.length - 1)]); }
 
       out.innerHTML = "Solve for B algorithm <input type='button' value='Find B' onclick='findB(this,"+n.calc()+",2);' /><br /><br />";
 
-      out.innerHTML += getParts(val, 2, b) + "<br />This makes our receptacle parts <p class='g'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
+      out.innerHTML += getParts(val, 2, b, isPI) + "<br />This makes our receptacle parts <p class='g'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + n.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + n.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
@@ -1130,11 +1168,15 @@
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
+      var v = NaN; for (var i = 0; i < a.length; v = v.split(a[i], b[i]), i++); out.innerHTML += "<input type='button' value='Show PI' onclick='genExpansion(" + v.calc() + ",[" + b + "],false,true)' /><br /><br />";
+
       out.innerHTML += "The values for B can be calculated quickly as <p class='yu'>1&times1=1</p>, 1+2=3, <p class='yu'>3&times;3=9</p>, 3+2=5, <p class='yu'>5&times;5=25</p>, 5+2=7, <p class='yu'>7&times;7=49</p>, 7+2=9, <p class='yu'>9&times;9=81</p>, 9+2=11...";
 
       out.innerHTML += "<h1>Partial sums 3D and higher</h1>";
 
       out.innerHTML += "All 2D vector ratios can be solved 100%. However, when we move beyond 2D, we get partial sums that combine into larger sums when we divide the number into parts.<br /><br />";
+
+      out.innerHTML += "The number PI is an really good example of partial sums. Hit the show PI button to see for yourself.<br /><br />";
 
       out.innerHTML += "If we know the vector ratio (how a number is represented as a set of scaled directional components) of the number, we also know its generalized expansion form (the expression of a number as a sum of these components). As far as we know, it is not impossible to solve them.<br /><br />";
 
