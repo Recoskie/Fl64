@@ -1103,13 +1103,13 @@
 
       out.innerHTML += "We use the colon to mark the rational parts before the ratio.<br /><br />";
 
-      out.innerHTML += "A=0,1:4,4,4,4,4,4,4<br />B=1,1:3,3,3,3,3,3<br /><br />";
+      out.innerHTML += "A=0,1:4,4,4,4,4,4,4<br />B=1,1:3,3,3,3,3,3,3<br /><br />";
       
       out.innerHTML += "<h1>3D ratios and higher</h1>";
 
       out.innerHTML += "<img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' style='width:100%;max-width:2139px;' /><br /><br />";
 
-      out.innerHTML += "All 2D number ratios have a center point at which all A and B are the same per part after the rational parts. The rational parts only exist because we don't like to use fractional numbers in A/B parts otherwise we could just show all A/B in 2D ratios as always the same across. All 2D ratios are a scale of the ones column In which the ones are multiplied by a selected value for both A and B after the rational parts. When we go higher than a 2D vector A/B becomes counting numbers plus lower combinations in scale after the rational parts.<br />";
+      out.innerHTML += "All 2D number ratios have a point at which all A and B are the same whole numbers per part after the rational parts. The rational parts only exist because we don't like to use fractional numbers in A and B parts otherwise we could just show all A and B in 2D ratios as always the same across. All 2D ratios are a scale of the ones column In which the ones are multiplied by a selected value for both A and B after the rational parts. When we go higher than a 2D vector A and B becomes counting numbers plus lower combinations in scale after the rational parts.<br />";
 
       out.innerHTML += "<h2>The natural logarithm</h2>";
 
@@ -1160,9 +1160,9 @@
 
       out.innerHTML += "The number PI is an really good example of partial sums. Hit the show PI button to see for yourself.<br /><br />";
 
-      out.innerHTML += "If we know the vector ratio (how a number is represented as a set of scaled directional components) of the number, we also know its generalized expansion form (the expression of a number as a sum of these components). As far as we know, it is not impossible to solve them.<br /><br />";
+      out.innerHTML += "If we know the vector ratio of the number, we also know its generalized expansion form. As far as we know, it is not impossible to solve them.<br /><br />";
 
-      out.innerHTML += "The vector expansion tool shows how to convert back into a vector ratio. However, if we divide the number into A/B parts (proportionally), the best we can do is adjust the A and B parts until the result is smoothed to its generalized expansion.";
+      out.innerHTML += "The vector expansion tool shows how to convert back into a vector ratio. However, if we divide the number into A and B parts (proportionally), the best we can do is adjust the A and B parts until the result is smoothed to its generalized expansion.";
 
       out.innerHTML += "<h1>Transcendental numbers</h1>";
 
@@ -1323,7 +1323,7 @@
         
       o.innerHTML += "The value <p class='r'>" + r[f[0]].toFixed(5) + "</p> recurs between parts <p class='g'>" + sect + "</p>.<br />";
 
-      o.innerHTML += "Since the value matches between parts <p class='g'>" + sect + "</p> then the parts <p class='g'>" + sect + "</p> recur forever is this 2D ratio.<br />";
+      o.innerHTML += "Since the value matches between parts <p class='g'>" + sect + "</p> then the parts <p class='g'>" + sect + "</p> recur forever in 2D ratio.<br />";
         
       var s = (f[0] == 0 ? r[f[0]]/r[bm] : r[bm]/r[f[0]]).limit(1/99999).getFract();
       o.innerHTML += "Solving for B <p class='b'>" + (f[0] == 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p>&div;<p class='r'>" + (f[0] != 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p> = " + (s+0).toFixed(5) + ".<br />";
