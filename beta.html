@@ -1411,8 +1411,6 @@
 
         o.innerHTML += "Value=" + v.primitive() + "<br />";
 
-        console.log(v);
-
         for(var i = 0;i < v.length;i++)
         {
           o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='g'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
@@ -1423,16 +1421,10 @@
     }
 
     function match2D(r) { for(var i1 = 0, c = 0;i1 < r.length;i1++) { c = Math.floor(r[i1] * 10000);for(var i2=0;i2<r.length;i2++) { if(c == Math.floor(r[i2] * 10000) && i1 != i2) { return([i1,i2]); } } } return([-1,0]); }
-
-    function test()
-    {
-      genExpansion(1, [1], true, false);
-      document.getElementsByTagName("h1")[1].scrollIntoView();
-    }
   </script>
 </head>
 
-<body onload="test()">
+<body>
   <div class="page" style="overflow: scroll-y;">
     <table border="1" style="width:100%;">
       <tr>
