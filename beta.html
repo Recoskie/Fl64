@@ -491,7 +491,7 @@
     {
       var str = "<div style='background-color: rgb(68, 43, 157);'>", exp = v + "", sc = b != undefined, bn = 1, t = [];
         
-      if(PI){ str += "When we divide PI into parts we end up with partial sums that are too big in size. Instead of taking the full part away we only take <p class='g'>6</p> away after the first rational part.<br /><br />"; }  
+      if(PI){ str += "When we divide PI into parts we end up with partial sums that are too big in size. Instead of taking the full part away we only take <p class='g'>6</p> away after the first rational part.<hr /><br />"; }  
         
       for (var i = 0, r = v.reValue(); i < n; i++)
       {
@@ -1049,7 +1049,7 @@
         "<h1>Generalized forum.</h1>" +
         "In the generalized expansion forum, we stop dividing our value into one to find the next part. We pick the values we wish to divide by.<br /><br />" +
         "For example, dividing into 2 instead of 1 makes all parts twice as large, and dividing into 3 instead of 1 makes all parts three times as large.<br /><br />" +
-        "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratio.<br /><br />" +
+        "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratios.<br /><br />" +
         "If we know the vector ratio combination of a number, we can show it in a regular generalized sequential expansion.<br /><br />" +
         "The tool below lets you pick what you want to divide by.<br /><br />" +
         "<table border='1' style='width:100%;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
@@ -1083,53 +1083,33 @@
 
       out.innerHTML += "<h1>2D ratios</h1>";
 
-      out.innerHTML += "Every square root and every 2D vector-summed ratio has a point at which the added parts repeat. These ratios all reduce to the same value for all added parts A and B.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true);' /><input type='button' value='Solve random 2D vector' onclick='solve2D(false);' />";
+      out.innerHTML += "Every square root and every 2D vector-summed ratio has a point at which the added parts repeat. These ratios all reduce to the same value for all added parts A and B.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true,false);' /> <input type='button' value='Solve random 2D vector' onclick='solve2D(false,false);' /><br /><br /><input type='button' value='Solve random complex square root' onclick='solve2D(true,true);' /> <input type='button' value='Solve random complex 2D vector' onclick='solve2D(false,true);' />";
 
       out.innerHTML += "<br /><br /><div id='seq' style='background-color: rgb(68, 43, 157);'></div>";
 
       out.innerHTML += "<h2>The rational part</h2>";
 
-      out.innerHTML += "The first part in A and the first part in B do not have to match. This first part is called the rational part.<br /><br />";
+      out.innerHTML += "The first parts in A and B do not have to match in a 2D ratio. The point at which A and B match can be say 4 parts in.<br /><br />";
       
-      out.innerHTML += "The first two numbers in the 2D vector ratio determine the rational part.<br /><br />";
-      
-      out.innerHTML += "The difference between the last two numbers in the 2D vector ratio determines the A/B parts that remain the same through the number.<br /><br />";
+      out.innerHTML += "The last two numbers in the 2D vector ratio determine the A by B parts. The first number determines the size of the A by B parts.<br /><br />";
 
-      out.innerHTML += "Knowing the vector ratio also reveals the vector's generalized expansion.<br /><br />";
-      
-      out.innerHTML += "The rational part of a square root is always half in size of the matching A/B parts.<br /><br />";
-      
-      out.innerHTML += "The rational part is also similar to having a simple 2D ratio of 0.414213562.<br /><br />";
+      out.innerHTML += "In order for A by B to remain whole numbers we can express what A and B are divided by as the first few parts before we match the values recurrence as whole number in A by B.<br /><br />";
 
-      var a = [0, 2, 2, 2, 2, 2, 2, 2], b = [1, 1, 1, 1, 1, 1, 1, 1];
+      out.innerHTML += "This way A and B are never fractional and remain whole numbers after the rational parts that express the fractional.<br /><br />";
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
-      
-      out.innerHTML += "A square has four sides, and if we divide by one side, we get four.<br /><br />";
-      
-      out.innerHTML += "If we make one side a little longer by adding the value 4 + 0.414213562 = 4.414213562.<br /><br />";
+      out.innerHTML += "Knowing a numbers vector ratio also reveals the vector's generalized expansion.<br /><br />";
 
-      out.innerHTML += "It is no longer a square but a new kind of shape.<br /><br />";
+      out.innerHTML += "By knowing the first value in the vector we can compute the rational parts where A and B line up.<br /><br />";
 
-      var a = [4, 2, 2, 2, 2, 2, 2, 2], b = [1, 1, 1, 1, 1, 1, 1, 1];
+      out.innerHTML += "We use the colon to mark the rational parts before the ratio.<br /><br />";
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
-
-      out.innerHTML += "This same logic applies to shapes of any number of sides plus our ratio. The remainder after the first part is what actually carries the ratio.<br /><br />";
-      
-      out.innerHTML += "So the first part in A, and B is often called the rational part before we go into the remainder carrying the sequential ratio.<br /><br />";
-
-      out.innerHTML += "We use the colon to mark the rational part before the remainder into a ratio.<br /><br />";
-
-      out.innerHTML += "A=4:2,2,2,2,2,2,2<br />B=1:1,1,1,1,1,1,1<br /><br />";
-
-      out.innerHTML += "Sometimes the rational part matches with the remainder.<br />";
+      out.innerHTML += "A=0,1:4,4,4,4,4,4,4<br />B=1,1:3,3,3,3,3,3<br /><br />";
       
       out.innerHTML += "<h1>3D ratios and higher</h1>";
 
       out.innerHTML += "<img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' style='width:100%;max-width:2139px;' /><br /><br />";
 
-      out.innerHTML += "All 2D number ratios have a center point at which all A and B are the same per part after the rational part, which is a scale of the ones column. In which the ones are multiplied by a selected value.<br />";
+      out.innerHTML += "All 2D number ratios have a center point at which all A and B are the same per part after the rational parts. The rational parts only exist because we don't like to use fractional numbers in A/B parts otherwise we could just show all A/B in 2D ratios as always the same across. All 2D ratios are a scale of the ones column In which the ones are multiplied by a selected value for both A and B after the rational parts. When we go higher than a 2D vector A/B becomes counting numbers plus lower combinations in scale after the rational parts.<br />";
 
       out.innerHTML += "<h2>The natural logarithm</h2>";
 
@@ -1164,6 +1144,8 @@
 
       out.innerHTML += "All sequences and counting forums are in this pyramid structure, along with all possible number ratios. Also, all vector combinations have generalized expansion forums.<br /><br />";
 
+      out.innerHTML += "If you wish to see this in action in solving multidimensional data and sequences, see the <a target='_blank' href='https://recoskie.github.io/AI-Matrix/docs/Matrix%20Structure.html#dims'>matrix multidimensional data analyzer</a>.<br /><br />";
+
       a = [3, 6, 6, 6, 6, 6]; b = [1, 9, 25, 49, 81, 121];
 
       out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
@@ -1192,7 +1174,7 @@
 
       out.innerHTML += "All is divided into 4, and we also switch between adding and subtracting the next, which makes it a transcendental expansion.<br /><br />";
 
-      out.innerHTML += "All transcendental numbers can be expressed as factorial and power series. To translate back to a factorial expansion, we pair each subtraction with its corresponding factor.<br /><br />";
+      out.innerHTML += "All transcendental numbers can be expressed as factorial and power series. To translate back to a fraction expansion, we pair each subtraction with its corresponding factor.<br /><br />";
 
       out.innerHTML += "<p class='r'>4&div;1-4&div;3</p>+<p class='g'>4&div;5-4&div;7</p>+<p class='r'>4&div;9-4&div;11</p>... = 3.1415926535<br /><br />";
 
@@ -1212,9 +1194,9 @@
 
       out.innerHTML += "The world's fastest way of calculating PI is found by adding as many fractions as possible, reducing to the smallest fraction, and finding a way to add to another larger combined fraction. By doing this, we can compute PI in larger chunks, as papers call them, the kth terms.<br /><br />";
 
-      out.innerHTML += "All transcendental expansions have factorial expansions that compute the number at twice the speed, and all factorial expansions have generalized expansions, and generalized expansions have vector ratio combinations.<br /><br />";
+      out.innerHTML += "All transcendental expansions have fractional expansions that compute the number at twice the speed, and all fractional expansions have generalized expansions, and generalized expansions have vector ratio combinations.<br /><br />";
 
-      out.innerHTML += "However, not all factorial expansions and generalized expansions can be changed into two fractions that subtract together and add the next two that subtract together as a transcendental expansion.<br /><br />";
+      out.innerHTML += "However, not all fractional expansions and generalized expansions can be changed into two fractions that subtract together and add the next two that subtract together as a transcendental expansion.<br /><br />";
 
       out.innerHTML += "The set of transcendental numbers is smaller; however, it still allows us to sum numbers using simpler, smaller sequences.<br /><br />";
 
@@ -1298,66 +1280,159 @@
     Note sq=true use a random square else use a random 2D vector ratio.
     ***********************************************************************************/
 
-    function solve2D(sq)
+    function solve2D(sq,cp)
     {
-      var o = document.getElementById("seq"), v = 0, r = [];
+      var o = document.getElementById("seq"), v = 0, ve = [], f = [-1,0], r = [], eq = "";
 
       if(sq)
       {
-        while((v-(v&-1)) == 0){ v = Math.floor(Math.random() * 29 + 2)**0.5; }
-        o.innerHTML = "&radic;" + Math.round(v**2) + " = " + v + "<br /><br />";
-      }
-      else
-      {
-        v = new vect(1,Math.round(Math.random()*9+1),Math.round(Math.random()*9+1)); while(v.zero) { v = new vect(1,Math.round(Math.random()*9+1),Math.round(Math.random()*9+1)); }
-        o.innerHTML = "2D vector ratio " + v.v + " = " + (v=v.pv) + "<br /><br />";
-      }
-
-      var i = match2D(r = v.splitAll().r), a = [], b = [], sect = [], s = 0; if(i[0] != -1)
-      {
-        for(var i1 = 0;i1 < i[1];i1++)
-        {
-          a[i1] = r[i1] & -1; b[i1] = 1; if(i1 >= i[0]) { sect.push(a[i1]); } o.innerHTML += "<p class='yu'>1</p>&div;(" + r[i1].toFixed(5) + "-<p class='g'>" + a[i1] + "</p>)=";
-
-          o.innerHTML += "<p "+((i1==(i[0]-1)||(i1>=i[1]-2))?"class='" + (i1==i[1]-2 ?"b":"r"):"style='display:inline-block;")+"'>" + r[i1+1].toFixed(5) + "</p><br />";
-        }
-        a=a.concat(sect);for(;i1 < a.length;b[i1++]=1);
+        var v1 = 0, v2 = 0, v3 = 0, q = false, v = 0;
+        while(f[0] == -1){ q = Math.floor(Math.random() * 2) == 1; v1 = Math.floor(Math.random() * 29 + 2); v2 = Math.floor(Math.random() * 29 + 1); v3 = Math.floor(Math.random() * 29 + 2); v = (v1**0.5)+(q ? v2:0); v = cp ? v/v3:v; f = match2D(r = v.splitAll().r); }
         
-        o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
-
-        o.innerHTML += "The value <p class='r'>" + r[i[1]].toFixed(5) + "</p> recurs between parts <p class='g'>" + sect + "</p>.<br />";
-
-        o.innerHTML += "Since the value matches between parts <p class='g'>" + sect + "</p> then the parts <p class='g'>" + sect + "</p> recur forever is this 2D ratio.<br />";
-
-        o.innerHTML += "Solving for B by dividing the value just before the repeat <p class='b'>" + r[i[1]-1].toFixed(5) + "</p>&div;<p class='r'>" + r[i[1]].toFixed(5) + "</p> = " + (s=Math.round(r[i[1]-1]/r[i[1]])) + ".<br />";
-
-        o.innerHTML += "Gives us " + s + " and by setting B to " + s + " while finding the next part lines up the recurrence.<br /><br />";
-
-        v = v.split(v.reValue()&-1,s); while( v != 0 ){ v = v.split(v.reValue()&-1,s); } a = v.a; b = v.b; a[a.length-1] = a[a.length-2]; b[a.length-1] = b[a.length-2]; r = v.r;
-
-        for(var i1 = 0;i1 <= (i[0]+1);i1++)
-        {
-          o.innerHTML += "<p class='yu'>" + s + "</p>&div;(" + r[i1].toFixed(5) + "-<p class='g'>" + a[i1] + "</p>)=" + r[i1+1].toFixed(5) + "<br />";
-        }
-
-        o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
-
-        o.innerHTML += "<input type='button' value='Show expansion' onclick='genExpansion(" + v.calc() + ",[" + b + "])' />";
+        o.innerHTML = eq = (cp ? "(":"") + "&radic;" + v1 + (q ? "+" + v2 : "") + (cp ? ")&div;"+v3:"") + " = " + v + "<br /><br />";
       }
       else
       {
-        for(var i1 = 0;i1 < r.length-1;i1++)
-        {
-          o.innerHTML += "<p class='yu'>1</p>&div;(" + r[i1].toFixed(5) + "-<p class='g'>" + (r[i1]&-1) + "</p>)=" + r[i1+1].toFixed(5) + "<br />";
-        }
-        o.innerHTML += "<h2>No match found!</h2>";
+        v = new vect(cp ? Math.floor(Math.random()*9+2) : 1,Math.round(Math.random()*9+1),Math.round(Math.random()*9+1)); f = match2D(r = v.pv.splitAll().r);
+        
+        while(v.zero || f[0] == -1) { v = new vect(cp ? Math.floor(Math.random()*9+2) : 1,Math.round(Math.random()*9+1),Math.round(Math.random()*9+1)); f = match2D(r = v.pv.splitAll().r); }
+
+        o.innerHTML = eq = "2D vector ratio " + (ve=v.v) + " = " + (v=v.pv) + "<br /><br />";
       }
+
+      //Show how to find it.
+
+      o.innerHTML += "<hr /><h3>Finding generalized expansion from the value only</h3><hr />";
+
+      var a = [], b = [], sect = [], s = 0, bm = f[0] == 0 ? 1 : f[1]-1;
+      
+      for(var i = -1, e = f[1];i < e;)
+      {
+        if(i>=0)
+        {
+          a[i] = r[i] & -1; b[i] = 1; if(i >= f[0]) { sect.push(a[i]); } o.innerHTML += "<p class='yu'>1</p>&div;(" + r[i].toFixed(5) + "-<p class='g'>" + a[i] + "</p>)=";
+        }
+        else { o.innerHTML += "Value="; }
+
+        i+=1; o.innerHTML += "<p class='" + ((i==f[0]||i==f[1]) ? "r" : (i==bm ? "b" : "")) + "' style='display:inline-block;'>" + r[i].toFixed(5) + "</p><br />";
+      }
+
+      a=a.concat(sect);for(;i < a.length;b[i++]=1);
+        
+      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+        
+      o.innerHTML += "The value <p class='r'>" + r[f[0]].toFixed(5) + "</p> recurs between parts <p class='g'>" + sect + "</p>.<br />";
+
+      o.innerHTML += "Since the value matches between parts <p class='g'>" + sect + "</p> then the parts <p class='g'>" + sect + "</p> recur forever is this 2D ratio.<br />";
+        
+      var s = (f[0] == 0 ? r[f[0]]/r[bm] : r[bm]/r[f[0]]).limit(1/99999).getFract();
+      o.innerHTML += "Solving for B <p class='b'>" + (f[0] == 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p>&div;<p class='r'>" + (f[0] != 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p> = " + (s+0).toFixed(5) + ".<br />";
+
+      o.innerHTML += "Gives us " + s + " and by setting B to " + s + " while finding the next part lines up the recurrence.<br /><br />";
+
+      f[0]-=1;
+
+      v = v.split(v.reValue()&-1,f[0] <= 0 ? s : 1); while( v != 0 && v.length < 11 ){ v = v.split(v.reValue()&-1,f[0] <= v.length ? s : 1); } a = v.a; b = v.b; a[a.length-1] = a[a.length-2]; b[a.length-1] = b[a.length-2]; r = v.r;
+
+      for(var i=f[0]+2;i < a.length && a[i] == a[i-1];i++); for(;a.length>=i;v=v.remove(),a.pop(),b.pop()); for(var i = 0;i <= (f[0]+1);i++)
+      {
+        o.innerHTML += "<p class='yu'>" + v.b[i].toFixed(5) + "</p>&div;(" + r[i].toFixed(5) + "-<p class='g'>" + a[i] + "</p>)=" + r[i+1].toFixed(5) + "<br />";
+      }
+
+      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+
+      o.innerHTML += (b[b.length-1].y == 1 ? "<input type='button' value='Show expansion' onclick='genExpansion(" + v.calc() + ",[" + b + "])' /><br />" : "") + "<br />";
+
+      //Show the fast method.
+
+      o.innerHTML += "<hr /><h3>Finding generalized expansion from the calculation</h3><hr /><br />" + eq;
+
+      if(sq)
+      {
+        a = []; b = []; v = v.primitive();
+
+        a[0] = (v1**0.5)&-1; o.innerHTML += "The closest square to " + v1 + " is " + a[0] + "&times;" + a[0] + "=" + (a[0]*a[0]) + " making A=<p class='g'>" + a[0] + "</p>.<br />";
+
+        a[1] = a[0]*2; a[2] = a[1];
+
+        o.innerHTML += "All preceding values for A are twice the size making A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+
+        o.innerHTML += "By subtracting our square root to the closest square " + v1 + "-" + (a[0]*a[0]) + "=<p class='yu'>" + (b[0]=v1-(a[0]*a[0])) + "</p>.<br /><br />";
+
+        b[1] = b[0]; b[2] = b[0];
+          
+        o.innerHTML += "Makes B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
+
+        if(q)
+        {
+          o.innerHTML += "The first value for A=<p class='g'>"+a[0]+"</p> plus the value we added to the square " + v2; a[0] += v2; o.innerHTML += " making A =<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br /><br />";
+        }
+
+        o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+        o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
+
+        if(cp)
+        {
+          o.innerHTML += "Since we divided everything by " + v3 + " we also divide All B parts by " + v3 + " making.<br /><br />";
+
+          b[0] = (b[0] / v3).toFixed(5); b[1] = (b[1] / v3).toFixed(5); b[2] = (b[2] / v3).toFixed(5);
+
+          o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+          o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
+        }
+
+        for(var i = 0; i < a.length; i++) { v=v.split(a[i],b[i]); }
+
+        o.innerHTML += "Value=" + v.primitive() + "<br />";
+
+        for(var i = 0;i < v.length;i++)
+        {
+          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='g'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
+        }
+      }
+      else
+      {
+        ve[0] = -ve[0]; a = [ve[1],ve[1],ve[1]]; b = [ve[2],ve[2],ve[2]]; v = v.primitive();
+        o.innerHTML += ve[0]  + ",<p class='g'>" + ve[1] + "</p>," + ve[2] + " is A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+        o.innerHTML += ve[0]  + "," + ve[1] + ",<p class='yu'>" + ve[2] + "</p> is B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
+
+        if(cp)
+        {
+          o.innerHTML += "Since the first digit in the vector is " + ve[0] + " we also divide All A and B parts by " + ve[0] + " making.<br /><br />";
+
+          a[0] = (a[0] / ve[0]).toFixed(5); a[1] = (a[1] / ve[0]).toFixed(5); a[2] = (a[2] / ve[0]).toFixed(5);
+          b[0] = (b[0] / ve[0]).toFixed(5); b[1] = (b[1] / ve[0]).toFixed(5); b[2] = (b[2] / ve[0]).toFixed(5);
+
+          o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+          o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
+        }
+
+        for(var i = 0; i < a.length; i++) { v=v.split(a[i],b[i]); }
+
+        o.innerHTML += "Value=" + v.primitive() + "<br />";
+
+        console.log(v);
+
+        for(var i = 0;i < v.length;i++)
+        {
+          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='g'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
+        }
+      }
+
+      if(cp) { o.innerHTML += "<h3>The method to cancel out the fractional B parts by adjusting the A parts so that A and B are whole numbers is not going to be shown here to keep this short and simple.</h3>"; }
     }
-    function match2D(r) { for(var i1 = 1, c = 0;i1 < r.length;i1++) { c = Math.floor(r[i1] * 1000);for(var i2=1;i2<r.length;i2++) { if(c == Math.floor(r[i2] * 1000) && i1 != i2) { return([i1,i2]); } } } return([-1,0]); }
+
+    function match2D(r) { for(var i1 = 0, c = 0;i1 < r.length;i1++) { c = Math.floor(r[i1] * 10000);for(var i2=0;i2<r.length;i2++) { if(c == Math.floor(r[i2] * 10000) && i1 != i2) { return([i1,i2]); } } } return([-1,0]); }
+
+    function test()
+    {
+      genExpansion(1, [1], true, false);
+      document.getElementsByTagName("h1")[1].scrollIntoView();
+    }
   </script>
 </head>
 
-<body>
+<body onload="test()">
   <div class="page" style="overflow: scroll-y;">
     <table border="1" style="width:100%;">
       <tr>
