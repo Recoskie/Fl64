@@ -1079,9 +1079,24 @@
 
       out.innerHTML += "If both the added parts A and B (Scale) are patterns per part, then the fractions are also patterns and can be expressed as factorials and power series, or as two added whole numbers that change in ratio, which are then divided together to form the number ratio at higher and higher accuracy.<br /><br />";
 
-      out.innerHTML += "Additionally, all numbers should have generalized expansion patterns, even if they are hard to find. Even all vector-summed ratios have generalized forms.<br />";
+      out.innerHTML += "Additionally, all numbers should have generalized expansion patterns, even if they are hard to find. Even all vector-summed ratios have generalized forms.<br /><br />";
 
-      out.innerHTML += "<h1>2D ratios</h1>";
+      out.innerHTML += "Explain how to find and compute nth dimensional numbers and PI? <input type='button' value='Show Info' onclick='explainNthDimGen(this);' />";
+
+      out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
+
+      document.getElementsByTagName("table")[0].scrollIntoView();
+    }
+
+    /***********************************************************************************
+    Show how nth dimensional numbers are solved and higher using generalized form if user prompts.
+    ***********************************************************************************/
+
+    function explainNthDimGen(out)
+    {
+      out.outerHTML = "<h1>2D ratios</h1><div id='info'></div>"; out=document.getElementById("info");
+
+      console.log(out);
 
       out.innerHTML += "Every square root and every 2D vector-summed ratio has a point at which the added parts repeat. These ratios all reduce to the same value for all added parts A and B.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true,false);' /> <input type='button' value='Solve random 2D vector' onclick='solve2D(false,false);' /><br /><br /><input type='button' value='Solve random complex square root' onclick='solve2D(true,true);' /> <input type='button' value='Solve random complex 2D vector' onclick='solve2D(false,true);' />";
 
@@ -1090,16 +1105,14 @@
       out.innerHTML += "<h2>The rational part</h2>";
 
       out.innerHTML += "The first parts in A and B do not have to match in a 2D ratio. The point at which A and B match can be say 4 parts in.<br /><br />";
-      
-      out.innerHTML += "The last two numbers in the 2D vector ratio determine the A by B parts. The first number determines the size of the A by B parts.<br /><br />";
 
       out.innerHTML += "In order for A by B to remain whole numbers we can express what A and B are divided by as the first few parts before we match the values recurrence as whole number in A by B.<br /><br />";
 
-      out.innerHTML += "This way A and B are never fractional and remain whole numbers after the rational parts that express the fractional.<br /><br />";
+      out.innerHTML += "This way A and B are never fractional and remain whole numbers after the rational parts that express the fractional before the sequence.<br /><br />";
 
       out.innerHTML += "Knowing a numbers vector ratio also reveals the vector's generalized expansion.<br /><br />";
 
-      out.innerHTML += "By knowing the first value in the vector we can compute the rational parts where A and B line up.<br /><br />";
+      out.innerHTML += "By knowing the first value in the vector we can compute the rational parts where A and B line up best as whole numbers.<br /><br />";
 
       out.innerHTML += "We use the colon to mark the rational parts before the ratio.<br /><br />";
 
@@ -1109,7 +1122,7 @@
 
       out.innerHTML += "<img src='https://recoskie.github.io/AI-Matrix/docs/figs/fig1.jpg' style='width:100%;max-width:2139px;' /><br /><br />";
 
-      out.innerHTML += "All 2D number ratios have a point at which all A and B are the same whole numbers per part after the rational parts. The rational parts only exist because we don't like to use fractional numbers in A and B parts otherwise we could just show all A and B in 2D ratios as always the same across. All 2D ratios are a scale of the ones column In which the ones are multiplied by a selected value for both A and B after the rational parts. When we go higher than a 2D vector A and B becomes counting numbers plus lower combinations in scale after the rational parts.<br />";
+      out.innerHTML += "All 2D number ratios have a point at which all A and B are the same whole numbers per part after the rational parts. All 2D ratios are a scale of the ones column In which the ones are multiplied by a selected value for both A and B after the rational parts. When we go higher than a 2D vector A and B becomes counting numbers plus lower combinations in scale after the rational parts.<br />";
 
       out.innerHTML += "<h2>The natural logarithm</h2>";
 
@@ -1207,10 +1220,6 @@
       out.innerHTML += "The following <a target='_blank' href='https://recoskie.github.io/Fl64/'>tool</a> lets you play around with generalized number expansions and transformations. It has many more examples.<br /><br />";
 
       out.innerHTML += "However, if we solve the vector combination of numbers, we also obtain its generalized expansion. This enables a much faster algorithm that can find solutions to all number patterns and ratios.";
-
-      out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
-
-      document.getElementsByTagName("table")[0].scrollIntoView();
     }
 
     /***********************************************************************************
