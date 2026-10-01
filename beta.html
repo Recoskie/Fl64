@@ -903,7 +903,7 @@
     ***********************************************************************************/
 
     var isVect = false, isPhi = false, getInput = function ()
-    {
+    {   
       n = document.getElementById("iv").value; parts = document.getElementById("pt").value;
 
       var bv = [], out = document.getElementById("out"); isPhi = true;
@@ -1001,6 +1001,8 @@
       }
 
       out.innerHTML += "Note that a generalized forum allows us to express complex ratios as simple sums of regular parts that don't jump chaotically. Would you like to learn about the generalized expansion forum? <input type='button' value='Show info' onclick='genExpansion(" + n.calc() + ",[2, 3, 4],true);' />.<br /><br /><hr />";
+
+      document.getElementById("y").scrollIntoView();
     }
 
     /***********************************************************************************
@@ -1043,7 +1045,7 @@
       if (bd)
       {
         out = document.getElementsByClassName("page")[0]; splitWorkData = out.innerHTML;
-        out.innerHTML = "<table border='1' style='width:100%;''>" +
+        out.innerHTML = "<div id='y' style='width:100%;height:48px;'></div><table border='1' style='position:fixed;top:0px;width:100%;''>" +
         "<tr><td><center>Value</center></td><td rowspan='2' style='width:100%;''><input style='width:100%;height:3em;' type='button' value='calc' onclick='genInput();' /></td></tr>" +
         "<tr><td><input type='text' value='" + val + "' id='iv' onclick='this.select();' /></td></tr></table>" +
         "<h1>Generalized forum.</h1>" +
@@ -1052,7 +1054,7 @@
         "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratios.<br /><br />" +
         "If we know the vector ratio combination of a number, we can show it in a regular generalized sequential expansion.<br /><br />" +
         "The tool below lets you pick what you want to divide by.<br /><br />" +
-        "<table border='1' style='width:100%;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
+        "<table border='1' style='position:sticky;left:0px;top:48px;width:100%;scroll-margin-top:48px;z-index:2;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
         "<input style='width:50%;height:3em;' type='button' value='Use input' onclick='genInput();' /><input style='width:50%;height:3em;' type='button' value='Random Input' onclick='genInput(true);' /></td></tr>" +
         "<tr><td><input type='text' value='" + b + "' id='bD' /></td></tr></table><br /><div id='out'></div>";
       }
@@ -1083,9 +1085,9 @@
 
       out.innerHTML += "Explain how to find and compute nth dimensional numbers and PI? <input type='button' value='Show Info' onclick='explainNthDimGen(this);' />";
 
-      out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementsByTagName(\"table\")[0].scrollIntoView();' /><hr /><br />";
+      out.innerHTML += "<br /><br /><hr />Go back to the vector expansion tool <input type='button' value='back' onclick='out = document.getElementsByClassName(\"page\")[0];out.innerHTML = splitWorkData;document.getElementById(\"y\")[0].scrollIntoView();' /><hr /><br />";
 
-      document.getElementsByTagName("table")[0].scrollIntoView();
+      document.getElementById("y").scrollIntoView();
     }
 
     /***********************************************************************************
@@ -1095,8 +1097,6 @@
     function explainNthDimGen(out)
     {
       out.outerHTML = "<h1>2D ratios</h1><div id='info'></div>"; out=document.getElementById("info");
-
-      console.log(out);
 
       out.innerHTML += "Every square root and every 2D vector-summed ratio has a point at which the added parts repeat. These ratios all reduce to the same value for all added parts A and B.<br /><br /><input type='button' value='Solve random square root' onclick='solve2D(true,false);' /> <input type='button' value='Solve random 2D vector' onclick='solve2D(false,false);' /><br /><br /><input type='button' value='Solve random complex square root' onclick='solve2D(true,true);' /> <input type='button' value='Solve random complex 2D vector' onclick='solve2D(false,true);' />";
 
@@ -1434,8 +1434,8 @@
 </head>
 
 <body>
-  <div class="page" style="overflow: scroll-y;">
-    <table border="1" style="width:100%;">
+  <div class="page" style="height:100%;overflow: scroll-y;">
+    <div id="y" style="width:100%;height:48px;"></div><table border="1" style="position:fixed;top:0px;width:100%;">
       <tr>
         <td>
           <center>Input</center>
