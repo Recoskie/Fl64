@@ -351,14 +351,14 @@
 
     function addParts(v, n)
     {
-      var t1 = "<p class='g'>" + v.val.a[0] + "</p>", t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>Receptacle Parts = <p class='g'>" + v.val.a + "</p><br /><br />", n = Math.min(n || v.val.a.length, v.val.a.length);
+      var t1 = "<p class='b'>" + v.val.a[0] + "</p>", t2 = "", str = "<div style='background-color: rgb(68, 43, 157);'>Receptacle Parts = <p class='b'>" + v.val.a + "</p><br /><br />", n = Math.min(n || v.val.a.length, v.val.a.length);
 
       str += t1 + " = " + v.val.a[0] + "<br /><br />";
 
       for (var i = 1; i < n; i++)
       {
-        t1 = t1 + "+<p class='yu'>" + v.val.b[i - 1] + "</p>&div;"; str += t1 + "<p class='g'>" + v.val.a[i] + "</p>" + t2 + " = " + v.val.calc(0, i) + "<br />" + (i < (n - 1) ? "<br />" : "");
-        t1 += "(<p class='g'>" + v.val.a[i] + "</p>"; t2 += ")";
+        t1 = t1 + "+<p class='yu'>" + v.val.b[i - 1] + "</p>&div;"; str += t1 + "<p class='b'>" + v.val.a[i] + "</p>" + t2 + " = " + v.val.calc(0, i) + "<br />" + (i < (n - 1) ? "<br />" : "");
+        t1 += "(<p class='b'>" + v.val.a[i] + "</p>"; t2 += ")";
       }
 
       return (str + (i < v.val.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this," + (n + 1) + ",[" + v.val.a + "],[" + v.val.b + "]);' /></div>" : "") + "</div>");
@@ -366,7 +366,7 @@
 
     function addNextPart(e, n, parts, b)
     {
-      var t = new Number(NaN).split(parts[0], b[0]), t1 = "<p class='g'>" + parts[0] + "</p>", o = "", t2 = ""; for (var i = 1; i < n; i++) { t = t.split(parts[i], b[i]); t1 = t1 + "+<p class='yu'>" + b[i - 1] + "</p>&div;"; o = t1 + "<p class='g'>" + parts[i] + "</p>" + t2 + " = "; t1 += "(<p class='g'>" + parts[i] + "</p>"; t2 += ")"; }
+      var t = new Number(NaN).split(parts[0], b[0]), t1 = "<p class='b'>" + parts[0] + "</p>", o = "", t2 = ""; for (var i = 1; i < n; i++) { t = t.split(parts[i], b[i]); t1 = t1 + "+<p class='yu'>" + b[i - 1] + "</p>&div;"; o = t1 + "<p class='b'>" + parts[i] + "</p>" + t2 + " = "; t1 += "(<p class='b'>" + parts[i] + "</p>"; t2 += ")"; }
 
       e.parentElement.innerHTML = "<br />" + o + t.calc() + (i < parts.length ? "<div><input type='button' value='Add next part' onclick='addNextPart(this," + (i + 1) + ",[" + parts + "],[" + b + "]);' /></div>" : "");
     }
@@ -433,7 +433,7 @@
     }
 
     /***********************************************************************************
-    Demonstrate how the process works in reverse..
+    Demonstrate how the process works in reverse.
     ***********************************************************************************/
 
     function getPartsFract(dif, b)
@@ -446,20 +446,22 @@
       {
         t = ((fx / fy) + "").split("."); curParts.push(t[0]);
 
-        str += "<br /><br /><p class='" + (sw ? "r" : "g") + "'>" + fx + "</p>&div;<p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> = <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "</div> the number of times it divides evenly is " + "<p class='b'>" + t[0] + "</p>, which makes our reciprocal parts <p class='b'>" + curParts + "</p>...<br />";
+        str += "<br /><hr /><p class='" + (sw ? "r" : "g") + "'>" + fx + "</p>&div;<p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> = <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "</div> the number of times it divides evenly is " + "<p class='b'>" + t[0] + "</p>, which makes our reciprocal parts <p class='b'>" + curParts + "</p>...<br />";
 
-        str += "We multiply the number we are dividing by and subtract it to leave what does not fit " + "<p class='" + (sw ? "r" : "g") + "'>" + fx + "</p> - <p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> &times; <p class='b'>" + curParts[curParts.length - 1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (r = (fx - fy * curParts[curParts.length - 1])) + "</p>";
+        str += "Leave what does not fit " + "<p class='" + (sw ? "r" : "g") + "'>" + fx + "</p> - <p class='" + (sw ? "g" : "r") + "'>" + fy + "</p> &times; <p class='b'>" + curParts[curParts.length - 1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (r = (fx - fy * curParts[curParts.length - 1])) + "</p>";
 
         fx = fy; fy = r;
 
-        if (sc) { str += " The remainder is divided by B (Scale) <p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>&div;<p class='yu'>" + b[curParts.length - 1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (fy /= b[curParts.length - 1]) + "</p><br />"; }
+        if (sc) { str += " divided by B (Scale) <p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>&div;<p class='yu'>" + b[curParts.length - 1] + "</p> = <p class='" + (sw ? "r" : "g") + "'>" + (fy /= b[curParts.length - 1]) + "</p>"; }
         
-        str += "<br />The remaining amount goes into the value we divided by to find the next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p>";
+        str += " Next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p> = " + (fx/fy) + "<br /><br />Is also<br />";
+
+        str += "<br /><p class='yu'>" + (sc ? b[curParts.length - 1] : 1) + "</p>&div;(<p class='b'>" + t[0] + "</p>" + (t[1] ? "." + t[1] : "") + "-<p class='b'>" + t[0] + "</p>) = " + (fx/fy) + "<br /><br />Which is also the same as how we divide a number to its next receptacle part.";
 
         sw = !sw;
       }
 
-      str += "<br /><br /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>";
+      str += "<br /><hr /><p class='r'>The resulting fraction divides to zero and there are no more parts.</p>";
 
       if (!sc) { str += "<br />When we take away the value before the decimal point and divide the value into one we are also asking how many times the value divides evenly to the next part without the fraction.<br /><br />"; }
 
@@ -469,9 +471,9 @@
       {
         r = Math.floor(Math.random() * 10) + 7; fx = curFx * r; fy = curFy * r;
 
-        str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='b'>" + r + "</p>.<br /><br />";
+        str += "<hr /><br />Additionally we can make both sides of the fraction larger by multiplying both sides by a random value like <p class='gr'>" + r + "</p>.<br /><br />";
 
-        str += "<p class='r'>" + curFx + "</p>&times<p class='b'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='b'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx / fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
+        str += "<p class='r'>" + curFx + "</p>&times<p class='gr'>" + r + "</p>&div;<p class='g'>" + curFy + "</p>&times<p class='gr'>" + r + "</p> is <p class='r'>" + fx + "</p>&div;<p class='g'>" + fy + "</p> = " + (fx / fy) + " Which still results in the same number value with a larger fraction.<br /><br />";
 
         str += "Even though we made both sides of the fraction larger it will break down into the same parts. <input type='button' value='Reverse fraction " + fx + "&div;" + fy + "' onclick='getPartsFract(" + r + ");' /><br /><br />";
 
@@ -491,33 +493,33 @@
     {
       var str = "<div style='background-color: rgb(68, 43, 157);'>", exp = v + "", sc = b != undefined, bn = 1, t = [];
         
-      if(PI){ str += "When we divide PI into parts we end up with partial sums that are too big in size. Instead of taking the full part away we only take <p class='g'>6</p> away after the first rational part.<hr /><br />"; }  
+      if(PI){ str += "When we divide PI into parts we end up with partial sums that are too big in size. Instead of taking the full part away we only take <p class='b'>6</p> away after the first rational part.<hr /><br />"; }  
         
       for (var i = 0, r = v.reValue(); i < n; i++)
       {
         t = (r + "").split(".");
 
-        str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + " is <p class='g'>" + t[0] + "</p>, ";
+        str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + " is <p class='b'>" + t[0] + "</p>, ";
         
         if(!PI || r < 4)
         {
-          str += "which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+          str += "which makes our reciprocal parts <p class='b'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
           
           bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
 
           str += "We take away the value before the decimal point, leaving " + r + ".<br />";
 
-          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='b'>" + t[0] + "</p>)";
         }
         else
         {
-          str += "Instead we only take <p class='g'>6</p> away which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
+          str += "Instead we only take <p class='b'>6</p> away which makes our reciprocal parts <p class='b'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
           
           bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(6, bn); r -= 6;
 
-          str += "We take away <p class='g'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
+          str += "We take away <p class='b'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
 
-          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>6</p>)";
+          exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='b'>6</p>)";
         }
         
         if (v == 0)
@@ -556,27 +558,27 @@
 
       var str = "", sc = b != undefined, t = []; for (var i = 0; i < parts.length; v = v.split(parts[i], sc ? b[Math.min(b.length - 1, i)] : 1), i++); var r = v.reValue(); t = (r + "").split(".");
 
-      str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + "</div> is <div style='white-space: nowrap; display: inline-block;'><p class='g'>" + t[0] + "</p>, ";
+      str += "The value before the decimal point of <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>" + (t.length > 0 ? "." + t[1] : "") + "</div> is <div style='white-space: nowrap; display: inline-block;'><p class='b'>" + t[0] + "</p>, ";
 
       if(!PI || r < 4)
       {
-        str += "which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
+        str += "which makes our reciprocal parts <p class='b'>" + (v.length != 0 ? v.a + "," : "") + t[0] + "</p></div>...<br />";
           
         bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(r & -1, bn); r -= r & -1;
 
         str += "We take away the value before the decimal point, leaving " + r + ".<br />";
 
-        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>" + t[0] + "</p>)";
+        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='b'>" + t[0] + "</p>)";
       }
       else
       {
-        str += "Instead we only take <p class='g'>6</p> away which makes our reciprocal parts <p class='g'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
+        str += "Instead we only take <p class='b'>6</p> away which makes our reciprocal parts <p class='b'>" + (v.length != 0 ? v.a + "," : "") + "6</p></div>...<br />";
           
         bn = sc ? b[Math.min(b.length - 1, i)] : 1; v = v.split(6, bn); r -= 6;
 
-        str += "We take away <p class='g'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
+        str += "We take away <p class='b'>6</p>, leaving " + r + ".<br /><br />As long as the value we are dividing into is larger we can divide to the next part.<br />";
 
-        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='g'>6</p>)";
+        exp = "<p class='yu'>" + bn + "</p>&div;(" + exp + "-<p class='b'>6</p>)";
       }
 
       if (v == 0)
@@ -981,7 +983,7 @@
 
       out.innerHTML += "The reciprocal parts can be added together into reciprocal fractions.<br /><br />";
 
-      out.innerHTML += "<div id='fRev'>" + addPartsFract(n.a, undefined, 3) + "<br />" + (isPhi ? spPat() : "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement);' /><br /><br /></div>") + "</div>";
+      out.innerHTML += "<div style='scroll-margin-top:48px;' id='fRev'>" + addPartsFract(n.a, undefined, 3) + "<br />" + (isPhi ? spPat() : "<div>Each receptacle part adds together forming a spiral and particular number.<input type='button' value='Show more info' onclick='spPat(this.parentElement);' /><br /><br /></div>") + "</div>";
 
       out.innerHTML += "All numbers can be taken apart this way and added to their smallest fraction. It does not matter if we go by value or by fraction; the show in reverse option shows this in detail.<br /><br >";
 
@@ -1054,7 +1056,7 @@
         "Although simple, this allows us to express chaotic sequences as regular sequential expansions, whereas we could have expressed them only as vector-summed expansion ratios.<br /><br />" +
         "If we know the vector ratio combination of a number, we can show it in a regular generalized sequential expansion.<br /><br />" +
         "The tool below lets you pick what you want to divide by.<br /><br />" +
-        "<table border='1' style='position:sticky;left:0px;top:48px;width:100%;scroll-margin-top:48px;z-index:2;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
+        "<table border='1' style='position:sticky;left:0px;top:48px;width:100%;scroll-margin-top:48px;'><tr><td><center>Scale (B)</center></td><td rowspan='2' style='width:100%;'>" +
         "<input style='width:50%;height:3em;' type='button' value='Use input' onclick='genInput();' /><input style='width:50%;height:3em;' type='button' value='Random Input' onclick='genInput(true);' /></td></tr>" +
         "<tr><td><input type='text' value='" + b + "' id='bD' /></td></tr></table><br /><div id='out'></div>";
       }
@@ -1069,9 +1071,9 @@
 
       out.innerHTML = "Solve for B algorithm <input type='button' value='Find B' onclick='findB(this,"+n.calc()+",2);' /><br /><br />";
 
-      out.innerHTML += getParts(val, 2, b, isPI) + "<br />This makes our receptacle parts <p class='g'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
+      out.innerHTML += getParts(val, 2, b, isPI) + "<br />This makes our receptacle parts <p class='b'>" + n.a + "</p> which the standard name is called parts \"A\".<br /><br />";
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + n.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + n.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + n.a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + n.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       out.innerHTML += "The standard name for what we divide into is called parts \"B\" = <p class='yu'>" + n.b + "</p>. Normally, all \"B\" are one in value, so we never show both A and B this way.<br /><br />"; n.val = n;
 
@@ -1134,7 +1136,7 @@
 
       var a = [2, 1, 2, 3, 4, 5, 6, 7], b = [1, 1, 2, 3, 4, 5, 6, 7];
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       var v = NaN; for (var i = 0; i < a.length; v = v.split(a[i], b[i]), i++); out.innerHTML += "<input type='button' value='Show natural log' onclick='genExpansion(" + v.calc() + ",[" + b + "])' />";
 
@@ -1161,7 +1163,7 @@
 
       a = [3, 6, 6, 6, 6, 6]; b = [1, 9, 25, 49, 81, 121];
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       var v = NaN; for (var i = 0; i < a.length; v = v.split(a[i], b[i]), i++); out.innerHTML += "<input type='button' value='Show PI' onclick='genExpansion(" + v.calc() + ",[" + b + "],false,true)' /><br /><br />";
 
@@ -1319,23 +1321,23 @@
       {
         if(i>=0)
         {
-          a[i] = r[i] & -1; b[i] = 1; if(i >= f[0]) { sect.push(a[i]); } o.innerHTML += "<p class='yu'>1</p>&div;(" + r[i].toFixed(5) + "-<p class='g'>" + a[i] + "</p>)=";
+          a[i] = r[i] & -1; b[i] = 1; if(i >= f[0]) { sect.push(a[i]); } o.innerHTML += "<p class='yu'>1</p>&div;(" + r[i].toFixed(5) + "-<p class='b'>" + a[i] + "</p>)=";
         }
         else { o.innerHTML += "Value="; }
 
-        i+=1; o.innerHTML += "<p class='" + ((i==f[0]||i==f[1]) ? "r" : (i==bm ? "b" : "")) + "' style='display:inline-block;'>" + r[i].toFixed(5) + "</p><br />";
+        i+=1; o.innerHTML += "<p class='" + ((i==f[0]||i==f[1]) ? "r" : (i==bm ? "gr" : "")) + "' style='display:inline-block;'>" + r[i].toFixed(5) + "</p><br />";
       }
 
       a=a.concat(sect);for(;i < a.length;b[i++]=1);
         
-      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
         
-      o.innerHTML += "The value <p class='r'>" + r[f[0]].toFixed(5) + "</p> recurs between parts <p class='g'>" + sect + "</p>.<br />";
+      o.innerHTML += "The value <p class='r'>" + r[f[0]].toFixed(5) + "</p> recurs between parts <p class='b'>" + sect + "</p>.<br />";
 
-      o.innerHTML += "Since the value matches between parts <p class='g'>" + sect + "</p> then the parts <p class='g'>" + sect + "</p> recur forever in 2D ratio.<br />";
+      o.innerHTML += "Since the value matches between parts <p class='b'>" + sect + "</p> then the parts <p class='b'>" + sect + "</p> recur forever in 2D ratio.<br />";
         
       var s = (f[0] == 0 ? r[f[0]]/r[bm] : r[bm]/r[f[0]]).limit(1/99999).getFract();
-      o.innerHTML += "Solving for B <p class='b'>" + (f[0] == 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p>&div;<p class='r'>" + (f[0] != 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p> = " + (s+0).toFixed(5) + ".<br />";
+      o.innerHTML += "Solving for B <p class='gr'>" + (f[0] == 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p>&div;<p class='r'>" + (f[0] != 0 ? r[f[0]] : r[bm]).toFixed(5) + "</p> = " + (s+0).toFixed(5) + ".<br />";
 
       o.innerHTML += "Gives us " + s + " and by setting B to " + s + " while finding the next part lines up the recurrence.<br /><br />";
 
@@ -1345,12 +1347,12 @@
 
       for(var i=f[0]+2;i < a.length && a[i] == a[i-1];i++); for(;a.length>=i;v=v.remove(),a.pop(),b.pop()); for(var i = 0;i <= (f[0]+1);i++)
       {
-        o.innerHTML += "<p class='yu'>" + v.b[i].toFixed(5) + "</p>&div;(" + r[i].toFixed(5) + "-<p class='g'>" + a[i] + "</p>)=" + r[i+1].toFixed(5) + "<br />";
+        o.innerHTML += "<p class='yu'>" + v.b[i].toFixed(5) + "</p>&div;(" + r[i].toFixed(5) + "-<p class='b'>" + a[i] + "</p>)=" + r[i+1].toFixed(5) + "<br />";
       }
 
-      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='g'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      o.innerHTML += "<br /><table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
-      o.innerHTML += (b[b.length-1].y == 1 ? "<input type='button' value='Show expansion' onclick='genExpansion(" + v.calc() + ",[" + b + "])' /><br />" : "") + "<br />";
+      o.innerHTML += (b[b.length-1].y == 1 ? "<input type='button' value='Show expansion' onclick='genExpansion(" + v.primitive() + ",[" + b + "])' /><br />" : "") + "<br />";
 
       //Show the fast method.
 
@@ -1360,11 +1362,11 @@
       {
         a = []; b = []; v = v.primitive();
 
-        a[0] = (v1**0.5)&-1; o.innerHTML += "The closest square to " + v1 + " is " + a[0] + "&times;" + a[0] + "=" + (a[0]*a[0]) + " making A=<p class='g'>" + a[0] + "</p>.<br />";
+        a[0] = (v1**0.5)&-1; o.innerHTML += "The closest square to " + v1 + " is " + a[0] + "&times;" + a[0] + "=" + (a[0]*a[0]) + " making A=<p class='b'>" + a[0] + "</p>.<br />";
 
         a[1] = a[0]*2; a[2] = a[1];
 
-        o.innerHTML += "All preceding values for A are twice the size making A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+        o.innerHTML += "All preceding values for A are twice the size making A=<p class='b'>" + a.join("</p>,<p class='b'>") + "</p>...<br />";
 
         o.innerHTML += "By subtracting our square root to the closest square " + v1 + "-" + (a[0]*a[0]) + "=<p class='yu'>" + (b[0]=v1-(a[0]*a[0])) + "</p>.<br /><br />";
 
@@ -1374,10 +1376,10 @@
 
         if(q)
         {
-          o.innerHTML += "The first value for A=<p class='g'>"+a[0]+"</p> plus the value we added to the square " + v2; a[0] += v2; o.innerHTML += " making A =<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br /><br />";
+          o.innerHTML += "The first value for A=<p class='b'>"+a[0]+"</p> plus the value we added to the square " + v2; a[0] += v2; o.innerHTML += " making A =<p class='b'>" + a.join("</p>,<p class='b'>") + "</p>...<br /><br />";
         }
 
-        o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+        o.innerHTML += "A=<p class='b'>" + a.join("</p>,<p class='b'>") + "</p>...<br />";
         o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
 
         if(cp)
@@ -1386,7 +1388,7 @@
 
           b[0] = (b[0] / v3).toFixed(5); b[1] = (b[1] / v3).toFixed(5); b[2] = (b[2] / v3).toFixed(5);
 
-          o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+          o.innerHTML += "A=<p class='b>" + a.join("</p>,<p class='b'>") + "</p>...<br />";
           o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
         }
 
@@ -1396,13 +1398,13 @@
 
         for(var i = 0;i < v.length;i++)
         {
-          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='g'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
+          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='b'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
         }
       }
       else
       {
         ve[0] = -ve[0]; a = [ve[1],ve[1],ve[1]]; b = [ve[2],ve[2],ve[2]]; v = v.primitive();
-        o.innerHTML += ve[0]  + ",<p class='g'>" + ve[1] + "</p>," + ve[2] + " is A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+        o.innerHTML += ve[0]  + ",<p class='b'>" + ve[1] + "</p>," + ve[2] + " is A=<p class='b'>" + a.join("</p>,<p class='b'>") + "</p>...<br />";
         o.innerHTML += ve[0]  + "," + ve[1] + ",<p class='yu'>" + ve[2] + "</p> is B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
 
         if(cp)
@@ -1412,7 +1414,7 @@
           a[0] = (a[0] / ve[0]).toFixed(5); a[1] = (a[1] / ve[0]).toFixed(5); a[2] = (a[2] / ve[0]).toFixed(5);
           b[0] = (b[0] / ve[0]).toFixed(5); b[1] = (b[1] / ve[0]).toFixed(5); b[2] = (b[2] / ve[0]).toFixed(5);
 
-          o.innerHTML += "A=<p class='g'>" + a.join("</p>,<p class='g'>") + "</p>...<br />";
+          o.innerHTML += "A=<p class='b'>" + a.join("</p>,<p class='b'>") + "</p>...<br />";
           o.innerHTML += "B=<p class='yu'>" + b.join("</p>,<p class='yu'>") + "</p>...<br /><br />";
         }
 
@@ -1422,7 +1424,7 @@
 
         for(var i = 0;i < v.length;i++)
         {
-          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='g'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
+          o.innerHTML += "<p class='yu'>" + v.b[i] + "</p>&div;(" + v.r[i].toFixed(5) + "-<p class='b'>" + v.a[i] + "</p>)=" + v.r[i+1].toFixed(5) + "<br />";
         }
       }
 
@@ -1522,11 +1524,11 @@
 
       <h1>Important note</h1>
 
-      A vector of 1,1,1 is the Fibonacci constant (golden ratio).<br /><br />
+      A vector of 1,1,1 is the Fibonacci constant (golden ratio). Is the center of all 2D ratios.<br /><br />
 
-      A vector of 1,1,1,1 is the Tribonacci constant.<br /><br />
+      A vector of 1,1,1,1 is the Tribonacci constant. Is the center of all 3D ratios.<br /><br />
 
-      A vector of 1,1,1,1,1 is raised to the fourth term and is the Quatronacci constant.<br /><br />
+      A vector of 1,1,1,1,1 is raised to the fourth term and is the Quatronacci constant. Is the center of all 4D ratios.<br /><br />
 
       This can go as high as you want in higher and higher dimensions.
     </div>
