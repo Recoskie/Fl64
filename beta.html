@@ -1136,7 +1136,7 @@
 
       var a = [2, 1, 2, 3, 4, 5, 6, 7], b = [1, 1, 2, 3, 4, 5, 6, 7];
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       var v = NaN; for (var i = 0; i < a.length; v = v.split(a[i], b[i]), i++); out.innerHTML += "<input type='button' value='Show natural log' onclick='genExpansion(" + v.calc() + ",[" + b + "])' />";
 
@@ -1163,7 +1163,7 @@
 
       a = [3, 6, 6, 6, 6, 6]; b = [1, 9, 25, 49, 81, 121];
 
-      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+      out.innerHTML += "<table border='1px'><tr><td>A</td><td><p class='b'>" + a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
 
       var v = NaN; for (var i = 0; i < a.length; v = v.split(a[i], b[i]), i++); out.innerHTML += "<input type='button' value='Show PI' onclick='genExpansion(" + v.calc() + ",[" + b + "],false,true)' /><br /><br />";
 
@@ -1244,13 +1244,13 @@
       {
         sbEnd -= 1; if(c) { str += "To find the value for next B we divide the value into its next part.<br /><br />"; }
 
-        val = val.split();
+        val = val.split(); t = (val.r[i].toFixed(5)+"").split(".");
 
-        str += "<p class='yu'>1</p>&div;(<p class='r'>" + val.r[i].toFixed(5) + "</p>-<p class='g'>" + Math.floor(val.r[i]) + "</p>)=<p class='b'>"+val.r[i+1].toFixed(5)+"</p><br />";
+        str += "<hr /><p class='yu'>1</p>&div;(<p class='b'>" + t[0] + "</p>" + (t[1] ? t[1] : "") + "-<p class='b'>" + t[0] + "</p>)=<p class='gr'>"+val.r[i+1].toFixed(5)+"</p><br />";
 
         str += "Now we ask what we need to divide by to make the next part the same in size.<br />";
 
-        str += "<p class='g'>" + Math.floor(val.r[i]) + "</p>&div;<p class='b'>"+val.r[i+1].toFixed(5)+"</p> = <p class='yu'>" + (b = Math.floor(val.r[i]) / val.r[i+1]).toFixed(5) + "</p>";
+        str += "<p class='b'>" + t[0] + "</p>&div;<p class='gr'>"+val.r[i+1].toFixed(5)+"</p> = <p class='yu'>" + (b = Math.floor(val.r[i]) / val.r[i+1]).toFixed(5) + "</p>";
 
         str += " to next closest whole number <p class='yu'>" + (b=Math.ceil(b)) + "</p>.<br />";
 
@@ -1265,7 +1265,7 @@
 
         str += "We now calculate the next part dividing into our new value for B.<br />"; val = val.setB(i,b);
 
-        str += "<p class='yu'>" + b + "</p>&div;(<p class='r'>" + val.r[i].toFixed(5) + "</p>-<p class='g'>" + Math.floor(val.r[i]) + "</p>)=<p class='b'>"+val.r[i+1].toFixed(5)+"</p><hr />"; c = true;
+        "<p class='yu'>1</p>&div;(<p class='b'>" + t[0] + "</p>" + (t[1] ? t[1] : "") + "-<p class='b'>" + t[0] + "</p>)=<p class='gr'>"+val.r[i+1].toFixed(5)+"</p>"; c = true;
       }
 
       if(sbEnd > 0 || init) { str += "<div><input type='button' value='Find next part' onclick='findB(this," + val.reValue() + ", 1, true)' /></div>"; }
@@ -1276,7 +1276,7 @@
 
         val.b[i-1] = isFinite(val.b[i-1]) ? val.b[i-1] : val.b[i-2];
 
-        str += "<hr /><table border='1px'><tr><td>A</td><td><p class='g'>" + val.a.join("</p></td><td><p class='g'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + val.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
+        str += "<hr /><table border='1px'><tr><td>A</td><td><p class='b'>" + val.a.join("</p></td><td><p class='b'>") + "</td></tr><tr><td>B</td><td><p class='yu'>" + val.b.join("</p></td><td><p class='yu'>") + "</td></tr></table><br />";
         
         str += "<input type='button' value='Use scale factors for value' onclick='genExpansion(" + val.primitive() + ",[" + val.b + "]);' />";
 
