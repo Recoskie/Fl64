@@ -456,7 +456,7 @@
         
         str += " Next reciprocal part <p class='" + (sw ? "g" : "r") + "'> " + fx + "</p>&div;<p class='" + (sw ? "r" : "g") + "'>" + fy + "</p> = " + (fx/fy) + "<br /><br />Is also<br />";
 
-        str += "<br /><p class='yu'>" + (sc ? b[curParts.length - 1] : 1) + "</p>&div;(<p class='b'>" + t[0] + "</p>" + (t[1] ? "." + t[1] : "") + "-<p class='b'>" + t[0] + "</p>) = " + (fx/fy) + "<br /><br />Which is also the same as how we divide a number to its next receptacle part.";
+        str += "<br />As one line: <p class='yu'>" + (sc ? b[curParts.length - 1] : 1) + "</p>&div;(<p class='b'>" + t[0] + "</p>" + (t[1] ? "." + t[1] : "") + "-<p class='b'>" + t[0] + "</p>) = " + (fx/fy) + "<br /><br />Which is also the same as how we divide a number to its next receptacle part.";
 
         sw = !sw;
       }
@@ -526,7 +526,8 @@
         {
           if (r != 0)
           {
-            str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.";
+            str += "<br />The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br />";
+            str += "Note values past this range limit 2<sup>53</sup> that extend past the size of our float64 value are incomplete or partial.<br /><br />";
           }
           else
           {
@@ -546,7 +547,9 @@
         }
         else { str += "We divide the value into one to find the next reciprocal part <p class='yu'>1</p>&div;" + r + " = " + (r = 1 / r) + "<br /><br />"; }
 
-        str += "<hr />" + exp + " = " + v.reValue() + "<hr /><br />";
+        str += "As one line: <p class='yu'>" + bn + "</p>&div;(<p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "-<p class='b'>" + t[0] + "</p>) = " + r + "<br /><br >";
+
+        str += "<hr />Combined: " + exp + " = " + v.reValue() + "<hr /><br />";
       }
 
       return (str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\"," + PI + ")'></div>" : "") + "</div>");
@@ -585,7 +588,8 @@
       {
         if (r != 0)
         {
-          str += "The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br /><br />";
+          str += "<br />The remaining value " + r + " can not be divided to any more parts as we have reached the end of accuracy of a float64 number.<br />";
+          str += "Note values past this range limit 2<sup>53</sup> that extend past the size of our float64 value are incomplete or partial.<br /><br />";
         }
         else
         {
@@ -600,7 +604,9 @@
       }
       else { str += "We divide the value into one to find the next reciprocal part <p class='yu'>1</p>&div;" + r + " = " + (r = 1 / r) + "<br /><br />"; }
 
-      str += "<hr />" + exp + " = " + v.reValue() + "<hr /><br />";
+      str += "As one line: <p class='yu'>" + bn + "</p>&div;(<p class='b'>" + t[0] + "</p>" + (t.length > 1 ? "." + t[1] : "") + "-<p class='b'>" + t[0] + "</p>) = " + r + "<br /><br >";
+
+      str += "<hr />Combined: " + exp + " = " + v.reValue() + "<hr /><br />";
 
       e.parentElement.innerHTML = str + (v != 0 ? "<div><input type='button' value='Find next part' onclick='getNextPart(this, " + v.r[0] + ",[" + v.a + "]," + (sc ? "[" + b + "]" : "undefined") + ",\"" + exp.replace(/'/g, "\\\"") + "\"," + PI + ")'></div>" : "");
     }
@@ -1081,9 +1087,9 @@
 
       out.innerHTML += "<div id='fRev'>" + addPartsFract(n.a, n.b, 3) + "</div><br />";
 
-      out.innerHTML += "If both the added parts A and B (Scale) are patterns per part, then the fractions are also patterns and can be expressed as factorials and power series, or as two added whole numbers that change in ratio, which are then divided together to form the number ratio at higher and higher accuracy.<br /><br />";
+      out.innerHTML += "If both the added parts A and B (Scale) are patterns per part, then the produced fractions are also patterns and can be expressed as a pattern to find the next fraction, we call it the fractional expansion ratio of a number, which is then divided together to form the number ratio at higher and higher accuracy.<br /><br />";
 
-      out.innerHTML += "Additionally, all numbers should have generalized expansion patterns, even if they are hard to find. Even all vector-summed ratios have generalized forms.<br /><br />";
+      out.innerHTML += "Additionally, all number sequences and growing ratios follow general expansion patterns, even if they are hard to find and can easily be changed into fractional expansion patterns. All vector-summed ratios also have generalized forms and fractional expansion patterns.<br /><br />";
 
       out.innerHTML += "Explain how to find and compute nth dimensional numbers and PI? <input type='button' value='Show Info' onclick='explainNthDimGen(this);' />";
 
@@ -1189,7 +1195,7 @@
 
       out.innerHTML += "All is divided into 4, and we also switch between adding and subtracting the next, which makes it a transcendental expansion.<br /><br />";
 
-      out.innerHTML += "All transcendental numbers can be expressed as factorial and power series. To translate back to a fraction expansion, we pair each subtraction with its corresponding factor.<br /><br />";
+      out.innerHTML += "All transcendental numbers can be expressed as a fractional expansion just as how generalized forum can change to fractional pattern. To translate back to a fraction expansion, we pair each subtraction with its corresponding factor.<br /><br />";
 
       out.innerHTML += "<p class='r'>4&div;1-4&div;3</p>+<p class='g'>4&div;5-4&div;7</p>+<p class='r'>4&div;9-4&div;11</p>... = 3.1415926535<br /><br />";
 
@@ -1198,7 +1204,7 @@
       out.innerHTML += "<p class='r'>4&div;9-4&div;11</p> = 8&div;99<br />";
       out.innerHTML += "<p class='g'>4&div;13-4&div;15</p> = 8&div;195<br /><br />";
 
-      out.innerHTML += "This creates the following factorial 8&div;3+8&div;35+8&div;99+8&div;195...=3.1415926535<br /><br />";
+      out.innerHTML += "This creates the following fraction 8&div;3+8&div;35+8&div;99+8&div;195...=3.1415926535<br /><br />";
 
       out.innerHTML += "Each value divided into 8 is the following:<br /><br />";
 
@@ -1465,11 +1471,11 @@
       A value like 0.12345 can be expressed as a set of fractions that approach the value: 1÷10=0.1, 12÷100=0.12, 123÷1000=0.123. In this way, we can express both sides of the fraction as a growing, changing pattern. We say this ratio is raised to the 10th (or 10D ratio) since 1×10=10, 10×10=100, and 100×10=1000; the sequence increases by 10 each time we add one to the pattern and move by 10 for the base sequence.<br /><br />
 
       Some values have no visible pattern in their digits, but they grow sequentially the same way, progressing with a
-      slight expanding change that can not be found by looking at the numbers down the decimal point, such as the ratio
+      slight expanding change that can not be found by looking at the numbers, such as the ratio
       3.1415926535, which we call PI.<br /><br />
 
       We refer to these complex number pattern expansions as irrational numbers. Unravelling complex values takes a lot
-      of work when the expanding ratio down the number is invisible.<br /><br />
+      of work when the expanding ratio down the numbers digits is invisible.<br /><br />
 
       Originally, we would look for equations that match the number ratio we are looking at through a lot of calculation
       and proof work, such as comparing a circle with smaller and smaller lines to find the expansion ratio for the outside distance of
@@ -1478,7 +1484,7 @@
       <h1>Using this tool</h1>
 
       Enter a custom vector combination, such as 1,8,99, then hit calc to see the steps for computing each part. It then
-      shows how the parts are added to an irrational number.<br /><br />
+      shows how the parts are added to a number.<br /><br />
 
       The resulting irrational number is broken back into parts step by step.<br /><br />
 
